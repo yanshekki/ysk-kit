@@ -1,0 +1,27 @@
+{
+  "name": "ysk-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "YSK Kit — shared TypeScript monorepo starter for YSK products",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "db:generate": "pnpm --filter @ysk/api prisma:generate",
+    "db:migrate": "pnpm --filter @ysk/api prisma:migrate",
+    "db:studio": "pnpm --filter @ysk/api prisma:studio",
+    "ysk": "pnpm --filter @ysk/cli start"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.2"
+  }
+}

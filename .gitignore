@@ -1,0 +1,12 @@
+node_modules
+dist
+.turbo
+coverage
+.env
+.env.local
+*.log
+.DS_Store
+apps/api/prisma/*.db
+apps/mobile/.expo
+apps/web/dist
+apps/admin/dist

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ysk/config": "workspace:*",
+    "@ysk/contracts": "workspace:*",
     "@ysk/sdk": "workspace:*",
     "@ysk/ui-logic": "workspace:*",
     "react": "^19.1.0",

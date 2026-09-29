@@ -22,3 +22,27 @@ jobs:
       - run: pnpm layers
       - run: pnpm typecheck
       - run: pnpm test
+
+  thin-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.8.1
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm --filter @ysk/create-app start /tmp/ysk-thin-smoke --preset thin --flavor saas --no-admin --no-mobile --db sqlite
+      - name: verify thin dest
+        working-directory: /tmp/ysk-thin-smoke
+        run: |
+          pnpm install
+          cp .env.example .env
+          pnpm db:generate
+          pnpm layers
+          pnpm typecheck
+          pnpm test
+          pnpm gen:openapi

@@ -29,7 +29,7 @@ export const assertPrismaEnumsMatchContracts = (schema: string): void => {
       `Prisma UserRole ${JSON.stringify(role)} != contracts ${JSON.stringify(USER_ROLE_VALUES)}`,
     );
   }
-  if (!sameSet(orgRole, ORG_ROLE_VALUES)) {
+  if (orgRole.length > 0 && !sameSet(orgRole, ORG_ROLE_VALUES)) {
     throw new Error(
       `Prisma OrgRole ${JSON.stringify(orgRole)} != contracts ${JSON.stringify(ORG_ROLE_VALUES)}`,
     );

@@ -1,6 +1,6 @@
 # YSK Kit 產品計劃書（2026-09-29）
 
-狀態：已批核。波 0（法律文件）同波 1（黃金切片產生器）喺 Phase 39 落地。波 2–5 仍然按本文順序做。
+狀態：已批核。波 0–1 喺 Phase 39 落地。波 2（薄開倉 + capability 複製）喺 Phase 40 落地。波 3–5 未做。
 範圍：重新審視 kit 目的、開發者點樣快速架構產品、專業化、以及 AI 開發點樣真正受惠。
 刻意排除呢一波：Hono、Drizzle、tRPC、Resend、K8s、Tax ID / metered billing、Electron installer、APNs。呢啲係可選 adapter，解決唔到而家最大嘅痛。
 
@@ -68,7 +68,7 @@ pnpm db:migrate && pnpm test && pnpm layers && pnpm dev
 - `pnpm layers` 綠（web 無 Prisma / Express）
 - OpenAPI 有呢條 path
 
-呢條路徑而家 **唔存在**。而家存在嘅係：複製成個 living saas（連 LLM、Stripe、org billing），再人手改。
+`create-ysk-app --preset thin` 同 `ysk add module` 已存在。Seed / Playwright E2E 仍然係波 3。
 
 ---
 

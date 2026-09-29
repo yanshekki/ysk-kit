@@ -71,7 +71,7 @@ pnpm gen:openapi
 pnpm --filter @ysk/create-app start my-product --db mysql
 ```
 
-`ysk add module` writes a complete slice (contract, DTO, repos, Express + Fastify, SDK, web page). See [docs/recipes/add-module.md](./docs/recipes/add-module.md). `create-ysk-app` copies this living saas tree; `--preset thin` is later (product-plan wave 2).
+`ysk add module` writes a complete slice (contract, DTO, repos, Express + Fastify, SDK, web page). See [docs/recipes/add-module.md](./docs/recipes/add-module.md). `create-ysk-app --preset thin` (default) copies this tree then strips llm / billing / orgs / push. `--preset full` keeps the living demo. Restore a capability with `pnpm ysk add llm|team|billing|push`.
 
 `ysk add <capability>` merges Prisma fragments, `.env.example` keys, and `apps/api` workspace deps when missing. A second run is a no-op. `ysk add module` also puts the contract on `appContract` and registers routes when `app.ts` / `composition.ts` exist. Then `pnpm db:migrate`.
 

@@ -3,6 +3,7 @@ import {
   ensureEnvKey,
   ensureJsonDep,
   ensureMarkerBlock,
+  ensureNamedImport,
   insertAfterLastImport,
 } from './patch-text';
 
@@ -35,5 +36,15 @@ describe('patch-text', () => {
     const first = ensureMarkerBlock(source, 'team', '  register();', '  return app;');
     expect(first).toContain('// --- ysk-add:team ---');
     expect(ensureMarkerBlock(first, 'team', '  register();', '  return app;')).toBe(first);
+  });
+
+  it('adds named specifiers to an existing import', () => {
+    const source = `import { appContract } from '@ysk/contracts';\n`;
+    const next = ensureNamedImport(source, '@ysk/contracts', [
+      'LlmCompleteCommandSchema',
+      'appContract',
+    ]);
+    expect(next).toContain('LlmCompleteCommandSchema');
+    expect(next.match(/from '@ysk\/contracts'/g)).toHaveLength(1);
   });
 });

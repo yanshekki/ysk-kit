@@ -29,7 +29,7 @@ describe('fastify adapter', () => {
     expect(spec.statusCode).toBe(200);
     const body = spec.json() as { paths: Record<string, unknown> };
     expect(body.paths['/health']).toBeDefined();
-    expect(body.paths['/v1/billing/plans']).toBeDefined();
+    expect(body.paths['/v1/auth/login']).toBeDefined();
   });
 
   it('rate-limits when configured', async () => {

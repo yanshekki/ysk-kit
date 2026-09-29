@@ -8,7 +8,16 @@ A contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). Product domains 
 
 ## Before you invent a folder
 
-New HTTP feature:
+New product:
+
+```bash
+pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm ysk add module <kebab-name> --prisma --web
+```
+
+`--preset full` copies the living demo (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first).
+
+New HTTP feature in this repo or a generated product:
 
 ```bash
 pnpm ysk add module <kebab-name> --prisma --web

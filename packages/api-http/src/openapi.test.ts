@@ -7,7 +7,7 @@ describe('buildOpenApiDocument', () => {
     const spec = buildOpenApiDocument(appContract);
     expect(spec.openapi).toBe('3.1.0');
     expect(spec.paths['/health']).toBeDefined();
-    expect(spec.paths['/v1/billing/plans']).toBeDefined();
+    expect(spec.paths['/v1/auth/login']).toBeDefined();
     expect(scalarDocsHtml()).toContain('api-reference');
     expect(scalarDocsHtml()).toContain('/openapi.json');
   });

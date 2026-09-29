@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,23 +6,28 @@ import { describe, expect, it } from 'vitest';
 import { addCapability } from './add-capability';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+const hasTeam = existsSync(join(kitRoot, 'apps/api/src/modules/organizations'));
+const hasLlm = existsSync(join(kitRoot, 'apps/api/src/modules/llm'));
+const hasPush = existsSync(join(kitRoot, 'apps/api/src/modules/devices'));
 
 describe('addCapability', () => {
   it('prints saas wiring hints', () => {
-    const logs = addCapability('auth');
+    const logs = addCapability('auth', mkdtempSync(join(tmpdir(), 'ysk-hint-')));
     expect(logs.join('\n')).toContain('saas flavor');
   });
 
   it('rejects unknown names', () => {
-    expect(() => addCapability('foobar')).toThrow(/unknown capability/);
+    expect(() => addCapability('foobar', mkdtempSync(join(tmpdir(), 'ysk-unk-')))).toThrow(
+      /unknown capability/,
+    );
   });
 
   it('aliases org to team', () => {
-    const logs = addCapability('org');
+    const logs = addCapability('org', mkdtempSync(join(tmpdir(), 'ysk-alias-')));
     expect(logs.join('\n')).toContain('ysk add team');
   });
 
-  it('is a no-op on the living kit when team is already wired', () => {
+  it.skipIf(!hasTeam)('is a no-op on the living kit when team is already wired', () => {
     const before = readFileSync(join(kitRoot, 'apps/api/prisma/schema.prisma'), 'utf8');
     const logs = addCapability('team', kitRoot);
     expect(logs[0]).toContain('already applied');
@@ -68,17 +73,20 @@ describe('addCapability', () => {
     expect(again.match(/model Organization/g)).toHaveLength(1);
   });
 
-  it('is a no-op on the living kit when llm/push/websocket are already wired', () => {
-    const before = readFileSync(join(kitRoot, 'apps/api/prisma/schema.prisma'), 'utf8');
-    for (const name of ['llm', 'push', 'websocket'] as const) {
-      const logs = addCapability(name, kitRoot);
-      expect(logs[0]).toContain('already applied');
-      expect(logs.join('\n')).toContain('composition already hand-wired in saas');
-    }
-    expect(readFileSync(join(kitRoot, 'apps/api/prisma/schema.prisma'), 'utf8')).toBe(before);
-    expect(before.match(/model LlmUsage/g)).toHaveLength(1);
-    expect(before.match(/model Device/g)).toHaveLength(1);
-  });
+  it.skipIf(!hasLlm || !hasPush)(
+    'is a no-op on the living kit when llm/push/websocket are already wired',
+    () => {
+      const before = readFileSync(join(kitRoot, 'apps/api/prisma/schema.prisma'), 'utf8');
+      for (const name of ['llm', 'push', 'websocket'] as const) {
+        const logs = addCapability(name, kitRoot);
+        expect(logs[0]).toContain('already applied');
+        expect(logs.join('\n')).toContain('composition already hand-wired in saas');
+      }
+      expect(readFileSync(join(kitRoot, 'apps/api/prisma/schema.prisma'), 'utf8')).toBe(before);
+      expect(before.match(/model LlmUsage/g)).toHaveLength(1);
+      expect(before.match(/model Device/g)).toHaveLength(1);
+    },
+  );
 
   it('merges llm prisma and source into a fixture tree', () => {
     const root = mkdtempSync(join(tmpdir(), 'ysk-add-llm-'));
@@ -190,6 +198,16 @@ describe('addCapability', () => {
     const env = readFileSync(join(root, '.env.example'), 'utf8');
     addCapability('jobs', root);
     expect(readFileSync(join(root, '.env.example'), 'utf8')).toBe(env);
+  });
+
+  it('refuses billing before team', () => {
+    const root = mkdtempSync(join(tmpdir(), 'ysk-bill-'));
+    mkdirSync(join(root, 'apps/api/prisma'), { recursive: true });
+    writeFileSync(
+      join(root, 'apps/api/prisma/schema.prisma'),
+      'model User {\n  id String @id\n}\n',
+    );
+    expect(() => addCapability('billing', root)).toThrow(/requires team/);
   });
 
   it('ships a PM2 ecosystem with api and worker', () => {

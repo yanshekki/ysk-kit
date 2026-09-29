@@ -10,6 +10,7 @@ import {
 } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applyThinPreset } from './thin';
 
 export type Db = 'mysql' | 'postgresql' | 'sqlite';
 export const FLAVORS = [
@@ -21,6 +22,8 @@ export const FLAVORS = [
   'static-web3',
 ] as const;
 export type Flavor = (typeof FLAVORS)[number];
+export const PRESETS = ['thin', 'full'] as const;
+export type Preset = (typeof PRESETS)[number];
 
 export type CreateAppOptions = {
   name: string;
@@ -30,6 +33,7 @@ export type CreateAppOptions = {
   db: Db;
   admin: boolean;
   mobile: boolean;
+  preset: Preset;
 };
 
 const SKIP = new Set([
@@ -50,6 +54,11 @@ export const parseArgs = (argv: string[]) => {
   const dbFlag = argv.find((arg) => arg.startsWith('--db='))?.slice('--db='.length);
   const dbIdx = argv.indexOf('--db');
   const db = (dbFlag ?? (dbIdx >= 0 ? argv[dbIdx + 1] : 'mysql')) as Db;
+  const presetFlag = argv.find((arg) => arg.startsWith('--preset='))?.slice('--preset='.length);
+  const presetIdx = argv.indexOf('--preset');
+  const preset = (presetFlag ??
+    (presetIdx >= 0 ? argv[presetIdx + 1] : 'thin') ??
+    'thin') as Preset;
   const flags = new Set([
     'saas',
     'desktop',
@@ -60,14 +69,18 @@ export const parseArgs = (argv: string[]) => {
     'mysql',
     'postgresql',
     'sqlite',
+    'thin',
+    'full',
     flavor,
     db,
+    preset,
   ]);
   const positional = argv.filter((arg) => !arg.startsWith('--') && !flags.has(arg));
   return {
     name: positional[0],
     flavor,
     db,
+    preset,
     admin: !argv.includes('--no-admin'),
     mobile: !argv.includes('--no-mobile'),
   };
@@ -221,6 +234,9 @@ export const createYskApp = (opts: CreateAppOptions): string => {
       `flavor '${opts.flavor}' is not in this phase. Use --flavor saas, desktop, gateway, php-bridge, trading, or static-web3.`,
     );
   }
+  if (!PRESETS.includes(opts.preset)) {
+    throw new Error('--preset must be thin or full');
+  }
   if (!['mysql', 'postgresql', 'sqlite'].includes(opts.db)) {
     throw new Error('--db must be mysql, postgresql, or sqlite');
   }
@@ -307,8 +323,16 @@ export const createYskApp = (opts: CreateAppOptions): string => {
     const provider =
       opts.db === 'postgresql' ? 'postgresql' : opts.db === 'sqlite' ? 'sqlite' : 'mysql';
     schema = schema.replace(/provider\s*=\s*"mysql"/, `provider = "${provider}"`);
+    if (opts.db === 'sqlite') {
+      schema = schema.replace(/\s+@db\.[A-Za-z0-9(),]+/g, '');
+    }
     writeFileSync(schemaPath, schema);
     rewritePrismaAdapter(dest, opts.db);
+  }
+
+  const usesCopyTree = opts.flavor !== 'php-bridge';
+  if (opts.preset === 'thin' && usesCopyTree && opts.flavor !== 'static-web3') {
+    applyThinPreset(dest);
   }
 
   const webLine =

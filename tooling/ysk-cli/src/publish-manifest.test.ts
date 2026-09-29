@@ -26,7 +26,9 @@ describe('publish manifest', () => {
       'packages/biome-config',
       'packages/typescript-config',
     ]) {
-      const pkg = JSON.parse(readFileSync(join(kitRoot, rel, 'package.json'), 'utf8')) as {
+      const pkgPath = join(kitRoot, rel, 'package.json');
+      if (!existsSync(pkgPath)) continue;
+      const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
         private?: boolean;
       };
       expect(pkg.private).toBe(true);

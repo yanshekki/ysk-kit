@@ -31,7 +31,7 @@ pnpm gen:openapi
 pnpm --filter @ysk/create-app start my-product --db mysql
 ```
 
-`ysk add module` 會寫完整切片（合約、DTO、repo、Express + Fastify、SDK、web 頁）。見 [docs/recipes/add-module.md](./docs/recipes/add-module.md)。`create-ysk-app` 而家複製 living saas；`--preset thin` 係計劃書波 2。
+`ysk add module` 會寫完整切片（合約、DTO、repo、Express + Fastify、SDK、web 頁）。見 [docs/recipes/add-module.md](./docs/recipes/add-module.md)。`create-ysk-app --preset thin`（預設）複製呢棵樹再剝 llm / billing / orgs / push。`--preset full` 保留 living 示範。加返能力：`pnpm ysk add llm|team|billing|push`。
 
 `ysk add` 會 idempotent merge Prisma / `.env.example` / API workspace deps。PM2：`pnpm --filter @ysk/api build` 之後 `pm2 start ecosystem.config.cjs`。
 

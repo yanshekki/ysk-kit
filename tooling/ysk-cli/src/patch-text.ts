@@ -53,3 +53,22 @@ export const insertBeforeMatch = (source: string, match: string, insert: string)
   if (index < 0) return source;
   return `${source.slice(0, index)}${insert}${source.slice(index)}`;
 };
+
+export const ensureNamedImport = (source: string, moduleName: string, names: string[]): string => {
+  const escaped = moduleName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`import\\s+(type\\s+)?\\{([^}]*)\\}\\s+from\\s+['"]${escaped}['"]`);
+  const match = re.exec(source);
+  if (!match || match.index === undefined) {
+    return insertAfterLastImport(source, `import { ${names.join(', ')} } from '${moduleName}';`);
+  }
+  const existing = (match[2] ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  const hasName = (name: string) =>
+    existing.some((item) => item === name || item === `type ${name}` || item.endsWith(` ${name}`));
+  const missing = names.filter((name) => !hasName(name));
+  if (missing.length === 0) return source;
+  const rebuilt = `import ${match[1] ?? ''}{ ${[...existing, ...missing].join(', ')} } from '${moduleName}'`;
+  return `${source.slice(0, match.index)}${rebuilt}${source.slice(match.index + match[0].length)}`;
+};

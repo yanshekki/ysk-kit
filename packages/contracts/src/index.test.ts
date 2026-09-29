@@ -49,7 +49,5 @@ describe('contracts', () => {
     expect(appContract.users.list.path).toBe('/v1/users');
     expect(appContract.users.create.method).toBe('POST');
     expect(appContract.users.suspend.path).toBe('/v1/users/:id/suspend');
-    expect(appContract.organizations.create.path).toBe('/v1/organizations');
-    expect(appContract.organizations.acceptInvite.path).toBe('/v1/organizations/invites/accept');
   });
 });

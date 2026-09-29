@@ -6,13 +6,15 @@
 
 ## Implemented in this repo
 
-Living saas kit through **Phase 39**. Capability history: [history.md](./history.md). Product plan: [product-plan.md](./product-plan.md). Agent law: [AGENTS.md](../AGENTS.md).
+Living saas kit through **Phase 40**. Capability history: [history.md](./history.md). Product plan: [product-plan.md](./product-plan.md). Agent law: [AGENTS.md](../AGENTS.md).
 
 Current stack: Node 24, pnpm 12.8.1, TypeScript 6.0.3, Vitest 5, Prisma 7.10 + MariaDB adapter, Express 5 + Fastify 5, Vite 8 web/admin, Electron 44 + electron-vite 5 + Vite 7 desktop, Expo 57, React 19.2.3.
 
 **Phase 39:** `AGENTS.md` + architecture/history split. `ysk add module` clones a complete hexagonal slice (contract, DTO, memory+prisma repos, Express and Fastify handlers, SDK, web-sdk hooks, web page, service test). Living saas does not mount a demo notes route.
 
-Later: product-plan waves 2–5 (thin create, client shell + seed, package upgrade path, agent fixtures).
+**Phase 40:** `create-ysk-app --preset thin|full` (default **thin**). Thin copies the living tree then strips llm / billing / organizations / devices. `ysk add llm|team|billing|push` copies source trees from `tooling/ysk-cli/templates/capabilities/` and patches Express, Fastify, composition, main, SDK, web-sdk, and the web router. Living kit stays fully-loaded. CI job `thin-smoke` scaffolds sqlite `--no-admin --no-mobile`.
+
+Later: product-plan waves 3–5 (client shell + seed, package upgrade path, agent fixtures).
 
 Envelope exceptions: LLM stream is SSE (`event: delta|done`); invoice PDF is HTTP 302; OpenAPI JSON is `GET /openapi.json`; Scalar HTML is `GET /docs`. All other routes stay `{ ok, data }` / `{ ok, error }`.
 
@@ -414,10 +416,10 @@ Living web/admin 用 TanStack Router（`router.tsx`）+ `features/*`。`features
 ### 開新產品
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --db mysql --flavor saas
+pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
 ```
 
-而家係 copy living saas（flags：`--flavor`、`--db`、`--no-admin`、`--no-mobile`）。互動 wizard 同 `--preset thin` 係 product-plan 波 2。
+`--preset thin`（預設）複製 living kit 再剝 llm / billing / orgs / push。`--preset full` 係原樣 copyTree。Flavor 仍然決定 skip 邊個 app（`--no-admin` / `--no-mobile`）。`php-bridge` 同 `static-web3` 忽略 preset。互動 wizard 係 product-plan 波 3。
 
 ### 加能力
 

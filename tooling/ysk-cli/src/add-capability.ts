@@ -86,6 +86,7 @@ const HINTS: Record<Capability, string[]> = {
     'dev uses a built-in key when NODE_ENV is not production',
   ],
   billing: [
+    'requires ysk add team first (Organization + Membership)',
     'GET /v1/billing/plans (public); org OWNER/ADMIN + billing.checkout for the rest',
     'log IBillingPort by default; STRIPE_SECRET_KEY + STRIPE_PRICE_PRO enable Checkout',
     'STRIPE_WEBHOOK_SECRET for POST /v1/billing/webhook (raw body)',

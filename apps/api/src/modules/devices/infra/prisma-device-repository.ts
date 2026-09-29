@@ -1,5 +1,5 @@
-import type { PrismaClient } from '@prisma/client';
 import type { DevicePlatform } from '@ysk/contracts';
+import type { PrismaClient } from '../../../generated/prisma/client';
 import type { DeviceRecord, IDeviceRepository } from '../domain/device-repository';
 
 const toRecord = (row: {

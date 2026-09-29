@@ -43,6 +43,13 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'apps/api/prisma/schema.prisma'), 'utf8')).toContain(
       'provider = "postgresql"',
     );
+    expect(readFileSync(join(dest, 'apps/api/package.json'), 'utf8')).toContain(
+      '@prisma/adapter-pg',
+    );
+    expect(readFileSync(join(dest, 'apps/api/src/infra/create-prisma.ts'), 'utf8')).toContain(
+      'PrismaPg',
+    );
+    expect(readFileSync(join(dest, 'docker-compose.yml'), 'utf8')).toContain('postgres:18-alpine');
     expect(readFileSync(join(dest, 'package.json'), 'utf8')).toContain('"name": "acme"');
     expect(readFileSync(join(dest, 'docker-compose.yml'), 'utf8')).toContain('prometheus');
     expect(existsSync(join(dest, 'deploy/prometheus/prometheus.yml'))).toBe(true);
@@ -135,6 +142,9 @@ describe('create-ysk-app', () => {
     });
     expect(existsSync(join(dest, 'apps/desktop/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'apps/api/package.json'))).toBe(true);
+    expect(readFileSync(join(dest, 'apps/api/src/infra/create-prisma.ts'), 'utf8')).toContain(
+      'PrismaBetterSqlite3',
+    );
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);

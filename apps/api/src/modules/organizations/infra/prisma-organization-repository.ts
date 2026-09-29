@@ -1,5 +1,5 @@
-import type { Organization, OrgInvite, PrismaClient } from '@prisma/client';
 import type { InviteOrgRole } from '@ysk/contracts';
+import type { Organization, OrgInvite, PrismaClient } from '../../../generated/prisma/client';
 import type {
   IOrganizationRepository,
   OrganizationRecord,

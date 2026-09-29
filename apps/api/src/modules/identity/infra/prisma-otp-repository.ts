@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '../../../generated/prisma/client';
 import type { IOtpRepository } from '../domain/otp-repository';
 
 export const createPrismaOtpRepository = (prisma: PrismaClient): IOtpRepository => ({

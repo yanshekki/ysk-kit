@@ -20,7 +20,8 @@
     "@bull-board/express": "9.10.1",
     "@bull-board/fastify": "9.10.1",
     "@fastify/cors": "^11.0.1",
-    "@prisma/client": "^6.8.2",
+    "@prisma/adapter-mariadb": "7.10.0",
+    "@prisma/client": "7.10.0",
     "@ysk/api-express": "workspace:*",
     "@ysk/api-fastify": "workspace:*",
     "@ysk/api-http": "workspace:*",
@@ -39,21 +40,21 @@
     "@ysk/realtime": "workspace:*",
     "@ysk/storage": "workspace:*",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "fastify": "^5.3.3",
-    "ioredis": "^5.6.1",
-    "pino": "^9.6.0",
-    "zod": "^4.1.11"
+    "express": "^5.2.1",
+    "fastify": "^5.12.5",
+    "ioredis": "^6.0.0",
+    "pino": "^10.3.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.13.10",
+    "@types/node": "^24.5.2",
     "@types/supertest": "^6.0.3",
-    "prisma": "^6.8.2",
+    "prisma": "7.10.0",
     "supertest": "^7.1.0",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
   }
 }

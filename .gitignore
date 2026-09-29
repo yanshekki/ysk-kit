@@ -8,6 +8,7 @@ coverage
 .DS_Store
 *.tsbuildinfo
 apps/api/prisma/*.db
+apps/api/src/generated/
 apps/mobile/.expo
 apps/web/dist
 apps/admin/dist

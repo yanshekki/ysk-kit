@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { corsOrigins, loadServerEnv, type ServerEnv } from '@ysk/config';
 import { createBullmqQueue, createMemoryQueue, type IJobQueue } from '@ysk/jobs';
 import { createLlmFromEnv, type ILlmPort } from '@ysk/llm';
@@ -8,6 +7,7 @@ import { pinoOtelMixin } from '@ysk/observability';
 import { createPushFromEnv, type IPushPort } from '@ysk/push';
 import { createRealtimeFromEnv, type IRealtimePort } from '@ysk/realtime';
 import { createStorageFromEnv, type IStoragePort } from '@ysk/storage';
+import { createPrisma, type PrismaClient } from './infra/create-prisma';
 import {
   type ApiKeyService,
   createApiKeyService,
@@ -86,7 +86,7 @@ export const createComposition = async (opts?: {
 }): Promise<Composition> => {
   const env = loadServerEnv(opts?.source);
   const logger = createLogger({ name: 'api', env: env.NODE_ENV, mixin: pinoOtelMixin });
-  const prisma = new PrismaClient({ datasourceUrl: env.DATABASE_URL });
+  const prisma = createPrisma(env.DATABASE_URL);
   const users = createPrismaUserRepository(prisma);
   const sessions = createPrismaSessionRepository(prisma);
   const otps = createPrismaOtpRepository(prisma);

@@ -1,5 +1,5 @@
-import type { PrismaClient } from '@prisma/client';
 import type { BillingPlanCode, SubscriptionStatus } from '@ysk/contracts';
+import type { PrismaClient } from '../../../generated/prisma/client';
 import type {
   ISubscriptionRepository,
   SubscriptionRecord,

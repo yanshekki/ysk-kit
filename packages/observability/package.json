@@ -27,11 +27,11 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
-    "@types/node": "^22.13.10",
+    "@types/node": "^24.5.2",
     "@ysk/logger": "workspace:*",
-    "express": "^5.1.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "express": "^5.2.1",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
   },
   "files": [
     "dist"

@@ -1,5 +1,5 @@
-import type { Prisma, PrismaClient } from '@prisma/client';
 import type { Permission } from '@ysk/contracts';
+import type { Prisma, PrismaClient } from '../../../generated/prisma/client';
 import type { ApiKeyRecord, IApiKeyRepository } from '../domain/api-key-repository';
 
 const toRecord = (row: {

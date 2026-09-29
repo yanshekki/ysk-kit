@@ -1,6 +1,6 @@
-import { Prisma, type PrismaClient } from '@prisma/client';
 import { slicePage } from '@ysk/application';
 import { AppError } from '@ysk/domain-kernel';
+import { Prisma, type PrismaClient } from '../../../generated/prisma/client';
 import type { IUserRepository } from '../domain/user-repository';
 import { toUserDto, toUserRecord } from './user-mapper';
 

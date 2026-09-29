@@ -39,12 +39,13 @@ export const createBullmqQueue = async (opts: {
   const { default: IORedis } = await import('ioredis');
   const connection = new IORedis(opts.redisUrl, { maxRetriesPerRequest: null });
   const prefix = opts.prefix ?? 'ysk';
-  const queues = new Map<string, InstanceType<typeof Queue>>();
-  const workers: InstanceType<typeof Worker>[] = [];
+  const makeQueue = (name: string) => new Queue(name, { connection, prefix });
+  const queues = new Map<string, ReturnType<typeof makeQueue>>();
+  const workers: Array<{ close: () => Promise<void> }> = [];
   const queueFor = (name: string) => {
     const existing = queues.get(name);
     if (existing) return existing;
-    const q = new Queue(name, { connection, prefix });
+    const q = makeQueue(name);
     queues.set(name, q);
     return q;
   };

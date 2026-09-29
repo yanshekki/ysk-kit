@@ -17,10 +17,11 @@ A pnpm + Turborepo platform so a new product does not reinvent enums, DTOs, erro
 
 Product domains stay out of this repo. This tree is the living `saas` flavor.
 
+Requires **Node 24** (Active LTS) and **pnpm 12**.
+
 ## Quick start
 
 ```bash
-corepack enable
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
@@ -33,7 +34,7 @@ pnpm dev
 - Web http://localhost:5173
 - Admin http://localhost:5174
 - OpenAPI UI http://localhost:3001/docs (`GET /openapi.json`)
-- Optional traces: `docker compose up -d jaeger`, set `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`, UI http://localhost:16686
+- Optional traces: `docker compose up -d jaeger` (`jaegertracing/jaeger:2.21.0`), set `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`, UI http://localhost:16686
 - Optional metrics UI: `docker compose up -d prometheus grafana` — Prometheus http://localhost:9090, Grafana http://localhost:3000 (`admin` / `admin`)
 
 PostgreSQL or SQLite: change `datasource.provider` in `apps/api/prisma/schema.prisma` and `DATABASE_URL`. `create-ysk-app --db postgresql` does this for a new product.

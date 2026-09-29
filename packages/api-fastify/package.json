@@ -19,12 +19,12 @@
     "@ysk/auth": "workspace:*",
     "@ysk/contracts": "workspace:*",
     "@ysk/domain-kernel": "workspace:*",
-    "fastify": "^5.3.3"
+    "fastify": "^5.12.5"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "@types/node": "^24.5.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
   },
   "files": [
     "dist"

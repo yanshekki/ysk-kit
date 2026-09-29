@@ -1,6 +1,6 @@
-import type { PrismaClient } from '@prisma/client';
 import { slicePage } from '@ysk/application';
 import type { NotificationType } from '@ysk/contracts';
+import type { PrismaClient } from '../../../generated/prisma/client';
 import type { INotificationRepository } from '../domain/notification-repository';
 
 export const createPrismaNotificationRepository = (

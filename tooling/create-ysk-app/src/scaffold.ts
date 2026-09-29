@@ -32,7 +32,16 @@ export type CreateAppOptions = {
   mobile: boolean;
 };
 
-const SKIP = new Set(['node_modules', 'dist', '.git', '.turbo', 'coverage', '.expo', '.DS_Store']);
+const SKIP = new Set([
+  'node_modules',
+  'dist',
+  '.git',
+  '.turbo',
+  'coverage',
+  '.expo',
+  '.DS_Store',
+  'generated',
+]);
 
 export const parseArgs = (argv: string[]) => {
   const flavorFlag = argv.find((arg) => arg.startsWith('--flavor='))?.slice('--flavor='.length);
@@ -81,15 +90,13 @@ const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<strin
 };
 
 const jaegerService = `  jaeger:
-    image: jaegertracing/all-in-one:1.76.0
+    image: jaegertracing/jaeger:2.21.0
     restart: unless-stopped
-    environment:
-      COLLECTOR_OTLP_ENABLED: "true"
     ports:
       - "16686:16686"
       - "4318:4318"
   prometheus:
-    image: prom/prometheus:v3.13.3
+    image: prom/prometheus:v3.15.0
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -98,7 +105,7 @@ const jaegerService = `  jaeger:
     volumes:
       - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   grafana:
-    image: grafana/grafana:13.2.2
+    image: grafana/grafana:13.2.3
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -126,7 +133,7 @@ const mysqlCompose = `services:
       - ysk_kit_mysql:/var/lib/mysql
     command: ["--default-authentication-plugin=mysql_native_password", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
   redis:
-    image: redis:7.4-alpine
+    image: redis:8.10-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -137,7 +144,7 @@ volumes:
 
 const pgCompose = `services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     environment:
       POSTGRES_DB: ysk_kit
@@ -148,7 +155,7 @@ const pgCompose = `services:
     volumes:
       - ysk_kit_pg:/var/lib/postgresql/data
   redis:
-    image: redis:7.4-alpine
+    image: redis:8.10-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -159,11 +166,54 @@ volumes:
 
 const sqliteCompose = `services:
   redis:
-    image: redis:7.4-alpine
+    image: redis:8.10-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"
 ${jaegerService}`;
+
+const pgCreatePrisma = `import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../generated/prisma/client';
+
+export type { PrismaClient };
+
+export const createPrisma = (databaseUrl: string): PrismaClient => {
+  const adapter = new PrismaPg({ connectionString: databaseUrl });
+  return new PrismaClient({ adapter });
+};
+`;
+
+const sqliteCreatePrisma = `import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaClient } from '../generated/prisma/client';
+
+export type { PrismaClient };
+
+export const createPrisma = (databaseUrl: string): PrismaClient => {
+  const adapter = new PrismaBetterSqlite3({ url: databaseUrl });
+  return new PrismaClient({ adapter });
+};
+`;
+
+const rewritePrismaAdapter = (dest: string, db: Db): void => {
+  const createPath = join(dest, 'apps/api/src/infra/create-prisma.ts');
+  const pkgPath = join(dest, 'apps/api/package.json');
+  if (!existsSync(createPath) || !existsSync(pkgPath)) return;
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
+    dependencies: Record<string, string>;
+  };
+  delete pkg.dependencies['@prisma/adapter-mariadb'];
+  if (db === 'postgresql') {
+    pkg.dependencies['@prisma/adapter-pg'] = '7.10.0';
+    pkg.dependencies.pg = '^8.16.3';
+    writeFileSync(createPath, pgCreatePrisma);
+  } else if (db === 'sqlite') {
+    pkg.dependencies['@prisma/adapter-better-sqlite3'] = '7.10.0';
+    writeFileSync(createPath, sqliteCreatePrisma);
+  } else {
+    pkg.dependencies['@prisma/adapter-mariadb'] = '7.10.0';
+  }
+  writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
+};
 
 export const createYskApp = (opts: CreateAppOptions): string => {
   if (!FLAVORS.includes(opts.flavor as Flavor)) {
@@ -258,6 +308,7 @@ export const createYskApp = (opts: CreateAppOptions): string => {
       opts.db === 'postgresql' ? 'postgresql' : opts.db === 'sqlite' ? 'sqlite' : 'mysql';
     schema = schema.replace(/provider\s*=\s*"mysql"/, `provider = "${provider}"`);
     writeFileSync(schemaPath, schema);
+    rewritePrismaAdapter(dest, opts.db);
   }
 
   const webLine =
@@ -274,7 +325,7 @@ export const createYskApp = (opts: CreateAppOptions): string => {
 Generated from YSK Kit (\`static-web3\` flavor).
 
 \`\`\`bash
-corepack enable
+# Node 24 + pnpm 12
 pnpm install
 cp .env.example .env
 pnpm --filter @ysk/web dev
@@ -288,7 +339,7 @@ See [docs/architecture.md](docs/architecture.md).
 Generated from YSK Kit (\`${opts.flavor}\` flavor).
 
 \`\`\`bash
-corepack enable
+# Node 24 + pnpm 12
 pnpm install
 cp .env.example .env
 ${opts.db === 'sqlite' ? '' : `docker compose up -d ${opts.db === 'postgresql' ? 'postgres' : 'mysql'}\n`}pnpm db:generate

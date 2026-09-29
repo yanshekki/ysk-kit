@@ -11,7 +11,8 @@
       "!**/coverage",
       "!**/.expo",
       "!**/pnpm-lock.yaml",
-      "!**/routeTree.gen.ts"
+      "!**/routeTree.gen.ts",
+      "!**/apps/api/src/generated"
     ]
   },
   "vcs": {

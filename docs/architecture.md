@@ -1,6 +1,6 @@
 # YSK Kit — 共用全端開發架構
 
-版本：0.2（2026-09-28）
+版本：0.2（2026-09-29）
 目標：每個新 project 只寫業務，唔再重做 frontend / backend / database / mobile 骨架。
 依據：yanshekki GitHub 19 個 repo 實況 + SlashMap 四端架構。
 
@@ -80,11 +80,13 @@
 
 **Phase 37:** HTTP hardening (security headers + in-memory IP rate limit, `RATE_LIMIT_MAX=0` off). Public Scalar UI at `GET /docs` and `GET /openapi.json`. Optional Prometheus (`prom/prometheus:v3.13.3` :9090) + Grafana (`grafana/grafana:13.2.2` :3000) in Compose scraping host `:3001/metrics`. Web `/orgs/$id/billing`. Admin audit, API keys, queues probe. CI does not start Grafana/Prometheus.
 
+**Phase 38:** Version wave to latest stable. Node 24 Active LTS, pnpm 12.8.1, TypeScript 6.0 (7 has no public compiler API yet; `dependency-cruiser` cannot parse the TS graph on 7), Vitest 5, Prisma 7.10.0 (driver adapter `@prisma/adapter-mariadb`, generated client at `apps/api/src/generated/prisma`). Electron 44 + electron-vite 5 + desktop Vite 7. Web/admin stay Vite 8. Compose: Redis 8.10-alpine, Postgres 18-alpine, Jaeger `jaegertracing/jaeger:2.21.0`, Prometheus v3.15.0, Grafana 13.2.3. MySQL 8.4 LTS, Expo 57, and `@ts-rest/core` 3.53.0-rc.1 stay. CI is Node 24 / pnpm 12. CI does not start Redis / Stripe / Twilio / FCM / collector / Grafana. `create-ysk-app --db postgresql|sqlite` swaps the Prisma adapter and `create-prisma.ts`.
+
 Later: (empty)
 
 Envelope exceptions: LLM stream is SSE (`event: delta|done`); invoice PDF is HTTP 302; OpenAPI JSON is `GET /openapi.json`; Scalar HTML is `GET /docs`. All other routes stay `{ ok, data }` / `{ ok, error }`.
 
-Envelope: every response uses `{ ok, data }` / `{ ok, error }` (including single resources). HTTP adapter is Express 5. Web/admin use Vite 8. Mobile uses Expo 57. Desktop uses Vite 8 via electron-vite 6 beta.
+Envelope: every response uses `{ ok, data }` / `{ ok, error }` (including single resources). HTTP adapter is Express 5. Web/admin use Vite 8. Mobile uses Expo 57. Desktop uses Vite 7 via electron-vite 5.
 
 ---
 
@@ -124,21 +126,21 @@ Envelope: every response uses `{ ok, data }` / `{ ok, error }` (including single
 
 | 層 | 預設（建議採用） | 備選 | 點解咁揀 |
 |---|---|---|---|
-| Monorepo | pnpm workspaces + Turborepo | Nx（公司 >15 個 app 先考慮） | 輕、快、夠用 |
-| Language | TypeScript 5.9+ `strict` + `exactOptionalPropertyTypes` | — | 生產級 |
-| Frontend | Vite 8 + React 19 + TanStack Router + TanStack Query | Next.js 模組（SEO / SSR 產品先加） | 你要獨立 FE/BE；Router/Query 型別最好 |
+| Monorepo | pnpm 12 workspaces + Turborepo | Nx（公司 >15 個 app 先考慮） | 輕、快、夠用 |
+| Language | TypeScript 6 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when compiler API ships | 生產級 |
+| Frontend | Vite 8 (web/admin) + React 19 + TanStack Router + TanStack Query；desktop Vite 7 via electron-vite 5 | Next.js 模組（SEO / SSR 產品先加） | 你要獨立 FE/BE；Router/Query 型別最好 |
 | UI | Tailwind CSS 4 + shadcn/ui | MUI（內部 admin 先考慮） | 可複製、可主題化 |
 | HTTP API | Express 5 **作為 adapter** | Fastify / Hono adapter | 對齊 typescript-express-starter，但業務唔綁死 Express |
 | API 合約 | **ts-rest + Zod 4** | 內部高速通道可加 tRPC；唔用 Zodios | REST + OpenAPI + 前後端共用；對外 API 重要 |
 | Validation | Zod（合約層） | — | runtime + type 同源 |
-| DB 預設 | **Prisma**（schema-first） | Drizzle adapter（edge / 高效能） | 你現有專案已用；Studio、nested write、hiring pool |
+| DB 預設 | **Prisma 7**（schema-first + driver adapter） | Drizzle adapter（edge / 高效能） | 你現有專案已用；Studio、nested write、hiring pool |
 | Cache / Queue | Redis + BullMQ | 無 Redis 時用 in-memory（dev only） | 同 AQTMS 棧一致 |
 | Auth | `@ysk/auth`（Better Auth 或自研 JWT+refresh）包一層 port | Clerk / Auth0 adapter | 核心只認 `IAuthPort` |
 | Logger | Pino | — | prod JSON / dev pretty |
 | Lint/Format | Biome | ESLint + Prettier | 一個工具搞完 |
-| Test | Vitest + Testing Library + Supertest | Playwright e2e | 快 |
+| Test | Vitest 5 + Testing Library + Supertest | Playwright e2e | 快 |
 | Docs | ts-rest → OpenAPI → Scalar/Swagger | — | 一鍵出文件 |
-| Runtime | Node 22 LTS | Bun（可選） | 生產穩 |
+| Runtime | Node 24 LTS | Bun（可選） | 生產穩 |
 | Deploy | Docker Compose + GitHub Actions + PM2/K8s | — | 對齊現有習慣 |
 
 Prisma vs Drizzle（寫清楚）：

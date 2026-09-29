@@ -24,12 +24,13 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
   },
   "files": [
     "dist"

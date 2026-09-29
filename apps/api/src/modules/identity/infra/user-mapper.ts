@@ -1,5 +1,5 @@
-import type { User } from '@prisma/client';
 import type { UserDto } from '@ysk/contracts';
+import type { User } from '../../../generated/prisma/client';
 import type { UserRecord } from '../domain/user';
 
 export const toUserRecord = (row: User): UserRecord => ({

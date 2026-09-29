@@ -1,5 +1,5 @@
-import type { PrismaClient } from '@prisma/client';
 import type { Platform } from '@ysk/contracts';
+import type { PrismaClient } from '../../../generated/prisma/client';
 import type { ISessionRepository, SessionRecord } from '../domain/session-repository';
 
 const toRecord = (row: {

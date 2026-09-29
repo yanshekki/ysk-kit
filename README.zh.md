@@ -6,8 +6,9 @@ Language: [English](README.md) · 中文
 
 呢個 repo 係 living `saas` flavor。業務 domain 唔寫入 kit。
 
+需要 **Node 24**（Active LTS）同 **pnpm 12**。
+
 ```bash
-corepack enable
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
@@ -20,7 +21,7 @@ pnpm dev
 - Web http://localhost:5173
 - Admin http://localhost:5174
 - OpenAPI UI http://localhost:3001/docs
-- 可選 traces：`docker compose up -d jaeger`，設 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`，UI http://localhost:16686
+- 可選 traces：`docker compose up -d jaeger`（`jaegertracing/jaeger:2.21.0`），設 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`，UI http://localhost:16686
 - 可選 metrics：`docker compose up -d prometheus grafana` — Prometheus http://localhost:9090，Grafana http://localhost:3000（`admin` / `admin`）
 
 ```bash

@@ -1,6 +1,6 @@
-import type { Prisma, PrismaClient } from '@prisma/client';
 import { slicePage } from '@ysk/application';
 import type { AuditAction } from '@ysk/contracts';
+import type { Prisma, PrismaClient } from '../../../generated/prisma/client';
 import type { IAuditLogger } from '../domain/audit-logger';
 
 export const createPrismaAuditLogger = (prisma: PrismaClient): IAuditLogger => ({

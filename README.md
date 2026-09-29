@@ -17,7 +17,7 @@ A pnpm + Turborepo platform so a new product does not reinvent enums, DTOs, erro
 
 Product domains stay out of this repo. This tree is the living `saas` flavor.
 
-Requires **Node 24** (Active LTS) and **pnpm 12**.
+Requires **Node 24** (Active LTS) and **pnpm 12**. Agent law: [AGENTS.md](./AGENTS.md). Product plan: [docs/product-plan.md](./docs/product-plan.md).
 
 ## Quick start
 
@@ -66,8 +66,12 @@ The GitHub owner/org should match `@ysk`. This workspace keeps `main` on TypeScr
 
 ```bash
 pnpm ysk add module booking --prisma --web
+pnpm db:migrate
+pnpm gen:openapi
 pnpm --filter @ysk/create-app start my-product --db mysql
 ```
+
+`ysk add module` writes a complete slice (contract, DTO, repos, Express + Fastify, SDK, web page). See [docs/recipes/add-module.md](./docs/recipes/add-module.md). `create-ysk-app` copies this living saas tree; `--preset thin` is later (product-plan wave 2).
 
 `ysk add <capability>` merges Prisma fragments, `.env.example` keys, and `apps/api` workspace deps when missing. A second run is a no-op. `ysk add module` also puts the contract on `appContract` and registers routes when `app.ts` / `composition.ts` exist. Then `pnpm db:migrate`.
 

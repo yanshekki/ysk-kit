@@ -1,0 +1,9 @@
+import type { Create{{pascal}}Command, PageQuery } from '@ysk/contracts';
+import type { I{{pascal}}Repository } from '../domain/{{kebab}}-repository';
+
+export const create{{pascal}}Service = (repo: I{{pascal}}Repository) => ({
+  list: (authorId: string, query: PageQuery) => repo.listForAuthor(authorId, query),
+  create: (authorId: string, input: Create{{pascal}}Command) => repo.create(authorId, input),
+});
+
+export type {{pascal}}Service = ReturnType<typeof create{{pascal}}Service>;

@@ -1,0 +1,20 @@
+import { describe, expect, it } from 'vitest';
+import { create{{pascal}}Service } from '../application/{{kebab}}-service';
+import { createMemory{{pascal}}Repository } from './memory-{{kebab}}-repository';
+
+describe('{{kebab}} service', () => {
+  it('creates and lists rows for the author', async () => {
+    const service = create{{pascal}}Service(createMemory{{pascal}}Repository());
+    const created = await service.create('11111111-1111-1111-1111-111111111111', {
+      title: 'Hello',
+      body: 'World',
+    });
+    expect(created.title).toBe('Hello');
+    expect(created.body).toBe('World');
+    const page = await service.list('11111111-1111-1111-1111-111111111111', { limit: 20 });
+    expect(page.items).toHaveLength(1);
+    expect(page.items[0]?.id).toBe(created.id);
+    const other = await service.list('22222222-2222-2222-2222-222222222222', { limit: 20 });
+    expect(other.items).toHaveLength(0);
+  });
+});

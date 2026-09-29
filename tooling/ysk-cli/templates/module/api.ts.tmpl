@@ -1,0 +1,32 @@
+import { initContract } from '@ts-rest/core';
+import { z } from 'zod';
+import {
+  Create{{pascal}}CommandSchema,
+  Paginated{{pascal}}Schema,
+  {{pascal}}DtoSchema,
+} from '../dto/{{kebab}}';
+import { PageQuerySchema } from '../dto/user';
+import { ErrSchema, OkSchema } from '../errors/envelope';
+
+const c = initContract();
+
+export const {{camel}}Contract = c.router({
+  list: {
+    method: 'GET',
+    path: '/v1/{{kebab}}',
+    query: PageQuerySchema,
+    responses: { 200: OkSchema(Paginated{{pascal}}Schema), 401: ErrSchema },
+    summary: 'List my {{kebab}}',
+  },
+  create: {
+    method: 'POST',
+    path: '/v1/{{kebab}}',
+    body: Create{{pascal}}CommandSchema,
+    responses: {
+      201: OkSchema({{pascal}}DtoSchema),
+      401: ErrSchema,
+      422: ErrSchema,
+    },
+    summary: 'Create a {{kebab}} row',
+  },
+});

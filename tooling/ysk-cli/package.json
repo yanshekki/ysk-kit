@@ -23,7 +23,8 @@
     "vitest": "^5.0.2"
   },
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",

@@ -1,0 +1,6 @@
+---
+description: YSK Kit agent law — contracts, envelope, layers
+alwaysApply: true
+---
+
+Follow `AGENTS.md` at the repo root before writing code. New HTTP features start with `pnpm ysk add module <kebab-name> --prisma --web`. Do not invent TypeScript enums, import Prisma from clients, or return JSON outside `{ ok, data }` / `{ ok, error }`. Run `pnpm layers && pnpm typecheck && pnpm test` before finishing.

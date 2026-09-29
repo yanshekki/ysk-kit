@@ -1,0 +1,36 @@
+import { slicePage } from '@ysk/application';
+import type { {{pascal}}Dto } from '@ysk/contracts';
+import type { I{{pascal}}Repository, {{pascal}}Record } from '../domain/{{kebab}}-repository';
+
+const toDto = (row: {{pascal}}Record): {{pascal}}Dto => ({
+  id: row.id,
+  title: row.title,
+  body: row.body,
+  authorId: row.authorId,
+  createdAt: row.createdAt.toISOString(),
+  updatedAt: row.updatedAt.toISOString(),
+});
+
+export const createMemory{{pascal}}Repository = (): I{{pascal}}Repository => {
+  const rows: {{pascal}}Record[] = [];
+  return {
+    async create(authorId, input) {
+      const now = new Date();
+      const row: {{pascal}}Record = {
+        id: crypto.randomUUID(),
+        title: input.title,
+        body: input.body,
+        authorId,
+        createdAt: now,
+        updatedAt: now,
+      };
+      rows.unshift(row);
+      return toDto(row);
+    },
+    async listForAuthor(authorId, query) {
+      const mine = rows.filter((row) => row.authorId === authorId);
+      const page = slicePage(mine, query.limit);
+      return { items: page.items.map(toDto), nextCursor: page.nextCursor };
+    },
+  };
+};

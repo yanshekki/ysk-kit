@@ -1,0 +1,21 @@
+import { z } from 'zod';
+import { PaginatedSchema } from './user';
+
+export const {{pascal}}DtoSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string().min(1).max(200),
+  body: z.string().max(8000),
+  authorId: z.string().uuid(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+});
+export type {{pascal}}Dto = z.infer<typeof {{pascal}}DtoSchema>;
+
+export const Paginated{{pascal}}Schema = PaginatedSchema({{pascal}}DtoSchema);
+export type Paginated{{pascal}} = z.infer<typeof Paginated{{pascal}}Schema>;
+
+export const Create{{pascal}}CommandSchema = z.object({
+  title: z.string().min(1).max(200),
+  body: z.string().max(8000).default(''),
+});
+export type Create{{pascal}}Command = z.infer<typeof Create{{pascal}}CommandSchema>;

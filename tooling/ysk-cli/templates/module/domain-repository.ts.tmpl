@@ -1,0 +1,15 @@
+import type { Create{{pascal}}Command, PageQuery, Paginated{{pascal}}, {{pascal}}Dto } from '@ysk/contracts';
+
+export type {{pascal}}Record = {
+  id: string;
+  title: string;
+  body: string;
+  authorId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export interface I{{pascal}}Repository {
+  create(authorId: string, input: Create{{pascal}}Command): Promise<{{pascal}}Dto>;
+  listForAuthor(authorId: string, query: PageQuery): Promise<Paginated{{pascal}}>;
+}

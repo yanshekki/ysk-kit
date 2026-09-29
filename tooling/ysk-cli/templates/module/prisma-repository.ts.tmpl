@@ -1,0 +1,38 @@
+import { slicePage } from '@ysk/application';
+import type { I{{pascal}}Repository } from '../domain/{{kebab}}-repository';
+import type { PrismaClient } from '../../../generated/prisma/client';
+
+const toDto = (row: {
+  id: string;
+  title: string;
+  body: string;
+  authorId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}) => ({
+  id: row.id,
+  title: row.title,
+  body: row.body,
+  authorId: row.authorId,
+  createdAt: row.createdAt.toISOString(),
+  updatedAt: row.updatedAt.toISOString(),
+});
+
+export const createPrisma{{pascal}}Repository = (prisma: PrismaClient): I{{pascal}}Repository => ({
+  async create(authorId, input) {
+    const row = await prisma.{{camel}}.create({
+      data: { title: input.title, body: input.body, authorId },
+    });
+    return toDto(row);
+  },
+  async listForAuthor(authorId, query) {
+    const rows = await prisma.{{camel}}.findMany({
+      where: { authorId },
+      orderBy: { createdAt: 'desc' },
+      take: query.limit + 1,
+      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+    });
+    const page = slicePage(rows, query.limit);
+    return { items: page.items.map(toDto), nextCursor: page.nextCursor };
+  },
+});

@@ -1,0 +1,32 @@
+import { type HttpHandler, mountContract } from '@ysk/api-express';
+import { appContract, type Create{{pascal}}Command, type PageQuery } from '@ysk/contracts';
+import { AppError } from '@ysk/domain-kernel';
+import type { Express } from 'express';
+import type { {{pascal}}Service } from '../application/{{kebab}}-service';
+
+export const {{camel}}Handlers = (service: {{pascal}}Service): Record<string, HttpHandler> => ({
+  list: {
+    auth: 'required',
+    handle: async ({ query, auth }) => {
+      if (!auth) throw new AppError('UNAUTHENTICATED');
+      return {
+        status: 200,
+        body: { ok: true, data: await service.list(auth.sub, query as PageQuery) },
+      };
+    },
+  },
+  create: {
+    auth: 'required',
+    handle: async ({ body, auth }) => {
+      if (!auth) throw new AppError('UNAUTHENTICATED');
+      return {
+        status: 201,
+        body: { ok: true, data: await service.create(auth.sub, body as Create{{pascal}}Command) },
+      };
+    },
+  },
+});
+
+export const register{{pascal}}Routes = (app: Express, service: {{pascal}}Service): void => {
+  mountContract(app, appContract.{{camel}}, {{camel}}Handlers(service));
+};

@@ -1,0 +1,24 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { Create{{pascal}}Command } from '@ysk/contracts';
+import type { YskClient } from '@ysk/sdk';
+
+export const {{camel}}QueryKey = ['{{kebab}}'] as const;
+
+export function create{{pascal}}Hooks(client: YskClient) {
+  return {
+    useList: (query?: { cursor?: string; limit?: number }) =>
+      useQuery({
+        queryKey: [...{{camel}}QueryKey, query],
+        queryFn: () => client.{{camel}}.list(query),
+      }),
+    useCreate: () => {
+      const qc = useQueryClient();
+      return useMutation({
+        mutationFn: (body: Create{{pascal}}Command) => client.{{camel}}.create(body),
+        onSuccess: () => {
+          void qc.invalidateQueries({ queryKey: {{camel}}QueryKey });
+        },
+      });
+    },
+  };
+}

@@ -6,7 +6,7 @@ Language: [English](README.md) · 中文
 
 呢個 repo 係 living `saas` flavor。業務 domain 唔寫入 kit。
 
-需要 **Node 24**（Active LTS）同 **pnpm 12**。
+需要 **Node 24**（Active LTS）同 **pnpm 12**。Agent 法律：[AGENTS.md](./AGENTS.md)。產品計劃：[docs/product-plan.md](./docs/product-plan.md)。
 
 ```bash
 pnpm install
@@ -26,8 +26,12 @@ pnpm dev
 
 ```bash
 pnpm ysk add module booking --prisma --web
+pnpm db:migrate
+pnpm gen:openapi
 pnpm --filter @ysk/create-app start my-product --db mysql
 ```
+
+`ysk add module` 會寫完整切片（合約、DTO、repo、Express + Fastify、SDK、web 頁）。見 [docs/recipes/add-module.md](./docs/recipes/add-module.md)。`create-ysk-app` 而家複製 living saas；`--preset thin` 係計劃書波 2。
 
 `ysk add` 會 idempotent merge Prisma / `.env.example` / API workspace deps。PM2：`pnpm --filter @ysk/api build` 之後 `pm2 start ecosystem.config.cjs`。
 

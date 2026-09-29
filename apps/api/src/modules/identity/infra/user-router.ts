@@ -1,21 +1,38 @@
-import { Router } from 'express';
-import type { createUserService } from '../application/user-service';
+import { type HttpHandler, mountContract } from '@ysk/api-express';
+import { appContract, type PageQuery } from '@ysk/contracts';
+import { AppError } from '@ysk/domain-kernel';
+import type { Express } from 'express';
+import type { UserService } from '../application/user-service';
 
-export const createUserRouter = (service: ReturnType<typeof createUserService>) => {
-  const router = Router();
-  router.get('/v1/users', async (_req, res, next) => {
-    try {
-      res.json({ ok: true, data: await service.list() });
-    } catch (error) {
-      next(error);
-    }
-  });
-  router.post('/v1/users', async (req, res, next) => {
-    try {
-      res.status(201).json({ ok: true, data: await service.create(req.body) });
-    } catch (error) {
-      next(error);
-    }
-  });
-  return router;
+export const userHandlers = (service: UserService): Record<string, HttpHandler> => ({
+  list: {
+    auth: 'required',
+    handle: async ({ query }) => ({
+      status: 200,
+      body: { ok: true, data: await service.list(query as PageQuery) },
+    }),
+  },
+  create: {
+    auth: 'required',
+    permission: 'user.create',
+    handle: async ({ body, auth }) => ({
+      status: 201,
+      body: { ok: true, data: await service.create(body, auth?.sub) },
+    }),
+  },
+  suspend: {
+    auth: 'required',
+    permission: 'user.suspend',
+    handle: async ({ params, auth }) => {
+      if (!auth) throw new AppError('UNAUTHENTICATED');
+      return {
+        status: 200,
+        body: { ok: true, data: await service.suspend(auth.sub, (params as { id: string }).id) },
+      };
+    },
+  },
+});
+
+export const registerUserRoutes = (app: Express, service: UserService): void => {
+  mountContract(app, appContract.users, userHandlers(service));
 };

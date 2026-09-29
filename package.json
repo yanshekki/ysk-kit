@@ -14,13 +14,25 @@
     "build": "turbo build",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
-    "lint": "turbo lint",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "layers": "depcruise apps packages --config .dependency-cruiser.cjs",
     "db:generate": "pnpm --filter @ysk/api prisma:generate",
     "db:migrate": "pnpm --filter @ysk/api prisma:migrate",
     "db:studio": "pnpm --filter @ysk/api prisma:studio",
-    "ysk": "pnpm --filter @ysk/cli start"
+    "worker": "pnpm --filter @ysk/api worker",
+    "ysk": "pnpm --filter @ysk/cli start",
+    "gen:openapi": "pnpm --filter @ysk/cli start generate openapi",
+    "gen:module": "pnpm --filter @ysk/cli start add module",
+    "pm2:start": "pm2 start ecosystem.config.cjs",
+    "changeset": "changeset",
+    "build:packages": "pnpm -r --filter \"./packages/**\" --filter \"./tooling/**\" --if-present build"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
+    "@changesets/cli": "^2.29.4",
+    "@ysk/biome": "workspace:*",
+    "dependency-cruiser": "^16.10.2",
     "turbo": "^2.5.4",
     "typescript": "^5.8.2"
   }

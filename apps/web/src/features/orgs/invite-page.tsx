@@ -1,0 +1,74 @@
+import { useNavigate } from '@tanstack/react-router';
+import { AcceptInviteCommandSchema } from '@ysk/contracts';
+import { Button, Input } from '@ysk/ui';
+import { type FormEvent, useEffect, useState } from 'react';
+import { userHooks } from '../../lib/client';
+
+export function InvitePage() {
+  const accept = userHooks.useAcceptInvite();
+  const navigate = useNavigate();
+  const [token, setToken] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [formError, setFormError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = params.get('token');
+    if (fromQuery) {
+      setToken(fromQuery);
+      params.delete('token');
+      const next = `${window.location.pathname}${params.toString() ? `?${params}` : ''}`;
+      window.history.replaceState({}, '', next);
+    }
+  }, []);
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    const parsed = AcceptInviteCommandSchema.safeParse({
+      token,
+      ...(password.length > 0 ? { password } : {}),
+      ...(displayName.length > 0 ? { displayName } : {}),
+    });
+    if (!parsed.success) {
+      setFormError(parsed.error.issues[0]?.message ?? 'Invalid');
+      return;
+    }
+    setFormError(null);
+    accept.mutate(parsed.data, {
+      onSuccess: () => {
+        void navigate({ to: '/login' });
+      },
+      onError: (error) => setFormError(error.message),
+    });
+  };
+
+  return (
+    <section className="mx-auto max-w-sm space-y-4">
+      <h1 className="text-2xl font-semibold">Accept invite</h1>
+      <form onSubmit={onSubmit} className="grid gap-3">
+        <label className="grid gap-1 text-sm" htmlFor="invite-password">
+          Password (required for new accounts)
+          <Input
+            id="invite-password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <label className="grid gap-1 text-sm" htmlFor="invite-name">
+          Display name
+          <Input
+            id="invite-name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+        </label>
+        {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+        <Button type="submit" disabled={accept.isPending || token.length === 0}>
+          Accept
+        </Button>
+      </form>
+    </section>
+  );
+}

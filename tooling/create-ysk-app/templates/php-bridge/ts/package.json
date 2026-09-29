@@ -1,0 +1,9 @@
+{
+  "name": "__NAME__-ts-client",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/client.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit --esModuleInterop --module nodenext --target es2022 src/client.ts"
+  }
+}

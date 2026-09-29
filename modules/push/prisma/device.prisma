@@ -1,0 +1,16 @@
+// Fragment already applied in apps/api/prisma/schema.prisma (Device).
+// ysk add push is idempotent for the saas flavor.
+
+model Device {
+  id        String   @id @default(uuid())
+  userId    String
+  platform  String
+  tokenHash String
+  token     String   @db.VarChar(512)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, tokenHash])
+  @@index([userId])
+}

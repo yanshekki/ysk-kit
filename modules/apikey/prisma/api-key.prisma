@@ -1,0 +1,18 @@
+// Fragment already applied in apps/api/prisma/schema.prisma (ApiKey).
+// ysk add apikey is idempotent for the saas flavor.
+
+model ApiKey {
+  id          String    @id @default(uuid())
+  userId      String
+  name        String
+  prefix      String    @unique
+  last4       String
+  tokenHash   String    @unique
+  permissions Json
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}

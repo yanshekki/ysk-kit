@@ -1,0 +1,13 @@
+// Fragment already applied in apps/api/prisma/schema.prisma (Subscription + Organization billing fields).
+
+model Subscription {
+  id               String       @id @default(uuid())
+  organizationId   String       @unique
+  planCode         String
+  status           String
+  currentPeriodEnd DateTime?
+  seatCount        Int          @default(1)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  organization     Organization @relation(fields: [organizationId], references: [id])
+}

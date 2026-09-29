@@ -1,17 +1,47 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { addCapability, CAPABILITIES } from './add-capability';
+import { addModule } from './add-module';
+import { generateOpenApi } from './generate-openapi';
 
-const [, , cmd, kind, name] = process.argv;
+const args = process.argv.slice(2);
+const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+const root = resolve(process.env.YSK_ROOT ?? kitRoot);
 
-if (cmd === 'add' && kind === 'module' && name) {
-  const root = join(process.cwd(), 'apps/api/src/modules', name);
-  mkdirSync(join(root, 'domain'), { recursive: true });
-  mkdirSync(join(root, 'application'), { recursive: true });
-  mkdirSync(join(root, 'infra'), { recursive: true });
-  const pascal = name[0]!.toUpperCase() + name.slice(1);
-  writeFileSync(join(root, 'application', `${name}-service.ts`), `export const create${pascal}Service = () => ({});\n`);
-  console.log(`created apps/api/src/modules/${name}`);
-  process.exit(0);
+const help = () => {
+  console.log(`usage:
+  pnpm ysk add module <name> [--prisma] [--web]
+  pnpm ysk add <${CAPABILITIES.join('|')}>
+  pnpm ysk generate openapi
+`);
+};
+
+try {
+  if (args[0] === 'add' && args[1] && args[1] !== 'module') {
+    const logs = addCapability(args[1], root);
+    for (const line of logs) console.log(line);
+    process.exit(0);
+  }
+
+  if (args[0] === 'add' && args[1] === 'module' && args[2]) {
+    const name = args[2];
+    const logs = addModule(root, name, {
+      prisma: args.includes('--prisma'),
+      web: args.includes('--web') || !args.includes('--no-web'),
+    });
+    for (const line of logs) console.log(line);
+    process.exit(0);
+  }
+
+  if (args[0] === 'generate' && args[1] === 'openapi') {
+    const out = generateOpenApi(root);
+    console.log(`wrote ${out}`);
+    process.exit(0);
+  }
+
+  help();
+  process.exit(args.length === 0 ? 0 : 1);
+} catch (error) {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
 }
-
-console.log('usage: pnpm ysk add module <name>');

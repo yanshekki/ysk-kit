@@ -1,0 +1,35 @@
+{
+  "name": "@ysk/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "start": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@ysk/config": "workspace:*",
+    "@ysk/contracts": "workspace:*",
+    "@ysk/sdk": "workspace:*",
+    "@ysk/ui": "workspace:*",
+    "@ysk/ui-logic": "workspace:*",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^6.1.1",
+    "electron": "^36.3.1",
+    "electron-vite": "6.0.0-beta.3",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.8.2",
+    "vite": "^8.3.1",
+    "vitest": "^3.0.8"
+  }
+}

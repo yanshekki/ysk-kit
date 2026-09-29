@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { USER_ROLE_VALUES } from '../enums/user-role';
-import { USER_STATUS_VALUES } from '../enums/user-status';
+import { HK } from '../constants/hk';
+import { UserRoleSchema } from '../enums/user-role';
+import { UserStatusSchema } from '../enums/user-status';
 
 export const PageQuerySchema = z.object({
   cursor: z.string().optional(),
@@ -9,21 +10,35 @@ export const PageQuerySchema = z.object({
 
 export type PageQuery = z.infer<typeof PageQuerySchema>;
 
+export const PaginatedSchema = <T extends z.ZodType>(item: T) =>
+  z.object({
+    items: z.array(item),
+    nextCursor: z.string().nullable(),
+  });
+
+export const HkPhoneSchema = z
+  .string()
+  .regex(new RegExp(`^\\${HK.phonePrefix}[0-9]{8}$`), 'Expected +852 and 8 digits');
+
 export const UserDtoSchema = z.object({
   id: z.string().uuid(),
-  email: z.string().email(),
+  email: z.string().email().nullable(),
+  phone: z.string().nullable(),
   displayName: z.string().min(1).max(80),
-  role: z.enum(USER_ROLE_VALUES),
-  status: z.enum(USER_STATUS_VALUES),
-  createdAt: z.string().datetime(),
+  role: UserRoleSchema,
+  status: UserStatusSchema,
+  createdAt: z.iso.datetime(),
 });
 
 export type UserDto = z.infer<typeof UserDtoSchema>;
 
+export const PaginatedUsersSchema = PaginatedSchema(UserDtoSchema);
+export type PaginatedUsers = z.infer<typeof PaginatedUsersSchema>;
+
 export const CreateUserCommandSchema = z.object({
   email: z.string().email(),
   displayName: z.string().min(1).max(80),
-  role: z.enum(USER_ROLE_VALUES).default('USER'),
+  role: UserRoleSchema.default('USER'),
 });
 
 export type CreateUserCommand = z.infer<typeof CreateUserCommandSchema>;

@@ -2,15 +2,42 @@
   "name": "@ysk/cli",
   "version": "0.1.0",
   "type": "module",
+  "bin": {
+    "ysk": "./src/index.ts"
+  },
   "scripts": {
     "start": "tsx src/index.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run --passWithNoTests",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@ysk/api-http": "workspace:*",
+    "@ysk/contracts": "workspace:*",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    "bin": {
+      "ysk": "./dist/index.js"
+    }
   }
 }

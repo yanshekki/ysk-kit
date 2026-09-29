@@ -1,0 +1,22 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
+  "extends": ["@ysk/biome/biome"],
+  "files": {
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/apps/desktop/out",
+      "!**/.turbo",
+      "!**/coverage",
+      "!**/.expo",
+      "!**/pnpm-lock.yaml",
+      "!**/routeTree.gen.ts"
+    ]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}

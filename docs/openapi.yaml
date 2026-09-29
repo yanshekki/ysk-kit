@@ -1,0 +1,793 @@
+openapi: "3.1.0"
+info:
+  title: "YSK Kit API"
+  version: "0.1.0"
+paths:
+  /health:
+    get:
+      operationId: "health.get"
+      responses:
+        200:
+          description: "OK"
+  /ready:
+    get:
+      operationId: "health.ready"
+      responses:
+        200:
+          description: "OK"
+  /v1/auth/register:
+    post:
+      operationId: "auth.register"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                password:
+                  type: "string"
+                  minLength: 8
+                  maxLength: 128
+                displayName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+              required:                 - "email"
+                - "password"
+                - "displayName"
+              additionalProperties: false
+  /v1/auth/login:
+    post:
+      operationId: "auth.login"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                password:
+                  type: "string"
+                  minLength: 1
+              required:                 - "email"
+                - "password"
+              additionalProperties: false
+  /v1/auth/otp/request:
+    post:
+      operationId: "auth.requestOtp"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                phone:
+                  type: "string"
+                  pattern: "^\\+852[0-9]{8}$"
+              required:                 - "phone"
+              additionalProperties: false
+  /v1/auth/otp/verify:
+    post:
+      operationId: "auth.verifyOtp"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                phone:
+                  type: "string"
+                  pattern: "^\\+852[0-9]{8}$"
+                code:
+                  type: "string"
+                  pattern: "^[0-9]{6}$"
+              required:                 - "phone"
+                - "code"
+              additionalProperties: false
+  /v1/auth/refresh:
+    post:
+      operationId: "auth.refresh"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                refreshToken:
+                  type: "string"
+                  minLength: 16
+              required:                 - "refreshToken"
+              additionalProperties: false
+  /v1/auth/logout:
+    post:
+      operationId: "auth.logout"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+{}
+              additionalProperties: false
+  /v1/me:
+    get:
+      operationId: "auth.me"
+      responses:
+        200:
+          description: "OK"
+  /v1/auth/forgot:
+    post:
+      operationId: "auth.forgot"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+              required:                 - "email"
+              additionalProperties: false
+  /v1/auth/reset:
+    post:
+      operationId: "auth.reset"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                token:
+                  type: "string"
+                  minLength: 16
+                password:
+                  type: "string"
+                  minLength: 8
+                  maxLength: 128
+              required:                 - "token"
+                - "password"
+              additionalProperties: false
+  /v1/auth/admin/otp/request:
+    post:
+      operationId: "auth.requestAdminOtp"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+              required:                 - "email"
+              additionalProperties: false
+  /v1/auth/admin/otp/verify:
+    post:
+      operationId: "auth.verifyAdminOtp"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                code:
+                  type: "string"
+                  pattern: "^[0-9]{6}$"
+              required:                 - "email"
+                - "code"
+              additionalProperties: false
+  /v1/users:
+    get:
+      operationId: "users.list"
+      responses:
+        200:
+          description: "OK"
+      parameters:
+        - in: "query"
+          name: "query"
+          schema:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            type: "object"
+            properties:
+              cursor:
+                type: "string"
+              limit:
+                default: 20
+                type: "integer"
+                minimum: 1
+                maximum: 50
+            required:               - "limit"
+            additionalProperties: false
+    post:
+      operationId: "users.create"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                displayName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+                role:
+                  default: "USER"
+                  type: "string"
+                  enum:                     - "USER"
+                    - "ADMIN"
+                    - "OPS"
+              required:                 - "email"
+                - "displayName"
+                - "role"
+              additionalProperties: false
+  /v1/users/{id}/suspend:
+    post:
+      operationId: "users.suspend"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+{}
+              additionalProperties: false
+  /v1/audit-logs:
+    get:
+      operationId: "audit.list"
+      responses:
+        200:
+          description: "OK"
+      parameters:
+        - in: "query"
+          name: "query"
+          schema:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            type: "object"
+            properties:
+              cursor:
+                type: "string"
+              limit:
+                default: 20
+                type: "integer"
+                minimum: 1
+                maximum: 50
+            required:               - "limit"
+            additionalProperties: false
+  /v1/files/presign:
+    post:
+      operationId: "files.presign"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                mime:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 120
+                byteSize:
+                  type: "integer"
+                  exclusiveMinimum: 0
+                  maximum: 20971520
+                filename:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 180
+              required:                 - "mime"
+                - "byteSize"
+                - "filename"
+              additionalProperties: false
+  /v1/notifications:
+    get:
+      operationId: "notifications.list"
+      responses:
+        200:
+          description: "OK"
+      parameters:
+        - in: "query"
+          name: "query"
+          schema:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            type: "object"
+            properties:
+              cursor:
+                type: "string"
+              limit:
+                default: 20
+                type: "integer"
+                minimum: 1
+                maximum: 50
+            required:               - "limit"
+            additionalProperties: false
+  /v1/notifications/{id}/read:
+    post:
+      operationId: "notifications.markRead"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+{}
+              additionalProperties: false
+  /v1/llm/complete:
+    post:
+      operationId: "llm.complete"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                messages:
+                  minItems: 1
+                  maxItems: 50
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      role:
+                        type: "string"
+                        enum:                           - "system"
+                          - "user"
+                          - "assistant"
+                      content:
+                        type: "string"
+                        minLength: 1
+                        maxLength: 32000
+                    required:                       - "role"
+                      - "content"
+                    additionalProperties: false
+                temperature:
+                  type: "number"
+                  minimum: 0
+                  maximum: 2
+              required:                 - "messages"
+              additionalProperties: false
+  /v1/llm/models:
+    get:
+      operationId: "llm.models"
+      responses:
+        200:
+          description: "OK"
+  /v1/me/devices:
+    get:
+      operationId: "devices.list"
+      responses:
+        200:
+          description: "OK"
+    put:
+      operationId: "devices.register"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                token:
+                  type: "string"
+                  minLength: 8
+                  maxLength: 4096
+                platform:
+                  type: "string"
+                  enum:                     - "ios"
+                    - "android"
+              required:                 - "token"
+                - "platform"
+              additionalProperties: false
+  /v1/me/devices/{id}:
+    delete:
+      operationId: "devices.remove"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations:
+    post:
+      operationId: "organizations.create"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+              required:                 - "name"
+              additionalProperties: false
+    get:
+      operationId: "organizations.list"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations/invites/accept:
+    post:
+      operationId: "organizations.acceptInvite"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                token:
+                  type: "string"
+                  minLength: 16
+                password:
+                  type: "string"
+                  minLength: 8
+                  maxLength: 128
+                displayName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+              required:                 - "token"
+              additionalProperties: false
+  /v1/organizations/{organizationId}:
+    get:
+      operationId: "organizations.get"
+      responses:
+        200:
+          description: "OK"
+    patch:
+      operationId: "organizations.update"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+              required:                 - "name"
+              additionalProperties: false
+  /v1/organizations/{organizationId}/members:
+    get:
+      operationId: "organizations.members"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations/{organizationId}/invites:
+    post:
+      operationId: "organizations.invite"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  pattern: "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                role:
+                  type: "string"
+                  enum:                     - "ADMIN"
+                    - "MEMBER"
+              required:                 - "email"
+                - "role"
+              additionalProperties: false
+    get:
+      operationId: "organizations.invites"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations/{organizationId}/invites/{id}:
+    delete:
+      operationId: "organizations.revokeInvite"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations/{organizationId}/members/{userId}:
+    delete:
+      operationId: "organizations.removeMember"
+      responses:
+        200:
+          description: "OK"
+  /v1/organizations/{organizationId}/leave:
+    post:
+      operationId: "organizations.leave"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+{}
+              additionalProperties: false
+  /v1/me/api-keys:
+    get:
+      operationId: "apiKeys.list"
+      responses:
+        200:
+          description: "OK"
+    post:
+      operationId: "apiKeys.create"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 80
+                permissions:
+                  minItems: 1
+                  type: "array"
+                  items:
+                    type: "string"
+                    enum:                       - "user.create"
+                      - "user.suspend"
+                      - "audit.read"
+                      - "file.upload"
+                      - "llm.use"
+                      - "billing.checkout"
+              required:                 - "name"
+                - "permissions"
+              additionalProperties: false
+  /v1/me/api-keys/{id}:
+    delete:
+      operationId: "apiKeys.revoke"
+      responses:
+        200:
+          description: "OK"
+  /v1/billing/plans:
+    get:
+      operationId: "billing.plans"
+      responses:
+        200:
+          description: "OK"
+  /v1/billing/subscription:
+    get:
+      operationId: "billing.subscription"
+      responses:
+        200:
+          description: "OK"
+      parameters:
+        - in: "query"
+          name: "query"
+          schema:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            type: "object"
+            properties:
+              organizationId:
+                type: "string"
+                format: "uuid"
+                pattern: "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            required:               - "organizationId"
+            additionalProperties: false
+  /v1/billing/checkout:
+    post:
+      operationId: "billing.checkout"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                organizationId:
+                  type: "string"
+                  format: "uuid"
+                  pattern: "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                planCode:
+                  type: "string"
+                  enum:                     - "free"
+                    - "pro"
+                successUrl:
+                  type: "string"
+                  format: "uri"
+                cancelUrl:
+                  type: "string"
+                  format: "uri"
+                seatCount:
+                  default: 1
+                  type: "integer"
+                  minimum: 1
+                  maximum: 500
+              required:                 - "organizationId"
+                - "planCode"
+                - "successUrl"
+                - "cancelUrl"
+                - "seatCount"
+              additionalProperties: false
+  /v1/billing/cancel:
+    post:
+      operationId: "billing.cancel"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                organizationId:
+                  type: "string"
+                  format: "uuid"
+                  pattern: "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              required:                 - "organizationId"
+              additionalProperties: false
+  /v1/billing/invoices:
+    get:
+      operationId: "billing.invoices"
+      responses:
+        200:
+          description: "OK"
+      parameters:
+        - in: "query"
+          name: "query"
+          schema:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            type: "object"
+            properties:
+              organizationId:
+                type: "string"
+                format: "uuid"
+                pattern: "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            required:               - "organizationId"
+            additionalProperties: false
+  /v1/billing/portal:
+    post:
+      operationId: "billing.portal"
+      responses:
+        200:
+          description: "OK"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $schema: "https://json-schema.org/draft/2020-12/schema"
+              type: "object"
+              properties:
+                organizationId:
+                  type: "string"
+                  format: "uuid"
+                  pattern: "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                returnUrl:
+                  type: "string"
+                  format: "uri"
+              required:                 - "organizationId"
+                - "returnUrl"
+              additionalProperties: false

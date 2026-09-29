@@ -10,8 +10,7 @@ export const ApiErrorBodySchema = z.object({
 
 export type ApiErrorBody = z.infer<typeof ApiErrorBodySchema>;
 
-export const OkSchema = <T extends z.ZodTypeAny>(data: T) =>
-  z.object({ ok: z.literal(true), data });
+export const OkSchema = <T extends z.ZodType>(data: T) => z.object({ ok: z.literal(true), data });
 
 export const ErrSchema = z.object({
   ok: z.literal(false),
@@ -19,3 +18,4 @@ export const ErrSchema = z.object({
 });
 
 export type ErrEnvelope = z.infer<typeof ErrSchema>;
+export type OkEnvelope<T> = { ok: true; data: T };

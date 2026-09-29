@@ -6,7 +6,10 @@ coverage
 .env.local
 *.log
 .DS_Store
+*.tsbuildinfo
 apps/api/prisma/*.db
 apps/mobile/.expo
 apps/web/dist
 apps/admin/dist
+apps/desktop/out
+.data

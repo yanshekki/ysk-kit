@@ -2,17 +2,26 @@ export interface TokenStore {
   get(): Promise<string | null>;
   set(token: string): Promise<void>;
   clear(): Promise<void>;
+  getRefresh?(): Promise<string | null>;
+  setPair?(access: string, refresh: string): Promise<void>;
 }
 
 export const memoryTokenStore = (): TokenStore => {
-  let token: string | null = null;
+  let access: string | null = null;
+  let refresh: string | null = null;
   return {
-    get: async () => token,
+    get: async () => access,
     set: async (value) => {
-      token = value;
+      access = value;
+    },
+    getRefresh: async () => refresh,
+    setPair: async (nextAccess, nextRefresh) => {
+      access = nextAccess;
+      refresh = nextRefresh;
     },
     clear: async () => {
-      token = null;
+      access = null;
+      refresh = null;
     },
   };
 };

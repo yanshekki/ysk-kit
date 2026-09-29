@@ -11,6 +11,8 @@
     "test": "vitest run --passWithNoTests",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "seed": "tsx --env-file=../../.env src/infra/seed.ts",
     "worker": "tsx --env-file=../../.env src/worker.ts",
     "prisma:studio": "prisma studio",
     "postinstall": "prisma generate"

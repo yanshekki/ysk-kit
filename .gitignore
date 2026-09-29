@@ -11,6 +11,9 @@ apps/api/prisma/*.db
 apps/api/src/generated/
 apps/mobile/.expo
 apps/web/dist
+apps/web/test-results
+apps/web/playwright-report
+apps/web/blob-report
 apps/admin/dist
 apps/desktop/out
 .data

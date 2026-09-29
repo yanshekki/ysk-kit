@@ -1,4 +1,5 @@
 import { createRootRoute, createRoute, createRouter, Link, Outlet } from '@tanstack/react-router';
+import { AppShell, PageHeader } from '@ysk/ui';
 import { ForgotPage } from './features/auth/forgot-page';
 import { LoginPage } from './features/auth/login-page';
 import { RegisterPage } from './features/auth/register-page';
@@ -12,49 +13,49 @@ import { OrgsPage } from './features/orgs/orgs-page';
 import { UsersPage } from './features/users/users-page';
 import { userHooks } from './lib/client';
 
+const navClass = 'text-zinc-600 hover:text-zinc-900';
+
 function Shell() {
   const me = userHooks.useMe();
   const logout = userHooks.useLogout();
   userHooks.useNotificationsLive();
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <header className="border-b border-zinc-200 bg-white">
-        <nav className="mx-auto flex max-w-4xl items-center gap-4 px-4 py-3 text-sm">
-          <Link to="/" className="font-semibold">
-            YSK Kit
-          </Link>
-          <Link to="/users" className="text-zinc-600 hover:text-zinc-900">
+    <AppShell
+      brand={
+        <Link to="/" className="font-semibold">
+          YSK Kit
+        </Link>
+      }
+      nav={
+        <>
+          <Link to="/users" className={navClass}>
             Users
           </Link>
-          <Link to="/notifications" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/notifications" className={navClass}>
             Inbox
           </Link>
-          <Link to="/llm" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/llm" className={navClass}>
             LLM
           </Link>
-          <Link to="/orgs" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/orgs" className={navClass}>
             Orgs
           </Link>
-          <span className="ml-auto" />
-          {me.data ? (
-            <button
-              type="button"
-              className="text-zinc-600 hover:text-zinc-900"
-              onClick={() => logout.mutate()}
-            >
-              Logout
-            </button>
-          ) : (
-            <Link to="/login" className="text-zinc-600 hover:text-zinc-900">
-              Sign in
-            </Link>
-          )}
-        </nav>
-      </header>
-      <main className="mx-auto max-w-4xl px-4 py-8">
-        <Outlet />
-      </main>
-    </div>
+        </>
+      }
+      trailing={
+        me.data ? (
+          <button type="button" className={navClass} onClick={() => logout.mutate()}>
+            Logout
+          </button>
+        ) : (
+          <Link to="/login" className={navClass}>
+            Sign in
+          </Link>
+        )
+      }
+    >
+      <Outlet />
+    </AppShell>
   );
 }
 
@@ -64,10 +65,7 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: () => (
-    <section className="space-y-2">
-      <h1 className="text-2xl font-semibold">YSK Kit Web</h1>
-      <p className="text-zinc-600">Register or sign in, then open Users.</p>
-    </section>
+    <PageHeader title="Home" description="Sign in to manage users, inbox, and your organization." />
   ),
 });
 

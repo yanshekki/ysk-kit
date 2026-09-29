@@ -1,6 +1,6 @@
 # YSK Kit 產品計劃書（2026-09-29）
 
-狀態：已批核。波 0–1 喺 Phase 39 落地。波 2（薄開倉 + capability 複製）喺 Phase 40 落地。波 3–5 未做。
+狀態：已批核。波 0–1 喺 Phase 39 落地。波 2（薄開倉 + capability 複製）喺 Phase 40 落地。波 3（client shell + seed + Playwright）喺 Phase 41 落地。波 4–5 未做。
 範圍：重新審視 kit 目的、開發者點樣快速架構產品、專業化、以及 AI 開發點樣真正受惠。
 刻意排除呢一波：Hono、Drizzle、tRPC、Resend、K8s、Tax ID / metered billing、Electron installer、APNs。呢啲係可選 adapter，解決唔到而家最大嘅痛。
 
@@ -68,7 +68,7 @@ pnpm db:migrate && pnpm test && pnpm layers && pnpm dev
 - `pnpm layers` 綠（web 無 Prisma / Express）
 - OpenAPI 有呢條 path
 
-`create-ysk-app --preset thin` 同 `ysk add module` 已存在。Seed / Playwright E2E 仍然係波 3。
+`create-ysk-app --preset thin` 同 `ysk add module` 已存在。Seed / Playwright E2E 喺 Phase 41（波 3）落地。
 
 ---
 
@@ -283,6 +283,8 @@ pnpm typecheck && pnpm test && pnpm layers
 5. web 最少一個 Testing Library 測 login 表單：非法 email 用 `LoginPasswordCommandSchema` 出 error
 
 驗收：seed 後 admin 登入；Playwright 綠；UI 元件有 export 同 typecheck。
+
+落地：Phase 41。
 
 ### 波 4 — 版本傳遞同專業發佈（解決 P6）
 

@@ -15,7 +15,7 @@ pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor
 pnpm ysk add module <kebab-name> --prisma --web
 ```
 
-`--preset full` copies the living demo (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first).
+`--preset full` copies the living demo (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first). After migrate: `pnpm db:seed` then sign in as `admin@ysk.hk` / `ysk-admin-dev` (passwords live in `.env.example`). Local browser smoke (ports 3001/5173 free): `pnpm --filter @ysk/web exec playwright install chromium && pnpm --filter @ysk/api build && pnpm --filter @ysk/web build && pnpm e2e`.
 
 New HTTP feature in this repo or a generated product:
 

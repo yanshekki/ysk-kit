@@ -6,7 +6,7 @@
 
 ## Implemented in this repo
 
-Living saas kit through **Phase 40**. Capability history: [history.md](./history.md). Product plan: [product-plan.md](./product-plan.md). Agent law: [AGENTS.md](../AGENTS.md).
+Living saas kit through **Phase 41**. Capability history: [history.md](./history.md). Product plan: [product-plan.md](./product-plan.md). Agent law: [AGENTS.md](../AGENTS.md).
 
 Current stack: Node 24, pnpm 12.8.1, TypeScript 6.0.3, Vitest 5, Prisma 7.10 + MariaDB adapter, Express 5 + Fastify 5, Vite 8 web/admin, Electron 44 + electron-vite 5 + Vite 7 desktop, Expo 57, React 19.2.3.
 
@@ -14,7 +14,9 @@ Current stack: Node 24, pnpm 12.8.1, TypeScript 6.0.3, Vitest 5, Prisma 7.10 + M
 
 **Phase 40:** `create-ysk-app --preset thin|full` (default **thin**). Thin copies the living tree then strips llm / billing / organizations / devices. `ysk add llm|team|billing|push` copies source trees from `tooling/ysk-cli/templates/capabilities/` and patches Express, Fastify, composition, main, SDK, web-sdk, and the web router. Living kit stays fully-loaded. CI job `thin-smoke` scaffolds sqlite `--no-admin --no-mobile`.
 
-Later: product-plan waves 3–5 (client shell + seed, package upgrade path, agent fixtures).
+**Phase 41:** `@ysk/ui` AppShell / PageHeader / EmptyState / ErrorBanner / FormField / Spinner. Web and admin routers use AppShell. `pnpm db:seed` upserts `admin@ysk.hk` + `user@ysk.hk` (`apps/api/src/infra/seed.ts`; production needs `ALLOW_SEED=1`). Web login Testing Library. CI job `e2e` runs one Chromium Playwright smoke against living MySQL 8.4 (no Redis / Stripe / Twilio / FCM / Jaeger / Grafana).
+
+Later: product-plan waves 4–5 (package upgrade path, agent fixtures). Interactive create-ysk-app wizard stays Later.
 
 Envelope exceptions: LLM stream is SSE (`event: delta|done`); invoice PDF is HTTP 302; OpenAPI JSON is `GET /openapi.json`; Scalar HTML is `GET /docs`. All other routes stay `{ ok, data }` / `{ ok, error }`.
 
@@ -419,7 +421,7 @@ Living web/admin 用 TanStack Router（`router.tsx`）+ `features/*`。`features
 pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
 ```
 
-`--preset thin`（預設）複製 living kit 再剝 llm / billing / orgs / push。`--preset full` 係原樣 copyTree。Flavor 仍然決定 skip 邊個 app（`--no-admin` / `--no-mobile`）。`php-bridge` 同 `static-web3` 忽略 preset。互動 wizard 係 product-plan 波 3。
+`--preset thin`（預設）複製 living kit 再剝 llm / billing / orgs / push。`--preset full` 係原樣 copyTree。Flavor 仍然決定 skip 邊個 app（`--no-admin` / `--no-mobile`）。`php-bridge` 同 `static-web3` 忽略 preset。互動 wizard 仍然 Later（product-plan），唔喺波 3。
 
 ### 加能力
 
@@ -473,7 +475,7 @@ Kit 提供 **base schema**（User、Session、AuditLog），產品加自己嘅 m
 
 - Kit 表 **無前綴**（User、Session、AuditLog、…）。產品加自己嘅 model，唔改 kit 表結構。
 - 每個產品自己嘅 migration history。
-- Seed（`pnpm db:seed`）係 product-plan 波 3；而家要人手 register 或直接寫 DB。
+- Seed：`pnpm db:seed`（`apps/api/src/infra/seed.ts`）upsert `admin@ysk.hk`（ADMIN）同 `user@ysk.hk`（USER）。密碼只寫喺 `.env.example`。`NODE_ENV=production` 要 `ALLOW_SEED=1`。
 - multi-tenant：`organizationId` 係 team/billing 模組，唔寫死全部產品。
 
 ---
@@ -486,7 +488,9 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm db:migrate
+pnpm db:seed
 pnpm db:studio
+pnpm e2e
 pnpm gen:openapi
 pnpm gen:module booking
 pnpm changeset

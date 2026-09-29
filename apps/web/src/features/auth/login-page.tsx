@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import { LoginPasswordCommandSchema } from '@ysk/contracts';
-import { Button, Input } from '@ysk/ui';
+import { Button, ErrorBanner, FormField, Input, PageHeader } from '@ysk/ui';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 
@@ -28,10 +28,9 @@ export function LoginPage() {
 
   return (
     <section className="mx-auto max-w-sm space-y-4">
-      <h1 className="text-2xl font-semibold">Sign in</h1>
-      <form onSubmit={onSubmit} className="grid gap-3">
-        <label className="grid gap-1 text-sm" htmlFor="login-email">
-          Email
+      <PageHeader title="Sign in" />
+      <form onSubmit={onSubmit} className="grid gap-3" noValidate>
+        <FormField label="Email" htmlFor="login-email">
           <Input
             id="login-email"
             type="email"
@@ -39,9 +38,8 @@ export function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        <label className="grid gap-1 text-sm" htmlFor="login-password">
-          Password
+        </FormField>
+        <FormField label="Password" htmlFor="login-password">
           <Input
             id="login-password"
             type="password"
@@ -49,12 +47,12 @@ export function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
+        </FormField>
         <Button type="submit" disabled={login.isPending}>
           Sign in
         </Button>
       </form>
-      {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+      {formError ? <ErrorBanner message={formError} /> : null}
       <p className="text-sm text-zinc-600">
         No account?{' '}
         <Link to="/register" className="underline">

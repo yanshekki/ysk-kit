@@ -2,7 +2,12 @@ import { CreateUserCommandSchema } from '@ysk/contracts';
 import {
   Button,
   Can,
+  EmptyState,
+  ErrorBanner,
+  FormField,
   Input,
+  PageHeader,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +26,7 @@ export function UsersPage() {
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
+  const items = users.data?.items ?? [];
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -41,11 +47,10 @@ export function UsersPage() {
 
   return (
     <section className="space-y-6">
-      <h1 className="text-2xl font-semibold">Admin · Users</h1>
+      <PageHeader title="Users" description="Create and suspend accounts." />
       <Can role={me.data?.role ?? 'USER'} permission="user.create">
         <form onSubmit={onSubmit} className="flex flex-wrap items-end gap-3">
-          <label className="grid gap-1 text-sm" htmlFor="admin-user-email">
-            Email
+          <FormField label="Email" htmlFor="admin-user-email">
             <Input
               id="admin-user-email"
               value={email}
@@ -53,58 +58,63 @@ export function UsersPage() {
               type="email"
               required
             />
-          </label>
-          <label className="grid gap-1 text-sm" htmlFor="admin-user-name">
-            Display name
+          </FormField>
+          <FormField label="Display name" htmlFor="admin-user-name">
             <Input
               id="admin-user-name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               required
             />
-          </label>
+          </FormField>
           <Button type="submit" disabled={createUser.isPending}>
             Create
           </Button>
         </form>
       </Can>
-      {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
-      {users.error ? <p className="text-sm text-red-600">{users.error.message}</p> : null}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead />
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {(users.data?.items ?? []).map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>{user.status}</TableCell>
-              <TableCell>
-                <Can role={me.data?.role ?? 'USER'} permission="user.suspend">
-                  {user.status !== 'SUSPENDED' && user.id !== me.data?.id ? (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        if (window.confirm('Suspend this user?')) suspendUser.mutate(user.id);
-                      }}
-                    >
-                      Suspend
-                    </Button>
-                  ) : null}
-                </Can>
-              </TableCell>
+      {formError ? <ErrorBanner message={formError} /> : null}
+      {users.error ? <ErrorBanner message={users.error.message} /> : null}
+      {users.isPending ? <Spinner /> : null}
+      {!users.isPending && !users.error && items.length === 0 ? (
+        <EmptyState title="No users" description="Create a user to populate this table." />
+      ) : null}
+      {!users.isPending && items.length > 0 ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead />
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {items.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+                <TableCell>{user.status}</TableCell>
+                <TableCell>
+                  <Can role={me.data?.role ?? 'USER'} permission="user.suspend">
+                    {user.status !== 'SUSPENDED' && user.id !== me.data?.id ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          if (window.confirm('Suspend this user?')) suspendUser.mutate(user.id);
+                        }}
+                      >
+                        Suspend
+                      </Button>
+                    ) : null}
+                  </Can>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : null}
     </section>
   );
 }

@@ -36,7 +36,7 @@ try {
   console.log('  cp .env.example .env');
   if (dbService) console.log(`  docker compose up -d ${dbService}`);
   if (args.flavor !== 'php-bridge' && args.flavor !== 'static-web3') {
-    console.log('  pnpm db:generate && pnpm db:migrate');
+    console.log('  pnpm db:generate && pnpm db:migrate && pnpm db:seed');
     console.log('  pnpm ysk add module <kebab> --prisma --web');
     console.log('  pnpm gen:openapi');
   }

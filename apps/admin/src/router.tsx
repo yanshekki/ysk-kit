@@ -1,4 +1,5 @@
 import { createRootRoute, createRoute, createRouter, Link, Outlet } from '@tanstack/react-router';
+import { AppShell, PageHeader } from '@ysk/ui';
 import { ApiKeysPage } from './features/api-keys/api-keys-page';
 import { AuditPage } from './features/audit/audit-page';
 import { LoginPage } from './features/auth/login-page';
@@ -6,48 +7,48 @@ import { QueuesPage } from './features/queues/queues-page';
 import { UsersPage } from './features/users/users-page';
 import { userHooks } from './lib/client';
 
+const navClass = 'text-zinc-600 hover:text-zinc-900';
+
 function Shell() {
   const me = userHooks.useMe();
   const logout = userHooks.useLogout();
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <header className="border-b border-zinc-200 bg-white">
-        <nav className="mx-auto flex max-w-4xl items-center gap-4 px-4 py-3 text-sm">
-          <Link to="/" className="font-semibold">
-            YSK Admin
-          </Link>
-          <Link to="/users" className="text-zinc-600 hover:text-zinc-900">
+    <AppShell
+      brand={
+        <Link to="/" className="font-semibold">
+          YSK Admin
+        </Link>
+      }
+      nav={
+        <>
+          <Link to="/users" className={navClass}>
             Users
           </Link>
-          <Link to="/audit" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/audit" className={navClass}>
             Audit
           </Link>
-          <Link to="/api-keys" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/api-keys" className={navClass}>
             API keys
           </Link>
-          <Link to="/queues" className="text-zinc-600 hover:text-zinc-900">
+          <Link to="/queues" className={navClass}>
             Queues
           </Link>
-          <span className="ml-auto" />
-          {me.data ? (
-            <button
-              type="button"
-              className="text-zinc-600 hover:text-zinc-900"
-              onClick={() => logout.mutate()}
-            >
-              Logout
-            </button>
-          ) : (
-            <Link to="/login" className="text-zinc-600 hover:text-zinc-900">
-              Sign in
-            </Link>
-          )}
-        </nav>
-      </header>
-      <main className="mx-auto max-w-4xl px-4 py-8">
-        <Outlet />
-      </main>
-    </div>
+        </>
+      }
+      trailing={
+        me.data ? (
+          <button type="button" className={navClass} onClick={() => logout.mutate()}>
+            Logout
+          </button>
+        ) : (
+          <Link to="/login" className={navClass}>
+            Sign in
+          </Link>
+        )
+      }
+    >
+      <Outlet />
+    </AppShell>
   );
 }
 
@@ -57,10 +58,7 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: () => (
-    <section className="space-y-2">
-      <h1 className="text-2xl font-semibold">YSK Kit Admin</h1>
-      <p className="text-zinc-600">Sign in. Create is gated by canAct(role, user.create).</p>
-    </section>
+    <PageHeader title="Admin" description="Sign in to manage users, audit, API keys, and queues." />
   ),
 });
 

@@ -14,11 +14,12 @@ cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate
 pnpm db:migrate
+pnpm db:seed
 pnpm dev
 ```
 
 - API http://localhost:3001
-- Web http://localhost:5173
+- Web http://localhost:5173 — seed 之後用 `admin@ysk.hk` / `ysk-admin-dev` 登入
 - Admin http://localhost:5174
 - OpenAPI UI http://localhost:3001/docs
 - 可選 traces：`docker compose up -d jaeger`（`jaegertracing/jaeger:2.21.0`），設 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`，UI http://localhost:16686

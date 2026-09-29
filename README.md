@@ -27,11 +27,12 @@ cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate
 pnpm db:migrate
+pnpm db:seed
 pnpm dev
 ```
 
 - API http://localhost:3001 (`HTTP_ADAPTER=fastify` optional)
-- Web http://localhost:5173
+- Web http://localhost:5173 — after seed, sign in as `admin@ysk.hk` / `ysk-admin-dev`
 - Admin http://localhost:5174
 - OpenAPI UI http://localhost:3001/docs (`GET /openapi.json`)
 - Optional traces: `docker compose up -d jaeger` (`jaegertracing/jaeger:2.21.0`), set `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`, UI http://localhost:16686
@@ -48,7 +49,9 @@ pnpm typecheck
 pnpm test
 pnpm layers
 pnpm db:migrate
+pnpm db:seed
 pnpm db:studio
+pnpm e2e
 pnpm gen:openapi
 pnpm gen:module booking
 pnpm changeset

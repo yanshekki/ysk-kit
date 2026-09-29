@@ -368,6 +368,7 @@ pnpm install
 cp .env.example .env
 ${opts.db === 'sqlite' ? '' : `docker compose up -d ${opts.db === 'postgresql' ? 'postgres' : 'mysql'}\n`}pnpm db:generate
 pnpm db:migrate
+pnpm db:seed
 pnpm dev
 \`\`\`
 

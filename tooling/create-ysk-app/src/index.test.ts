@@ -125,6 +125,9 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, 'tooling/examples/package.json'))).toBe(true);
+    expect(existsSync(join(dest, 'tooling/create-ysk-app/package.json'))).toBe(true);
+    expect(existsSync(join(dest, 'examples'))).toBe(false);
   });
 
   it('scaffolds php-bridge without apps', () => {

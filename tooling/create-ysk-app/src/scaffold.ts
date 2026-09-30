@@ -4,7 +4,6 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
-  rmSync,
   statSync,
   writeFileSync,
 } from 'node:fs';
@@ -46,7 +45,6 @@ const SKIP = new Set([
   '.expo',
   '.DS_Store',
   'generated',
-  'examples',
   '.runs',
   '.env',
   '.env.local',
@@ -60,6 +58,23 @@ const SKIP = new Set([
 
 export const shouldSkipCopyEntry = (entry: string): boolean =>
   SKIP.has(entry) || (entry.startsWith('.env') && entry !== '.env.example');
+
+const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<string>): void => {
+  mkdirSync(to, { recursive: true });
+  for (const entry of readdirSync(from)) {
+    if (shouldSkipCopyEntry(entry)) continue;
+    if (from === kitRoot && entry === 'examples') continue;
+    const source = join(from, entry);
+    const dest = join(to, entry);
+    const stat = statSync(source);
+    if (stat.isDirectory()) {
+      if (from === join(kitRoot, 'apps') && skipApps.has(entry)) continue;
+      copyTree(source, dest, kitRoot, skipApps);
+    } else {
+      cpSync(source, dest);
+    }
+  }
+};
 
 const writeAgentStubs = (dest: string, kitRoot: string): void => {
   const templates = join(kitRoot, 'tooling/ysk-cli/templates/agent');
@@ -147,22 +162,6 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
       noMobile: argv.includes('--no-mobile'),
     },
   };
-};
-
-const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<string>): void => {
-  mkdirSync(to, { recursive: true });
-  for (const entry of readdirSync(from)) {
-    if (shouldSkipCopyEntry(entry)) continue;
-    const source = join(from, entry);
-    const dest = join(to, entry);
-    const stat = statSync(source);
-    if (stat.isDirectory()) {
-      if (from === join(kitRoot, 'apps') && skipApps.has(entry)) continue;
-      copyTree(source, dest, kitRoot, skipApps);
-    } else {
-      cpSync(source, dest);
-    }
-  }
 };
 
 const jaegerService = `  jaeger:
@@ -327,7 +326,6 @@ export const createYskApp = (opts: CreateAppOptions): string => {
   }
 
   copyTree(opts.kitRoot, dest, opts.kitRoot, skipApps);
-  rmSync(join(dest, 'tooling/create-ysk-app'), { recursive: true, force: true });
   writeAgentStubs(dest, opts.kitRoot);
 
   const pkgPath = join(dest, 'package.json');

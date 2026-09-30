@@ -8,6 +8,7 @@ YSK Kit ships two generators and a set of workspace scripts.
 |---|---|---|
 | `ysk` | Add a module, add a capability, generate OpenAPI, refresh guardrails, scan agent patches | [ysk.md](ysk.md) |
 | `create-ysk-app` | Scaffold a product from this kit | [create-ysk-app.md](create-ysk-app.md) |
+| `@ysk/examples` | Apply a worked product overlay onto a new destination | [examples.md](examples.md) |
 | Root `package.json` scripts | Dev, test, migrate, seed, lint | [workspace-scripts.md](workspace-scripts.md) |
 | `.env` / `.env.example` | Runtime configuration | [env.md](env.md) |
 

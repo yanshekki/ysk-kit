@@ -31,6 +31,8 @@ pnpm dev
 
 預設 preset 是 **thin**：複製本樹後剝走 llm、billing、organizations 與 push 裝置。`--preset full` 保留完整示範。還原能力：`pnpm ysk add llm|team|billing|push`。
 
+十個已完成的產品系統（欄位、規則、截圖）見 [examples/](examples/README.zh.md)。套用：`pnpm --filter @ysk/examples start apply <slug> --yes`。
+
 ## 運行本倉
 
 ```bash

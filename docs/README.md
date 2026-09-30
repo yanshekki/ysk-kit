@@ -7,6 +7,7 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | If you want to… | Read |
 |---|---|
 | Run the kit or scaffold a product in minutes | [Getting started](guides/getting-started.md) |
+| Follow a finished system (ten catalogue rows) | [Worked examples](../examples/README.md) |
 | Understand the platform | [Architecture](architecture.md), [root README](../README.md) |
 | Use the generators | [CLI](cli/index.md), [add a module](recipes/add-module.md), [add a capability](recipes/add-capability.md), [refresh guardrails](guides/upgrade.md) |
 | Learn a subsystem | [Hexagonal layers](guides/hexagonal.md), [envelope](guides/envelope.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [testing](guides/testing.md), [deploy](guides/deploy.md), [upgrade](guides/upgrade.md) |

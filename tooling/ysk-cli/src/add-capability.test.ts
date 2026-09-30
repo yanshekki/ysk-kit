@@ -66,6 +66,7 @@ describe('addCapability', () => {
     const schema = readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8');
     expect(schema).toContain('enum OrgRole');
     expect(schema).toContain('model Organization');
+    expect(schema).toContain('stripeCustomerId');
     expect(schema).toContain('memberships Membership[]');
     expect(readFileSync(join(root, 'apps/api/src/app.ts'), 'utf8')).toContain(
       'registerOrganizationRoutes',

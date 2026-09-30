@@ -35,4 +35,4 @@ App-level:
 | `pnpm --filter @ysk/mobile start` | Expo |
 | `pnpm --filter @ysk/web exec playwright install chromium` | Local Playwright browser |
 
-CI jobs in `.github/workflows/ci.yml`: `check` (lint, layers, typecheck, test), `thin-smoke` (sqlite saas without admin/mobile), `e2e` (MySQL 8.4 + Chromium).
+CI jobs in `.github/workflows/ci.yml`: `check` (lint, layers, typecheck, test), `thin-smoke` (sqlite saas without admin/mobile), `example-smoke` (matrix: apply each catalogue slug onto sqlite), `e2e` (MySQL 8.4 + Chromium).

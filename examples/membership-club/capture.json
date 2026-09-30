@@ -1,0 +1,29 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Orgs" } },
+    { "waitUrl": "/orgs" },
+    { "fill": { "label": "Name", "value": "Harbour Club" } },
+    { "submit": "Create" },
+    { "waitText": "Harbour Club" },
+    { "click": { "role": "link", "name": "Harbour Club" } },
+    { "waitUrl": "/orgs/" },
+    { "click": { "role": "link", "name": "Billing" } },
+    { "waitHeading": "Billing" },
+    { "waitText": "Pro" },
+    { "shot": "06-billing.png" },
+    { "goto": "/member-profile" },
+    { "waitText": "No member profiles" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Organization", "value": "Harbour Club" } },
+    { "fill": { "label": "Display name", "value": "" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Display name", "value": "Harbour Member" } },
+    { "submit": "Create" },
+    { "waitCell": "Harbour Member" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/member-profile", "shot": "05-docs.png" } }
+  ]
+}

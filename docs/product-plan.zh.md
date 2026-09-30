@@ -14,7 +14,7 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 | 客戶端 | Vite 8 web/admin（AppShell）；Expo 流動應用（組織列表／邀請）；Electron 桌面 |
 | 資料 | `pnpm db:seed` upsert `admin@ysk.hk` 與 `user@ysk.hk` |
 | 驗證 | `pnpm layers`、typecheck、Vitest（記憶體 port）、Testing Library 登入、一條 Playwright smoke |
-| 文件 | 雙語公開手冊、CLI 參考、agent skills、`AGENTS.md` |
+| 文件 | 雙語公開手冊、CLI 參考、agent skills、`AGENTS.md`。十個已完成實例在 `examples/` |
 | 護欄 | `.ysk-kit.json` 記錄 kit 版本、flavor、preset 與資料庫。`ysk upgrade` 從 kit 工作副本複製允許清單上的法律、skills 與編譯／lint 設定 |
 | Agent 掃描 | `ysk check agent` 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch`。Biome `noEnum` 為 error。CI 會跑此掃描 |
 

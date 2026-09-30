@@ -1,0 +1,12 @@
+model Course {
+  id          String       @id @default(uuid())
+  title       String
+  quota       Int
+  startsOn    String
+  authorId    String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  enrollments Enrollment[]
+
+  @@index([authorId])
+}

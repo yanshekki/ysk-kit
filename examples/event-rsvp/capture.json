@@ -1,0 +1,29 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Event" } },
+    { "waitUrl": "/event" },
+    { "waitText": "No events" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Title", "value": "Harbour Talk" } },
+    { "fill": { "label": "Venue", "value": "Central" } },
+    { "fill": { "label": "Starts at", "value": "$futureLocal" } },
+    { "fill": { "label": "Capacity", "value": "0" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Capacity", "value": "20" } },
+    { "submit": "Create" },
+    { "waitCell": "Harbour Talk" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/event", "shot": "05-docs.png" } },
+    { "goto": "/rsvp" },
+    { "waitText": "No RSVPs" },
+    { "fill": { "label": "Event", "value": "Harbour Talk" } },
+    { "fill": { "label": "Attendee name", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Email", "value": "chan@ysk.hk" } },
+    { "submit": "Create" },
+    { "waitCell": "Chan Tai Man" },
+    { "shot": "06-rsvp.png" }
+  ]
+}

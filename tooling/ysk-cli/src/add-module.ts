@@ -2,7 +2,12 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mergePrisma } from './merge-prisma';
-import { ensureMarkerBlock, insertAfterLastImport, insertBeforeMatch } from './patch-text';
+import {
+  ensureMarkerBlock,
+  expressRouteInsertBefore,
+  insertAfterLastImport,
+  insertBeforeMatch,
+} from './patch-text';
 
 const templateDir = join(dirname(fileURLToPath(import.meta.url)), '../templates/module');
 
@@ -197,7 +202,7 @@ export const addModule = (
         next,
         `module:${name}`,
         `  register${pascal}Routes(app, input.${camel}Service);`,
-        '  return app;',
+        expressRouteInsertBefore(next),
       );
       return next;
     },
@@ -388,6 +393,23 @@ export const addModule = (
           next = next.replace(
             '<span className="ml-auto" />',
             `<Link to="/${name}" className="text-zinc-600 hover:text-zinc-900">\n            ${pascal}\n          </Link>\n          <span className="ml-auto" />`,
+          );
+        }
+        if (
+          next.includes('<Link to="/notifications"') &&
+          !next.includes(`to="/${name}"`) &&
+          next.includes('className={navClass}')
+        ) {
+          next = next.replace(
+            `          <Link to="/notifications" className={navClass}>
+            Inbox
+          </Link>`,
+            `          <Link to="/notifications" className={navClass}>
+            Inbox
+          </Link>
+          <Link to="/${name}" className={navClass}>
+            ${pascal}
+          </Link>`,
           );
         }
         return next;

@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "data": {
+    "url": "https://billing.local/checkout?plan=pro&seats=1"
+  }
+}

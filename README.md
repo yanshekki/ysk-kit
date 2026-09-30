@@ -31,6 +31,8 @@ pnpm dev
 
 Default preset is **thin**: a copy of this tree with llm, billing, organizations, and push devices removed. `--preset full` keeps the living demonstration. Restore a capability with `pnpm ysk add llm|team|billing|push`.
 
+Ten finished product systems (fields, rules, screenshots) live in [examples/](examples/README.md). Apply one with `pnpm --filter @ysk/examples start apply <slug> --yes`.
+
 ## Run this repository
 
 ```bash

@@ -58,4 +58,14 @@ describe('mergePrisma', () => {
     expect(actions).toContain('skipped model Organization');
     expect(actions).toContain('skipped field User.memberships');
   });
+
+  it('strips @db native types when the dest provider is sqlite', () => {
+    const { schema } = mergePrisma(
+      `datasource db {\n  provider = "sqlite"\n}\n\nmodel User {\n  id String @id\n}\n`,
+      `model Device {\n  id String @id\n  token String @db.VarChar(512)\n}\n`,
+    );
+    expect(schema).toContain('model Device');
+    expect(schema).toContain('token String');
+    expect(schema).not.toContain('@db.');
+  });
 });

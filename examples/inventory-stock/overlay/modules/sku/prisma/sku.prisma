@@ -1,0 +1,13 @@
+model Sku {
+  id         String      @id @default(uuid())
+  code       String
+  name       String
+  qtyOnHand  Int
+  authorId   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  stockMoves StockMove[]
+
+  @@unique([authorId, code])
+  @@index([authorId])
+}

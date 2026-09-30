@@ -1,0 +1,15 @@
+{
+  "slug": "inventory-stock",
+  "title": "Stock in / out",
+  "titleZh": "進銷存",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [
+    { "name": "sku", "prisma": true, "web": true },
+    { "name": "stock-move", "prisma": true, "web": true }
+  ]
+}

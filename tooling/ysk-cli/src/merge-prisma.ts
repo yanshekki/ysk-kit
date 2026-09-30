@@ -105,5 +105,9 @@ export const mergePrisma = (
     actions.push(`added model ${item.name}`);
   }
 
+  if (/provider\s*=\s*"sqlite"/.test(next)) {
+    next = next.replace(/\s+@db\.[A-Za-z0-9(),]+/g, '');
+  }
+
   return { schema: next, actions };
 };

@@ -46,6 +46,10 @@ const SKIP = new Set([
   '.expo',
   '.DS_Store',
   'generated',
+  'examples',
+  '.runs',
+  '.env',
+  '.env.local',
 ]);
 
 const hasOpt = (argv: string[], name: string): boolean =>

@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    followUpService: createFollowUpService(createMemoryFollowUpRepository()),\n    contactService: createContactService(createMemoryContactRepository()),",
+    "replace": "    ...(() => {\n      const contactRepo = createMemoryContactRepository();\n      return {\n        contactService: createContactService(contactRepo),\n        followUpService: createFollowUpService(createMemoryFollowUpRepository(contactRepo)),\n      };\n    })(),"
+  }
+]

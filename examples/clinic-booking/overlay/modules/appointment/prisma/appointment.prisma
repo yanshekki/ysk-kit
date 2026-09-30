@@ -1,0 +1,13 @@
+model Appointment {
+  id          String   @id @default(uuid())
+  patientName String
+  phone       String
+  startsAt    DateTime
+  durationMin Int
+  status      String
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([authorId, startsAt])
+}

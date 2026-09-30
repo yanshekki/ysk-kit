@@ -234,6 +234,10 @@ describe('create-ysk-app', () => {
       'PrismaBetterSqlite3',
     );
     expect(readFileSync(join(dest, 'apps/api/prisma/schema.prisma'), 'utf8')).not.toContain('@db.');
+    const ignore = readFileSync(join(dest, '.gitignore'), 'utf8');
+    expect(ignore).toMatch(/^\*\.db$/m);
+    expect(ignore).toContain('.env');
+    expect(ignore).toContain('.runs/');
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);
@@ -304,12 +308,18 @@ describe('create-ysk-app', () => {
     );
 
     expect(yskAdd('push', dest)).toContain('ysk add push: applied');
+    expect(readFileSync(join(dest, 'apps/api/src/create-memory-input.ts'), 'utf8')).toMatch(
+      /return \{ input, otpSink, mail, jobs, realtime, push/,
+    );
     expect(readFileSync(join(dest, 'apps/api/src/app.ts'), 'utf8')).toContain(
       'registerDeviceRoutes',
     );
     expect(readFileSync(join(dest, 'packages/sdk/src/index.ts'), 'utf8')).toContain(
       'devices: devicesResource',
     );
+    const afterPush = readFileSync(join(dest, 'apps/api/prisma/schema.prisma'), 'utf8');
+    expect(afterPush).toContain('model Device');
+    expect(afterPush).not.toContain('@db.');
   });
 
   it('keeps Expo org screens on full + mobile', () => {
@@ -347,7 +357,9 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(false);
     const app = readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8');
     expect(app).not.toContain("'orgs'");
+    expect(app).not.toContain("'invite'");
     expect(app).not.toContain('OrgsScreen');
+    expect(app).not.toContain('InviteScreen');
     expect(
       readFileSync(join(dest, 'apps/mobile/src/screens/home-screen.tsx'), 'utf8'),
     ).not.toContain('Organizations');

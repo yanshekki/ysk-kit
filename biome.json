@@ -13,7 +13,8 @@
       "!**/pnpm-lock.yaml",
       "!**/routeTree.gen.ts",
       "!**/apps/api/src/generated",
-      "!**/tooling/ysk-cli/fixtures"
+      "!**/tooling/ysk-cli/fixtures",
+      "!**/examples/.runs"
     ]
   },
   "vcs": {

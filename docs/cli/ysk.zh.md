@@ -36,7 +36,7 @@ pnpm ysk check agent
 | `packages/sdk/src/resources/<name>.ts` | `client.<name>.list/create` |
 | `packages/web-sdk/src/<name>-hooks.ts` | `useList` / `useCreate` |
 
-檔案存在時，命令亦會修補 `appContract`、`apps/api/src/app.ts`、`app-fastify.ts`、`composition.ts`、`main.ts` 與 `create-memory-input.ts`。同一名稱再跑一次，對已有檔案是空操作。
+檔案存在時，命令亦會修補 `appContract`、`apps/api/src/app.ts`、`app-fastify.ts`、`composition.ts`、`main.ts` 與 `create-memory-input.ts`。Express 路由掛在 `errorHandler` 之前。同一名稱再跑一次，對已有檔案是空操作。
 
 產生之後：若需要更多欄位就改 Prisma model，規則放在 `application/`，然後：
 

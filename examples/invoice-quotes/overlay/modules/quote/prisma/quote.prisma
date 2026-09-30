@@ -1,0 +1,11 @@
+model Quote {
+  id         String   @id @default(uuid())
+  clientName String
+  amountHkd  Int
+  status     String
+  authorId   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([authorId])
+}

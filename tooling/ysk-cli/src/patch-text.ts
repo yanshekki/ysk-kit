@@ -31,6 +31,13 @@ export const insertAfterLastImport = (source: string, statement: string): string
   return lines.join('\n');
 };
 
+export const EXPRESS_ERROR_HANDLER = '  app.use(errorHandler);';
+export const EXPRESS_RETURN_APP = '  return app;';
+
+/** Express only maps `next(error)` for routers registered before `errorHandler`. */
+export const expressRouteInsertBefore = (source: string): string =>
+  source.includes(EXPRESS_ERROR_HANDLER) ? EXPRESS_ERROR_HANDLER : EXPRESS_RETURN_APP;
+
 export const ensureMarkerBlock = (
   source: string,
   name: string,

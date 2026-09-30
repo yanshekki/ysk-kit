@@ -1,0 +1,13 @@
+model Ticket {
+  id             String   @id @default(uuid())
+  title          String
+  body           String   @default("")
+  organizationId String
+  status         String
+  authorId       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([authorId])
+}

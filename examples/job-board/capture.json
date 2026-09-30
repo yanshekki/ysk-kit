@@ -1,0 +1,31 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Job" } },
+    { "waitUrl": "/job" },
+    { "waitText": "No jobs" },
+    { "shot": "02-empty.png" },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Title", "value": "React engineer" } },
+    { "fill": { "label": "Department", "value": "Product" } },
+    { "submit": "Create" },
+    { "waitCell": "React engineer" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/job", "shot": "05-docs.png" } },
+    { "goto": "/job" },
+    { "waitCell": "React engineer" },
+    { "click": { "role": "button", "name": "Publish" } },
+    { "waitCell": "Published" },
+    { "goto": "/application" },
+    { "waitText": "No applications" },
+    { "fill": { "label": "Job", "value": "React engineer" } },
+    { "fill": { "label": "Applicant name", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Email", "value": "chan@ysk.hk" } },
+    { "fill": { "label": "Cover", "value": "I use YSK Kit" } },
+    { "submit": "Create" },
+    { "waitCell": "Chan Tai Man" },
+    { "shot": "06-application.png" }
+  ]
+}

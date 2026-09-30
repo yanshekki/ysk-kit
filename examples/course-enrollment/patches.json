@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    enrollmentService: createEnrollmentService(createMemoryEnrollmentRepository()),\n    courseService: createCourseService(createMemoryCourseRepository()),",
+    "replace": "    ...(() => {\n      const courseRepo = createMemoryCourseRepository();\n      return {\n        courseService: createCourseService(courseRepo),\n        enrollmentService: createEnrollmentService(createMemoryEnrollmentRepository(courseRepo)),\n      };\n    })(),"
+  }
+]

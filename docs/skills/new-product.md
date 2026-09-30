@@ -20,3 +20,5 @@ pnpm --filter @ysk/create-app start <name> --preset thin --db mysql --flavor saa
 7. Sign in as `admin@ysk.hk` / `ysk-admin-dev`.
 
 Do not invent a parallel monorepo layout. Do not copy this kit by hand. `php-bridge` and `static-web3` skip migrate/seed; follow the generated README instead. Later, refresh kit guardrails with [upgrade](../guides/upgrade.md).
+
+Ten worked product systems live in [`examples/`](../../examples/README.md). Apply them with `pnpm --filter @ysk/examples start apply <slug> --yes` instead of inventing an industry module on the living kit.

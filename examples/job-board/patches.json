@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    applicationService: createApplicationService(createMemoryApplicationRepository()),\n    jobService: createJobService(createMemoryJobRepository()),",
+    "replace": "    ...(() => {\n      const jobRepo = createMemoryJobRepository();\n      return {\n        jobService: createJobService(jobRepo),\n        applicationService: createApplicationService(createMemoryApplicationRepository(jobRepo)),\n      };\n    })(),"
+  }
+]

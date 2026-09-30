@@ -1,0 +1,12 @@
+[
+  {
+    "file": "apps/api/src/composition.ts",
+    "find": "const workOrderService = createWorkOrderService(createPrismaWorkOrderRepository(prisma));",
+    "replace": "const workOrderService = createWorkOrderService(createPrismaWorkOrderRepository(prisma), queue);"
+  },
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "workOrderService: createWorkOrderService(createMemoryWorkOrderRepository()),",
+    "replace": "workOrderService: createWorkOrderService(createMemoryWorkOrderRepository(), queue),"
+  }
+]

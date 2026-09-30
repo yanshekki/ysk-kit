@@ -1,0 +1,15 @@
+model Application {
+  id            String   @id @default(uuid())
+  jobId         String
+  applicantName String
+  email         String
+  cover         String
+  authorId      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  job           Job      @relation(fields: [jobId], references: [id])
+
+  @@unique([jobId, email])
+  @@index([authorId])
+  @@index([jobId])
+}

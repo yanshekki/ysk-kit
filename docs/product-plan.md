@@ -14,7 +14,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | Clients | Vite 8 web/admin with AppShell; Expo mobile with organisation list and invite; Electron desktop |
 | Data | `pnpm db:seed` upserts `admin@ysk.hk` and `user@ysk.hk` |
 | Verify | `pnpm layers`, typecheck, Vitest (memory ports), Testing Library login, one Playwright smoke |
-| Docs | Bilingual public manuals, CLI reference, agent skills, `AGENTS.md` |
+| Docs | Bilingual public manuals, CLI reference, agent skills, `AGENTS.md`. Ten worked examples in `examples/` |
 | Guardrails | `.ysk-kit.json` records kit version, flavor, preset, and database. `ysk upgrade` copies allowlisted law, skills, and compiler/lint config from a kit checkout |
 | Agent scan | `ysk check agent` flags TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop. Biome `noEnum` is error. CI runs the scan |
 

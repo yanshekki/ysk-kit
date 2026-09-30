@@ -35,4 +35,4 @@ Language: [English](workspace-scripts.md) · 中文
 | `pnpm --filter @ysk/mobile start` | Expo |
 | `pnpm --filter @ysk/web exec playwright install chromium` | 本機 Playwright 瀏覽器 |
 
-`.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`e2e`（MySQL 8.4 + Chromium）。
+`.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`example-smoke`（matrix：把目錄裡每一個 slug 套用到 sqlite）、`e2e`（MySQL 8.4 + Chromium）。

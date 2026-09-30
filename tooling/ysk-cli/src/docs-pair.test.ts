@@ -14,9 +14,12 @@ const SKILLS = [
   'envelope-api',
 ] as const;
 
+const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);
+
 const walkMarkdown = (dir: string): string[] => {
   const out: string[] = [];
   for (const entry of readdirSync(dir)) {
+    if (SKIP_DIRS.has(entry)) continue;
     const path = join(dir, entry);
     const stat = statSync(path);
     if (stat.isDirectory()) {
@@ -43,6 +46,15 @@ describe('public docs language pairs', () => {
 
   it('pairs modules/notes/README.md', () => {
     expect(existsSync(join(kitRoot, 'modules/notes/README.zh.md'))).toBe(true);
+  });
+
+  it('pairs examples README and every tutorial.md', () => {
+    const dir = join(kitRoot, 'examples');
+    if (!existsSync(dir)) return;
+    const files = walkMarkdown(dir);
+    const english = files.filter((path) => !path.endsWith('.zh.md'));
+    const missing = english.filter((path) => !existsSync(path.replace(/\.md$/, '.zh.md')));
+    expect(missing.map((path) => relative(kitRoot, path))).toEqual([]);
   });
 
   it('ships six Grok and Cursor skill wrappers that point at docs and law', () => {

@@ -1,0 +1,15 @@
+{
+  "slug": "course-enrollment",
+  "title": "Course enrolment",
+  "titleZh": "課程報名",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [
+    { "name": "course", "prisma": true, "web": true },
+    { "name": "enrollment", "prisma": true, "web": true }
+  ]
+}

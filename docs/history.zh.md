@@ -4,7 +4,7 @@ Language: [English](history.md) · 中文
 
 本檔按日期記錄 kit 已發布的內容。現行行為以 [architecture.zh.md](architecture.zh.md) 與指南為準。Agent 寫功能時不必讀本檔。
 
-版本以 Phase 1 … Phase 46 標示。
+版本以 Phase 1 … Phase 51 標示。
 
 **Phase 1:** pnpm + Turborepo + Biome、`@ysk/contracts`（Zod 4 + ts-rest）、envelope `{ok,data}/{ok,error}`、domain-kernel、Express 5 adapter 與 composition root、Prisma MySQL、Vite web/admin、Expo mobile 骨架、`@ysk/sdk` + `@ysk/web-sdk`、`@ysk/ui-logic`、`ysk add module`、`create-ysk-app --flavor saas`、CI、Docker Compose、dependency-cruiser、enum-drift 測試。
 
@@ -97,3 +97,13 @@ Language: [English](history.md) · 中文
 **Phase 45:** `create-ysk-app` 在 TTY 下對未傳的名稱、flavor、preset、資料庫、admin、mobile 提問。`--yes` / `-y` 與非 TTY（CI）永不提問。已傳的旗標不會再問。
 
 **Phase 46:** Expo 組織列表、詳情（成員／邀請／離開）與接受邀請畫面接上 `@ysk/sdk` 的 `organizations` 與 `orgRoleCan`。`--preset thin` 會剝走它們；產品有 `apps/mobile` 時，`ysk add team` 會還原。
+
+**Phase 47:** 已完成實例套用器 `@ysk/examples` 與金牌教程 `clinic-booking`（overlay、雙語步驟、預期 envelope、Playwright 截圖）。living kit 仍然不掛行業路由。`ysk add module` 與 capability 的 Express 修補把路由掛在 `errorHandler` 之前。
+
+**Phase 48:** 已完成實例 `crm-contacts`（客戶與跟進）與 `inventory-stock`（SKU 與庫存異動）。雙模組記憶體 harness 透過 `patches.json` 共用父 repository。
+
+**Phase 49:** 已完成實例 `helpdesk-tickets`（`ysk add team`，工單屬於組織）與 `membership-club`（先 team 再 billing；記錄 checkout URL，擷取時不按 Checkout）。Team 的 Organization fragment 含 `stripeCustomerId`，沒有 billing 的 dest 仍然能通過型別檢查。
+
+**Phase 50:** 已完成實例 `course-enrollment`（名額與電郵唯一）與 `invoice-quotes`（金額以港元仙計，DRAFT → SENT → ACCEPTED）。
+
+**Phase 51:** 已完成實例 `event-rsvp`、`job-board`（未發布職位報名回 CONFLICT）與 `field-work-orders`（`ysk add push`，指派會把 `work.assigned` 寫入 Inbox）。十個系統的目錄現已提供。CI `example-smoke` 為 10 slug 矩陣（`fail-fast: false`）。擷取按 `capture.json` 在埠 13001／15173 逐步操作。sqlite dest 上的 `ysk add` 會去掉 `@db` native types（Device.token）。thin + mobile 的 Expo 應用在沒有組織畫面時仍能通過型別檢查。`ysk add push` 會把 `push` 放回 memory harness 的回傳值。

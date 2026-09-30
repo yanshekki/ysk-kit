@@ -1,0 +1,12 @@
+{
+  "slug": "helpdesk-tickets",
+  "title": "Helpdesk tickets",
+  "titleZh": "客服工單",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": ["team"],
+  "modules": [{ "name": "ticket", "prisma": true, "web": true }]
+}

@@ -1,0 +1,11 @@
+model MemberProfile {
+  id             String   @id @default(uuid())
+  displayName    String
+  organizationId String
+  authorId       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([authorId, organizationId])
+  @@index([authorId])
+}

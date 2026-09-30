@@ -120,6 +120,7 @@ export const router = createRouter({ routeTree });
       'createBookingHooks',
     );
     expect(readFileSync(join(root, 'apps/web/src/router.tsx'), 'utf8')).toContain('bookingRoute');
+    expect(readFileSync(join(root, 'apps/web/src/router.tsx'), 'utf8')).toContain('to="/booking"');
     expect(
       readFileSync(join(root, 'apps/api/src/modules/booking/infra/booking.test.ts'), 'utf8'),
     ).toContain('creates and lists rows');
@@ -128,5 +129,58 @@ export const router = createRouter({ routeTree });
     expect(
       readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8').match(/model Booking/g),
     ).toHaveLength(1);
+  });
+
+  it('mounts Express routes before errorHandler', () => {
+    const root = mkdtempSync(join(tmpdir(), 'ysk-mod-err-'));
+    writeTree(root, {
+      'packages/contracts/src/api/index.ts': `import { initContract } from '@ts-rest/core';
+import { healthContract } from './health';
+
+const c = initContract();
+
+export const appContract = c.router({
+  health: healthContract,
+});
+
+export * from './health';
+`,
+      'packages/contracts/src/dto/index.ts': `export * from './user';\n`,
+      'apps/api/src/app.ts': `import { errorHandler } from '@ysk/api-express';
+
+export const createApp = (input: { userService: never }) => {
+  const app = { use(_fn: unknown) {} };
+  app.use(errorHandler);
+  return app;
+};
+`,
+      'apps/api/src/composition.ts': `export const createComposition = () => {
+  return {
+    ok: true,
+  };
+};
+`,
+      'apps/api/src/app-fastify.ts': `export const createFastifyApp = async () => {
+  return {};
+};
+`,
+      'packages/sdk/src/index.ts': `export function createYskClient() {
+  return {
+    connectRealtime: () => ({}),
+  };
+}
+`,
+      'packages/web-sdk/src/index.ts': `export function createUserHooks() {
+  return {};
+}
+`,
+    });
+    addModule(root, 'booking', { prisma: false, web: false });
+    const app = readFileSync(join(root, 'apps/api/src/app.ts'), 'utf8');
+    expect(app.indexOf('registerBookingRoutes')).toBeGreaterThan(-1);
+    expect(app.indexOf('registerBookingRoutes')).toBeLessThan(app.indexOf('app.use(errorHandler)'));
+    expect(
+      readFileSync(join(root, 'apps/api/src/modules/booking/infra/booking.test.ts'), 'utf8'),
+    ).toContain('UNAUTHENTICATED');
   });
 });

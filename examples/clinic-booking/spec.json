@@ -1,0 +1,12 @@
+{
+  "slug": "clinic-booking",
+  "title": "Clinic booking",
+  "titleZh": "診所／顧問預約",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [{ "name": "appointment", "prisma": true, "web": true }]
+}

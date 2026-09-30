@@ -1,0 +1,15 @@
+{
+  "slug": "job-board",
+  "title": "Job board",
+  "titleZh": "招聘板",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [
+    { "name": "job", "prisma": true, "web": true },
+    { "name": "application", "prisma": true, "web": true }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "membership-club",
+  "title": "Membership club",
+  "titleZh": "會員訂閱",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": ["team", "billing"],
+  "modules": [{ "name": "member-profile", "prisma": true, "web": true }]
+}

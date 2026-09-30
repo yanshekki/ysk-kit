@@ -7,7 +7,7 @@ import { createLocalTokenStore } from '../adapters/token-store';
 export const queryClient = new QueryClient();
 
 export const api = createYskClient({
-  baseUrl: defaultPublicConfig().apiPublicUrl,
+  baseUrl: process.env.API_PUBLIC_URL ?? defaultPublicConfig().apiPublicUrl,
   platform: 'web',
   tokenStore: createLocalTokenStore(),
 });

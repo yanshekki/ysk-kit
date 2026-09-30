@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    rsvpService: createRsvpService(createMemoryRsvpRepository()),\n    eventService: createEventService(createMemoryEventRepository()),",
+    "replace": "    ...(() => {\n      const eventRepo = createMemoryEventRepository();\n      return {\n        eventService: createEventService(eventRepo),\n        rsvpService: createRsvpService(createMemoryRsvpRepository(eventRepo)),\n      };\n    })(),"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "slug": "field-work-orders",
+  "title": "Field work orders",
+  "titleZh": "外勤工單",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": true,
+  "capabilities": ["push"],
+  "modules": [{ "name": "work-order", "prisma": true, "web": true }]
+}

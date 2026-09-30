@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "data": {
+    "patientName": "Chan Tai Man",
+    "phone": "+85291234567",
+    "durationMin": 30,
+    "status": "SCHEDULED"
+  }
+}

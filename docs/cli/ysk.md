@@ -36,7 +36,7 @@ Files created (skipped if they already exist):
 | `packages/sdk/src/resources/<name>.ts` | `client.<name>.list/create` |
 | `packages/web-sdk/src/<name>-hooks.ts` | `useList` / `useCreate` |
 
-When the files exist, the command also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, and `create-memory-input.ts`. A second run on the same name is a no-op for existing files.
+When the files exist, the command also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, and `create-memory-input.ts`. Express routers are mounted before `errorHandler`. A second run on the same name is a no-op for existing files.
 
 After generate: edit the Prisma model if you need more fields, put rules in `application/`, then:
 

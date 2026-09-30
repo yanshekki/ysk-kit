@@ -1,0 +1,29 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Contact" } },
+    { "waitUrl": "/contact" },
+    { "waitText": "No contacts" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Name", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Email", "value": "not-an-email" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Email", "value": "chan@ysk.hk" } },
+    { "fill": { "label": "Phone", "value": "+85291234567" } },
+    { "fill": { "label": "Company", "value": "YSK Limited" } },
+    { "submit": "Create" },
+    { "waitCell": "Chan Tai Man" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/contact", "shot": "05-docs.png" } },
+    { "goto": "/follow-up" },
+    { "waitText": "No follow-ups" },
+    { "fill": { "label": "Contact", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Due at", "value": "$futureLocal" } },
+    { "fill": { "label": "Note", "value": "Call back about the proposal" } },
+    { "submit": "Create" },
+    { "waitCell": "Call back about the proposal" },
+    { "shot": "06-follow-up.png" }
+  ]
+}

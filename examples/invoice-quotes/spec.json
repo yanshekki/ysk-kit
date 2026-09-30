@@ -1,0 +1,12 @@
+{
+  "slug": "invoice-quotes",
+  "title": "Quotes",
+  "titleZh": "報價",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [{ "name": "quote", "prisma": true, "web": true }]
+}

@@ -1,0 +1,27 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Sku" } },
+    { "waitUrl": "/sku" },
+    { "waitText": "No skus" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Code", "value": "WIDGET-2" } },
+    { "fill": { "label": "Name", "value": "Box" } },
+    { "fill": { "label": "Quantity on hand", "value": "-1" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Quantity on hand", "value": "10" } },
+    { "submit": "Create" },
+    { "waitCell": "WIDGET-2" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/sku", "shot": "05-docs.png" } },
+    { "goto": "/stock-move" },
+    { "fill": { "label": "Sku", "value": "WIDGET-2" } },
+    { "fill": { "label": "Reason", "value": "OUT" } },
+    { "fill": { "label": "Delta", "value": "2" } },
+    { "submit": "Create" },
+    { "waitCell": "OUT" },
+    { "shot": "06-stock-move.png" }
+  ]
+}

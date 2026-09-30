@@ -1,0 +1,13 @@
+model Event {
+  id        String   @id @default(uuid())
+  title     String
+  venue     String
+  startsAt  DateTime
+  capacity  Int
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rsvps     Rsvp[]
+
+  @@index([authorId])
+}

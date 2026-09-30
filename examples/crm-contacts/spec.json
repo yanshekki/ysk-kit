@@ -1,0 +1,15 @@
+{
+  "slug": "crm-contacts",
+  "title": "CRM contacts and follow-ups",
+  "titleZh": "CRM 客戶與跟進",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [
+    { "name": "contact", "prisma": true, "web": true },
+    { "name": "follow-up", "prisma": true, "web": true }
+  ]
+}

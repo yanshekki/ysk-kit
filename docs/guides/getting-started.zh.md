@@ -47,6 +47,18 @@ Thin 包含身分、檔案、通知、工作、郵件、API 金鑰、加密與�
 
 產品根目錄含有 `.ysk-kit.json`（kit 版本、flavor、preset、資料庫）。稍後在 kit 工作副本執行 `pnpm ysk upgrade` 以更新護欄——見[更新已產生產品的護欄](upgrade.zh.md)。
 
+## 路徑 C — 一個已完成的系統
+
+跟隨一個做完的產品，而不是空白的 `title`／`body` 模組。十個系統見[實例目錄](../../examples/README.zh.md)。套用器會開出 thin 目的地、加入所列模組與能力、複製 overlay、seed 並驗證。診所預約是最短的一條：
+
+```bash
+pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+cd ~/Projects/my-clinic
+pnpm dev
+```
+
+以 `user@ysk.hk`／`ysk-user-dev` 登入，然後開啟 `/appointment`。教程、截圖與預期 envelope：[診所／顧問預約](../../examples/clinic-booking/tutorial.zh.md)。十個系統的目錄：[examples/README.zh.md](../../examples/README.zh.md)。
+
 ## 埠已被佔用
 
 預設埠是 API **3001**、web **5173**、admin **5174**。若被其他行程佔用：
@@ -71,6 +83,7 @@ docker compose up -d prometheus grafana
 
 - [Hexagonal 分層](hexagonal.zh.md) — 程式放哪裏
 - [加模組](../recipes/add-module.zh.md)
+- [已完成的實例](../../examples/README.zh.md)
 - [CLI](../cli/index.zh.md)
 - [更新已產生產品的護欄](upgrade.zh.md)
 - [部署](deploy.zh.md)

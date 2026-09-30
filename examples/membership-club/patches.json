@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    memberProfileService: createMemberProfileService(createMemoryMemberProfileRepository()),",
+    "replace": "    memberProfileService: createMemberProfileService(createMemoryMemberProfileRepository(orgs)),"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "slug": "event-rsvp",
+  "title": "Event RSVP",
+  "titleZh": "活動報名",
+  "flavor": "saas",
+  "preset": "thin",
+  "db": "sqlite",
+  "admin": false,
+  "mobile": false,
+  "capabilities": [],
+  "modules": [
+    { "name": "event", "prisma": true, "web": true },
+    { "name": "rsvp", "prisma": true, "web": true }
+  ]
+}

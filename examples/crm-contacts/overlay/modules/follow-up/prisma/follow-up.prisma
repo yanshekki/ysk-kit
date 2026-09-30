@@ -1,0 +1,13 @@
+model FollowUp {
+  id        String   @id @default(uuid())
+  contactId String
+  dueAt     DateTime
+  note      String
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contact   Contact  @relation(fields: [contactId], references: [id])
+
+  @@index([authorId])
+  @@index([contactId])
+}

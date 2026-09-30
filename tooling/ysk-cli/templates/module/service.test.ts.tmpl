@@ -1,4 +1,7 @@
+import request from 'supertest';
 import { describe, expect, it } from 'vitest';
+import { createApp } from '../../../app';
+import { createMemoryInput } from '../../../create-memory-input';
 import { create{{pascal}}Service } from '../application/{{kebab}}-service';
 import { createMemory{{pascal}}Repository } from './memory-{{kebab}}-repository';
 
@@ -16,5 +19,15 @@ describe('{{kebab}} service', () => {
     expect(page.items[0]?.id).toBe(created.id);
     const other = await service.list('22222222-2222-2222-2222-222222222222', { limit: 20 });
     expect(other.items).toHaveLength(0);
+  });
+});
+
+describe('{{kebab}} HTTP', () => {
+  it('returns UNAUTHENTICATED without a session', async () => {
+    const mem = createMemoryInput();
+    const app = createApp(mem.input);
+    const res = await request(app).post('/v1/{{kebab}}').send({ title: 'Hello', body: 'World' });
+    expect(res.status).toBe(401);
+    expect(res.body).toMatchObject({ ok: false, error: { code: 'UNAUTHENTICATED' } });
   });
 });

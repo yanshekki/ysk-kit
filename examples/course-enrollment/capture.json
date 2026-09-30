@@ -1,0 +1,27 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Course" } },
+    { "waitUrl": "/course" },
+    { "waitText": "No courses" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Title", "value": "Cantonese A1" } },
+    { "fill": { "label": "Quota", "value": "0" } },
+    { "fill": { "label": "Starts on", "value": "$futureDate" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Quota", "value": "8" } },
+    { "submit": "Create" },
+    { "waitCell": "Cantonese A1" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/course", "shot": "05-docs.png" } },
+    { "goto": "/enrollment" },
+    { "fill": { "label": "Course", "value": "Cantonese A1" } },
+    { "fill": { "label": "Student name", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Email", "value": "chan@ysk.hk" } },
+    { "submit": "Create" },
+    { "waitCell": "chan@ysk.hk" },
+    { "shot": "06-enrollment.png" }
+  ]
+}

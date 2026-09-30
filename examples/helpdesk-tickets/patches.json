@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    ticketService: createTicketService(createMemoryTicketRepository()),",
+    "replace": "    ticketService: createTicketService(createMemoryTicketRepository(orgs)),"
+  }
+]

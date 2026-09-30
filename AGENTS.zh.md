@@ -50,7 +50,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 ## 不要
 
-- 把沙龍、交易、地圖或其他行業 domain 放進本 kit。
+- 把沙龍、交易、地圖或其他行業 domain 放進本 kit。已完成教程在 `examples/`，套用到新目的地（`pnpm --filter @ysk/examples start apply <slug> --yes`）。
 - 從 web/admin/mobile/desktop import `@ysk/observability`。
 - 把 Hono / Drizzle / Nest / Next 設為預設。
 - 把密鑰、OTP 代碼、Stripe `sk_` 或 webhook 密鑰寫進日誌。

@@ -31,7 +31,7 @@ Use a kebab-case name (`appointment`, `note`, `inventory-item`). The URL is `/v1
 | `packages/web-sdk/src/<name>-hooks.ts` | `useList` / `useCreate` |
 | `apps/web/src/features/<name>/<name>-page.tsx` | List + create form using the create command schema |
 
-It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, and `create-memory-input.ts` when those files exist. Existing files are left in place (idempotent).
+It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, and `create-memory-input.ts` when those files exist. Existing files are left in place (idempotent). Express routers are mounted **before** `errorHandler`, so `{ ok: false }` envelopes reach the client. The web router gains a nav `Link` in `AppShell` (and in the older `ml-auto` shell).
 
 ## After generate
 

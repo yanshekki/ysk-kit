@@ -1,6 +1,7 @@
 import {
   ensureMarkerBlock,
   ensureNamedImport,
+  expressRouteInsertBefore,
   insertAfterLastImport,
   insertBeforeMatch,
 } from './patch-text';
@@ -70,7 +71,7 @@ export const patchTeamApp = (src: string): string => {
     next,
     'team',
     '  registerOrganizationRoutes(app, input.organizationService);',
-    '  return app;',
+    expressRouteInsertBefore(next),
   );
 };
 
@@ -237,6 +238,23 @@ const inviteRoute = createRoute({
           <span className="ml-auto" />`,
     );
   }
+  if (
+    next.includes('<Link to="/notifications"') &&
+    !next.includes('to="/orgs"') &&
+    next.includes('className={navClass}')
+  ) {
+    next = next.replace(
+      `          <Link to="/notifications" className={navClass}>
+            Inbox
+          </Link>`,
+      `          <Link to="/notifications" className={navClass}>
+            Inbox
+          </Link>
+          <Link to="/orgs" className={navClass}>
+            Orgs
+          </Link>`,
+    );
+  }
   return next;
 };
 
@@ -400,7 +418,7 @@ export const patchLlmApp = (src: string): string => {
     next,
     'llm',
     '  registerLlmRoutes(app, input.llmService);',
-    '  return app;',
+    expressRouteInsertBefore(next),
   );
 };
 
@@ -597,7 +615,7 @@ export const patchPushApp = (src: string): string => {
     next,
     'push',
     '  registerDeviceRoutes(app, input.deviceService);',
-    '  return app;',
+    expressRouteInsertBefore(next),
   );
 };
 
@@ -702,7 +720,10 @@ export const patchPushMemory = (src: string): string => {
   if (next.includes('registerWorkers({') && !next.includes('devices,')) {
     next = next.replace('realtime,', 'realtime,\n    devices,\n    push,');
   }
-  if (next.includes('return { input, otpSink, mail, jobs, realtime') && !next.includes('push,')) {
+  if (
+    next.includes('return { input, otpSink, mail, jobs, realtime') &&
+    !/return \{ input, otpSink, mail, jobs, realtime[^}]*\bpush\b/.test(next)
+  ) {
     next = next.replace(
       'return { input, otpSink, mail, jobs, realtime',
       'return { input, otpSink, mail, jobs, realtime, push',
@@ -790,7 +811,7 @@ export const patchBillingApp = (src: string): string => {
     next,
     'billing',
     '  registerBillingRoutes(app, input.billingService);',
-    '  return app;',
+    expressRouteInsertBefore(next),
   );
   return ensureMarkerBlock(
     next,
@@ -813,7 +834,7 @@ export const patchBillingApp = (src: string): string => {
       }
     },
   );`,
-    '  return app;',
+    expressRouteInsertBefore(next),
   );
 };
 

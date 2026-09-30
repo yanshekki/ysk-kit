@@ -1,0 +1,19 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Quote" } },
+    { "waitUrl": "/quote" },
+    { "waitText": "No quotes" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Client name", "value": "YSK Limited" } },
+    { "fill": { "label": "Amount (cents)", "value": "0" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Amount (cents)", "value": "128000" } },
+    { "submit": "Create" },
+    { "waitCell": "YSK Limited" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/quote", "shot": "05-docs.png" } }
+  ]
+}

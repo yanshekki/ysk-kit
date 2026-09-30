@@ -52,6 +52,36 @@ jobs:
           pnpm test
           pnpm gen:openapi
 
+  example-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        slug:
+          - clinic-booking
+          - crm-contacts
+          - inventory-stock
+          - helpdesk-tickets
+          - membership-club
+          - course-enrollment
+          - invoice-quotes
+          - event-rsvp
+          - job-board
+          - field-work-orders
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 12.8.1
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install
+      - name: apply ${{ matrix.slug }}
+        run: pnpm --filter @ysk/examples start apply ${{ matrix.slug }} --dest /tmp/ysk-example --yes --force
+
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 25

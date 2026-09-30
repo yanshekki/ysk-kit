@@ -30,7 +30,7 @@ pnpm create @ysk/app <name> [options]
 | `--no-mobile` | 旗標 | 包含 mobile | 略過 `apps/mobile`。flavor 本身已不含 mobile 時忽略。 |
 | `--yes` / `-y` | 旗標 | 關閉 | 不提問。使用預設值與其他已傳旗標。 |
 
-複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store` 與 `generated`。產品仍會收到 `tooling/ysk-cli`。
+複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、`examples`、`.runs`、`.env` 與 `.env.local`。產品仍會收到 `tooling/ysk-cli`。複製後的 `.gitignore` 會忽略 `.env`、sqlite `*.db`（包括 `apps/api/dev.db`）、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告與 `.runs/`。
 
 ## Flavor
 

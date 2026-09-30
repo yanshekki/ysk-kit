@@ -1,0 +1,13 @@
+model StockMove {
+  id        String   @id @default(uuid())
+  skuId     String
+  delta     Int
+  reason    String
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sku       Sku      @relation(fields: [skuId], references: [id])
+
+  @@index([authorId])
+  @@index([skuId])
+}

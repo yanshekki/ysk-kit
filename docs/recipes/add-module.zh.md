@@ -31,7 +31,7 @@ pnpm layers && pnpm typecheck && pnpm test
 | `packages/web-sdk/src/<name>-hooks.ts` | `useList` / `useCreate` |
 | `apps/web/src/features/<name>/<name>-page.tsx` | 使用 create command schema 的 list + create 表單 |
 
-檔案存在時，亦會修補 `appContract`、`apps/api/src/app.ts`、`app-fastify.ts`、`composition.ts`、`main.ts` 與 `create-memory-input.ts`。已有檔案保留（冪等）。
+檔案存在時，亦會修補 `appContract`、`apps/api/src/app.ts`、`app-fastify.ts`、`composition.ts`、`main.ts` 與 `create-memory-input.ts`。已有檔案保留（冪等）。Express 路由掛在 `errorHandler` **之前**，客戶端才會收到 `{ ok: false }` envelope。Web router 會在 `AppShell`（以及舊的 `ml-auto` shell）加入導航 `Link`。
 
 ## 產生之後
 

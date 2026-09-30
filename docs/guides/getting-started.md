@@ -47,6 +47,18 @@ Thin has identity, files, notifications, jobs, mail, API keys, crypto, and realt
 
 The product root contains `.ysk-kit.json` (kit version, flavor, preset, database). Refresh kit guardrails later with `pnpm ysk upgrade` from a kit checkout — see [Refreshing a generated product](upgrade.md).
 
+## Path C — a worked system
+
+Follow a finished product instead of an empty `title` / `body` module. Ten systems are in the [examples catalogue](../../examples/README.md). The applicator scaffolds a thin destination, adds the listed modules and capabilities, copies the overlay, seeds, and verifies. Clinic booking is the shortest walk:
+
+```bash
+pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+cd ~/Projects/my-clinic
+pnpm dev
+```
+
+Sign in as `user@ysk.hk` / `ysk-user-dev`, then open `/appointment`. Tutorial, screenshots, and expected envelopes: [Clinic booking](../../examples/clinic-booking/tutorial.md). Catalogue of ten systems: [examples/README.md](../../examples/README.md).
+
 ## Ports already in use
 
 Default ports are API **3001**, web **5173**, admin **5174**. If another process holds them:
@@ -71,6 +83,7 @@ Jaeger does nothing until `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`. G
 
 - [Hexagonal layers](hexagonal.md) — where to put code
 - [Add a module](../recipes/add-module.md)
+- [Worked examples](../../examples/README.md)
 - [CLI](../cli/index.md)
 - [Refreshing a generated product](upgrade.md)
 - [Deploy](deploy.md)

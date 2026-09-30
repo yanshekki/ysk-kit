@@ -1,0 +1,26 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "WorkOrder" } },
+    { "waitUrl": "/work-order" },
+    { "waitText": "No work orders" },
+    { "shot": "02-empty.png" },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Title", "value": "Fix AC" } },
+    { "fill": { "label": "Address", "value": "18 Harbour Road" } },
+    { "submit": "Create" },
+    { "waitCell": "Fix AC" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/work-order", "shot": "05-docs.png" } },
+    { "goto": "/work-order" },
+    { "waitCell": "Fix AC" },
+    { "click": { "role": "button", "name": "Assign" } },
+    { "waitCell": "ASSIGNED" },
+    { "shot": "06-assigned.png" },
+    { "click": { "role": "link", "name": "Inbox" } },
+    { "waitText": "Fix AC" },
+    { "shot": "07-inbox.png" }
+  ]
+}

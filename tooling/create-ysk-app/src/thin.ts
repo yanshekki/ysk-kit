@@ -423,6 +423,7 @@ export const applyThinPreset = (dest: string): void => {
     next = dropJsxFrom(next, "{screen === 'orgs' ?", ') : null}');
     next = dropJsxFrom(next, "{screen === 'org-detail'", ') : null}');
     next = dropJsxFrom(next, "{screen === 'invite' ?", ') : null}');
+    next = dropLinesContaining(next, ['InviteScreen', "screen === 'invite'"]);
     next = next.replace(
       `{screen === 'login' ? (
         <LoginScreen

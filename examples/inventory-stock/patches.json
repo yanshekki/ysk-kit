@@ -1,0 +1,7 @@
+[
+  {
+    "file": "apps/api/src/create-memory-input.ts",
+    "find": "    stockMoveService: createStockMoveService(createMemoryStockMoveRepository()),\n    skuService: createSkuService(createMemorySkuRepository()),",
+    "replace": "    ...(() => {\n      const skuRepo = createMemorySkuRepository();\n      return {\n        skuService: createSkuService(skuRepo),\n        stockMoveService: createStockMoveService(createMemoryStockMoveRepository(skuRepo)),\n      };\n    })(),"
+  }
+]

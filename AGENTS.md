@@ -50,7 +50,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 ## Do not
 
-- Put salon, trading, map, or other industry domain in this kit.
+- Put salon, trading, map, or other industry domain in this kit. Worked tutorials live in `examples/` and apply onto a new destination (`pnpm --filter @ysk/examples start apply <slug> --yes`).
 - Import `@ysk/observability` from web/admin/mobile/desktop.
 - Add Hono / Drizzle / Nest / Next as a default.
 - Log secrets, OTP codes, Stripe `sk_`, or webhook secrets.

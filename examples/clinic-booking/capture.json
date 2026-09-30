@@ -1,0 +1,21 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Appointment" } },
+    { "waitUrl": "/appointment" },
+    { "waitText": "No appointments" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Patient name", "value": "Chan Tai Man" } },
+    { "fill": { "label": "Phone", "value": "123" } },
+    { "fill": { "label": "Starts at", "value": "$futureLocal" } },
+    { "fill": { "label": "Duration (minutes)", "value": "30" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Phone", "value": "+85291234567" } },
+    { "submit": "Create" },
+    { "waitCell": "Chan Tai Man" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/appointment", "shot": "05-docs.png" } }
+  ]
+}

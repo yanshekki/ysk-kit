@@ -1,0 +1,26 @@
+{
+  "steps": [
+    { "login": true },
+    { "click": { "role": "link", "name": "Orgs" } },
+    { "waitUrl": "/orgs" },
+    { "fill": { "label": "Name", "value": "Acme Support" } },
+    { "submit": "Create" },
+    { "waitText": "Acme Support" },
+    { "shot": "06-orgs.png" },
+    { "click": { "role": "link", "name": "Ticket" } },
+    { "waitUrl": "/ticket" },
+    { "waitText": "No tickets" },
+    { "shot": "02-empty.png" },
+    { "fill": { "label": "Organization", "value": "Acme Support" } },
+    { "fill": { "label": "Title", "value": "" } },
+    { "submit": "Create" },
+    { "waitAlert": true },
+    { "shot": "03-invalid.png" },
+    { "fill": { "label": "Title", "value": "Printer jam" } },
+    { "fill": { "label": "Body", "value": "3F copier" } },
+    { "submit": "Create" },
+    { "waitCell": "Printer jam" },
+    { "shot": "04-created.png" },
+    { "docs": { "path": "/v1/ticket", "shot": "05-docs.png" } }
+  ]
+}

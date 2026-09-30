@@ -4,7 +4,7 @@ Language: [中文](history.zh.md) · English
 
 Dated record of what this kit shipped. Current behaviour is defined by [architecture.md](architecture.md) and the guides. Agents do not need this file to write a feature.
 
-Releases are labelled Phase 1 … Phase 46.
+Releases are labelled Phase 1 … Phase 51.
 
 **Phase 1:** pnpm + Turborepo + Biome, `@ysk/contracts` (Zod 4 + ts-rest), envelope `{ok,data}/{ok,error}`, domain-kernel, Express 5 adapter and composition root, Prisma MySQL, Vite web/admin, Expo mobile skeleton, `@ysk/sdk` + `@ysk/web-sdk`, `@ysk/ui-logic`, `ysk add module`, `create-ysk-app --flavor saas`, CI, Docker Compose, dependency-cruiser, enum-drift tests.
 
@@ -97,3 +97,13 @@ Releases are labelled Phase 1 … Phase 46.
 **Phase 45:** `create-ysk-app` prompts on a TTY for omitted name, flavor, preset, database, admin, and mobile. `--yes` / `-y` and non-TTY (CI) never prompt. Flags already passed are not asked again.
 
 **Phase 46:** Expo organisation list, detail (members / invite / leave), and accept-invite screens on `apps/mobile`, wired through `@ysk/sdk` `organizations` and `orgRoleCan`. `--preset thin` strips them; `ysk add team` restores them when `apps/mobile` exists.
+
+**Phase 47:** Worked-example applicator `@ysk/examples` plus gold tutorial `clinic-booking` (overlay, bilingual steps, expected envelopes, Playwright screenshots). Living kit still does not mount industry routes. `ysk add module` and capability Express patches mount routers before `errorHandler`.
+
+**Phase 48:** Worked examples `crm-contacts` (contact + follow-up) and `inventory-stock` (sku + stock-move). Dual-module memory harness shares the parent repository through `patches.json`.
+
+**Phase 49:** Worked examples `helpdesk-tickets` (`ysk add team`, tickets scoped to an organisation) and `membership-club` (team then billing; log checkout URL, capture does not click Checkout). Team Organization fragment includes `stripeCustomerId` so a dest without billing still typechecks.
+
+**Phase 50:** Worked examples `course-enrollment` (quota + unique email) and `invoice-quotes` (amounts in HKD cents, DRAFT → SENT → ACCEPTED).
+
+**Phase 51:** Worked examples `event-rsvp`, `job-board` (unpublished apply is CONFLICT), and `field-work-orders` (`ysk add push`, assign enqueues `work.assigned` into Inbox). Catalogue of ten systems is available. CI `example-smoke` is a 10-slug matrix (`fail-fast: false`). Capture walks `capture.json` on ports 13001 / 15173. `ysk add` on a sqlite dest strips `@db` native types (Device.token). Thin + mobile Expo app typechecks without organisation screens. `ysk add push` returns `push` from the memory harness.

@@ -4,6 +4,7 @@ import {
   ensureJsonDep,
   ensureMarkerBlock,
   ensureNamedImport,
+  expressRouteInsertBefore,
   insertAfterLastImport,
 } from './patch-text';
 
@@ -36,6 +37,13 @@ describe('patch-text', () => {
     const first = ensureMarkerBlock(source, 'team', '  register();', '  return app;');
     expect(first).toContain('// --- ysk-add:team ---');
     expect(ensureMarkerBlock(first, 'team', '  register();', '  return app;')).toBe(first);
+  });
+
+  it('inserts Express routes before errorHandler when present', () => {
+    expect(expressRouteInsertBefore('  app.use(errorHandler);\n  return app;\n')).toBe(
+      '  app.use(errorHandler);',
+    );
+    expect(expressRouteInsertBefore('  return app;\n')).toBe('  return app;');
   });
 
   it('adds named specifiers to an existing import', () => {

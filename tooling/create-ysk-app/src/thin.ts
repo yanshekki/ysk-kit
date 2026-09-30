@@ -240,6 +240,7 @@ export const applyThinPreset = (dest: string): void => {
     'packages/sdk/src/resources/billing.ts',
     'packages/sdk/src/resources/organizations.ts',
     'packages/sdk/src/resources/devices.ts',
+    'packages/sdk/src/optional-resources.test.ts',
     'packages/web-sdk/src/llm-hooks.ts',
     'packages/web-sdk/src/billing-hooks.ts',
     'packages/web-sdk/src/organizations-hooks.ts',

@@ -30,7 +30,7 @@ pnpm create @ysk/app <name> [options]
 | `--no-mobile` | 旗標 | 包含 mobile | 略過 `apps/mobile`。flavor 本身已不含 mobile 時忽略。 |
 | `--yes` / `-y` | 旗標 | 關閉 | 不提問。使用預設值與其他已傳旗標。 |
 
-複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄，以及 `.env.example` 以外的任何 `.env*` 檔。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 Cursor／Grok skill 包裝。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.grok/`、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告與 `.runs/`。
+複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄、`.env.example` 以外的任何 `.env*` 檔，以及 `tooling/` 底下的 kit 編寫測試（`*.test.ts` / `*.test.tsx`）。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 Cursor／Grok skill 包裝。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.grok/`、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告與 `.runs/`。
 
 ## Flavor
 
@@ -47,7 +47,7 @@ pnpm create @ysk/app <name> [options]
 
 ## Thin preset
 
-複製之後，thin 會移除 llm、billing、organizations 與 device（push）模組、Prisma model、路由與 web 畫面。身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊保留。還原：
+複製之後，thin 會移除 llm、billing、organizations 與 device（push）模組、Prisma model、路由、web 畫面，以及可選 SDK resource 測試。身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊保留。還原：
 
 ```bash
 pnpm ysk add llm

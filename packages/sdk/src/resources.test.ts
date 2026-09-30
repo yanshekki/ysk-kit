@@ -9,7 +9,7 @@ const json = (data: unknown, status = 200) =>
   });
 
 describe('sdk resources', () => {
-  it('calls users, notifications, devices, api-keys, audit, billing, orgs, auth', async () => {
+  it('calls users, notifications, api-keys, audit, auth', async () => {
     const seen: string[] = [];
     const client = createYskClient({
       baseUrl: 'http://api.test',
@@ -25,21 +25,18 @@ describe('sdk resources', () => {
         if (url.includes('/v1/me/api-keys') && init?.method === 'POST') {
           return json({ id: 'k', token: 'ysk_live_x' }, 201);
         }
-        if (url.includes('/v1/organizations') && init?.method === 'POST') {
-          return json({ id: 'o' }, 201);
-        }
         return json({ items: [], nextCursor: null });
       },
     });
     await client.users.list({ limit: 10 });
     await client.notifications.list();
-    await client.devices.list();
     await client.apiKeys.list();
     await client.audit.list();
-    await client.billing.plans();
-    await client.organizations.list();
     await client.auth.login({ email: 'a@ysk.hk', password: 'password1' });
     expect(seen.some((row) => row.includes('/v1/users'))).toBe(true);
+    expect(seen.some((row) => row.includes('/v1/notifications'))).toBe(true);
+    expect(seen.some((row) => row.includes('/v1/me/api-keys'))).toBe(true);
+    expect(seen.some((row) => row.includes('/v1/audit-logs'))).toBe(true);
     expect(seen.some((row) => row.includes('/v1/auth/login'))).toBe(true);
   });
 });

@@ -7,7 +7,7 @@ import {
   statSync,
   writeFileSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyThinPreset } from './thin';
 
@@ -87,11 +87,18 @@ export const pruneLockfileImporters = (dest: string): void => {
   writeFileSync(lockPath, out.join('\n'));
 };
 
+const isToolingTestFile = (from: string, entry: string, kitRoot: string): boolean => {
+  if (!entry.endsWith('.test.ts') && !entry.endsWith('.test.tsx')) return false;
+  const rel = relative(kitRoot, from);
+  return rel === 'tooling' || rel.startsWith(`tooling${sep}`);
+};
+
 const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<string>): void => {
   mkdirSync(to, { recursive: true });
   for (const entry of readdirSync(from)) {
     if (shouldSkipCopyEntry(entry)) continue;
     if (from === kitRoot && entry === 'examples') continue;
+    if (isToolingTestFile(from, entry, kitRoot)) continue;
     const source = join(from, entry);
     const dest = join(to, entry);
     const stat = statSync(source);

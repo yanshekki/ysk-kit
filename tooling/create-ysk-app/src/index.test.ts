@@ -127,6 +127,8 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/examples/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/create-ysk-app/package.json'))).toBe(true);
+    expect(existsSync(join(dest, 'tooling/create-ysk-app/src/index.test.ts'))).toBe(false);
+    expect(existsSync(join(dest, 'tooling/examples/src/apply.test.ts'))).toBe(false);
     expect(existsSync(join(dest, 'examples'))).toBe(false);
     const lock = readFileSync(join(dest, 'pnpm-lock.yaml'), 'utf8');
     expect(lock).toContain('\n  apps/web:\n');
@@ -284,6 +286,9 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/api/src/modules/billing'))).toBe(false);
     expect(existsSync(join(dest, 'apps/api/src/modules/organizations'))).toBe(false);
     expect(existsSync(join(dest, 'apps/api/src/modules/devices'))).toBe(false);
+    expect(existsSync(join(dest, 'packages/sdk/src/optional-resources.test.ts'))).toBe(false);
+    const sdkTest = readFileSync(join(dest, 'packages/sdk/src/resources.test.ts'), 'utf8');
+    expect(sdkTest).not.toMatch(/client\.(devices|billing|organizations|llm)\b/);
     const contract = readFileSync(join(dest, 'packages/contracts/src/api/index.ts'), 'utf8');
     expect(contract).not.toContain('llm: llmContract');
     expect(contract).not.toContain('billing: billingContract');

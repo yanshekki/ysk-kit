@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { expandCaptureValue, loadCaptureScript, parseCaptureScript } from './capture-script';
 import { parseDestPatches } from './patches';
-import { listExampleSlugs } from './spec';
+import { hasExampleCatalogue, listExampleSlugs } from './spec';
+
+const catalogue = hasExampleCatalogue();
 
 describe('capture script', () => {
   it('expands future tokens to local calendar values', () => {
@@ -11,7 +13,7 @@ describe('capture script', () => {
     expect(expandCaptureValue('chan@ysk.hk', now)).toBe('chan@ysk.hk');
   });
 
-  it('parses the clinic-booking walk', () => {
+  it.skipIf(!catalogue)('parses the clinic-booking walk', () => {
     const script = loadCaptureScript('clinic-booking');
     expect(script.steps[0]).toEqual({ login: true });
     expect(
@@ -20,7 +22,7 @@ describe('capture script', () => {
     expect(script.steps.some((step) => 'shot' in step && step.shot === '02-empty.png')).toBe(true);
   });
 
-  it('parses every catalogue capture.json', () => {
+  it.skipIf(!catalogue)('parses every catalogue capture.json', () => {
     for (const slug of listExampleSlugs()) {
       const script = loadCaptureScript(slug);
       expect(script.steps[0]).toEqual({ login: true });

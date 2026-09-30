@@ -4,7 +4,9 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { applyExample } from './apply';
 import { HELP } from './help';
-import { listExampleSlugs, loadSpec } from './spec';
+import { hasExampleCatalogue, listExampleSlugs, loadSpec } from './spec';
+
+const catalogue = hasExampleCatalogue();
 
 describe('examples apply', () => {
   it('documents apply and capture', () => {
@@ -13,7 +15,7 @@ describe('examples apply', () => {
     expect(HELP).toContain('examples/README.md');
   });
 
-  it('loads clinic-booking spec', () => {
+  it.skipIf(!catalogue)('loads clinic-booking spec', () => {
     const spec = loadSpec('clinic-booking');
     expect(spec.modules[0]?.name).toBe('appointment');
     expect(spec.preset).toBe('thin');
@@ -22,7 +24,7 @@ describe('examples apply', () => {
     expect(spec.mobile).toBe(false);
   });
 
-  it('loads every catalogue spec', () => {
+  it.skipIf(!catalogue)('loads every catalogue spec', () => {
     const slugs = listExampleSlugs();
     expect(slugs).toEqual([
       'clinic-booking',
@@ -61,7 +63,7 @@ describe('examples apply', () => {
     return dest;
   };
 
-  it('applies overlay onto a generated dest without install', () => {
+  it.skipIf(!catalogue)('applies overlay onto a generated dest without install', () => {
     const dest = skipApply('clinic-booking');
     const dto = readFileSync(join(dest, 'packages/contracts/src/dto/appointment.ts'), 'utf8');
     expect(dto).toContain('patientName');
@@ -91,7 +93,7 @@ describe('examples apply', () => {
     );
   });
 
-  it('shares the contact memory repo with follow-up', () => {
+  it.skipIf(!catalogue)('shares the contact memory repo with follow-up', () => {
     const dest = skipApply('crm-contacts');
     const dto = readFileSync(join(dest, 'packages/contracts/src/dto/contact.ts'), 'utf8');
     expect(dto).toContain('email');
@@ -107,7 +109,7 @@ describe('examples apply', () => {
     expect(router).toContain('to="/follow-up"');
   });
 
-  it('wires ticket membership through the team org repo', () => {
+  it.skipIf(!catalogue)('wires ticket membership through the team org repo', () => {
     const dest = skipApply('helpdesk-tickets');
     const memory = readFileSync(join(dest, 'apps/api/src/create-memory-input.ts'), 'utf8');
     expect(memory).toContain('createMemoryTicketRepository(orgs)');
@@ -123,7 +125,7 @@ describe('examples apply', () => {
     );
   });
 
-  it('injects the job queue into the work-order service', () => {
+  it.skipIf(!catalogue)('injects the job queue into the work-order service', () => {
     const dest = skipApply('field-work-orders');
     const composition = readFileSync(join(dest, 'apps/api/src/composition.ts'), 'utf8');
     expect(composition).toContain(

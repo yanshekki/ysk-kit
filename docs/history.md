@@ -110,4 +110,4 @@ Releases are labelled Phase 1 … Phase 51.
 
 Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are written to gitignored `.cursor/` and `.grok/` by `create-ysk-app` and `ysk upgrade`. `.gitignore` also covers `.env.*` (keeps `.env.example`), editor trees, and `*.pem` / `*.key`.
 
-**Phase 52:** CI green on sqlite dests (all three Prisma adapters in the lockfile), create-app Vitest 30s timeout, Release gated to GitHub owner `ysk`, e2e API via `tsx`. `pnpm test:coverage` reports Vitest v8 coverage (95% configured). Shared web-storage token store and Prisma id-cursor helper.
+**Phase 52:** CI green on sqlite dests (all three Prisma adapters in the lockfile), create-app Vitest 30s timeout, Release gated to GitHub owner `ysk`, e2e API via `tsx`. `pnpm test:coverage` reports Vitest v8 coverage (95% configured). Shared web-storage token store and Prisma id-cursor helper. Thin dest SDK tests cover remaining resources; optional llm/billing/orgs/devices tests stay on the living kit.

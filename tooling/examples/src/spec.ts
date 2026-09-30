@@ -2,10 +2,14 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { exampleRoot, examplesDir } from './paths';
 
-export const listExampleSlugs = (): string[] =>
-  readdirSync(examplesDir)
+export const listExampleSlugs = (): string[] => {
+  if (!existsSync(examplesDir)) return [];
+  return readdirSync(examplesDir)
     .filter((name) => existsSync(join(examplesDir, name, 'spec.json')))
     .sort();
+};
+
+export const hasExampleCatalogue = (): boolean => listExampleSlugs().length > 0;
 
 export const EXAMPLE_DBS = ['mysql', 'postgresql', 'sqlite'] as const;
 export type ExampleDb = (typeof EXAMPLE_DBS)[number];

@@ -110,4 +110,4 @@ Language: [English](history.md) · 中文
 
 Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `create-ysk-app` 與 `ysk upgrade` 寫入已 gitignore 的 `.cursor/` 與 `.grok/`。`.gitignore` 同時覆蓋 `.env.*`（保留 `.env.example`）、編輯器目錄，以及 `*.pem`／`*.key`。
 
-**Phase 52:** sqlite dest 的 CI 變綠（lockfile 含三種 Prisma adapter）、create-app Vitest 30 秒 timeout、Release 只在 GitHub owner 為 `ysk` 時運行、e2e API 用 `tsx`。`pnpm test:coverage` 用 Vitest v8 出覆蓋率報告（已設 95%）。共用 web-storage token store 與 Prisma id-cursor helper。
+**Phase 52:** sqlite dest 的 CI 變綠（lockfile 含三種 Prisma adapter）、create-app Vitest 30 秒 timeout、Release 只在 GitHub owner 為 `ysk` 時運行、e2e API 用 `tsx`。`pnpm test:coverage` 用 Vitest v8 出覆蓋率報告（已設 95%）。共用 web-storage token store 與 Prisma id-cursor helper。Thin dest 的 SDK 測試只覆蓋常駐 resource；llm/billing/orgs/devices 測試留在 living kit。

@@ -1,6 +1,7 @@
 import { slicePage } from '@ysk/application';
 import type { NotificationType } from '@ysk/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
+import { prismaIdCursor } from '../../../infra/prisma-page';
 import type { INotificationRepository } from '../domain/notification-repository';
 
 export const createPrismaNotificationRepository = (
@@ -15,7 +16,7 @@ export const createPrismaNotificationRepository = (
       where: { userId },
       orderBy: { createdAt: 'desc' },
       take: query.limit + 1,
-      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+      ...prismaIdCursor(query.cursor),
     });
     const page = slicePage(rows, query.limit);
     return {

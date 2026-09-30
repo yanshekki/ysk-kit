@@ -146,7 +146,6 @@ jobs:
       - run: pnpm db:generate
       - run: pnpm --filter @ysk/api prisma:migrate:deploy
       - run: pnpm db:seed
-      - run: pnpm --filter @ysk/api build
       - run: pnpm --filter @ysk/web build
       - run: pnpm --filter @ysk/web exec playwright install --with-deps chromium
       - run: pnpm e2e

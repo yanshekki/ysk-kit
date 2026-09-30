@@ -61,7 +61,7 @@ export function LoginPage() {
   return (
     <section className="mx-auto max-w-sm space-y-6">
       <h1 className="text-2xl font-semibold">Admin sign in</h1>
-      <form onSubmit={onPassword} className="grid gap-3">
+      <form onSubmit={onPassword} className="grid gap-3" noValidate>
         <label className="grid gap-1 text-sm" htmlFor="admin-login-email">
           Email
           <Input

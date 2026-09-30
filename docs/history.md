@@ -109,3 +109,5 @@ Releases are labelled Phase 1 … Phase 51.
 **Phase 51:** Worked examples `event-rsvp`, `job-board` (unpublished apply is CONFLICT), and `field-work-orders` (`ysk add push`, assign enqueues `work.assigned` into Inbox). Catalogue of ten systems is available. CI `example-smoke` is a 10-slug matrix (`fail-fast: false`). Capture walks `capture.json` on ports 13001 / 15173. `ysk add` on a sqlite dest strips `@db` native types (Device.token). Thin + mobile Expo app typechecks without organisation screens. `ysk add push` returns `push` from the memory harness.
 
 Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are written to gitignored `.cursor/` and `.grok/` by `create-ysk-app` and `ysk upgrade`. `.gitignore` also covers `.env.*` (keeps `.env.example`), editor trees, and `*.pem` / `*.key`.
+
+**Phase 52:** CI green on sqlite dests (all three Prisma adapters in the lockfile), create-app Vitest 30s timeout, Release gated to GitHub owner `ysk`, e2e API via `tsx`. `pnpm test:coverage` reports Vitest v8 coverage (95% configured). Shared web-storage token store and Prisma id-cursor helper.

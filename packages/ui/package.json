@@ -29,6 +29,9 @@
     "@types/react-dom": "^19.1.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "@testing-library/react": "^16.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "happy-dom": "^20.0.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.2"
   },

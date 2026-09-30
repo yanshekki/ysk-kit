@@ -18,7 +18,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [
     {
-      command: 'pnpm --filter @ysk/api start',
+      command: 'pnpm --filter @ysk/api exec tsx --env-file=../../.env src/main.ts',
       cwd: root,
       url: 'http://localhost:3001/health',
       reuseExistingServer: !process.env.CI,

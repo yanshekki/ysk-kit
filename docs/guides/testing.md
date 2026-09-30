@@ -8,7 +8,10 @@ API tests inject memory ports. They do not start MySQL, Redis, Stripe, Twilio, F
 
 ```bash
 pnpm test
+pnpm test:coverage
 ```
+
+Coverage is Vitest v8 over `apps/*/src`, `packages/*/src`, and the two CLI `src` trees. It excludes generated Prisma, templates, e2e, `infra/prisma-*.ts`, and process entrypoints (`main.ts`, `worker.ts`, Vite `main.tsx`). The configured gate is 95% lines, functions, statements, and branches. `pnpm test:coverage` is the report; CI `check` stays on `pnpm test` until the remaining client pages and live adapters close the gap. Unit tests stay on memory ports.
 
 Enum literals: `pnpm --filter @ysk/db-prisma test` compares Prisma schema to `@ysk/contracts`.
 
@@ -18,11 +21,10 @@ Web login has a component test for invalid email. Run with the web package Vites
 
 ## Playwright
 
-One Chromium smoke in `apps/web/e2e`. It starts the compiled API and a Vite preview on 5173.
+One Chromium smoke in `apps/web/e2e`. It starts the API with `tsx` (workspace packages export TypeScript) and a Vite preview on 5173.
 
 ```bash
 pnpm --filter @ysk/web exec playwright install chromium
-pnpm --filter @ysk/api build
 pnpm --filter @ysk/web build
 pnpm e2e
 ```
@@ -61,7 +63,9 @@ Biome `style.noEnum` is `error` in `@ysk/biome`, so `pnpm lint` also rejects Typ
 |---|---|
 | `check` | `pnpm lint && pnpm layers && pnpm ysk check agent && pnpm typecheck && pnpm test` |
 | `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk check agent` / typecheck / test / OpenAPI |
-| `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
+| `example-smoke` | Apply each worked example onto a sqlite dest |
+| `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
+| `Release` | Runs only when the GitHub owner is `ysk` |
 
 After a feature, the local bar is:
 

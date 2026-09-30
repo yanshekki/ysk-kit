@@ -1,0 +1,45 @@
+import { describe, expect, it } from 'vitest';
+import { createYskClient } from './index';
+import { memoryTokenStore } from './token-store';
+
+const json = (data: unknown, status = 200) =>
+  new Response(JSON.stringify({ ok: true, data }), {
+    status,
+    headers: { 'content-type': 'application/json' },
+  });
+
+describe('sdk resources', () => {
+  it('calls users, notifications, devices, api-keys, audit, billing, orgs, auth', async () => {
+    const seen: string[] = [];
+    const client = createYskClient({
+      baseUrl: 'http://api.test',
+      platform: 'web',
+      tokenStore: memoryTokenStore(),
+      fetchImpl: async (input, init) => {
+        const url = String(input);
+        seen.push(`${init?.method ?? 'GET'} ${url}`);
+        if (url.includes('/v1/auth/login')) {
+          return json({ accessToken: 'a', refreshToken: 'r', user: { id: '1' } });
+        }
+        if (url.includes('/v1/auth/logout')) return json({ ok: true });
+        if (url.includes('/v1/me/api-keys') && init?.method === 'POST') {
+          return json({ id: 'k', token: 'ysk_live_x' }, 201);
+        }
+        if (url.includes('/v1/organizations') && init?.method === 'POST') {
+          return json({ id: 'o' }, 201);
+        }
+        return json({ items: [], nextCursor: null });
+      },
+    });
+    await client.users.list({ limit: 10 });
+    await client.notifications.list();
+    await client.devices.list();
+    await client.apiKeys.list();
+    await client.audit.list();
+    await client.billing.plans();
+    await client.organizations.list();
+    await client.auth.login({ email: 'a@ysk.hk', password: 'password1' });
+    expect(seen.some((row) => row.includes('/v1/users'))).toBe(true);
+    expect(seen.some((row) => row.includes('/v1/auth/login'))).toBe(true);
+  });
+});

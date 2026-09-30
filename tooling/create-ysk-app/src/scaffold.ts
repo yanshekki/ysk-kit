@@ -61,7 +61,7 @@ const SKIP = new Set([
 export const shouldSkipCopyEntry = (entry: string): boolean =>
   SKIP.has(entry) || (entry.startsWith('.env') && entry !== '.env.example');
 
-const writeAgentStubs = (kitRoot: string, dest: string): void => {
+const writeAgentStubs = (dest: string, kitRoot: string): void => {
   const templates = join(kitRoot, 'tooling/ysk-cli/templates/agent');
   const rule = join(templates, 'ysk-kit.mdc');
   const skillsDir = join(templates, 'skills');
@@ -272,23 +272,14 @@ export const createPrisma = (databaseUrl: string): PrismaClient => {
 
 const rewritePrismaAdapter = (dest: string, db: Db): void => {
   const createPath = join(dest, 'apps/api/src/infra/create-prisma.ts');
-  const pkgPath = join(dest, 'apps/api/package.json');
-  if (!existsSync(createPath) || !existsSync(pkgPath)) return;
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
-    dependencies: Record<string, string>;
-  };
-  delete pkg.dependencies['@prisma/adapter-mariadb'];
+  if (!existsSync(createPath)) return;
   if (db === 'postgresql') {
-    pkg.dependencies['@prisma/adapter-pg'] = '7.10.0';
-    pkg.dependencies.pg = '^8.16.3';
     writeFileSync(createPath, pgCreatePrisma);
-  } else if (db === 'sqlite') {
-    pkg.dependencies['@prisma/adapter-better-sqlite3'] = '7.10.0';
-    writeFileSync(createPath, sqliteCreatePrisma);
-  } else {
-    pkg.dependencies['@prisma/adapter-mariadb'] = '7.10.0';
+    return;
   }
-  writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
+  if (db === 'sqlite') {
+    writeFileSync(createPath, sqliteCreatePrisma);
+  }
 };
 
 export const createYskApp = (opts: CreateAppOptions): string => {
@@ -337,7 +328,7 @@ export const createYskApp = (opts: CreateAppOptions): string => {
 
   copyTree(opts.kitRoot, dest, opts.kitRoot, skipApps);
   rmSync(join(dest, 'tooling/create-ysk-app'), { recursive: true, force: true });
-  writeAgentStubs(opts.kitRoot, dest);
+  writeAgentStubs(dest, opts.kitRoot);
 
   const pkgPath = join(dest, 'package.json');
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as { name: string; description?: string };

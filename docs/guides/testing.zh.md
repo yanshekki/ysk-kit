@@ -8,7 +8,10 @@ API 測試注入記憶體 port。它們不啟動 MySQL、Redis、Stripe、Twilio
 
 ```bash
 pnpm test
+pnpm test:coverage
 ```
+
+Coverage 用 Vitest v8，範圍是 `apps/*/src`、`packages/*/src` 與兩套 CLI 的 `src`。略過 generated Prisma、templates、e2e、`infra/prisma-*.ts` 與行程入口（`main.ts`、`worker.ts`、Vite `main.tsx`）。設定門檻是行、函式、陳述式、分支均 95%。`pnpm test:coverage` 出報告；CI `check` 仍跑 `pnpm test`，直至其餘 client 頁面與 live adapter 補上缺口。單元測試維持記憶體 port。
 
 Enum 字面值：`pnpm --filter @ysk/db-prisma test` 比較 Prisma schema 與 `@ysk/contracts`。
 
@@ -18,11 +21,10 @@ Web 登入有一個無效電郵的元件測試。隨 web 套件的 Vitest 任務
 
 ## Playwright
 
-`apps/web/e2e` 有一條 Chromium smoke。它啟動編譯後的 API，以及 5173 的 Vite preview。
+`apps/web/e2e` 有一條 Chromium smoke。它用 `tsx` 啟動 API（工作區套件匯出 TypeScript），以及 5173 的 Vite preview。
 
 ```bash
 pnpm --filter @ysk/web exec playwright install chromium
-pnpm --filter @ysk/api build
 pnpm --filter @ysk/web build
 pnpm e2e
 ```
@@ -61,7 +63,9 @@ pnpm ysk check agent
 |---|---|
 | `check` | `pnpm lint && pnpm layers && pnpm ysk check agent && pnpm typecheck && pnpm test` |
 | `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk check agent`／typecheck／test／OpenAPI |
-| `e2e` | MySQL 8.4 服務、migrate deploy、種子、Chromium Playwright。沒有 Redis、Stripe、Twilio、FCM、Jaeger、Grafana |
+| `example-smoke` | 把每個已完成實例套用到 sqlite dest |
+| `e2e` | MySQL 8.4 服務、migrate deploy、種子、Chromium Playwright。API 用 `tsx`。沒有 Redis、Stripe、Twilio、FCM、Jaeger、Grafana |
+| `Release` | 只在 GitHub owner 為 `ysk` 時運行 |
 
 功能完成後，本機門檻是：
 

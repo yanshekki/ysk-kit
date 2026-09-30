@@ -30,7 +30,7 @@ export function RegisterPage() {
   return (
     <section className="mx-auto max-w-sm space-y-4">
       <h1 className="text-2xl font-semibold">Register</h1>
-      <form onSubmit={onSubmit} className="grid gap-3">
+      <form onSubmit={onSubmit} className="grid gap-3" noValidate>
         <label className="grid gap-1 text-sm" htmlFor="reg-name">
           Display name
           <Input

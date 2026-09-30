@@ -109,3 +109,5 @@ Language: [English](history.md) · 中文
 **Phase 51:** 已完成實例 `event-rsvp`、`job-board`（未發布職位報名回 CONFLICT）與 `field-work-orders`（`ysk add push`，指派會把 `work.assigned` 寫入 Inbox）。十個系統的目錄現已提供。CI `example-smoke` 為 10 slug 矩陣（`fail-fast: false`）。擷取按 `capture.json` 在埠 13001／15173 逐步操作。sqlite dest 上的 `ysk add` 會去掉 `@db` native types（Device.token）。thin + mobile 的 Expo 應用在沒有組織畫面時仍能通過型別檢查。`ysk add push` 會把 `push` 放回 memory harness 的回傳值。
 
 Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `create-ysk-app` 與 `ysk upgrade` 寫入已 gitignore 的 `.cursor/` 與 `.grok/`。`.gitignore` 同時覆蓋 `.env.*`（保留 `.env.example`）、編輯器目錄，以及 `*.pem`／`*.key`。
+
+**Phase 52:** sqlite dest 的 CI 變綠（lockfile 含三種 Prisma adapter）、create-app Vitest 30 秒 timeout、Release 只在 GitHub owner 為 `ysk` 時運行、e2e API 用 `tsx`。`pnpm test:coverage` 用 Vitest v8 出覆蓋率報告（已設 95%）。共用 web-storage token store 與 Prisma id-cursor helper。

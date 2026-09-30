@@ -1,6 +1,7 @@
 import { slicePage } from '@ysk/application';
 import { AppError } from '@ysk/domain-kernel';
 import { Prisma, type PrismaClient } from '../../../generated/prisma/client';
+import { prismaIdCursor } from '../../../infra/prisma-page';
 import type { IUserRepository } from '../domain/user-repository';
 import { toUserDto, toUserRecord } from './user-mapper';
 
@@ -21,7 +22,7 @@ export const createPrismaUserRepository = (prisma: PrismaClient): IUserRepositor
     const rows = await prisma.user.findMany({
       orderBy: { createdAt: 'desc' },
       take: query.limit + 1,
-      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+      ...prismaIdCursor(query.cursor),
     });
     const page = slicePage(rows.map(toUserRecord), query.limit);
     return { items: page.items.map(toUserDto), nextCursor: page.nextCursor };

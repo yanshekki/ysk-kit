@@ -10,7 +10,7 @@ import { llmResource } from './resources/llm';
 import { notificationsResource } from './resources/notifications';
 import { organizationsResource } from './resources/organizations';
 import { usersResource } from './resources/users';
-import { memoryTokenStore, type TokenStore } from './token-store';
+import { createWebStorageTokenStore, memoryTokenStore, type TokenStore } from './token-store';
 
 export function createYskClient(opts: {
   baseUrl: string;
@@ -49,4 +49,4 @@ export type YskClient = ReturnType<typeof createYskClient>;
 export type { DevicePort } from './ports/device';
 export type { FilePickerPort } from './ports/file-picker';
 export type { TokenStore } from './token-store';
-export { connectRealtime, memoryTokenStore };
+export { connectRealtime, createWebStorageTokenStore, memoryTokenStore };

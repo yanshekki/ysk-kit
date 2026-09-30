@@ -59,7 +59,7 @@ pnpm --filter @ysk-kit/examples start apply course-enrollment --dest ~/Projects/
 pnpm --filter @ysk-kit/examples start apply course-enrollment --yes --force
 ```
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module course --prisma --web`, `ysk add module enrollment --prisma --web`, copy this overlay, replace Prisma models `Course` and `Enrollment`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add module course --prisma --web`, `ysk-kit add module enrollment --prisma --web`, copy this overlay, replace Prisma models `Course` and `Enrollment`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
@@ -256,10 +256,10 @@ Open http://localhost:3001/docs (or port 13001 when using `capture`).
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Course tests cover quota `0`, duplicate email, a full class, a missing course, and the HTTP envelopes above. `ysk check agent` reports `ysk check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
+**Expected:** all green. Course tests cover quota `0`, duplicate email, a full class, a missing course, and the HTTP envelopes above. `ysk-kit check agent` reports `ysk-kit check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
 
 The apply CLI already runs that bar unless you pass `--skip-verify`.
 
@@ -267,7 +267,7 @@ The apply CLI already runs that bar unless you pass `--skip-verify`.
 
 - Mounting `course` or `enrollment` on the living kit
 - Waitlists, payments, or attendance
-- `ysk add team` or billing (see membership-club when it ships)
+- `ysk-kit add team` or billing (see membership-club when it ships)
 - Live Stripe, Twilio, FCM, Redis, Jaeger, Grafana
 - Visual screenshot diffs in CI (PNG files are documentation; CI applies sqlite and runs tests)
 

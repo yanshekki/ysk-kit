@@ -39,7 +39,7 @@ Fix by moving the import to the correct layer, not by weakening the rule. Proced
 
 ## Adding a feature
 
-Do not invent a fourth folder. Run `pnpm ysk add module <kebab> --prisma --web`, then:
+Do not invent a fourth folder. Run `pnpm ysk-kit add module <kebab> --prisma --web`, then:
 
 1. Extend the DTO and command in `@ysk-kit/contracts`.
 2. Put invariants in `application/<name>-service.ts`.

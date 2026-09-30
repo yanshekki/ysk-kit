@@ -34,10 +34,10 @@ pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-
 套用器會：
 
 1. 以 spec 的 flavor、preset、資料庫與 admin／mobile 旗標執行 `create-ysk-app --yes`。
-2. 為每項能力執行 `ysk add`（同時出現時先 `team` 再 `billing`）。
-3. 為每個模組執行 `ysk add module`。
+2. 為每項能力執行 `ysk-kit add`（同時出現時先 `team` 再 `billing`）。
+3. 為每個模組執行 `ysk-kit add module`。
 4. 把 `overlay/` 複製到目的地，取代產生器已插入的 Prisma model，若有 `patches.json` 則做精確字串替換。
-5. 安裝、產生 client、sqlite 用 `db push`（MySQL／Postgres 用 migrate）、seed，然後跑 `layers`、`typecheck`、`test`、`gen:openapi` 與 `ysk check agent`。
+5. 安裝、產生 client、sqlite 用 `db push`（MySQL／Postgres 用 migrate）、seed，然後跑 `layers`、`typecheck`、`test`、`gen:openapi` 與 `ysk-kit check agent`。
 
 命令參考：[docs/cli/examples.zh.md](../docs/cli/examples.zh.md)。
 

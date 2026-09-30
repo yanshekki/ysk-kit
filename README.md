@@ -6,7 +6,7 @@ Language: [中文](README.zh.md) · English
 
 | | |
 |---|---|
-| **Version** | 1.0.0 |
+| **Version** | 1.0.1 |
 | **License** | MIT |
 | **Company** | [YSK Limited](https://ysk.hk/) |
 | **Contact** | email@ysk.hk |
@@ -17,19 +17,32 @@ This repository is the living `saas` flavor. Identity, files, notifications, job
 
 ## Fifteen minutes to a product
 
+From npm:
+
+```bash
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+```
+
+From this checkout:
+
 ```bash
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+```
+
+Then:
+
+```bash
 cd my-product
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-Default preset is **thin**: a copy of this tree with llm, billing, organizations, and push devices removed. `--preset full` keeps the living demonstration. Restore a capability with `pnpm ysk add llm|team|billing|push`.
+Default preset is **thin**: a copy of this tree with llm, billing, organizations, and push devices removed. `--preset full` keeps the living demonstration. Restore a capability with `pnpm ysk-kit add llm|team|billing|push`.
 
 Ten finished product systems (fields, rules, screenshots) live in [examples/](examples/README.md). Apply one with `pnpm --filter @ysk-kit/examples start apply <slug> --yes`.
 
@@ -62,12 +75,13 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 
 | Command | Purpose |
 |---|---|
-| `pnpm ysk add module <name> --prisma --web` | Hexagonal HTTP slice |
-| `pnpm ysk add <capability>` | Merge a catalogued capability |
-| `pnpm ysk upgrade` | Refresh allowlisted kit guardrails |
-| `pnpm ysk check agent` | Flag TypeScript enum, client Prisma, raw fetch |
-| `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product |
-| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent` | Verify a change |
+| `pnpm ysk-kit add module <name> --prisma --web` | Hexagonal HTTP slice |
+| `pnpm ysk-kit add <capability>` | Merge a catalogued capability |
+| `pnpm ysk-kit upgrade` | Refresh allowlisted kit guardrails |
+| `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch |
+| `pnpm create @ysk-kit/app <name>` | Scaffold a product from npm |
+| `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product from this checkout |
+| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | Verify a change |
 
 Full tables: [CLI](docs/cli/index.md), [workspace scripts](docs/cli/workspace-scripts.md), [environment](docs/cli/env.md).
 

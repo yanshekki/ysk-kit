@@ -1,5 +1,11 @@
 # @ysk-kit/logger
 
+## 1.0.1
+
+### Patch Changes
+
+- CLI command is `ysk-kit` with alias `yskk`. The `ysk` binary is removed.
+
 ## 1.0.0
 
 ### Major Changes

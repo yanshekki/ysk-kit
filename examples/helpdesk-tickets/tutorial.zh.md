@@ -2,7 +2,7 @@
 
 Language: [English](tutorial.md) · 中文
 
-一個 thin SaaS 產品，把支援工單放在組織之內。本例在行業模組之前先執行 `ysk add team`。
+一個 thin SaaS 產品，把支援工單放在組織之內。本例在行業模組之前先執行 `ysk-kit add team`。
 
 以下截圖為 1280×800，對已套用的目的地擷取（API **13001**、web **15173**）。living kit 的 3001／5173 保持空閒。
 
@@ -11,7 +11,7 @@ Language: [English](tutorial.md) · 中文
 完成之後：
 
 - 一個**新產品目錄**（不是本 kit），來自 `--preset thin`：身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊。
-- `ysk add team` 的組織：導航文字 **Orgs**，頁面標題 **Organizations**，建立表單標籤 **Name**，按鈕 **Create**。
+- `ysk-kit add team` 的組織：導航文字 **Orgs**，頁面標題 **Organizations**，建立表單標籤 **Name**，按鈕 **Create**。
 - Hexagonal 模組 `ticket`，路徑 `GET/POST /v1/ticket`，另有 `POST /v1/ticket/:id/status`。
 - Web 頁 `/ticket`（導航 **Ticket**）：組織 `<select>`、Title、Body。只有選了組織才載入列表。
 - 種子帳戶 `admin@ysk.hk`／`ysk-admin-dev` 與 `user@ysk.hk`／`ysk-user-dev`。**不會**預先插入組織；擷取腳本建立 **Acme Support**，已登入使用者就是 OWNER。
@@ -66,8 +66,8 @@ pnpm --filter @ysk-kit/create-app start my-helpdesk --preset thin --flavor saas 
 cd my-helpdesk
 pnpm install
 cp .env.example .env
-pnpm ysk add team
-pnpm ysk add module ticket --prisma --web
+pnpm ysk-kit add team
+pnpm ysk-kit add module ticket --prisma --web
 # 然後把 examples/helpdesk-tickets/overlay/ 覆寫進此樹
 # 用 overlay 片段取代 apps/api/prisma/schema.prisma 內的 model Ticket
 # 套用 examples/helpdesk-tickets/patches.json，讓記憶體工單倉庫讀同一份組織會籍
@@ -82,7 +82,7 @@ SQLite 略過 Compose，並用 `prisma db push` 代替 `migrate dev`（migrate �
 
 `spec.json` 先列能力 `team`，再列模組 `ticket`（`--prisma --web`）。**先加 team**，`Organization`／`Membership` 才存在，工單的 `getMembership` 才能讀。套用器在同時出現時已會先 `team` 再 `billing`；本例沒有 billing。
 
-`ysk add module` 寫出 hexagonal 切片，並修補 Express、Fastify、composition、SDK、web-sdk 與 web 路由（`/ticket`，導航 **Ticket**）。產生器仍使用沒有組織的 `title`／`body`。overlay 隨後覆寫那些檔。
+`ysk-kit add module` 寫出 hexagonal 切片，並修補 Express、Fastify、composition、SDK、web-sdk 與 web 路由（`/ticket`，導航 **Ticket**）。產生器仍使用沒有組織的 `title`／`body`。overlay 隨後覆寫那些檔。
 
 `examples/helpdesk-tickets/patches.json` 會改 `create-memory-input.ts`，讓 `createMemoryTicketRepository(orgs)` 向**同一**記憶體組織倉庫查會籍（`organizationService` 寫入的就是它）。禁止整份 overlay `create-memory-input.ts`。HTTP 測試會註冊使用者 A、`POST /v1/organizations`，再用該 org id `POST /v1/ticket`。
 
@@ -271,10 +271,10 @@ HTTP 狀態 **201**。
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**預期效果：** 全部綠色。工單測試涵蓋會籍、MEMBER 對 OWNER 狀態、建立組織後 HTTP 201、外人 403、422 與 401。`ysk check agent` 報告 `ysk check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
+**預期效果：** 全部綠色。工單測試涵蓋會籍、MEMBER 對 OWNER 狀態、建立組織後 HTTP 201、外人 403、422 與 401。`ysk-kit check agent` 報告 `ysk-kit check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
 
 套用器除非傳 `--skip-verify`，否則已經跑這條門檻。
 
@@ -282,7 +282,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `ticket` 掛進 living kit
 - SLA 計時、分派佇列或電郵回覆
-- `ysk add billing`（見 membership-club）
+- `ysk-kit add billing`（見 membership-club）
 - 真實 Stripe、Twilio、FCM、Redis、Jaeger、Grafana
 - CI 視覺截圖比對（PNG 是文件；CI 以 sqlite 套用並跑測試）
 

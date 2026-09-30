@@ -10,8 +10,10 @@ Scaffold a product from YSK Kit. Law: [AGENTS.md](../../AGENTS.md). Manual: [cre
 2. Run:
 
 ```bash
-pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas
+pnpm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
 ```
+
+From a kit checkout: `pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`.
 
 3. In the new directory: `pnpm install`, copy `.env.example` to `.env`, start Compose if the database is MySQL or PostgreSQL.
 4. `pnpm db:generate && pnpm db:migrate && pnpm db:seed`.

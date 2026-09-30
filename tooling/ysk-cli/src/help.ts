@@ -1,13 +1,13 @@
 import { CAPABILITIES } from './add-capability';
 
-export const HELP = `ysk — generator for YSK Kit products
+export const HELP = `ysk-kit — generator for YSK Kit products (alias: yskk)
 
 Usage:
-  pnpm ysk add module <kebab-name> [--prisma] [--web] [--no-web]
-  pnpm ysk add <capability>
-  pnpm ysk generate openapi
-  pnpm ysk upgrade [--dry-run]
-  pnpm ysk check agent
+  pnpm ysk-kit add module <kebab-name> [--prisma] [--web] [--no-web]
+  pnpm ysk-kit add <capability>
+  pnpm ysk-kit generate openapi
+  pnpm ysk-kit upgrade [--dry-run]
+  pnpm ysk-kit check agent
 
 Commands:
   add module <name>
@@ -47,8 +47,8 @@ Environment:
   YSK_ROOT    Product root to patch (default: this repository)
 
 After add module / add capability:
-  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk check agent
+  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent
 
-Manual: docs/cli/ysk.md
-Chinese: docs/cli/ysk.zh.md
+Manual: docs/cli/ysk-kit.md
+Chinese: docs/cli/ysk-kit.zh.md
 `;

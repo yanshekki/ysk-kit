@@ -1,20 +1,20 @@
-# `ysk`
+# `ysk-kit`
 
-Language: [中文](ysk.zh.md) · English
+Language: [中文](ysk-kit.zh.md) · English
 
-Generator binary at `tooling/ysk-cli`. Invoke with `pnpm ysk …` from the product root (or `pnpm --filter @ysk-kit/cli start …`).
+Generator binary at `tooling/ysk-cli`. Commands: `ysk-kit` and alias `yskk`. Invoke with `pnpm ysk-kit …` from the product root (or `pnpm --filter @ysk-kit/cli start …`).
 
 ```text
-pnpm ysk add module <kebab-name> [--prisma] [--web] [--no-web]
-pnpm ysk add <capability>
-pnpm ysk generate openapi
-pnpm ysk upgrade [--dry-run]
-pnpm ysk check agent
+pnpm ysk-kit add module <kebab-name> [--prisma] [--web] [--no-web]
+pnpm ysk-kit add <capability>
+pnpm ysk-kit generate openapi
+pnpm ysk-kit upgrade [--dry-run]
+pnpm ysk-kit check agent
 ```
 
 Environment: `YSK_ROOT` — product root to patch. Defaults to this kit when unset.
 
-## `ysk add module`
+## `ysk-kit add module`
 
 Writes one hexagonal HTTP slice. Name must match `^[a-z][a-z0-9-]*$` (example: `booking`, `inventory-item`). The URL is `/v1/<name>`. The Prisma model is PascalCase of that name.
 
@@ -48,7 +48,7 @@ pnpm layers && pnpm typecheck && pnpm test
 
 Recipe: [add-module](../recipes/add-module.md).
 
-## `ysk add <capability>`
+## `ysk-kit add <capability>`
 
 Merges a catalogued platform capability. Unknown names throw `unknown capability`. Alias: `org` → `team`.
 
@@ -73,23 +73,23 @@ Merges a catalogued platform capability. Unknown names throw `unknown capability
 
 For `llm`, `team`, `billing`, and `push`, the command copies `tooling/ysk-cli/templates/capabilities/<name>/` when the product does not already contain the skip token (`createLlmService`, `createOrganizationService`, `createBillingService`, `createDeviceService`) in `app.ts` or `composition.ts`. This repository already wires those services, so a second add is a no-op.
 
-`ysk add billing` throws if `schema.prisma` has no `model Organization`. Run `pnpm ysk add team` first.
+`ysk-kit add billing` throws if `schema.prisma` has no `model Organization`. Run `pnpm ysk-kit add team` first.
 
 Every add merges missing Prisma fragments, `.env.example` keys, and `apps/api` workspace dependencies. It does not run `prisma migrate`.
 
 Recipe: [add-capability](../recipes/add-capability.md).
 
-## `ysk generate openapi`
+## `ysk-kit generate openapi`
 
 Reads the ts-rest `appContract` and writes `docs/openapi.yaml`. Equivalent: `pnpm gen:openapi`.
 
-## `ysk upgrade`
+## `ysk-kit upgrade`
 
 Copies **allowlisted guardrail files** from the kit checkout that contains this CLI into the product root (`YSK_ROOT`, default this repository).
 
 ```text
-pnpm ysk upgrade
-pnpm ysk upgrade --dry-run
+pnpm ysk-kit upgrade
+pnpm ysk-kit upgrade --dry-run
 ```
 
 | Flag | Effect |
@@ -105,20 +105,20 @@ After a successful run, `.ysk-kit.json` `version` is set to the current kit vers
 Apply a newer kit by running **that kit’s** CLI:
 
 ```bash
-YSK_ROOT=/path/to/your-product pnpm ysk upgrade
+YSK_ROOT=/path/to/your-product pnpm ysk-kit upgrade
 ```
 
 Guide: [Refreshing a generated product](../guides/upgrade.md).
 
-## `ysk check agent`
+## `ysk-kit check agent`
 
 Scans the product root (`YSK_ROOT`, default this repository) for typical broken patches. Text scan only: no database, no typecheck.
 
 ```text
-pnpm ysk check agent
+pnpm ysk-kit check agent
 ```
 
-Exit 0 prints `ysk check agent: ok`. Exit 1 prints one line per finding: `rule  file:line`.
+Exit 0 prints `ysk-kit check agent: ok`. Exit 1 prints one line per finding: `rule  file:line`.
 
 | Rule | Where | What it flags |
 |---|---|---|

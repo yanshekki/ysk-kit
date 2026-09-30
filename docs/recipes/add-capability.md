@@ -2,7 +2,7 @@
 
 Language: [中文](add-capability.zh.md) · English
 
-Restore or merge a catalogued platform feature. Law: [AGENTS.md](../../AGENTS.md). Catalogue: [capabilities](../guides/capabilities.md), [ysk CLI](../cli/ysk.md).
+Restore or merge a catalogued platform feature. Law: [AGENTS.md](../../AGENTS.md). Catalogue: [capabilities](../guides/capabilities.md), [ysk-kit CLI](../cli/ysk.md).
 
 ## When to use this
 
@@ -15,10 +15,10 @@ Do not use this for a new business resource. That is [add-module](add-module.md)
 ## Command
 
 ```bash
-pnpm ysk add team
-pnpm ysk add billing
-pnpm ysk add llm
-pnpm ysk add push
+pnpm ysk-kit add team
+pnpm ysk-kit add billing
+pnpm ysk-kit add llm
+pnpm ysk-kit add push
 pnpm db:migrate
 pnpm gen:openapi
 pnpm layers && pnpm typecheck && pnpm test

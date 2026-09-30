@@ -39,7 +39,7 @@ HTTP adapter → application → domain ports
 
 ## 加功能
 
-不要發明第四個資料夾。執行 `pnpm ysk add module <kebab> --prisma --web`，然後：
+不要發明第四個資料夾。執行 `pnpm ysk-kit add module <kebab> --prisma --web`，然後：
 
 1. 在 `@ysk-kit/contracts` 擴充 DTO 與 command。
 2. 不變量放在 `application/<name>-service.ts`。

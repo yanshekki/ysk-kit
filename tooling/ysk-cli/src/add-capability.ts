@@ -87,7 +87,7 @@ const HINTS: Record<Capability, string[]> = {
     'dev uses a built-in key when NODE_ENV is not production',
   ],
   billing: [
-    'requires ysk add team first (Organization + Membership)',
+    'requires ysk-kit add team first (Organization + Membership)',
     'GET /v1/billing/plans (public); org OWNER/ADMIN + billing.checkout for the rest',
     'log IBillingPort by default; STRIPE_SECRET_KEY + STRIPE_PRICE_PRO enable Checkout',
     'STRIPE_WEBHOOK_SECRET for POST /v1/billing/webhook (raw body)',
@@ -102,7 +102,7 @@ export const addCapability = (name: string, root = '.'): string[] => {
   const cap = resolved as Capability;
   return [
     ...applyCapability(root, cap),
-    `ysk add ${cap}: already part of the saas flavor`,
+    `ysk-kit add ${cap}: already part of the saas flavor`,
     ...HINTS[cap],
   ];
 };

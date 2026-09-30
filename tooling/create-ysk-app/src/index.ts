@@ -43,12 +43,12 @@ const main = async (): Promise<void> => {
   if (dbService) console.log(`  docker compose up -d ${dbService}`);
   if (resolved.flavor !== 'php-bridge' && resolved.flavor !== 'static-web3') {
     console.log('  pnpm db:generate && pnpm db:migrate && pnpm db:seed');
-    console.log('  pnpm ysk add module <kebab> --prisma --web');
+    console.log('  pnpm ysk-kit add module <kebab> --prisma --web');
     console.log('  pnpm gen:openapi');
   }
   console.log('  pnpm dev');
   if (resolved.preset === 'thin') {
-    console.log('optional: pnpm ysk add llm|team|billing|push  (source trees + Express/Fastify)');
+    console.log('optional: pnpm ysk-kit add llm|team|billing|push  (source trees + Express/Fastify)');
     console.log('full living copy: --preset full');
   }
 };

@@ -7,7 +7,7 @@ Language: [English](contributing.md) · 中文
 ## 程式
 
 1. 寫程式之前先讀 [AGENTS.zh.md](../AGENTS.zh.md)。
-2. 新的 HTTP 資源由 `pnpm ysk add module <kebab> --prisma --web` 開始。
+2. 新的 HTTP 資源由 `pnpm ysk-kit add module <kebab> --prisma --web` 開始。
 3. 業務規則放在 `application/`。Prisma 留在 `infra/`。
 4. 完成前執行：`pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi`。
 

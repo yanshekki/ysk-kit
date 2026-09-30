@@ -4,16 +4,14 @@ Language: [English](upgrade.md) · 中文
 
 以 `create-ysk-app` 開出的產品，一開始是本倉的複本（`php-bridge` 則是產生出來的客戶端）。其後業務程式寫在該產品內。Kit 的護欄——agent 法律、skills、TypeScript 設定、Biome 設定，以及 `pnpm layers` 規則——可以稍後更新，而無須再複製整棵樹。
 
-日常路徑：**複製，然後 `ysk upgrade`**。
+日常路徑：**複製，然後 `ysk-kit upgrade`**。
 
 ## 兩種使用方式
 
 | 路徑 | 何時使用 |
 |---|---|
-| 複製 + `ysk upgrade` | 預設。適用於 `create-ysk-app` 的每一個 flavor。 |
+| 複製 + `ysk-kit upgrade` | 預設。適用於 `create-ysk-app` 的每一個 flavor。 |
 | npmjs（`@ysk-kit/*`） | 公開程式庫與 `@ysk-kit/create-app` 發佈到 `https://registry.npmjs.org`。產品 dest 仍然以 `workspace:*` 解析 TypeScript 原始碼。 |
-
-工作區產品仍然以 `workspace:*` 解析 TypeScript 原始碼中的 `@ysk-kit/*`。
 
 ## 來源標記
 
@@ -22,14 +20,14 @@ Language: [English](upgrade.md) · 中文
 ```json
 {
   "kit": "ysk-kit",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "flavor": "saas",
   "preset": "thin",
   "db": "mysql"
 }
 ```
 
-`version` 是產生當下 kit `package.json` 的版本。產生出來的 `README.md` / `README.zh.md` 會記下同一來源，並指向 `pnpm ysk upgrade`。
+`version` 是產生當下 kit `package.json` 的版本。產生出來的 `README.md` / `README.zh.md` 會記下同一來源，並指向 `pnpm ysk-kit upgrade`。
 
 ## 如何執行
 
@@ -38,11 +36,11 @@ Language: [English](upgrade.md) · 中文
 在你要套用的那一版 YSK Kit 工作副本中執行：
 
 ```bash
-YSK_ROOT=/path/to/your-product pnpm ysk upgrade
-YSK_ROOT=/path/to/your-product pnpm ysk upgrade --dry-run
+YSK_ROOT=/path/to/your-product pnpm ysk-kit upgrade
+YSK_ROOT=/path/to/your-product pnpm ysk-kit upgrade --dry-run
 ```
 
-未設定時，`YSK_ROOT` 預設為擁有該 CLI 的倉。在本 kit 內執行 `pnpm ysk upgrade` 是冪等的（來源與目的是同一棵樹）。`--dry-run` 只列印 `will copy` / `skip` / `will write agent stubs`，不寫檔。
+未設定時，`YSK_ROOT` 預設為擁有該 CLI 的倉。在本 kit 內執行 `pnpm ysk-kit upgrade` 是冪等的（來源與目的是同一棵樹）。`--dry-run` 只列印 `will copy` / `skip` / `will write agent stubs`，不寫檔。
 
 若沒有 `.ysk-kit.json`，只要存在 `pnpm-workspace.yaml` 或 `AGENTS.md`，命令仍會執行，然後寫入標記；`flavor` / `preset` / `db` 在檔案尚未有值時為 `unknown`。否則結束並提示：請在產品根目錄執行，或設定 `YSK_ROOT`。
 
@@ -85,4 +83,4 @@ pnpm layers && pnpm typecheck && pnpm test
 
 `php-bridge` 與 `static-web3` 跟隨產生出來的 README，而不是 API 驗證鏈。
 
-CLI 參考：[`ysk upgrade`](../cli/ysk.zh.md#ysk-upgrade)。
+CLI 參考：[`ysk-kit upgrade`](../cli/ysk.zh.md#ysk-kit-upgrade)。

@@ -47,7 +47,7 @@ pnpm --filter @ysk-kit/examples start apply job-board --dest ~/Projects/my-jobs 
 
 預設目的地（已 gitignore）：`examples/.runs/job-board`。覆蓋上一次結果請加 `--force`。
 
-手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module job --prisma --web`、`ysk add module application --prisma --web`，複製此 overlay，替換 Prisma 模型 `Job` 與 `Application`，`prisma db push`，seed。
+手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk-kit add module job --prisma --web`、`ysk-kit add module application --prisma --web`，複製此 overlay，替換 Prisma 模型 `Job` 與 `Application`，`prisma db push`，seed。
 
 ## 6. 加哪些 module／capability，為甚麼這個順序
 
@@ -166,7 +166,7 @@ pnpm dev
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **預期效果：**全部綠色。職位測試涵蓋發布／第二次發布。申請測試涵蓋未發布申請、重複電郵與不明職位。
@@ -175,7 +175,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `job` 掛進 living kit
 - 公開職缺目錄、ATS 評分或發信給申請人
-- `ysk add team` 或 billing
+- `ysk-kit add team` 或 billing
 
 ## 17. 下一例
 

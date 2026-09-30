@@ -8,21 +8,22 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 
 | Area | Available now |
 |---|---|
-| Scaffold | `create-ysk-app --preset thin\|full` (default thin) and six flavors. TTY prompts for omitted flags; `--yes` skips prompts |
-| Slice | `ysk add module` writes contract, DTO, repos, Express + Fastify, SDK, web-sdk, page, test |
+| Scaffold | `pnpm create @ysk-kit/app` or `create-ysk-app --preset thin\|full` (default thin) and six flavors. TTY prompts for omitted flags; `--yes` skips prompts |
+| npmjs | Public `@ysk-kit/*` libraries and `@ysk-kit/create-app` 1.0.0 on [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit). Dest products still use copy-tree + `ysk-kit upgrade` |
+| Slice | `ysk-kit add module` writes contract, DTO, repos, Express + Fastify, SDK, web-sdk, page, test |
 | Capabilities | Sixteen catalogued adds; `llm`, `team`, `billing`, `push` copy source when missing |
 | Clients | Vite 8 web/admin with AppShell; Expo mobile with organisation list and invite; Electron desktop |
 | Data | `pnpm db:seed` upserts `admin@ysk.hk` and `user@ysk.hk` |
 | Verify | `pnpm layers`, typecheck, Vitest (memory ports), Testing Library login, one Playwright smoke |
 | Docs | Bilingual public manuals, CLI reference, agent skills, `AGENTS.md`. Ten worked examples in `examples/` |
-| Guardrails | `.ysk-kit.json` records kit version, flavor, preset, and database. `ysk upgrade` copies allowlisted law, skills, and compiler/lint config from a kit checkout |
-| Agent scan | `ysk check agent` flags TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop. Biome `noEnum` is error. CI runs the scan |
+| Guardrails | `.ysk-kit.json` records kit version, flavor, preset, and database. `ysk-kit upgrade` copies allowlisted law, skills, and compiler/lint config from a kit checkout |
+| Agent scan | `ysk-kit check agent` flags TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop. Biome `noEnum` is error. CI runs the scan |
 
 Fifteen-minute path:
 
 ```text
 create-ysk-app my-clinic --flavor saas --preset thin --db mysql
-ysk add module appointment --prisma --web
+ysk-kit add module appointment --prisma --web
 pnpm db:migrate && pnpm db:seed && pnpm test && pnpm layers && pnpm dev
 ```
 
@@ -30,9 +31,7 @@ Result: `GET/POST /v1/appointments` in the envelope, SDK `client.appointments`, 
 
 ## Planned
 
-| Work | Why |
-|---|---|
-| npmjs `@ysk-kit/*` | Public libraries and `@ysk-kit/create-app` publish to the npm org `ysk-kit`. Daily dest refresh still uses copy-tree plus `ysk upgrade`. |
+First-wave public items are shipped in [v1.0.0](https://github.com/yanshekki/ysk-kit/releases/tag/v1.0.0). GitHub Packages is unused (GitHub owner is `yanshekki`). Leftovers stay in the table below.
 
 ## Outside the default stack
 

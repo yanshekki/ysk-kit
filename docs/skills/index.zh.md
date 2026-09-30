@@ -13,4 +13,4 @@ Language: [English](index.md) · 中文
 | [fix-layers](fix-layers.zh.md) | `pnpm layers` 失敗 |
 | [envelope-api](envelope-api.zh.md) | 新路由、SSE、PDF 或錯誤形狀 |
 
-Grok 載入 `.grok/skills/<name>/SKILL.md`。Cursor 載入 `.cursor/skills/<name>/SKILL.md`。那些檔是由 `tooling/ysk-cli/templates/agent/` 產生的英文包裝（`create-ysk-app` 與 `ysk upgrade`）：YAML `description` 加上指向此處的指針。它們已 gitignore。其他 agent 先讀 `AGENTS.md`，再跟本目錄。
+Grok 載入 `.grok/skills/<name>/SKILL.md`。Cursor 載入 `.cursor/skills/<name>/SKILL.md`。那些檔是由 `tooling/ysk-cli/templates/agent/` 產生的英文包裝（`create-ysk-app` 與 `ysk-kit upgrade`）：YAML `description` 加上指向此處的指針。它們已 gitignore。其他 agent 先讀 `AGENTS.md`，再跟本目錄。

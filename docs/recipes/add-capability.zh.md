@@ -2,7 +2,7 @@
 
 Language: [English](add-capability.md) · 中文
 
-還原或合併一項已編目的平台功能。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。目錄：[能力](../guides/capabilities.zh.md)、[ysk CLI](../cli/ysk.zh.md)。
+還原或合併一項已編目的平台功能。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。目錄：[能力](../guides/capabilities.zh.md)、[ysk-kit CLI](../cli/ysk.zh.md)。
 
 ## 何時使用
 
@@ -15,10 +15,10 @@ Language: [English](add-capability.md) · 中文
 ## 命令
 
 ```bash
-pnpm ysk add team
-pnpm ysk add billing
-pnpm ysk add llm
-pnpm ysk add push
+pnpm ysk-kit add team
+pnpm ysk-kit add billing
+pnpm ysk-kit add llm
+pnpm ysk-kit add push
 pnpm db:migrate
 pnpm gen:openapi
 pnpm layers && pnpm typecheck && pnpm test

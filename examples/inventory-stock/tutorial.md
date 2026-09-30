@@ -132,7 +132,7 @@ No `Authorization` → HTTP **401** `UNAUTHENTICATED`.
 ## 15. Verify commands
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **Expected:** all green.

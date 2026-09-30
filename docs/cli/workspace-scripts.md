@@ -19,12 +19,13 @@ Root `package.json` scripts. Requires Node 24 and pnpm 12 (`packageManager` is `
 | `pnpm db:studio` | Prisma Studio | Inspect the database |
 | `pnpm e2e` | Playwright in `@ysk-kit/web` | One Chromium smoke; needs API 3001 and web 5173 |
 | `pnpm worker` | API worker entry | BullMQ (or in-memory) consumer |
-| `pnpm ysk` | `@ysk-kit/cli start` | Generator |
-| `pnpm gen:openapi` | `ysk generate openapi` | Write `docs/openapi.yaml` |
-| `pnpm gen:module` | `ysk add module` | Same as `pnpm ysk add module` (name still required) |
+| `pnpm ysk-kit` / `pnpm yskk` | `@ysk-kit/cli start` | Generator |
+| `pnpm gen:openapi` | `ysk-kit generate openapi` | Write `docs/openapi.yaml` |
+| `pnpm gen:module` | `ysk-kit add module` | Same as `pnpm ysk-kit add module` (name still required) |
 | `pnpm pm2:start` | `pm2 start ecosystem.config.cjs` | Production API + worker |
 | `pnpm changeset` | Changesets | Version publishable packages |
 | `pnpm build:packages` | Filter `packages/**` and `tooling/**` | Emit `dist/` for libraries |
+| `pnpm release:publish` | Build then `changeset publish` | Publish `@ysk-kit/*` to npmjs |
 
 App-level:
 

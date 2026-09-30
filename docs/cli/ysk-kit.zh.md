@@ -1,20 +1,20 @@
-# `ysk`
+# `ysk-kit`
 
-Language: [English](ysk.md) · 中文
+Language: [English](ysk-kit.md) · 中文
 
-產生器位於 `tooling/ysk-cli`。在產品根目錄執行 `pnpm ysk …`（或 `pnpm --filter @ysk-kit/cli start …`）。
+產生器位於 `tooling/ysk-cli`。命令：`ysk-kit`，短名 `yskk`。在產品根目錄執行 `pnpm ysk-kit …`（或 `pnpm --filter @ysk-kit/cli start …`）。
 
 ```text
-pnpm ysk add module <kebab-name> [--prisma] [--web] [--no-web]
-pnpm ysk add <capability>
-pnpm ysk generate openapi
-pnpm ysk upgrade [--dry-run]
-pnpm ysk check agent
+pnpm ysk-kit add module <kebab-name> [--prisma] [--web] [--no-web]
+pnpm ysk-kit add <capability>
+pnpm ysk-kit generate openapi
+pnpm ysk-kit upgrade [--dry-run]
+pnpm ysk-kit check agent
 ```
 
 環境變數：`YSK_ROOT` — 要修補的產品根目錄。未設定時預設為本 kit。
 
-## `ysk add module`
+## `ysk-kit add module`
 
 寫出一條 hexagonal HTTP 切片。名稱必須符合 `^[a-z][a-z0-9-]*$`（例如 `booking`、`inventory-item`）。URL 是 `/v1/<name>`。Prisma model 是該名稱的 PascalCase。
 
@@ -48,7 +48,7 @@ pnpm layers && pnpm typecheck && pnpm test
 
 操作手冊：[add-module](../recipes/add-module.zh.md)。
 
-## `ysk add <capability>`
+## `ysk-kit add <capability>`
 
 合併一項已編目的平台能力。未知名稱會丟出 `unknown capability`。別名：`org` → `team`。
 
@@ -73,23 +73,23 @@ pnpm layers && pnpm typecheck && pnpm test
 
 對 `llm`、`team`、`billing`、`push`，若產品的 `app.ts` 或 `composition.ts` 尚未包含略過標記（`createLlmService`、`createOrganizationService`、`createBillingService`、`createDeviceService`），命令會複製 `tooling/ysk-cli/templates/capabilities/<name>/`。本倉已經接上那些 service，再加一次是空操作。
 
-若 `schema.prisma` 沒有 `model Organization`，`ysk add billing` 會丟出錯誤。請先執行 `pnpm ysk add team`。
+若 `schema.prisma` 沒有 `model Organization`，`ysk-kit add billing` 會丟出錯誤。請先執行 `pnpm ysk-kit add team`。
 
 每次 add 都會合併缺失的 Prisma fragments、`.env.example` 鍵，以及 `apps/api` workspace 依賴。它不執行 `prisma migrate`。
 
 操作手冊：[add-capability](../recipes/add-capability.zh.md)。
 
-## `ysk generate openapi`
+## `ysk-kit generate openapi`
 
 讀取 ts-rest `appContract`，寫出 `docs/openapi.yaml`。等價命令：`pnpm gen:openapi`。
 
-## `ysk upgrade`
+## `ysk-kit upgrade`
 
 把 **允許清單上的護欄檔** 從含有此 CLI 的 kit 工作副本，複製到產品根目錄（`YSK_ROOT`，未設定時為本倉）。
 
 ```text
-pnpm ysk upgrade
-pnpm ysk upgrade --dry-run
+pnpm ysk-kit upgrade
+pnpm ysk-kit upgrade --dry-run
 ```
 
 | 旗標 | 作用 |
@@ -105,20 +105,20 @@ pnpm ysk upgrade --dry-run
 要套用較新的 kit，請執行 **該 kit** 的 CLI：
 
 ```bash
-YSK_ROOT=/path/to/your-product pnpm ysk upgrade
+YSK_ROOT=/path/to/your-product pnpm ysk-kit upgrade
 ```
 
 指南：[更新已產生產品的護欄](../guides/upgrade.zh.md)。
 
-## `ysk check agent`
+## `ysk-kit check agent`
 
 掃描產品根目錄（`YSK_ROOT`，未設定時為本倉）裏典型的壞補丁。只做文字掃描：不啟動資料庫、不跑 typecheck。
 
 ```text
-pnpm ysk check agent
+pnpm ysk-kit check agent
 ```
 
-退出 0 時列印 `ysk check agent: ok`。退出 1 時每條發現一行：`rule  file:line`。
+退出 0 時列印 `ysk-kit check agent: ok`。退出 1 時每條發現一行：`rule  file:line`。
 
 | 規則 | 掃描範圍 | 標記甚麼 |
 |---|---|---|

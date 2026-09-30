@@ -18,7 +18,7 @@ pnpm --filter @ysk-kit/examples start capture <slug> [--dest <path>]
 | `--db` | 來自 `spec.json` | sqlite／mysql／postgresql |
 | `--force` | 關閉 | 先刪除非空目的地 |
 | `--skip-install` | 關閉 | 略過 `pnpm install`、env、generate、migrate、seed |
-| `--skip-verify` | 關閉 | 略過目的地的 `layers`／typecheck／test／openapi／`ysk check agent` |
+| `--skip-verify` | 關閉 | 略過目的地的 `layers`／typecheck／test／openapi／`ysk-kit check agent` |
 
 `apply` 執行 `ysk` 時把 `YSK_ROOT` 設成目的地。複製 `overlay/` 之後會執行可選的 `examples/<slug>/patches.json`（精確字串替換）。擷取讀取 `examples/<slug>/capture.json`，使用 API 埠 **13001** 與 web 埠 **15173**，讓 living kit 可繼續佔用 3001／5173。sqlite 目的地會重建 `apps/api/dev.db` 並重新 seed，然後才逐步操作介面。
 

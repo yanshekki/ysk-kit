@@ -21,21 +21,21 @@ const writeTree = (root: string, files: Record<string, string>): void => {
 
 const fixture = (name: string): string => readFileSync(join(fixtures, name), 'utf8');
 
-describe('ysk check agent', () => {
+describe('ysk-kit check agent', () => {
   it('help documents check agent', () => {
     expect(HELP).toContain('check agent');
   });
 
   it('reports zero findings on this kit', () => {
     expect(checkAgent(kitRoot)).toEqual([]);
-    expect(formatAgentFindings([])).toBe('ysk check agent: ok');
+    expect(formatAgentFindings([])).toBe('ysk-kit check agent: ok');
   });
 
   it('cli exits 0 on this kit', () => {
     const out = execFileSync(process.execPath, [tsxCli, yskCli, 'check', 'agent'], {
       encoding: 'utf8',
     });
-    expect(out).toContain('ysk check agent: ok');
+    expect(out).toContain('ysk-kit check agent: ok');
   });
 
   it('flags a TypeScript enum in packages', () => {

@@ -6,7 +6,7 @@ Language: [English](README.md) · 中文
 
 | | |
 |---|---|
-| **版本** | 1.0.0 |
+| **版本** | 1.0.1 |
 | **授權** | MIT |
 | **公司** | [YSK Limited](https://ysk.hk/) |
 | **聯絡** | email@ysk.hk |
@@ -17,19 +17,32 @@ Language: [English](README.md) · 中文
 
 ## 十五分鐘開一個產品
 
+從 npm：
+
+```bash
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+```
+
+從本倉：
+
 ```bash
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+```
+
+然後：
+
+```bash
 cd my-product
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-預設 preset 是 **thin**：複製本樹後剝走 llm、billing、organizations 與 push 裝置。`--preset full` 保留完整示範。還原能力：`pnpm ysk add llm|team|billing|push`。
+預設 preset 是 **thin**：複製本樹後剝走 llm、billing、organizations 與 push 裝置。`--preset full` 保留完整示範。還原能力：`pnpm ysk-kit add llm|team|billing|push`。
 
 十個已完成的產品系統（欄位、規則、截圖）見 [examples/](examples/README.zh.md)。套用：`pnpm --filter @ysk-kit/examples start apply <slug> --yes`。
 
@@ -62,12 +75,13 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 | 命令 | 用途 |
 |---|---|
-| `pnpm ysk add module <name> --prisma --web` | hexagonal HTTP 切片 |
-| `pnpm ysk add <capability>` | 合併一項已編目的能力 |
-| `pnpm ysk upgrade` | 更新允許清單上的 kit 護欄 |
-| `pnpm ysk check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch |
-| `pnpm --filter @ysk-kit/create-app start <name>` | 產生一個產品 |
-| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent` | 驗證一次改動 |
+| `pnpm ysk-kit add module <name> --prisma --web` | hexagonal HTTP 切片 |
+| `pnpm ysk-kit add <capability>` | 合併一項已編目的能力 |
+| `pnpm ysk-kit upgrade` | 更新允許清單上的 kit 護欄 |
+| `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch |
+| `pnpm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
+| `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
+| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | 驗證一次改動 |
 
 完整表格：[CLI](docs/cli/index.zh.md)、[工作區 script](docs/cli/workspace-scripts.zh.md)、[環境變數](docs/cli/env.zh.md)。
 

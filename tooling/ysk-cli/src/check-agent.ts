@@ -96,7 +96,7 @@ export const checkAgent = (productRoot: string): AgentFinding[] => {
 };
 
 export const formatAgentFindings = (findings: AgentFinding[]): string => {
-  if (findings.length === 0) return 'ysk check agent: ok';
+  if (findings.length === 0) return 'ysk-kit check agent: ok';
   const width = Math.max(...findings.map((item) => item.rule.length));
   return findings.map((item) => `${item.rule.padEnd(width)}  ${item.file}:${item.line}`).join('\n');
 };

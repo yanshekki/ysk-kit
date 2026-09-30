@@ -2,7 +2,7 @@
 
 Language: [中文](tutorial.zh.md) · English
 
-A thin SaaS product for field technicians: work orders on the web, the same inbox on Expo. One hexagonal module, plus `ysk add push`.
+A thin SaaS product for field technicians: work orders on the web, the same inbox on Expo. One hexagonal module, plus `ysk-kit add push`.
 
 Screenshots below are 1280×800, captured against an applied destination (API **13001**, web **15173**). There are no fabricated mobile screenshots; Expo reads the same `GET /v1/notifications`.
 
@@ -52,11 +52,11 @@ pnpm --filter @ysk-kit/examples start apply field-work-orders --dest ~/Projects/
 
 Default destination (gitignored): `examples/.runs/field-work-orders`. Replace a previous run with `--force`.
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --yes` (keep mobile), then `ysk add push`, `ysk add module work-order --prisma --web`, copy this overlay, replace Prisma model `WorkOrder`, apply `patches.json`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --yes` (keep mobile), then `ysk-kit add push`, `ysk-kit add module work-order --prisma --web`, copy this overlay, replace Prisma model `WorkOrder`, apply `patches.json`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
-`spec.json` capabilities: `["push"]`. Modules: `work-order` with `--prisma --web`. Apply runs `ysk add push` **before** the module so devices, workers, and Inbox stay wired.
+`spec.json` capabilities: `["push"]`. Modules: `work-order` with `--prisma --web`. Apply runs `ysk-kit add push` **before** the module so devices, workers, and Inbox stay wired.
 
 `examples/field-work-orders/patches.json` must pass the composition `queue` into the service:
 
@@ -179,10 +179,10 @@ Assign: `POST /v1/work-order/:id/assign` with `{}`. Complete: `POST /v1/work-ord
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Work-order tests cover assign enqueue, HTTP 200 `ASSIGNED`, empty title, and 401. `ysk check agent` reports no TypeScript `enum`.
+**Expected:** all green. Work-order tests cover assign enqueue, HTTP 200 `ASSIGNED`, empty title, and 401. `ysk-kit check agent` reports no TypeScript `enum`.
 
 ## 16. Out of scope
 

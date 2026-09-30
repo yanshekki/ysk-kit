@@ -7,7 +7,7 @@ This document is for people who change YSK Kit itself: code, tests, or documenta
 ## Code
 
 1. Read [AGENTS.md](../AGENTS.md) before writing code.
-2. New HTTP resources start with `pnpm ysk add module <kebab> --prisma --web`.
+2. New HTTP resources start with `pnpm ysk-kit add module <kebab> --prisma --web`.
 3. Put business rules in `application/`. Keep Prisma in `infra/`.
 4. Before you finish: `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi`.
 

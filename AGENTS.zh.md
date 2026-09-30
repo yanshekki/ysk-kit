@@ -13,16 +13,17 @@ Language: [English](AGENTS.md) · 中文
 開新產品：
 
 ```bash
-pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
-pnpm ysk add module <kebab-name> --prisma --web
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# 本倉：pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm ysk-kit add module <kebab-name> --prisma --web
 ```
 
-`--preset full` 複製完整示範（llm、billing、orgs、push 已經掛上）。還原被剝走的能力：`pnpm ysk add llm|team|billing|push`（`billing` 須先有 `team`）。遷移之後執行 `pnpm db:seed`，以 `admin@ysk.hk` / `ysk-admin-dev` 登入（密碼在 `.env.example`）。
+`--preset full` 複製完整示範（llm、billing、orgs、push 已經掛上）。還原被剝走的能力：`pnpm ysk-kit add llm|team|billing|push`（`billing` 須先有 `team`）。遷移之後執行 `pnpm db:seed`，以 `admin@ysk.hk` / `ysk-admin-dev` 登入（密碼在 `.env.example`）。
 
 在本倉或已產生的產品新增 HTTP 功能：
 
 ```bash
-pnpm ysk add module <kebab-name> --prisma --web
+pnpm ysk-kit add module <kebab-name> --prisma --web
 ```
 
 該命令寫出 hexagonal 切片、ts-rest 合約、SDK resource、web-sdk hooks、Express + Fastify 掛載、composition 接線，以及 memory-repo 測試。業務規則填在 `application/` 與 Prisma model。不要另起一套目錄樹。
@@ -43,10 +44,10 @@ pnpm ysk add module <kebab-name> --prisma --web
 ## 每個功能之後
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-`pnpm layers` 必須保持綠色（客戶端不碰 Express / Prisma / jobs / mail / push / AWS SDK）。`pnpm ysk check agent` 必須保持綠色（沒有 TypeScript `enum`、客戶端沒有 Prisma、web/admin/mobile/desktop 沒有 raw `fetch`）。
+`pnpm layers` 必須保持綠色（客戶端不碰 Express / Prisma / jobs / mail / push / AWS SDK）。`pnpm ysk-kit check agent` 必須保持綠色（沒有 TypeScript `enum`、客戶端沒有 Prisma、web/admin/mobile/desktop 沒有 raw `fetch`）。
 
 ## 不要
 

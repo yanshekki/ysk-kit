@@ -49,7 +49,7 @@ pnpm --filter @ysk-kit/examples start apply crm-contacts --dest ~/Projects/my-cr
 
 Default destination (gitignored): `examples/.runs/crm-contacts`. Replace a previous run with `--force`.
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module contact --prisma --web`, `ysk add module follow-up --prisma --web`, copy this overlay, replace Prisma models `Contact` and `FollowUp`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add module contact --prisma --web`, `ysk-kit add module follow-up --prisma --web`, copy this overlay, replace Prisma models `Contact` and `FollowUp`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
@@ -162,7 +162,7 @@ No `Authorization` → HTTP **401** `UNAUTHENTICATED`.
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **Expected:** all green. Contact tests cover duplicate email, follow-up ownership, and the HTTP envelopes above.
@@ -171,7 +171,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - Mounting `contact` on the living kit
 - Pipelines, scoring, or email sending
-- `ysk add team` (see helpdesk-tickets)
+- `ysk-kit add team` (see helpdesk-tickets)
 
 ## 17. Next example
 

@@ -52,10 +52,10 @@ Details: [flavors guide](../guides/flavors.md).
 After copy, thin removes llm, billing, organizations, and device (push) modules, Prisma models, routes, web screens, and the optional SDK resource tests. Identity, files, notifications, jobs, mail, API keys, crypto, and realtime stay. Restore with:
 
 ```bash
-pnpm ysk add llm
-pnpm ysk add team
-pnpm ysk add billing    # after team
-pnpm ysk add push
+pnpm ysk-kit add llm
+pnpm ysk-kit add team
+pnpm ysk-kit add billing    # after team
+pnpm ysk-kit add push
 ```
 
 Copied `docs/openapi.yaml` still describes the living kit until you run `pnpm gen:openapi` in the product.
@@ -70,9 +70,9 @@ pnpm install
 cp .env.example .env
 docker compose up -d mysql    # skip for sqlite
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module <kebab> --prisma --web
+pnpm ysk-kit add module <kebab> --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-Generated products receive `.ysk-kit.json`, `README.md`, and `README.zh.md`. Seed accounts: `admin@ysk.hk` / `ysk-admin-dev`. Refresh kit guardrails with `pnpm ysk upgrade` ([guide](../guides/upgrade.md)).
+Generated products receive `.ysk-kit.json`, `README.md`, and `README.zh.md`. Seed accounts: `admin@ysk.hk` / `ysk-admin-dev`. Refresh kit guardrails with `pnpm ysk-kit upgrade` ([guide](../guides/upgrade.md)).

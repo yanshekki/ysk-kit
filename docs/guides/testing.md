@@ -42,7 +42,7 @@ Must stay green. See [hexagonal](hexagonal.md).
 ## Agent scan
 
 ```bash
-pnpm ysk check agent
+pnpm ysk-kit check agent
 ```
 
 Text scan of the product root. Exit 1 on any finding.
@@ -53,7 +53,7 @@ Text scan of the product root. Exit 1 on any finding.
 | `clients-no-prisma` | web / admin / mobile / desktop imported Prisma or the generated client |
 | `clients-no-raw-fetch` | those apps called `fetch(` |
 
-`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk check agent`](../cli/ysk.md#ysk-check-agent).
+`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk-kit check agent`](../cli/ysk.md#ysk-kit-check-agent).
 
 Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects TypeScript enums.
 
@@ -61,8 +61,8 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 
 | Job | What it runs |
 |---|---|
-| `check` | `pnpm lint && pnpm layers && pnpm ysk check agent && pnpm typecheck && pnpm test` |
-| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk check agent` / typecheck / test / OpenAPI |
+| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk-kit check agent` / typecheck / test / OpenAPI |
 | `example-smoke` | Apply each worked example onto a sqlite dest |
 | `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
 | `Release` | Runs only when the GitHub owner is `ysk` |
@@ -70,5 +70,5 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 After a feature, the local bar is:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```

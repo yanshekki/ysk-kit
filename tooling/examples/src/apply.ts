@@ -66,7 +66,7 @@ export const applyExample = (opts: ApplyOptions): { dest: string; logs: string[]
   const yskEnv = { ...process.env, YSK_ROOT: dest };
   for (const cap of orderedCapabilities(spec.capabilities)) {
     runNodeTsx(yskCli(), ['add', cap], { cwd: dest, env: yskEnv, stdio });
-    logs.push(`ysk add ${cap}`);
+    logs.push(`ysk-kit add ${cap}`);
   }
   for (const mod of spec.modules) {
     const moduleArgs = ['add', 'module', mod.name];
@@ -74,7 +74,7 @@ export const applyExample = (opts: ApplyOptions): { dest: string; logs: string[]
     if (mod.web) moduleArgs.push('--web');
     else moduleArgs.push('--no-web');
     runNodeTsx(yskCli(), moduleArgs, { cwd: dest, env: yskEnv, stdio });
-    logs.push(`ysk add module ${mod.name}`);
+    logs.push(`ysk-kit add module ${mod.name}`);
   }
 
   const overlayDir = join(exampleRoot(spec.slug), 'overlay');

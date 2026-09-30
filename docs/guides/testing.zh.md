@@ -42,7 +42,7 @@ pnpm layers
 ## Agent 掃描
 
 ```bash
-pnpm ysk check agent
+pnpm ysk-kit check agent
 ```
 
 對產品根目錄做文字掃描。有發現時退出 1。
@@ -53,7 +53,7 @@ pnpm ysk check agent
 | `clients-no-prisma` | web／admin／mobile／desktop import 了 Prisma 或 generated client |
 | `clients-no-raw-fetch` | 那些 app 呼叫了 `fetch(` |
 
-略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk check agent`](../cli/ysk.zh.md#ysk-check-agent)。
+略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk-kit check agent`](../cli/ysk.zh.md#ysk-kit-check-agent)。
 
 `@ysk-kit/biome` 把 Biome `style.noEnum` 設為 `error`，因此 `pnpm lint` 也會拒絕 TypeScript enum。
 
@@ -61,8 +61,8 @@ pnpm ysk check agent
 
 | Job | 運行甚麼 |
 |---|---|
-| `check` | `pnpm lint && pnpm layers && pnpm ysk check agent && pnpm typecheck && pnpm test` |
-| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk check agent`／typecheck／test／OpenAPI |
+| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk-kit check agent`／typecheck／test／OpenAPI |
 | `example-smoke` | 把每個已完成實例套用到 sqlite dest |
 | `e2e` | MySQL 8.4 服務、migrate deploy、種子、Chromium Playwright。API 用 `tsx`。沒有 Redis、Stripe、Twilio、FCM、Jaeger、Grafana |
 | `Release` | 只在 GitHub owner 為 `ysk` 時運行 |
@@ -70,5 +70,5 @@ pnpm ysk check agent
 功能完成後，本機門檻是：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```

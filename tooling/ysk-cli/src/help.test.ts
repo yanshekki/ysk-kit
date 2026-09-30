@@ -17,7 +17,8 @@ describe('ysk help', () => {
     expect(HELP).toContain('check agent');
     expect(HELP).toContain('--prisma');
     expect(HELP).toContain('--no-web');
-    expect(HELP).toContain('docs/cli/ysk.md');
+    expect(HELP).toContain('docs/cli/ysk-kit.md');
+    expect(HELP).toContain('yskk');
   });
 
   it('prints help when invoked with no arguments', () => {

@@ -29,7 +29,7 @@ describe('addCapability', () => {
 
   it('aliases org to team', () => {
     const logs = addCapability('org', mkdtempSync(join(tmpdir(), 'ysk-alias-')));
-    expect(logs.join('\n')).toContain('ysk add team');
+    expect(logs.join('\n')).toContain('ysk-kit add team');
   });
 
   it.skipIf(!hasTeam)('is a no-op on the living kit when team is already wired', () => {
@@ -62,7 +62,7 @@ describe('addCapability', () => {
       `export const createComposition = () => {\n  const prisma = {};\n  const users = {};\n  const queue = {};\n  const audit = {};\n  const env = { WEB_PUBLIC_URL: 'http://x' };\n  return {\n    ok: true,\n  };\n};\n`,
     );
     const logs = addCapability('team', root);
-    expect(logs[0]).toBe('ysk add team: applied');
+    expect(logs[0]).toBe('ysk-kit add team: applied');
     const schema = readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8');
     expect(schema).toContain('enum OrgRole');
     expect(schema).toContain('model Organization');
@@ -116,7 +116,7 @@ describe('addCapability', () => {
       `export const createComposition = (opts?: { llm?: never }) => {\n  const prisma = {};\n  const env = { LLM_API_KEY: '', XAI_API_KEY: '', NODE_ENV: 'test' };\n  return {\n    ok: true,\n  };\n};\n`,
     );
     const logs = addCapability('llm', root);
-    expect(logs[0]).toBe('ysk add llm: applied');
+    expect(logs[0]).toBe('ysk-kit add llm: applied');
     const schema = readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8');
     expect(schema).toContain('model LlmUsage');
     expect(schema).toContain('llmUsages LlmUsage[]');
@@ -151,7 +151,7 @@ describe('addCapability', () => {
       `export const createComposition = () => {\n  const prisma = {};\n  const env = {};\n  return {\n    ok: true,\n  };\n};\n`,
     );
     const logs = addCapability('push', root);
-    expect(logs[0]).toBe('ysk add push: applied');
+    expect(logs[0]).toBe('ysk-kit add push: applied');
     const schema = readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8');
     expect(schema).toContain('model Device');
     expect(schema).toContain('devices Device[]');
@@ -176,7 +176,7 @@ describe('addCapability', () => {
       `export const createComposition = (opts?: { realtime?: never }) => {\n  const env = {};\n  return {\n    ok: true,\n  };\n};\n`,
     );
     const logs = addCapability('websocket', root);
-    expect(logs[0]).toBe('ysk add websocket: applied');
+    expect(logs[0]).toBe('ysk-kit add websocket: applied');
     expect(readFileSync(join(root, '.env.example'), 'utf8')).toContain('RUN_WORKERS=');
     expect(readFileSync(join(root, 'apps/api/package.json'), 'utf8')).toContain(
       '@ysk-kit/realtime',
@@ -283,7 +283,7 @@ export function App() {
 `,
     );
     const logs = addCapability('team', root);
-    expect(logs[0]).toBe('ysk add team: applied');
+    expect(logs[0]).toBe('ysk-kit add team: applied');
     expect(existsSync(join(root, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);
     expect(existsSync(join(root, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(true);
     expect(existsSync(join(root, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(true);

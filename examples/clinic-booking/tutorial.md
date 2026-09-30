@@ -67,7 +67,7 @@ pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 # then copy examples/clinic-booking/overlay/ over this tree
 # replace model Appointment in apps/api/prisma/schema.prisma with the overlay fragment
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
@@ -81,7 +81,7 @@ SQLite skips Compose and uses `prisma db push` instead of `migrate dev` (migrate
 
 `spec.json` lists one module: `appointment` with `--prisma --web`. **Capabilities are empty.** Team and billing would come first on later examples (`team` then `billing`).
 
-`ysk add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/appointment`). The generator still uses `title` / `body`. The overlay then overwrites those files with clinic fields.
+`ysk-kit add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/appointment`). The generator still uses `title` / `body`. The overlay then overwrites those files with clinic fields.
 
 ## 7. Data model
 
@@ -260,10 +260,10 @@ Open http://localhost:3001/docs (or port 13001 when using `capture`).
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Appointment tests cover past starts, overlap, adjacent slots, cancel/complete, and the four HTTP envelopes above. `ysk check agent` reports `ysk check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
+**Expected:** all green. Appointment tests cover past starts, overlap, adjacent slots, cancel/complete, and the four HTTP envelopes above. `ysk-kit check agent` reports `ysk-kit check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
 
 The apply CLI already runs that bar unless you pass `--skip-verify`.
 
@@ -271,7 +271,7 @@ The apply CLI already runs that bar unless you pass `--skip-verify`.
 
 - Mounting `appointment` on the living kit
 - Staff / multi-practitioner calendars, Google Calendar, SMS reminders
-- `ysk add team` or billing (see [membership-club](../membership-club/tutorial.md))
+- `ysk-kit add team` or billing (see [membership-club](../membership-club/tutorial.md))
 - Live Stripe, Twilio, FCM, Redis, Jaeger, Grafana
 - Visual screenshot diffs in CI (PNG files are committed; CI applies sqlite and runs tests)
 

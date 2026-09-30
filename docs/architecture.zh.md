@@ -13,7 +13,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 3. **禁止向下依賴。** Domain 不 import infra。Contracts 不 import apps。
 4. **預設 REST + OpenAPI**，瀏覽器、手機、合作方與 agent 共用同一 HTTP 介面。
 5. **能力可加可不加。** 不是每個產品都需要 auth、jobs、billing。
-6. **禁止複製業務程式；複製骨架用產生器。** 使用 `ysk add module` 與 `create-ysk-app`。
+6. **禁止複製業務程式；複製骨架用產生器。** 使用 `ysk-kit add module` 與 `create-ysk-app`。
 
 ## 現行棧
 
@@ -160,13 +160,13 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 | 命令 | 作用 |
 |---|---|
 | `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。TTY 會提示未傳的旗標；`--yes` 略過提問 |
-| `ysk add module` | 一條 hexagonal HTTP 切片 |
-| `ysk add <capability>` | 合併 Prisma、環境變數、依賴；llm／team／billing／push 在缺失時複製源碼 |
+| `ysk-kit add module` | 一條 hexagonal HTTP 切片 |
+| `ysk-kit add <capability>` | 合併 Prisma、環境變數、依賴；llm／team／billing／push 在缺失時複製源碼 |
 | `ysk generate openapi` | 寫出 `docs/openapi.yaml` |
-| `ysk upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
-| `ysk check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
+| `ysk-kit upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
+| `ysk-kit check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
 
-`--preset thin`（預設）複製後剝走 llm、billing、organizations 與 devices。`--preset full` 保留完整示範。`php-bridge` 與 `static-web3` 忽略 preset。產品以 `ysk upgrade` 更新 kit 護欄；日常路徑不會從 registry 安裝 `@ysk-kit/*`。手冊：[CLI](cli/index.zh.md)、[flavors](guides/flavors.zh.md)、[能力](guides/capabilities.zh.md)、[升級](guides/upgrade.zh.md)。
+`--preset thin`（預設）複製後剝走 llm、billing、organizations 與 devices。`--preset full` 保留完整示範。`php-bridge` 與 `static-web3` 忽略 preset。產品以 `ysk-kit upgrade` 更新 kit 護欄；日常路徑不會從 registry 安裝 `@ysk-kit/*`。手冊：[CLI](cli/index.zh.md)、[flavors](guides/flavors.zh.md)、[能力](guides/capabilities.zh.md)、[升級](guides/upgrade.zh.md)。
 
 ## 產品範圍
 

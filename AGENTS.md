@@ -13,16 +13,17 @@ A contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). Product domains 
 New product:
 
 ```bash
-pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
-pnpm ysk add module <kebab-name> --prisma --web
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# from this checkout: pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm ysk-kit add module <kebab-name> --prisma --web
 ```
 
-`--preset full` copies the living demonstration (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first). After migrate: `pnpm db:seed` then sign in as `admin@ysk.hk` / `ysk-admin-dev` (passwords live in `.env.example`).
+`--preset full` copies the living demonstration (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk-kit add llm|team|billing|push` (`billing` needs `team` first). After migrate: `pnpm db:seed` then sign in as `admin@ysk.hk` / `ysk-admin-dev` (passwords live in `.env.example`).
 
 New HTTP feature in this repo or a generated product:
 
 ```bash
-pnpm ysk add module <kebab-name> --prisma --web
+pnpm ysk-kit add module <kebab-name> --prisma --web
 ```
 
 That command writes the hexagonal slice, ts-rest contract, SDK resource, web-sdk hooks, Express + Fastify mount, composition wiring, and a memory-repo test. Fill business rules in `application/` and the Prisma model. Do not invent a parallel tree.
@@ -43,10 +44,10 @@ That command writes the hexagonal slice, ts-rest contract, SDK resource, web-sdk
 ## After every feature
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-`pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK). `pnpm ysk check agent` must stay green (no TypeScript `enum`, no Prisma in clients, no raw `fetch` in web/admin/mobile/desktop).
+`pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK). `pnpm ysk-kit check agent` must stay green (no TypeScript `enum`, no Prisma in clients, no raw `fetch` in web/admin/mobile/desktop).
 
 ## Do not
 

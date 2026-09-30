@@ -31,21 +31,34 @@ Fastify：在 `.env` 設 `HTTP_ADAPTER=fastify` 並重啟 API。
 
 在 TTY 可省略旗標；命令會提示 flavor、preset 與資料庫。旗標與 `--yes` 會略過提問。
 
+從 npm（`@ysk-kit/create-app` 1.0.0）：
+
+```bash
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+```
+
+從本倉：
+
 ```bash
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+```
+
+然後：
+
+```bash
 cd my-product
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-Thin 包含身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊。它不附帶 llm、billing、organizations 或 push 裝置。稍後用 `pnpm ysk add …` 加入。完整複製：`--preset full`。
+Thin 包含身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊。它不附帶 llm、billing、organizations 或 push 裝置。稍後用 `pnpm ysk-kit add …` 加入。完整複製：`--preset full`。
 
-產品根目錄含有 `.ysk-kit.json`（kit 版本、flavor、preset、資料庫）。稍後在 kit 工作副本執行 `pnpm ysk upgrade` 以更新護欄——見[更新已產生產品的護欄](upgrade.zh.md)。
+產品根目錄含有 `.ysk-kit.json`（kit 版本、flavor、preset、資料庫）。稍後在 kit 工作副本執行 `pnpm ysk-kit upgrade` 以更新護欄——見[更新已產生產品的護欄](upgrade.zh.md)。
 
 ## 路徑 C — 一個已完成的系統
 

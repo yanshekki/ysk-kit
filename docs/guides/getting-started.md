@@ -31,21 +31,34 @@ Fastify: set `HTTP_ADAPTER=fastify` in `.env` and restart the API.
 
 On a TTY you may omit the flags; the command prompts for flavor, preset, and database. Flags and `--yes` skip prompts.
 
+From npm (`@ysk-kit/create-app` 1.0.0):
+
+```bash
+pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+```
+
+From this checkout:
+
 ```bash
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
+```
+
+Then:
+
+```bash
 cd my-product
 pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-Thin has identity, files, notifications, jobs, mail, API keys, crypto, and realtime. It does not ship llm, billing, organizations, or push devices. Add them later with `pnpm ysk add …`. Full copy: `--preset full`.
+Thin has identity, files, notifications, jobs, mail, API keys, crypto, and realtime. It does not ship llm, billing, organizations, or push devices. Add them later with `pnpm ysk-kit add …`. Full copy: `--preset full`.
 
-The product root contains `.ysk-kit.json` (kit version, flavor, preset, database). Refresh kit guardrails later with `pnpm ysk upgrade` from a kit checkout — see [Refreshing a generated product](upgrade.md).
+The product root contains `.ysk-kit.json` (kit version, flavor, preset, database). Refresh kit guardrails later with `pnpm ysk-kit upgrade` from a kit checkout — see [Refreshing a generated product](upgrade.md).
 
 ## Path C — a worked system
 

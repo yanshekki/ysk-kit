@@ -47,7 +47,7 @@ pnpm --filter @ysk-kit/examples start apply event-rsvp --dest ~/Projects/my-even
 
 預設目的地（已 gitignore）：`examples/.runs/event-rsvp`。覆蓋上一次結果請加 `--force`。
 
-手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module event --prisma --web`、`ysk add module rsvp --prisma --web`，複製此 overlay，替換 Prisma 模型 `Event` 與 `Rsvp`，`prisma db push`，seed。
+手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk-kit add module event --prisma --web`、`ysk-kit add module rsvp --prisma --web`，複製此 overlay，替換 Prisma 模型 `Event` 與 `Rsvp`，`prisma db push`，seed。
 
 ## 6. 加哪些 module／capability，為甚麼這個順序
 
@@ -160,7 +160,7 @@ pnpm dev
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **預期效果：**全部綠色。活動測試涵蓋名額 `0`。報名測試涵蓋不明活動、重複電郵與滿座。
@@ -169,7 +169,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `event` 掛進 living kit
 - 公開活動目錄、候補名單或日曆邀請
-- `ysk add team` 或 billing
+- `ysk-kit add team` 或 billing
 
 ## 17. 下一例
 

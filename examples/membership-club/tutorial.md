@@ -11,8 +11,8 @@ Screenshots below are 1280×800, captured against an applied destination (API **
 After you finish:
 
 - A new product directory with `--preset thin` identity, files, notifications, jobs, mail, API keys, crypto, and realtime.
-- Organizations from `ysk add team`: nav **Orgs**, heading **Organizations**, form label **Name**, button **Create**.
-- Billing from `ysk add billing`: org detail has a **Billing** link for OWNER/ADMIN. Plans **Free** and **Pro**. Do **not** click Checkout (it calls `window.location.assign`).
+- Organizations from `ysk-kit add team`: nav **Orgs**, heading **Organizations**, form label **Name**, button **Create**.
+- Billing from `ysk-kit add billing`: org detail has a **Billing** link for OWNER/ADMIN. Plans **Free** and **Pro**. Do **not** click Checkout (it calls `window.location.assign`).
 - Module `member-profile` at `GET/POST /v1/member-profile`. List is the author’s profiles. Unique per `(authorId, organizationId)`.
 - Web page `/member-profile` (nav **MemberProfile**): organization `<select>` and Display name. Empty **No member profiles**.
 - Seed accounts only. The walker creates **Harbour Club** so the signed-in user is OWNER.
@@ -50,7 +50,7 @@ pnpm --filter @ysk-kit/examples start apply membership-club --dest ~/Projects/my
 
 Default destination (gitignored): `examples/.runs/membership-club`. Replace a previous run with `--force`.
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add team`, `ysk add billing`, `ysk add module member-profile --prisma --web`, copy this overlay, replace Prisma model `MemberProfile`, apply `patches.json`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add team`, `ysk-kit add billing`, `ysk-kit add module member-profile --prisma --web`, copy this overlay, replace Prisma model `MemberProfile`, apply `patches.json`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
@@ -163,7 +163,7 @@ Log billing adapter (default when Stripe keys are unset) returns the checkout UR
 }
 ```
 
-Do not click Checkout in the UI; billing HTTP tests already cover the route from `ysk add billing`.
+Do not click Checkout in the UI; billing HTTP tests already cover the route from `ysk-kit add billing`.
 
 ## 14. Scalar `/docs`
 
@@ -176,10 +176,10 @@ Do not click Checkout in the UI; billing HTTP tests already cover the route from
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Member-profile tests cover membership, duplicate, and the HTTP envelopes above. Billing tests from `ysk add billing` stay in the dest.
+**Expected:** all green. Member-profile tests cover membership, duplicate, and the HTTP envelopes above. Billing tests from `ysk-kit add billing` stay in the dest.
 
 ## 16. Out of scope
 

@@ -52,10 +52,10 @@ pnpm create @ysk-kit/app <name> [options]
 複製之後，thin 會移除 llm、billing、organizations 與 device（push）模組、Prisma model、路由、web 畫面，以及可選 SDK resource 測試。身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊保留。還原：
 
 ```bash
-pnpm ysk add llm
-pnpm ysk add team
-pnpm ysk add billing    # 在 team 之後
-pnpm ysk add push
+pnpm ysk-kit add llm
+pnpm ysk-kit add team
+pnpm ysk-kit add billing    # 在 team 之後
+pnpm ysk-kit add push
 ```
 
 複製過來的 `docs/openapi.yaml` 仍描述完整 kit，直到你在產品內執行 `pnpm gen:openapi`。
@@ -70,9 +70,9 @@ pnpm install
 cp .env.example .env
 docker compose up -d mysql    # sqlite 可略過
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module <kebab> --prisma --web
+pnpm ysk-kit add module <kebab> --prisma --web
 pnpm gen:openapi
 pnpm dev
 ```
 
-產生出來的產品獲得 `.ysk-kit.json`、`README.md` 與 `README.zh.md`。種子帳戶：`admin@ysk.hk` / `ysk-admin-dev`。以 `pnpm ysk upgrade` 更新 kit 護欄（[指南](../guides/upgrade.zh.md)）。
+產生出來的產品獲得 `.ysk-kit.json`、`README.md` 與 `README.zh.md`。種子帳戶：`admin@ysk.hk` / `ysk-admin-dev`。以 `pnpm ysk-kit upgrade` 更新 kit 護欄（[指南](../guides/upgrade.zh.md)）。

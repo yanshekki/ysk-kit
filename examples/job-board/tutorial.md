@@ -49,7 +49,7 @@ pnpm --filter @ysk-kit/examples start apply job-board --dest ~/Projects/my-jobs 
 
 Default destination (gitignored): `examples/.runs/job-board`. Replace a previous run with `--force`.
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module job --prisma --web`, `ysk add module application --prisma --web`, copy this overlay, replace Prisma models `Job` and `Application`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add module job --prisma --web`, `ysk-kit add module application --prisma --web`, copy this overlay, replace Prisma models `Job` and `Application`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
@@ -168,7 +168,7 @@ Publish: `POST /v1/job/:id/publish` with `{}`.
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **Expected:** all green. Job tests cover publish / second publish. Application tests cover unpublished apply, duplicate email, and a missing job.
@@ -177,7 +177,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - Mounting `job` on the living kit
 - Public job catalogues, ATS scoring, or email to applicants
-- `ysk add team` or billing
+- `ysk-kit add team` or billing
 
 ## 17. Next example
 

@@ -7,7 +7,7 @@ Language: [English](add-module.md) · 中文
 ## 步驟
 
 1. 選一個 kebab-case 名稱。不要人手建立資料夾。
-2. `pnpm ysk add module <name> --prisma --web`（若沒有 Vite 應用則用 `--no-web`）。
+2. `pnpm ysk-kit add module <name> --prisma --web`（若沒有 Vite 應用則用 `--no-web`）。
 3. 擴充 DTO、command 與 Prisma 欄位。
 4. 規則放在 `application/<name>-service.ts`。
 5. Prisma 留在 `infra/`。客戶端只用 `@ysk-kit/sdk` / `@ysk-kit/web-sdk`。

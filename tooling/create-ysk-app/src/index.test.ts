@@ -119,9 +119,9 @@ describe('create-ysk-app', () => {
     expect(marker.db).toBe('postgresql');
     const readme = readFileSync(join(dest, 'README.md'), 'utf8');
     expect(readme).toContain(`YSK Kit ${kitVersion}`);
-    expect(readme).toContain('pnpm ysk upgrade');
+    expect(readme).toContain('pnpm ysk-kit upgrade');
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
-    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
     expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
@@ -160,8 +160,8 @@ describe('create-ysk-app', () => {
     expect(marker.preset).toBe('thin');
     expect(marker.db).toBe('mysql');
     expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
-    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk upgrade');
-    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
     expect(existsSync(join(dest, '.cursor'))).toBe(false);
     expect(existsSync(join(dest, '.grok'))).toBe(false);
   });
@@ -189,8 +189,8 @@ describe('create-ysk-app', () => {
     expect(marker.version).toBe(kitVersion);
     expect(marker.flavor).toBe('static-web3');
     expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
-    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk upgrade');
-    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
   });
 
   it('copies trading flavor with api+web only', () => {
@@ -270,7 +270,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
   });
 
-  it('strips optional capabilities on thin preset and ysk add restores them', () => {
+  it('strips optional capabilities on thin preset and ysk-kit add restores them', () => {
     const dest = join(mkdtempSync(join(tmpdir(), 'ysk-thin-')), 'clinic');
     createYskApp({
       name: 'clinic',
@@ -304,7 +304,7 @@ describe('create-ysk-app', () => {
     expect(app).not.toContain('llmService:');
     expect(app).toContain('apiKeyService:');
 
-    expect(yskAdd('llm', dest)).toContain('ysk add llm: applied');
+    expect(yskAdd('llm', dest)).toContain('ysk-kit add llm: applied');
     expect(existsSync(join(dest, 'apps/api/src/modules/llm/application/llm-service.ts'))).toBe(
       true,
     );
@@ -320,7 +320,7 @@ describe('create-ysk-app', () => {
       readFileSync(join(dest, 'apps/api/src/app.ts'), 'utf8').match(/registerLlmRoutes\(app/g),
     ).toHaveLength(1);
 
-    expect(yskAdd('team', dest)).toContain('ysk add team: applied');
+    expect(yskAdd('team', dest)).toContain('ysk-kit add team: applied');
     expect(readFileSync(join(dest, 'apps/api/src/app.ts'), 'utf8')).toContain(
       'registerOrganizationRoutes',
     );
@@ -328,7 +328,7 @@ describe('create-ysk-app', () => {
       'model Organization',
     );
 
-    expect(yskAdd('billing', dest)).toContain('ysk add billing: applied');
+    expect(yskAdd('billing', dest)).toContain('ysk-kit add billing: applied');
     expect(readFileSync(join(dest, 'apps/api/src/app.ts'), 'utf8')).toContain(
       'registerBillingRoutes',
     );
@@ -336,7 +336,7 @@ describe('create-ysk-app', () => {
       'billingHandlers',
     );
 
-    expect(yskAdd('push', dest)).toContain('ysk add push: applied');
+    expect(yskAdd('push', dest)).toContain('ysk-kit add push: applied');
     expect(readFileSync(join(dest, 'apps/api/src/create-memory-input.ts'), 'utf8')).toMatch(
       /return \{ input, otpSink, mail, jobs, realtime, push/,
     );
@@ -369,7 +369,7 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8')).toContain("'orgs'");
   });
 
-  it('strips Expo org screens on thin + mobile and ysk add team restores them', () => {
+  it('strips Expo org screens on thin + mobile and ysk-kit add team restores them', () => {
     const dest = join(mkdtempSync(join(tmpdir(), 'ysk-thin-mobile-')), 'clinic');
     createYskApp({
       name: 'clinic',
@@ -396,7 +396,7 @@ describe('create-ysk-app', () => {
       readFileSync(join(dest, 'apps/mobile/src/screens/login-screen.tsx'), 'utf8'),
     ).not.toContain('Accept invite');
 
-    expect(yskAdd('team', dest)).toContain('ysk add team: applied');
+    expect(yskAdd('team', dest)).toContain('ysk-kit add team: applied');
     expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);
     expect(existsSync(join(dest, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(true);
     expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(true);

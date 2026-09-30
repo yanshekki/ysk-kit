@@ -536,13 +536,13 @@ const writeKitMarker = (dest: string, opts: CreateAppOptions): void => {
 const generatedFromEn = (opts: CreateAppOptions): string => {
   const version = kitVersionOf(opts.kitRoot);
   return `Generated from YSK Kit ${version} (\`${opts.flavor}\`, preset \`${opts.preset}\`).
-Refresh guardrails: \`pnpm ysk upgrade\``;
+Refresh guardrails: \`pnpm ysk-kit upgrade\``;
 };
 
 const generatedFromZh = (opts: CreateAppOptions): string => {
   const version = kitVersionOf(opts.kitRoot);
   return `由 YSK Kit ${version} 產生（\`${opts.flavor}\`，preset \`${opts.preset}\`）。
-更新護欄：\`pnpm ysk upgrade\``;
+更新護欄：\`pnpm ysk-kit upgrade\``;
 };
 
 const writeProductReadme = (dest: string, opts: CreateAppOptions, includeAdmin: boolean): void => {

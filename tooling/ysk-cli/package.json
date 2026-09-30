@@ -1,9 +1,10 @@
 {
   "name": "@ysk-kit/cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "bin": {
-    "ysk": "./src/index.ts"
+    "ysk-kit": "./src/index.ts",
+    "yskk": "./src/index.ts"
   },
   "scripts": {
     "start": "tsx src/index.ts",
@@ -38,7 +39,8 @@
       }
     },
     "bin": {
-      "ysk": "./dist/index.js"
+      "ysk-kit": "./dist/index.js",
+      "yskk": "./dist/index.js"
     }
   }
 }

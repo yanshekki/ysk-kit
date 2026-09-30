@@ -132,7 +132,7 @@ pnpm dev
 ## 15. 驗證命令
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **預期效果：**全部綠色。

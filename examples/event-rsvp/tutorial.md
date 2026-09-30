@@ -49,7 +49,7 @@ pnpm --filter @ysk-kit/examples start apply event-rsvp --dest ~/Projects/my-even
 
 Default destination (gitignored): `examples/.runs/event-rsvp`. Replace a previous run with `--force`.
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module event --prisma --web`, `ysk add module rsvp --prisma --web`, copy this overlay, replace Prisma models `Event` and `Rsvp`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add module event --prisma --web`, `ysk-kit add module rsvp --prisma --web`, copy this overlay, replace Prisma models `Event` and `Rsvp`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
@@ -162,7 +162,7 @@ No `Authorization` → HTTP **401** `UNAUTHENTICATED`.
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **Expected:** all green. Event tests cover capacity `0`. RSVP tests cover missing event, duplicate email, and a full house.
@@ -171,7 +171,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - Mounting `event` on the living kit
 - Public event catalogues, waitlists, or calendar invites
-- `ysk add team` or billing
+- `ysk-kit add team` or billing
 
 ## 17. Next example
 

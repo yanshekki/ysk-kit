@@ -8,21 +8,22 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 
 | 範圍 | 現已提供 |
 |---|---|
-| 開倉 | `create-ysk-app --preset thin\|full`（預設 thin）與六個 flavor。TTY 會提示未傳的旗標；`--yes` 略過提問 |
-| 切片 | `ysk add module` 寫出合約、DTO、repo、Express + Fastify、SDK、web-sdk、頁面、測試 |
+| 開倉 | `pnpm create @ysk-kit/app` 或 `create-ysk-app --preset thin\|full`（預設 thin）與六個 flavor。TTY 會提示未傳的旗標；`--yes` 略過提問 |
+| npmjs | 公開 `@ysk-kit/*` 與 `@ysk-kit/create-app` 1.0.0 在 [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit)。產品 dest 仍然用 copy-tree 加 `ysk-kit upgrade` |
+| 切片 | `ysk-kit add module` 寫出合約、DTO、repo、Express + Fastify、SDK、web-sdk、頁面、測試 |
 | 能力 | 十六項已編目的 add；`llm`、`team`、`billing`、`push` 在缺失時複製源碼 |
 | 客戶端 | Vite 8 web/admin（AppShell）；Expo 流動應用（組織列表／邀請）；Electron 桌面 |
 | 資料 | `pnpm db:seed` upsert `admin@ysk.hk` 與 `user@ysk.hk` |
 | 驗證 | `pnpm layers`、typecheck、Vitest（記憶體 port）、Testing Library 登入、一條 Playwright smoke |
 | 文件 | 雙語公開手冊、CLI 參考、agent skills、`AGENTS.md`。十個已完成實例在 `examples/` |
-| 護欄 | `.ysk-kit.json` 記錄 kit 版本、flavor、preset 與資料庫。`ysk upgrade` 從 kit 工作副本複製允許清單上的法律、skills 與編譯／lint 設定 |
-| Agent 掃描 | `ysk check agent` 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch`。Biome `noEnum` 為 error。CI 會跑此掃描 |
+| 護欄 | `.ysk-kit.json` 記錄 kit 版本、flavor、preset 與資料庫。`ysk-kit upgrade` 從 kit 工作副本複製允許清單上的法律、skills 與編譯／lint 設定 |
+| Agent 掃描 | `ysk-kit check agent` 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch`。Biome `noEnum` 為 error。CI 會跑此掃描 |
 
 十五分鐘路徑：
 
 ```text
 create-ysk-app my-clinic --flavor saas --preset thin --db mysql
-ysk add module appointment --prisma --web
+ysk-kit add module appointment --prisma --web
 pnpm db:migrate && pnpm db:seed && pnpm test && pnpm layers && pnpm dev
 ```
 
@@ -30,9 +31,7 @@ pnpm db:migrate && pnpm db:seed && pnpm test && pnpm layers && pnpm dev
 
 ## 計劃中
 
-| 工作 | 原因 |
-|---|---|
-| npmjs `@ysk-kit/*` | 公開程式庫與 `@ysk-kit/create-app` 發佈到 npm org `ysk-kit`。產品 dest 日常更新仍然是 copy-tree 加 `ysk upgrade`。 |
+第一波公開項目已隨 [v1.0.0](https://github.com/yanshekki/ysk-kit/releases/tag/v1.0.0) 出。唔用 GitHub Packages（GitHub 擁有者是 `yanshekki`）。其餘見下表。
 
 ## 預設棧以外
 

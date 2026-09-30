@@ -84,7 +84,7 @@ export const applyCapability = (root: string, name: Capability): string[] => {
   if (name === 'billing') {
     const schema = readIf(join(root, 'apps/api/prisma/schema.prisma'));
     if (schema && !/model\s+Organization\s*\{/.test(schema)) {
-      throw new Error('ysk add billing requires team. Run: pnpm ysk add team');
+      throw new Error('ysk-kit add billing requires team. Run: pnpm ysk-kit add team');
     }
   }
 
@@ -206,7 +206,7 @@ export const applyCapability = (root: string, name: Capability): string[] => {
     }
   }
 
-  logs.unshift(changed ? `ysk add ${name}: applied` : `ysk add ${name}: already applied`);
+  logs.unshift(changed ? `ysk-kit add ${name}: applied` : `ysk-kit add ${name}: already applied`);
   logs.push('run pnpm db:migrate if prisma models changed');
   logs.push('run pnpm gen:openapi after contracts change');
   return logs;

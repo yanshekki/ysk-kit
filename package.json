@@ -1,6 +1,6 @@
 {
   "name": "ysk-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "YSK Kit — shared TypeScript monorepo starter for YSK products",
   "license": "MIT",
@@ -23,7 +23,8 @@
     "db:studio": "pnpm --filter @ysk-kit/api prisma:studio",
     "e2e": "pnpm --filter @ysk-kit/web exec playwright test",
     "worker": "pnpm --filter @ysk-kit/api worker",
-    "ysk": "pnpm --filter @ysk-kit/cli start",
+    "ysk-kit": "pnpm --filter @ysk-kit/cli start",
+    "yskk": "pnpm --filter @ysk-kit/cli start",
     "gen:openapi": "pnpm --filter @ysk-kit/cli start generate openapi",
     "gen:module": "pnpm --filter @ysk-kit/cli start add module",
     "pm2:start": "pm2 start ecosystem.config.cjs",

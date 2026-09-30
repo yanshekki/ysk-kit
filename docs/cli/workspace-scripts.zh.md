@@ -19,12 +19,13 @@ Language: [English](workspace-scripts.md) · 中文
 | `pnpm db:studio` | Prisma Studio | 檢視資料庫 |
 | `pnpm e2e` | `@ysk-kit/web` 的 Playwright | 一條 Chromium smoke；需要 API 3001 與 web 5173 |
 | `pnpm worker` | API worker 入口 | BullMQ（或記憶體）消費者 |
-| `pnpm ysk` | `@ysk-kit/cli start` | 產生器 |
-| `pnpm gen:openapi` | `ysk generate openapi` | 寫出 `docs/openapi.yaml` |
-| `pnpm gen:module` | `ysk add module` | 與 `pnpm ysk add module` 相同（仍須提供名稱） |
+| `pnpm ysk-kit` / `pnpm yskk` | `@ysk-kit/cli start` | 產生器 |
+| `pnpm gen:openapi` | `ysk-kit generate openapi` | 寫出 `docs/openapi.yaml` |
+| `pnpm gen:module` | `ysk-kit add module` | 與 `pnpm ysk-kit add module` 相同（仍須提供名稱） |
 | `pnpm pm2:start` | `pm2 start ecosystem.config.cjs` | 生產 API + worker |
 | `pnpm changeset` | Changesets | 為可發布套件版本 |
 | `pnpm build:packages` | 篩選 `packages/**` 與 `tooling/**` | 為程式庫輸出 `dist/` |
+| `pnpm release:publish` | 編譯然後 `changeset publish` | 把 `@ysk-kit/*` 發佈到 npmjs |
 
 應用層：
 

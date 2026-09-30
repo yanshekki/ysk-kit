@@ -59,7 +59,7 @@ pnpm --filter @ysk-kit/examples start apply course-enrollment --dest ~/Projects/
 pnpm --filter @ysk-kit/examples start apply course-enrollment --yes --force
 ```
 
-人手等價步驟（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module course --prisma --web`、`ysk add module enrollment --prisma --web`，複製此 overlay，替換 Prisma 模型 `Course` 與 `Enrollment`，`prisma db push`，seed。
+人手等價步驟（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk-kit add module course --prisma --web`、`ysk-kit add module enrollment --prisma --web`，複製此 overlay，替換 Prisma 模型 `Course` 與 `Enrollment`，`prisma db push`，seed。
 
 ## 6. 模組與能力，以及這個順序的原因
 
@@ -256,10 +256,10 @@ HTTP 狀態 **201**。
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**預期效果：** 全部綠色。課程測試涵蓋名額 `0`、重複電郵、額滿、課程不存在，以及上面的 HTTP envelope。`ysk check agent` 報告 `ysk check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
+**預期效果：** 全部綠色。課程測試涵蓋名額 `0`、重複電郵、額滿、課程不存在，以及上面的 HTTP envelope。`ysk-kit check agent` 報告 `ysk-kit check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
 
 套用器除非傳 `--skip-verify`，否則已經跑這條門檻。
 
@@ -267,7 +267,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `course` 或 `enrollment` 掛進 living kit
 - 候補名單、收費或出席
-- `ysk add team` 或 billing（會員訂閱實例稍後提供）
+- `ysk-kit add team` 或 billing（會員訂閱實例稍後提供）
 - 真實 Stripe、Twilio、FCM、Redis、Jaeger、Grafana
 - CI 視覺截圖比對（PNG 是文件；CI 以 sqlite 套用並跑測試）
 

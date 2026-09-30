@@ -2,12 +2,12 @@
 
 Language: [中文](add-module.zh.md) · English
 
-For humans and agents. Law: [AGENTS.md](../../AGENTS.md). CLI flags: [ysk](../cli/ysk.md).
+For humans and agents. Law: [AGENTS.md](../../AGENTS.md). CLI flags: [ysk-kit](../cli/ysk.md).
 
 ## Command
 
 ```bash
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 pnpm db:migrate
 pnpm gen:openapi
 pnpm layers && pnpm typecheck && pnpm test
@@ -48,7 +48,7 @@ The notes-shaped tree under `modules/notes` documents the template. This reposit
 ```text
 Follow AGENTS.md.
 Add a <name> module with fields <...>.
-Use: pnpm ysk add module <name> --prisma --web
+Use: pnpm ysk-kit add module <name> --prisma --web
 Then fill business rules in application/ and the Prisma model.
 Do not invent folders. Do not add TypeScript enums.
 Run pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi.

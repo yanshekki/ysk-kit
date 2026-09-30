@@ -34,10 +34,10 @@ Default destination (gitignored via `.runs/`): `examples/.runs/<slug>/`. Pass `-
 The applicator:
 
 1. Runs `create-ysk-app --yes` with the spec flavor, preset, database, and admin/mobile flags.
-2. Runs `ysk add` for each capability (`team` before `billing` when both appear).
-3. Runs `ysk add module` for each module.
+2. Runs `ysk-kit add` for each capability (`team` before `billing` when both appear).
+3. Runs `ysk-kit add module` for each module.
 4. Copies `overlay/` onto the destination, replaces Prisma models the generator already inserted, and applies `patches.json` exact string replacements when that file exists.
-5. Installs, generates the client, `db push` (sqlite) or migrate (MySQL/Postgres), seeds, then `layers`, `typecheck`, `test`, `gen:openapi`, and `ysk check agent`.
+5. Installs, generates the client, `db push` (sqlite) or migrate (MySQL/Postgres), seeds, then `layers`, `typecheck`, `test`, `gen:openapi`, and `ysk-kit check agent`.
 
 Command reference: [docs/cli/examples.md](../docs/cli/examples.md).
 

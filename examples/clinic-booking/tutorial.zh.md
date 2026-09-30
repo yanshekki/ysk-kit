@@ -67,7 +67,7 @@ pnpm install
 cp .env.example .env
 docker compose up -d mysql
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
-pnpm ysk add module appointment --prisma --web
+pnpm ysk-kit add module appointment --prisma --web
 # 然後把 examples/clinic-booking/overlay/ 覆寫進此樹
 # 用 overlay 片段取代 apps/api/prisma/schema.prisma 內的 model Appointment
 pnpm db:generate && pnpm db:migrate && pnpm db:seed
@@ -81,7 +81,7 @@ SQLite 略過 Compose，並用 `prisma db push` 代替 `migrate dev`（migrate �
 
 `spec.json` 只列一個模組：`appointment`，並帶 `--prisma --web`。**能力清單是空的。** 較後的實例若需要組織與收費，會先 `team` 再 `billing`。
 
-`ysk add module` 寫出 hexagonal 切片，並修補 Express、Fastify、composition、SDK、web-sdk 與 web 路由（`/appointment`）。產生器仍使用 `title`／`body`。overlay 隨後把那些檔換成診所欄位。
+`ysk-kit add module` 寫出 hexagonal 切片，並修補 Express、Fastify、composition、SDK、web-sdk 與 web 路由（`/appointment`）。產生器仍使用 `title`／`body`。overlay 隨後把那些檔換成診所欄位。
 
 ## 7. 資料模型
 
@@ -260,10 +260,10 @@ HTTP 狀態 **201**。
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**預期效果：** 全部綠色。預約測試涵蓋過去時間、重疊、緊接時段、取消／完成，以及上面四個 HTTP envelope。`ysk check agent` 報告 `ysk check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
+**預期效果：** 全部綠色。預約測試涵蓋過去時間、重疊、緊接時段、取消／完成，以及上面四個 HTTP envelope。`ysk-kit check agent` 報告 `ysk-kit check agent: ok`（沒有 TypeScript `enum`、web 沒有 Prisma、沒有 raw `fetch`）。
 
 套用器除非傳 `--skip-verify`，否則已經跑這條門檻。
 
@@ -271,7 +271,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `appointment` 掛進 living kit
 - 職員／多執業者日曆、Google Calendar、SMS 提醒
-- `ysk add team` 或 billing（見[會員訂閱](../membership-club/tutorial.zh.md)）
+- `ysk-kit add team` 或 billing（見[會員訂閱](../membership-club/tutorial.zh.md)）
 - 真實 Stripe、Twilio、FCM、Redis、Jaeger、Grafana
 - CI 視覺截圖比對（PNG 會提交；CI 以 sqlite 套用並跑測試）
 

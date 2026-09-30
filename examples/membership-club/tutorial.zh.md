@@ -9,8 +9,8 @@ Language: [English](tutorial.md) · 中文
 ## 1. 完成後你會得到甚麼
 
 - 新產品目錄，含 `--preset thin` 的身份、檔案、通知、工作、郵件、API 金鑰、加密與即時通道。
-- `ysk add team` 的組織：導航 **Orgs**，標題 **Organizations**，表單標籤 **Name**，按鈕 **Create**。
-- `ysk add billing` 的收費：組織詳情對 OWNER／ADMIN 有 **Billing** 連結。方案名稱 **Free** 與 **Pro**。**不要**按 Checkout（會呼叫 `window.location.assign`）。
+- `ysk-kit add team` 的組織：導航 **Orgs**，標題 **Organizations**，表單標籤 **Name**，按鈕 **Create**。
+- `ysk-kit add billing` 的收費：組織詳情對 OWNER／ADMIN 有 **Billing** 連結。方案名稱 **Free** 與 **Pro**。**不要**按 Checkout（會呼叫 `window.location.assign`）。
 - 模組 `member-profile`：`GET/POST /v1/member-profile`。列表是作者自己的資料。`(authorId, organizationId)` 唯一。
 - 網頁 `/member-profile`（導航 **MemberProfile**）：組織 `<select>` 與 Display name。空白 **No member profiles**。
 - 只 seed 帳戶。擷取腳本建立 **Harbour Club**，已登入使用者就是 OWNER。
@@ -48,7 +48,7 @@ pnpm --filter @ysk-kit/examples start apply membership-club --dest ~/Projects/my
 
 預設目的地（已 gitignore）：`examples/.runs/membership-club`。覆蓋上一次結果請加 `--force`。
 
-手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add team`、`ysk add billing`、`ysk add module member-profile --prisma --web`，複製此 overlay，替換 Prisma 模型 `MemberProfile`，套用 `patches.json`，`prisma db push`，seed。
+手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk-kit add team`、`ysk-kit add billing`、`ysk-kit add module member-profile --prisma --web`，複製此 overlay，替換 Prisma 模型 `MemberProfile`，套用 `patches.json`，`prisma db push`，seed。
 
 ## 6. 加哪些 module／capability，為甚麼這個順序
 
@@ -161,7 +161,7 @@ Display name 填 `Harbour Member`，Create。
 }
 ```
 
-介面不要按 Checkout；billing HTTP 測試已由 `ysk add billing` 覆蓋。
+介面不要按 Checkout；billing HTTP 測試已由 `ysk-kit add billing` 覆蓋。
 
 ## 14. Scalar `/docs`
 
@@ -174,10 +174,10 @@ Display name 填 `Harbour Member`，Create。
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**預期效果：**全部綠色。會員資料測試涵蓋會籍、重複，以及上述 HTTP envelope。`ysk add billing` 的測試仍在目的地內。
+**預期效果：**全部綠色。會員資料測試涵蓋會籍、重複，以及上述 HTTP envelope。`ysk-kit add billing` 的測試仍在目的地內。
 
 ## 16. 本例不做甚麼
 

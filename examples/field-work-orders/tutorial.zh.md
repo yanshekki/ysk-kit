@@ -2,7 +2,7 @@
 
 Language: [English](tutorial.md) · 中文
 
-精簡 SaaS 產品，給外勤技術員用：網頁工單，Expo 共用同一個收件箱。一個六角形模組，另加 `ysk add push`。
+精簡 SaaS 產品，給外勤技術員用：網頁工單，Expo 共用同一個收件箱。一個六角形模組，另加 `ysk-kit add push`。
 
 以下截圖為 1280×800，對已套用的目的地擷取（API **13001**，web **15173**）。沒有虛構流動截圖；Expo 讀同一個 `GET /v1/notifications`。
 
@@ -50,11 +50,11 @@ pnpm --filter @ysk-kit/examples start apply field-work-orders --dest ~/Projects/
 
 預設目的地（已 gitignore）：`examples/.runs/field-work-orders`。覆蓋上一次結果請加 `--force`。
 
-手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --yes`（保留 mobile），然後 `ysk add push`、`ysk add module work-order --prisma --web`，複製此 overlay，替換 Prisma 模型 `WorkOrder`，套用 `patches.json`，`prisma db push`，seed。
+手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --yes`（保留 mobile），然後 `ysk-kit add push`、`ysk-kit add module work-order --prisma --web`，複製此 overlay，替換 Prisma 模型 `WorkOrder`，套用 `patches.json`，`prisma db push`，seed。
 
 ## 6. 加哪些 module／capability，為甚麼這個順序
 
-`spec.json` 能力：`["push"]`。模組：`work-order` 帶 `--prisma --web`。套用器先 `ysk add push` 再加模組，裝置、worker 與 Inbox 才接得上。
+`spec.json` 能力：`["push"]`。模組：`work-order` 帶 `--prisma --web`。套用器先 `ysk-kit add push` 再加模組，裝置、worker 與 Inbox 才接得上。
 
 `examples/field-work-orders/patches.json` 必須把 composition 的 `queue` 傳進服務：
 
@@ -177,10 +177,10 @@ Expo 的 `InboxScreen` 呼叫同一個 `GET /v1/notifications`。本教程不要
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**預期效果：**全部綠色。工單測試涵蓋指派 enqueue、HTTP 200 `ASSIGNED`、空白標題與 401。`ysk check agent` 報告沒有 TypeScript `enum`。
+**預期效果：**全部綠色。工單測試涵蓋指派 enqueue、HTTP 200 `ASSIGNED`、空白標題與 401。`ysk-kit check agent` 報告沒有 TypeScript `enum`。
 
 ## 16. 本例不做甚麼
 

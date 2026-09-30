@@ -13,7 +13,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 3. **No downward imports.** Domain does not import infra. Contracts do not import apps.
 4. **REST + OpenAPI by default**, so browsers, phones, partners, and agents share one HTTP surface.
 5. **Capabilities are optional.** Auth, jobs, and billing are not required in every product.
-6. **Copy business code is forbidden; copy skeleton with generators.** Use `ysk add module` and `create-ysk-app`.
+6. **Copy business code is forbidden; copy skeleton with generators.** Use `ysk-kit add module` and `create-ysk-app`.
 
 ## Current stack
 
@@ -160,13 +160,13 @@ Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `Fi
 | Command | Effect |
 |---|---|
 | `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. TTY prompts for omitted flags; `--yes` skips prompts |
-| `ysk add module` | One hexagonal HTTP slice |
-| `ysk add <capability>` | Merge Prisma, env, deps; copy source for llm / team / billing / push when missing |
+| `ysk-kit add module` | One hexagonal HTTP slice |
+| `ysk-kit add <capability>` | Merge Prisma, env, deps; copy source for llm / team / billing / push when missing |
 | `ysk generate openapi` | Write `docs/openapi.yaml` |
-| `ysk upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
-| `ysk check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
+| `ysk-kit upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
+| `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
 
-`--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk upgrade`; they do not install `@ysk-kit/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
+`--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk-kit upgrade`; they do not install `@ysk-kit/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
 
 ## Product scope
 

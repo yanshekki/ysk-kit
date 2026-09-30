@@ -47,7 +47,7 @@ pnpm --filter @ysk-kit/examples start apply crm-contacts --dest ~/Projects/my-cr
 
 預設目的地（已 gitignore）：`examples/.runs/crm-contacts`。覆蓋上一次結果請加 `--force`。
 
-手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module contact --prisma --web`、`ysk add module follow-up --prisma --web`，複製此 overlay，替換 Prisma 模型 `Contact` 與 `FollowUp`，`prisma db push`，seed。
+手動（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk-kit add module contact --prisma --web`、`ysk-kit add module follow-up --prisma --web`，複製此 overlay，替換 Prisma 模型 `Contact` 與 `FollowUp`，`prisma db push`，seed。
 
 ## 6. 加哪些 module／capability，為甚麼這個順序
 
@@ -160,7 +160,7 @@ pnpm dev
 在目的地內：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 **預期效果：**全部綠色。聯絡人測試涵蓋重複電郵、跟進擁有權，以及上述 HTTP envelope。
@@ -169,7 +169,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 - 把 `contact` 掛進 living kit
 - 銷售漏斗、評分或發信
-- `ysk add team`（見 helpdesk-tickets）
+- `ysk-kit add team`（見 helpdesk-tickets）
 
 ## 17. 下一例
 

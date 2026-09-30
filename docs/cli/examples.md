@@ -18,7 +18,7 @@ Missing `<slug>` prints `--help` and exits 1.
 | `--db` | from `spec.json` | sqlite / mysql / postgresql |
 | `--force` | off | Delete a non-empty destination first |
 | `--skip-install` | off | Skip `pnpm install`, env, generate, migrate, seed |
-| `--skip-verify` | off | Skip dest `layers` / typecheck / test / openapi / `ysk check agent` |
+| `--skip-verify` | off | Skip dest `layers` / typecheck / test / openapi / `ysk-kit check agent` |
 
 `apply` sets `YSK_ROOT` to the destination when it runs `ysk`. After copying `overlay/`, apply runs optional `examples/<slug>/patches.json` (exact string replacements). Capture reads `examples/<slug>/capture.json`, uses API port **13001** and web port **15173** so the living kit can keep 3001 / 5173, and for sqlite destinations recreates `apps/api/dev.db` and re-seeds before it walks the UI.
 

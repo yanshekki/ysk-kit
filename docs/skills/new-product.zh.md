@@ -10,8 +10,10 @@ Language: [English](new-product.md) · 中文
 2. 執行：
 
 ```bash
-pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas
+pnpm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
 ```
+
+從 kit checkout：`pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`。
 
 3. 在新目錄：`pnpm install`，把 `.env.example` 複製為 `.env`，若資料庫是 MySQL 或 PostgreSQL 就啟動 Compose。
 4. `pnpm db:generate && pnpm db:migrate && pnpm db:seed`。

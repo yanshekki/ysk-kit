@@ -58,13 +58,13 @@ pnpm --filter @ysk-kit/examples start apply invoice-quotes --dest ~/Projects/my-
 pnpm --filter @ysk-kit/examples start apply invoice-quotes --yes --force
 ```
 
-Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module quote --prisma --web`, copy this overlay, replace Prisma model `Quote`, `prisma db push`, seed.
+Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk-kit add module quote --prisma --web`, copy this overlay, replace Prisma model `Quote`, `prisma db push`, seed.
 
 ## 6. Modules and capabilities, and why that order
 
 `spec.json` lists one module: `quote` with `--prisma --web`. **Capabilities are empty.** Team and billing would come first on later examples (`team` then `billing`).
 
-`ysk add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/quote`). The generator still uses `title` / `body`. The overlay then overwrites those files with quote fields. There is no `patches.json`.
+`ysk-kit add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/quote`). The generator still uses `title` / `body`. The overlay then overwrites those files with quote fields. There is no `patches.json`.
 
 ## 7. Data model
 
@@ -238,10 +238,10 @@ Open http://localhost:3001/docs (or port 13001 when using `capture`).
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Quote tests cover amount `0`, send/accept, wrong-status `CONFLICT`, and the HTTP envelopes above. `ysk check agent` reports `ysk check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
+**Expected:** all green. Quote tests cover amount `0`, send/accept, wrong-status `CONFLICT`, and the HTTP envelopes above. `ysk-kit check agent` reports `ysk-kit check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
 
 The apply CLI already runs that bar unless you pass `--skip-verify`.
 
@@ -249,7 +249,7 @@ The apply CLI already runs that bar unless you pass `--skip-verify`.
 
 - Mounting `quote` on the living kit
 - PDF invoices, tax, or Stripe Checkout (see membership-club when it ships)
-- `ysk add team` or billing
+- `ysk-kit add team` or billing
 - Live Stripe, Twilio, FCM, Redis, Jaeger, Grafana
 - Visual screenshot diffs in CI (PNG files are documentation; CI applies sqlite and runs tests)
 

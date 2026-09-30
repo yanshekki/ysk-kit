@@ -7,8 +7,8 @@ Language: [English](add-capability.md) · 中文
 ## 步驟
 
 1. 確認名稱在目錄內（`auth`、`rbac`、`audit-log`、`storage`、`i18n`、`jobs`、`mail`、`notifications`、`llm`、`websocket`、`push`、`mobile`、`team`、`apikey`、`crypto`、`billing`）。別名 `org` → `team`。
-2. 若名稱是 `billing`，先執行 `pnpm ysk add team`。
-3. `pnpm ysk add <name>`。
+2. 若名稱是 `billing`，先執行 `pnpm ysk-kit add team`。
+3. `pnpm ysk-kit add <name>`。
 4. Prisma 有變就執行 `pnpm db:migrate`。
 5. 從 `.env.example` 填環境變數（不要提交密鑰）。
 6. [驗證改動](verify-change.zh.md)。

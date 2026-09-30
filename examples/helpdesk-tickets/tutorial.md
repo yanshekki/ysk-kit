@@ -2,7 +2,7 @@
 
 Language: [中文](tutorial.zh.md) · English
 
-A thin SaaS product that stores support tickets inside an organization. This example adds `ysk add team` before the industry module.
+A thin SaaS product that stores support tickets inside an organization. This example adds `ysk-kit add team` before the industry module.
 
 Screenshots below are 1280×800, captured against an applied destination (API **13001**, web **15173**). Living-kit ports 3001 / 5173 stay free.
 
@@ -11,7 +11,7 @@ Screenshots below are 1280×800, captured against an applied destination (API **
 After you finish:
 
 - A new product directory (not this kit) with identity, files, notifications, jobs, mail, API keys, crypto, and realtime from `--preset thin`.
-- Organizations from `ysk add team`: nav label **Orgs**, page heading **Organizations**, create form label **Name**, button **Create**.
+- Organizations from `ysk-kit add team`: nav label **Orgs**, page heading **Organizations**, create form label **Name**, button **Create**.
 - Hexagonal module `ticket` at `GET/POST /v1/ticket` plus `POST /v1/ticket/:id/status`.
 - Web page `/ticket` (nav **Ticket**): organization `<select>`, Title, Body. List loads only when an org is selected.
 - Seed accounts `admin@ysk.hk` / `ysk-admin-dev` and `user@ysk.hk` / `ysk-user-dev`. **No organization is seeded**; the walker creates **Acme Support** so the signed-in user is OWNER.
@@ -66,8 +66,8 @@ pnpm --filter @ysk-kit/create-app start my-helpdesk --preset thin --flavor saas 
 cd my-helpdesk
 pnpm install
 cp .env.example .env
-pnpm ysk add team
-pnpm ysk add module ticket --prisma --web
+pnpm ysk-kit add team
+pnpm ysk-kit add module ticket --prisma --web
 # then copy examples/helpdesk-tickets/overlay/ over this tree
 # replace model Ticket in apps/api/prisma/schema.prisma with the overlay fragment
 # apply examples/helpdesk-tickets/patches.json so the memory ticket repo reads org memberships
@@ -82,7 +82,7 @@ SQLite skips Compose and uses `prisma db push` instead of `migrate dev` (migrate
 
 `spec.json` lists capability `team`, then module `ticket` with `--prisma --web`. **Team comes first** so `Organization` / `Membership` exist before ticket `getMembership` reads them. Apply already sorts `team` before `billing` when both appear; this example has no billing.
 
-`ysk add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/ticket`, nav **Ticket**). The generator still uses `title` / `body` without an org. The overlay then overwrites those files.
+`ysk-kit add module` writes the hexagonal slice and patches Express, Fastify, composition, SDK, web-sdk, and the web router (`/ticket`, nav **Ticket**). The generator still uses `title` / `body` without an org. The overlay then overwrites those files.
 
 `examples/helpdesk-tickets/patches.json` rewires `create-memory-input.ts` so `createMemoryTicketRepository(orgs)` looks up memberships on the **same** in-memory organization repository that `organizationService` writes. Overlaying a full `create-memory-input.ts` is forbidden. HTTP tests register user A, `POST /v1/organizations`, then `POST /v1/ticket` with that org id.
 
@@ -271,10 +271,10 @@ Open http://localhost:3001/docs (or port 13001 when using `capture`).
 Inside the destination:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
-**Expected:** all green. Ticket tests cover membership, MEMBER vs OWNER status, HTTP 201 after org create, 403 for an outsider, 422, and 401. `ysk check agent` reports `ysk check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
+**Expected:** all green. Ticket tests cover membership, MEMBER vs OWNER status, HTTP 201 after org create, 403 for an outsider, 422, and 401. `ysk-kit check agent` reports `ysk-kit check agent: ok` (no TypeScript `enum`, no Prisma in web, no raw `fetch`).
 
 The apply CLI already runs that bar unless you pass `--skip-verify`.
 
@@ -282,7 +282,7 @@ The apply CLI already runs that bar unless you pass `--skip-verify`.
 
 - Mounting `ticket` on the living kit
 - SLA clocks, assignment queues, or email replies
-- `ysk add billing` (see membership-club)
+- `ysk-kit add billing` (see membership-club)
 - Live Stripe, Twilio, FCM, Redis, Jaeger, Grafana
 - Visual screenshot diffs in CI (PNG files are documentation; CI applies sqlite and runs tests)
 

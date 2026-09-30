@@ -26,7 +26,12 @@ jobs:
           registry-url: https://registry.npmjs.org
           scope: '@ysk-kit'
       - run: pnpm install
+      - id: unpublished
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: node .github/unpublished-packages.mjs
       - uses: changesets/action@v1
+        if: steps.unpublished.outputs.skip != 'true'
         with:
           version: pnpm changeset version
           publish: pnpm release:publish

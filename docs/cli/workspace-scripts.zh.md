@@ -37,3 +37,5 @@ Language: [English](workspace-scripts.md) · 中文
 | `pnpm --filter @ysk-kit/web exec playwright install chromium` | 本機 Playwright 瀏覽器 |
 
 `.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`example-smoke`（matrix：把目錄裡每一個 slug 套用到 sqlite）、`e2e`（MySQL 8.4 + Chromium）。
+
+Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PUBLISH` 為 `true` 時運行。每個 public `name@version` 已在 npmjs 時跳過 `changeset publish`（`.github/unpublished-packages.mjs`）。

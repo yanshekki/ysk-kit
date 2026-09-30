@@ -107,3 +107,11 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - JSON 回應用 `{ ok, data }` / `{ ok, error }`，四個已文件化的 envelope 例外除外。
 
 見 [架構](docs/architecture.zh.md) 與 [AGENTS.zh.md](./AGENTS.zh.md)。
+
+## 授權
+
+MIT — 見 [LICENSE](./LICENSE)。
+
+## 作者
+
+**Ki (yanshekki)** — [YSK Limited](https://ysk.hk/)。[linktr.ee/yanshekki](https://linktr.ee/yanshekki)

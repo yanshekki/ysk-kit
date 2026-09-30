@@ -114,4 +114,4 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 
 **v1.0.0:** Workspace scope `@ysk-kit/*`. Public packages publish to npmjs org `ysk-kit`. GitHub Releases stay on `yanshekki/ysk-kit`. `create-ysk-app` from the registry downloads the matching GitHub tag tarball. GitHub Packages is unused.
 
-**v1.0.1:** CLI binary is `ysk-kit` with alias `yskk`. The `ysk` command is no longer the generator.
+**v1.0.1:** CLI binary is `ysk-kit` with alias `yskk`. The `ysk` command is no longer the generator. Release skips npm publish when those versions are already on the registry. README Author matches ysk-omni.

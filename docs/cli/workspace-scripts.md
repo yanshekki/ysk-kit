@@ -37,3 +37,5 @@ App-level:
 | `pnpm --filter @ysk-kit/web exec playwright install chromium` | Local Playwright browser |
 
 CI jobs in `.github/workflows/ci.yml`: `check` (lint, layers, typecheck, test), `thin-smoke` (sqlite saas without admin/mobile), `example-smoke` (matrix: apply each catalogue slug onto sqlite), `e2e` (MySQL 8.4 + Chromium).
+
+Release (`.github/workflows/release.yml`) runs on push to `main` when `vars.NPM_PUBLISH` is `true`. It skips `changeset publish` when every public `name@version` is already on npmjs (`.github/unpublished-packages.mjs`).

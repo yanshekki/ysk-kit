@@ -107,3 +107,11 @@ Details: [flavors](docs/guides/flavors.md).
 - JSON responses use `{ ok, data }` / `{ ok, error }` except the four documented envelope exceptions.
 
 See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
+
+## Author
+
+**Ki (yanshekki)** — [YSK Limited](https://ysk.hk/). [linktr.ee/yanshekki](https://linktr.ee/yanshekki)

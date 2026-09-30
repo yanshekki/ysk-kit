@@ -23,6 +23,7 @@ jobs:
       - run: pnpm install
       - run: pnpm lint
       - run: pnpm layers
+      - run: pnpm ysk check agent
       - run: pnpm typecheck
       - run: pnpm test
 
@@ -46,6 +47,7 @@ jobs:
           cp .env.example .env
           pnpm db:generate
           pnpm layers
+          pnpm ysk check agent
           pnpm typecheck
           pnpm test
           pnpm gen:openapi

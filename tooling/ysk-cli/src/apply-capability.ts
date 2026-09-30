@@ -189,6 +189,17 @@ export const applyCapability = (root: string, name: Capability): string[] => {
         recipe.patchContracts,
         'patched packages/contracts/src/api/index.ts',
       ],
+      ['apps/mobile/src/app.tsx', recipe.patchMobileApp, 'patched apps/mobile/src/app.tsx'],
+      [
+        'apps/mobile/src/screens/home-screen.tsx',
+        recipe.patchMobileHome,
+        'patched apps/mobile/src/screens/home-screen.tsx',
+      ],
+      [
+        'apps/mobile/src/screens/login-screen.tsx',
+        recipe.patchMobileLogin,
+        'patched apps/mobile/src/screens/login-screen.tsx',
+      ],
     ];
     for (const [rel, transform, label] of patches) {
       if (patchRel(root, rel, transform, logs, label)) changed = true;

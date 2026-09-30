@@ -12,7 +12,8 @@
       "!**/.expo",
       "!**/pnpm-lock.yaml",
       "!**/routeTree.gen.ts",
-      "!**/apps/api/src/generated"
+      "!**/apps/api/src/generated",
+      "!**/tooling/ysk-cli/fixtures"
     ]
   },
   "vcs": {

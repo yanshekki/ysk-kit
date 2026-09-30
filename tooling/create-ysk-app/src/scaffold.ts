@@ -12,7 +12,8 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyThinPreset } from './thin';
 
-export type Db = 'mysql' | 'postgresql' | 'sqlite';
+export const DBS = ['mysql', 'postgresql', 'sqlite'] as const;
+export type Db = (typeof DBS)[number];
 export const FLAVORS = [
   'saas',
   'desktop',
@@ -47,7 +48,27 @@ const SKIP = new Set([
   'generated',
 ]);
 
-export const parseArgs = (argv: string[]) => {
+const hasOpt = (argv: string[], name: string): boolean =>
+  argv.includes(`--${name}`) || argv.some((arg) => arg.startsWith(`--${name}=`));
+
+export type ParsedArgs = {
+  name: string | undefined;
+  flavor: string;
+  db: Db;
+  preset: Preset;
+  admin: boolean;
+  mobile: boolean;
+  yes: boolean;
+  explicit: {
+    flavor: boolean;
+    db: boolean;
+    preset: boolean;
+    noAdmin: boolean;
+    noMobile: boolean;
+  };
+};
+
+export const parseArgs = (argv: string[]): ParsedArgs => {
   const flavorFlag = argv.find((arg) => arg.startsWith('--flavor='))?.slice('--flavor='.length);
   const flavorIdx = argv.indexOf('--flavor');
   const flavor = flavorFlag ?? (flavorIdx >= 0 ? argv[flavorIdx + 1] : 'saas') ?? 'saas';
@@ -75,7 +96,7 @@ export const parseArgs = (argv: string[]) => {
     db,
     preset,
   ]);
-  const positional = argv.filter((arg) => !arg.startsWith('--') && !flags.has(arg));
+  const positional = argv.filter((arg) => arg !== '-y' && !arg.startsWith('--') && !flags.has(arg));
   return {
     name: positional[0],
     flavor,
@@ -83,6 +104,14 @@ export const parseArgs = (argv: string[]) => {
     preset,
     admin: !argv.includes('--no-admin'),
     mobile: !argv.includes('--no-mobile'),
+    yes: argv.includes('--yes') || argv.includes('-y'),
+    explicit: {
+      flavor: hasOpt(argv, 'flavor'),
+      db: hasOpt(argv, 'db'),
+      preset: hasOpt(argv, 'preset'),
+      noAdmin: argv.includes('--no-admin'),
+      noMobile: argv.includes('--no-mobile'),
+    },
   };
 };
 
@@ -335,58 +364,32 @@ export const createYskApp = (opts: CreateAppOptions): string => {
     applyThinPreset(dest);
   }
 
-  const webLine =
-    opts.flavor === 'saas' || opts.flavor === 'trading' || opts.flavor === 'static-web3'
-      ? '- Web http://localhost:5173\n'
-      : '';
-  const adminLine = includeAdmin ? '- Admin http://localhost:5174\n' : '';
-  const desktopLine =
-    opts.flavor === 'desktop' ? '- Desktop: pnpm --filter @ysk/desktop start\n' : '';
-  const readmeBody =
-    opts.flavor === 'static-web3'
-      ? `# ${opts.name}
-
-Generated from YSK Kit (\`static-web3\` flavor).
-
-\`\`\`bash
-# Node 24 + pnpm 12
-pnpm install
-cp .env.example .env
-pnpm --filter @ysk/web dev
-\`\`\`
-
-${webLine}
-See [docs/architecture.md](docs/architecture.md).
-`
-      : `# ${opts.name}
-
-Generated from YSK Kit (\`${opts.flavor}\` flavor).
-
-\`\`\`bash
-# Node 24 + pnpm 12
-pnpm install
-cp .env.example .env
-${opts.db === 'sqlite' ? '' : `docker compose up -d ${opts.db === 'postgresql' ? 'postgres' : 'mysql'}\n`}pnpm db:generate
-pnpm db:migrate
-pnpm db:seed
-pnpm dev
-\`\`\`
-
-- API http://localhost:3001
-${webLine}${adminLine}${desktopLine}
-See [docs/architecture.md](docs/architecture.md).
-`;
-  writeFileSync(join(dest, 'README.md'), readmeBody);
+  writeProductReadme(dest, opts, includeAdmin);
+  writeKitMarker(dest, opts);
 
   if (opts.flavor === 'static-web3') {
     writeFileSync(
       join(dest, 'WEB3.md'),
       `# static-web3
 
-Vite web + \`@ysk/config\` / \`@ysk/sdk\`. There is no API in this repo.
+Language: [中文](WEB3.zh.md) · English
+
+Vite web plus \`@ysk/config\` / \`@ysk/sdk\`. This product has no API.
 
 - Point \`API_PUBLIC_URL\` at a remote Kit API if the UI needs one.
-- Add viem/wagmi/wallet connect in this product — not in YSK Kit.
+- Add wallet connect (viem, wagmi, or similar) in this product.
+`,
+    );
+    writeFileSync(
+      join(dest, 'WEB3.zh.md'),
+      `# static-web3
+
+Language: [English](WEB3.md) · 中文
+
+Vite 前端，連同 \`@ysk/config\` / \`@ysk/sdk\`。此產品沒有 API。
+
+- 若介面需要後端，將 \`API_PUBLIC_URL\` 指向一套遠端 Kit API。
+- 錢包連線（viem、wagmi 等）寫在此產品內。
 `,
     );
   }
@@ -396,10 +399,24 @@ Vite web + \`@ysk/config\` / \`@ysk/sdk\`. There is no API in this repo.
       join(dest, 'TRADING.md'),
       `# Trading
 
-API + web + worker skeleton (AQTMS-shaped). Market data, orders, and exchange connectors stay in this product repo — not in YSK Kit.
+Language: [中文](TRADING.zh.md) · English
+
+API + web + worker skeleton. Market data, orders, and exchange connectors stay in this product.
 
 - Run \`pnpm worker\` or PM2 \`ysk-worker\` (set \`REDIS_URL\` in production).
-- Enqueue work with \`@ysk/jobs\`; do not add CCXT/Binance to the kit.
+- Enqueue work with \`@ysk/jobs\`.
+`,
+    );
+    writeFileSync(
+      join(dest, 'TRADING.zh.md'),
+      `# Trading
+
+Language: [English](TRADING.md) · 中文
+
+API、Web 與 worker 骨架。行情、下單與交易所連接器寫在此產品內。
+
+- 執行 \`pnpm worker\` 或 PM2 \`ysk-worker\`（生產環境設定 \`REDIS_URL\`）。
+- 用 \`@ysk/jobs\` 入列工作。
 `,
     );
   }
@@ -409,7 +426,9 @@ API + web + worker skeleton (AQTMS-shaped). Market data, orders, and exchange co
       join(dest, 'GATEWAY.md'),
       `# Gateway
 
-This product has API + Admin (no public web/mobile/desktop).
+Language: [中文](GATEWAY.zh.md) · English
+
+This product has API + Admin (no public web, mobile, or desktop).
 
 1. Create a user in Admin or \`POST /v1/auth/register\`.
 2. Mint a machine token: \`POST /v1/me/api-keys\` with a JWT, then call the API with \`Authorization: Bearer ysk_live_…\`.
@@ -417,9 +436,167 @@ This product has API + Admin (no public web/mobile/desktop).
 4. Optional: \`CRYPTO_MASTER_KEY\` (64 hex chars) for \`@ysk/crypto\`.
 `,
     );
+    writeFileSync(
+      join(dest, 'GATEWAY.zh.md'),
+      `# Gateway
+
+Language: [English](GATEWAY.md) · 中文
+
+此產品包含 API 與 Admin（沒有公開 Web、流動應用或桌面應用）。
+
+1. 在 Admin 建立帳戶，或呼叫 \`POST /v1/auth/register\`。
+2. 以 JWT 呼叫 \`POST /v1/me/api-keys\` 產生機器權杖，其後以 \`Authorization: Bearer ysk_live_…\` 呼叫 API。
+3. 執行 \`pnpm worker\` 或 PM2 \`ysk-worker\`（生產環境設定 \`REDIS_URL\`）。
+4. 可選：為 \`@ysk/crypto\` 設定 \`CRYPTO_MASTER_KEY\`（64 個十六進位字元）。
+`,
+    );
   }
 
   return dest;
+};
+
+const kitVersionOf = (kitRoot: string): string => {
+  const pkg = JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')) as {
+    version: string;
+  };
+  return pkg.version;
+};
+
+const writeKitMarker = (dest: string, opts: CreateAppOptions): void => {
+  const marker = {
+    kit: 'ysk-kit',
+    version: kitVersionOf(opts.kitRoot),
+    flavor: opts.flavor,
+    preset: opts.preset,
+    db: opts.db,
+  };
+  writeFileSync(join(dest, '.ysk-kit.json'), `${JSON.stringify(marker, null, 2)}\n`);
+};
+
+const generatedFromEn = (opts: CreateAppOptions): string => {
+  const version = kitVersionOf(opts.kitRoot);
+  return `Generated from YSK Kit ${version} (\`${opts.flavor}\`, preset \`${opts.preset}\`).
+Refresh guardrails: \`pnpm ysk upgrade\``;
+};
+
+const generatedFromZh = (opts: CreateAppOptions): string => {
+  const version = kitVersionOf(opts.kitRoot);
+  return `由 YSK Kit ${version} 產生（\`${opts.flavor}\`，preset \`${opts.preset}\`）。
+更新護欄：\`pnpm ysk upgrade\``;
+};
+
+const writeProductReadme = (dest: string, opts: CreateAppOptions, includeAdmin: boolean): void => {
+  const webLine =
+    opts.flavor === 'saas' || opts.flavor === 'trading' || opts.flavor === 'static-web3'
+      ? '- Web http://localhost:5173\n'
+      : '';
+  const adminLine = includeAdmin ? '- Admin http://localhost:5174\n' : '';
+  const desktopLine =
+    opts.flavor === 'desktop' ? '- Desktop: pnpm --filter @ysk/desktop start\n' : '';
+  const webLineZh =
+    opts.flavor === 'saas' || opts.flavor === 'trading' || opts.flavor === 'static-web3'
+      ? '- Web http://localhost:5173\n'
+      : '';
+  const adminLineZh = includeAdmin ? '- Admin http://localhost:5174\n' : '';
+  const desktopLineZh =
+    opts.flavor === 'desktop' ? '- 桌面應用：pnpm --filter @ysk/desktop start\n' : '';
+  const compose =
+    opts.db === 'sqlite'
+      ? ''
+      : `docker compose up -d ${opts.db === 'postgresql' ? 'postgres' : 'mysql'}\n`;
+
+  if (opts.flavor === 'static-web3') {
+    writeFileSync(
+      join(dest, 'README.md'),
+      `# ${opts.name}
+
+Language: [中文](README.zh.md) · English
+
+${generatedFromEn(opts)}
+
+\`\`\`bash
+# Node 24 + pnpm 12
+pnpm install
+cp .env.example .env
+pnpm --filter @ysk/web dev
+\`\`\`
+
+${webLine}
+Documentation: [docs/README.md](docs/README.md).
+`,
+    );
+    writeFileSync(
+      join(dest, 'README.zh.md'),
+      `# ${opts.name}
+
+Language: [English](README.md) · 中文
+
+${generatedFromZh(opts)}
+
+\`\`\`bash
+# Node 24 + pnpm 12
+pnpm install
+cp .env.example .env
+pnpm --filter @ysk/web dev
+\`\`\`
+
+${webLineZh}
+文件：[docs/README.zh.md](docs/README.zh.md)。
+`,
+    );
+    return;
+  }
+
+  writeFileSync(
+    join(dest, 'README.md'),
+    `# ${opts.name}
+
+Language: [中文](README.zh.md) · English
+
+${generatedFromEn(opts)}
+
+\`\`\`bash
+# Node 24 + pnpm 12
+pnpm install
+cp .env.example .env
+${compose}pnpm db:generate
+pnpm db:migrate
+pnpm db:seed
+pnpm dev
+\`\`\`
+
+- API http://localhost:3001
+${webLine}${adminLine}${desktopLine}
+After seed, sign in as \`admin@ysk.hk\` / \`ysk-admin-dev\` (see \`.env.example\`).
+
+Documentation: [docs/README.md](docs/README.md).
+`,
+  );
+  writeFileSync(
+    join(dest, 'README.zh.md'),
+    `# ${opts.name}
+
+Language: [English](README.md) · 中文
+
+${generatedFromZh(opts)}
+
+\`\`\`bash
+# Node 24 + pnpm 12
+pnpm install
+cp .env.example .env
+${compose}pnpm db:generate
+pnpm db:migrate
+pnpm db:seed
+pnpm dev
+\`\`\`
+
+- API http://localhost:3001
+${webLineZh}${adminLineZh}${desktopLineZh}
+種子帳戶：\`admin@ysk.hk\` / \`ysk-admin-dev\`（見 \`.env.example\`）。
+
+文件：[docs/README.zh.md](docs/README.zh.md)。
+`,
+  );
 };
 
 const copyDirReplace = (from: string, to: string, name: string): void => {
@@ -460,7 +637,11 @@ const scaffoldPhpBridge = (opts: CreateAppOptions, dest: string): string => {
     join(dest, 'README.md'),
     `# ${opts.name}
 
-PHP/TS bridge generated from YSK Kit. Point these clients at an existing Kit API.
+Language: [中文](README.zh.md) · English
+
+${generatedFromEn(opts)}
+
+PHP and TypeScript clients generated from YSK Kit. Point them at an existing Kit API.
 
 \`\`\`bash
 # TypeScript
@@ -474,5 +655,28 @@ cd php && composer dump-autoload
 See \`docs/openapi.yaml\`.
 `,
   );
+  writeFileSync(
+    join(dest, 'README.zh.md'),
+    `# ${opts.name}
+
+Language: [English](README.md) · 中文
+
+${generatedFromZh(opts)}
+
+由 YSK Kit 產生的 PHP 與 TypeScript 客戶端。請指向一套現有的 Kit API。
+
+\`\`\`bash
+# TypeScript
+cd ts && node --experimental-strip-types
+# PHP
+cd php && composer dump-autoload
+\`\`\`
+
+\`YskClient\` / \`createClient\` 會解開 \`{ ok, data }\` / \`{ ok, error }\`。其餘 OpenAPI 路徑用 \`request(method, path, body?)\`。設定 \`API_PUBLIC_URL\`（預設 http://localhost:3001）。
+
+見 \`docs/openapi.yaml\`。
+`,
+  );
+  writeKitMarker(dest, opts);
   return dest;
 };

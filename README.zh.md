@@ -1,12 +1,37 @@
 # YSK Kit
 
-YSK Limited 共用全端開發架構：合約先行，可選四端（API / Web / Admin / Mobile）。
+合約先行的全端平台：共用合約、hexagonal API，以及可選的 Web、Admin、流動應用與桌面客戶端。
 
 Language: [English](README.md) · 中文
 
-呢個 repo 係 living `saas` flavor。業務 domain 唔寫入 kit。
+| | |
+|---|---|
+| **版本** | 0.1.0 |
+| **授權** | MIT |
+| **公司** | [YSK Limited](https://ysk.hk/) |
+| **聯絡** | email@ysk.hk |
 
-需要 **Node 24**（Active LTS）同 **pnpm 12**。Agent 法律：[AGENTS.md](./AGENTS.md)。產品計劃：[docs/product-plan.md](./docs/product-plan.md)。
+需要 **Node 24**（Active LTS）與 **pnpm 12**。Agent 法律：[AGENTS.zh.md](./AGENTS.zh.md)。文件地圖：[docs/README.zh.md](docs/README.zh.md)。
+
+本倉是可運行的 `saas` flavor。身分、檔案、通知、工作、郵件、API 金鑰、加密、即時通訊已經接上。產品業務 domain 不寫入 kit。
+
+## 十五分鐘開一個產品
+
+```bash
+pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+cd my-product
+pnpm install
+cp .env.example .env
+docker compose up -d mysql
+pnpm db:generate && pnpm db:migrate && pnpm db:seed
+pnpm ysk add module appointment --prisma --web
+pnpm gen:openapi
+pnpm dev
+```
+
+預設 preset 是 **thin**：複製本樹後剝走 llm、billing、organizations 與 push 裝置。`--preset full` 保留完整示範。還原能力：`pnpm ysk add llm|team|billing|push`。
+
+## 運行本倉
 
 ```bash
 pnpm install
@@ -18,32 +43,51 @@ pnpm db:seed
 pnpm dev
 ```
 
-- API http://localhost:3001
-- Web http://localhost:5173 — seed 之後用 `admin@ysk.hk` / `ysk-admin-dev` 登入
-- Admin http://localhost:5174
-- OpenAPI UI http://localhost:3001/docs
-- 可選 traces：`docker compose up -d jaeger`（`jaegertracing/jaeger:2.21.0`），設 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`，UI http://localhost:16686
-- 可選 metrics：`docker compose up -d prometheus grafana` — Prometheus http://localhost:9090，Grafana http://localhost:3000（`admin` / `admin`）
+| 介面 | 網址 |
+|---|---|
+| API | http://localhost:3001（可選 `HTTP_ADAPTER=fastify`） |
+| Web | http://localhost:5173 |
+| Admin | http://localhost:5174 |
+| OpenAPI UI | http://localhost:3001/docs（`GET /openapi.json`） |
 
-```bash
-pnpm ysk add module booking --prisma --web
-pnpm db:migrate
-pnpm gen:openapi
-pnpm --filter @ysk/create-app start my-product --db mysql
-```
+種子之後以 `admin@ysk.hk` / `ysk-admin-dev` 登入（見 `.env.example`）。若 3001、5173 或 5174 已被佔用，改 `.env` 的 `API_PORT` 與對應的 `*_PUBLIC_URL`。
 
-`ysk add module` 會寫完整切片（合約、DTO、repo、Express + Fastify、SDK、web 頁）。見 [docs/recipes/add-module.md](./docs/recipes/add-module.md)。`create-ysk-app --preset thin`（預設）複製呢棵樹再剝 llm / billing / orgs / push。`--preset full` 保留 living 示範。加返能力：`pnpm ysk add llm|team|billing|push`。
+可選 traces：`docker compose up -d jaeger`，設定 `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`，介面 http://localhost:16686。可選 metrics 介面：`docker compose up -d prometheus grafana` — Prometheus http://localhost:9090，Grafana http://localhost:3000（`admin` / `admin`）。
 
-`ysk add` 會 idempotent merge Prisma / `.env.example` / API workspace deps。PM2：`pnpm --filter @ysk/api build` 之後 `pm2 start ecosystem.config.cjs`。
+PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改寫 Prisma provider。在本倉則自行改 `datasource.provider` 與 `DATABASE_URL`。
 
-Desktop：`pnpm --filter @ysk/create-app start my-app --flavor desktop`。
+## 命令
 
-Gateway：`pnpm --filter @ysk/create-app start my-gw --flavor gateway`（只得 API + Admin；machine token 用 `POST /v1/me/api-keys`）。
+| 命令 | 用途 |
+|---|---|
+| `pnpm ysk add module <name> --prisma --web` | hexagonal HTTP 切片 |
+| `pnpm ysk add <capability>` | 合併一項已編目的能力 |
+| `pnpm ysk upgrade` | 更新允許清單上的 kit 護欄 |
+| `pnpm ysk check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch |
+| `pnpm --filter @ysk/create-app start <name>` | 產生一個產品 |
+| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent` | 驗證一次改動 |
 
-PHP bridge：`pnpm --filter @ysk/create-app start my-php --flavor php-bridge`（OpenAPI + TS/PHP client，無 Node app）。
+完整表格：[CLI](docs/cli/index.zh.md)、[工作區 script](docs/cli/workspace-scripts.zh.md)、[環境變數](docs/cli/env.zh.md)。
 
-Trading：`pnpm --filter @ysk/create-app start my-aq --flavor trading`（API + Web + worker，無 admin）。
+## Flavor
 
-static-web3：`pnpm --filter @ysk/create-app start my-mint --flavor static-web3`（只有 Vite web，無 API）。
+| Flavor | 得到甚麼 |
+|---|---|
+| `saas` | API + web + admin + 可選 mobile |
+| `desktop` | API + Electron |
+| `gateway` | API + admin（機器 API 金鑰） |
+| `php-bridge` | OpenAPI + TypeScript/PHP 客戶端，沒有 Node 應用 |
+| `trading` | API + web + worker |
+| `static-web3` | 只有 Vite web |
 
-詳情見 [docs/architecture.md](docs/architecture.md)。
+詳情：[flavors](docs/guides/flavors.zh.md)。
+
+## 規則（短）
+
+- `@ysk/contracts` 是 enum、DTO、error code 與 ts-rest 路由的唯一來源。
+- 不用 TypeScript `enum`。
+- 客戶端只經 `@ysk/sdk` 呼叫 API。
+- Prisma 只留在 API infra。
+- JSON 回應用 `{ ok, data }` / `{ ok, error }`，四個已文件化的 envelope 例外除外。
+
+見 [架構](docs/architecture.zh.md) 與 [AGENTS.zh.md](./AGENTS.zh.md)。

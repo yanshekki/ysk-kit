@@ -32,6 +32,9 @@ import {
   patchTeamFastify,
   patchTeamMain,
   patchTeamMemory,
+  patchTeamMobileApp,
+  patchTeamMobileHome,
+  patchTeamMobileLogin,
   patchTeamSdk,
   patchTeamWeb,
   patchTeamWebSdk,
@@ -56,6 +59,9 @@ export type CapabilityRecipe = {
   patchWebRouter?: (src: string) => string;
   patchContracts?: (src: string) => string;
   patchWorker?: (src: string) => string;
+  patchMobileApp?: (src: string) => string;
+  patchMobileHome?: (src: string) => string;
+  patchMobileLogin?: (src: string) => string;
 };
 
 const patchWebsocketComposition = (src: string): string => {
@@ -155,6 +161,9 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
     patchWebSdk: patchTeamWebSdk,
     patchWebRouter: patchTeamWeb,
     patchContracts: patchTeamContracts,
+    patchMobileApp: patchTeamMobileApp,
+    patchMobileHome: patchTeamMobileHome,
+    patchMobileLogin: patchTeamMobileLogin,
   },
   apikey: {
     prisma: 'modules/apikey/prisma/api-key.prisma',

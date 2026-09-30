@@ -36,6 +36,9 @@ const livingTrees: Record<(typeof SOURCE_CAPABILITIES)[number], string[]> = {
     'apps/web/src/features/orgs/orgs-page.tsx',
     'apps/web/src/features/orgs/org-detail-page.tsx',
     'apps/web/src/features/orgs/invite-page.tsx',
+    'apps/mobile/src/screens/orgs-screen.tsx',
+    'apps/mobile/src/screens/org-detail-screen.tsx',
+    'apps/mobile/src/screens/invite-screen.tsx',
   ],
   billing: [
     'apps/api/src/modules/billing',

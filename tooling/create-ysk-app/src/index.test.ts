@@ -4,11 +4,24 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { HELP } from './help';
 import { createYskApp, parseArgs } from './scaffold';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+const kitVersion = (
+  JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')) as { version: string }
+).version;
 const tsxCli = join(kitRoot, 'tooling/ysk-cli/node_modules/tsx/dist/cli.mjs');
 const yskCli = join(kitRoot, 'tooling/ysk-cli/src/index.ts');
+
+const readMarker = (dest: string) =>
+  JSON.parse(readFileSync(join(dest, '.ysk-kit.json'), 'utf8')) as {
+    kit: string;
+    version: string;
+    flavor: string;
+    preset: string;
+    db: string;
+  };
 
 const yskAdd = (name: string, dest: string): string =>
   execFileSync(process.execPath, [tsxCli, yskCli, 'add', name], {
@@ -17,6 +30,29 @@ const yskAdd = (name: string, dest: string): string =>
   });
 
 describe('create-ysk-app', () => {
+  it('documents preset, flavor, and the CLI manual', () => {
+    expect(HELP).toContain('--preset');
+    expect(HELP).toContain('--flavor');
+    expect(HELP).toContain('thin');
+    expect(HELP).toContain('--yes');
+    expect(HELP).toContain('TTY');
+    expect(HELP).toContain('docs/cli/create-ysk-app.md');
+  });
+
+  it('prints help when invoked without a name', () => {
+    const tsx = join(kitRoot, 'tooling/create-ysk-app/node_modules/tsx/dist/cli.mjs');
+    const cli = join(kitRoot, 'tooling/create-ysk-app/src/index.ts');
+    try {
+      execFileSync(process.execPath, [tsx, cli], { encoding: 'utf8' });
+      expect.fail('expected non-zero exit');
+    } catch (error) {
+      const err = error as { status?: number; stdout?: string };
+      expect(err.status).toBe(1);
+      expect(String(err.stdout)).toContain('--preset');
+      expect(String(err.stdout)).toContain('--flavor');
+    }
+  });
+
   it('rejects unknown flavors', () => {
     expect(() =>
       createYskApp({
@@ -66,6 +102,19 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'package.json'), 'utf8')).toContain('"name": "acme"');
     expect(readFileSync(join(dest, 'docker-compose.yml'), 'utf8')).toContain('prometheus');
     expect(existsSync(join(dest, 'deploy/prometheus/prometheus.yml'))).toBe(true);
+    expect(existsSync(join(dest, 'README.md'))).toBe(true);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
+    const marker = readMarker(dest);
+    expect(marker.kit).toBe('ysk-kit');
+    expect(marker.version).toBe(kitVersion);
+    expect(marker.flavor).toBe('saas');
+    expect(marker.preset).toBe('full');
+    expect(marker.db).toBe('postgresql');
+    const readme = readFileSync(join(dest, 'README.md'), 'utf8');
+    expect(readme).toContain(`YSK Kit ${kitVersion}`);
+    expect(readme).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
   });
 
   it('scaffolds php-bridge without apps', () => {
@@ -85,6 +134,15 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'php/src/YskClient.php'), 'utf8')).toContain('function request');
     expect(readFileSync(join(dest, 'ts/src/client.ts'), 'utf8')).toContain('unwrapEnvelope');
     expect(existsSync(join(dest, 'apps'))).toBe(false);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
+    const marker = readMarker(dest);
+    expect(marker.version).toBe(kitVersion);
+    expect(marker.flavor).toBe('php-bridge');
+    expect(marker.preset).toBe('thin');
+    expect(marker.db).toBe('mysql');
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
   });
 
   it('copies static-web3 flavor with web only', () => {
@@ -101,9 +159,17 @@ describe('create-ysk-app', () => {
     });
     expect(existsSync(join(dest, 'apps/web/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'WEB3.md'))).toBe(true);
+    expect(existsSync(join(dest, 'WEB3.zh.md'))).toBe(true);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/api'))).toBe(false);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);
     expect(readFileSync(join(dest, '.env.example'), 'utf8')).not.toContain('DATABASE_URL');
+    const marker = readMarker(dest);
+    expect(marker.version).toBe(kitVersion);
+    expect(marker.flavor).toBe('static-web3');
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
+    expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
   });
 
   it('copies trading flavor with api+web only', () => {
@@ -121,6 +187,8 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/api/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'apps/web/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'TRADING.md'))).toBe(true);
+    expect(existsSync(join(dest, 'TRADING.zh.md'))).toBe(true);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/desktop'))).toBe(false);
@@ -141,6 +209,8 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/api/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'apps/admin/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'GATEWAY.md'))).toBe(true);
+    expect(existsSync(join(dest, 'GATEWAY.zh.md'))).toBe(true);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/desktop'))).toBe(false);
@@ -167,6 +237,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);
+    expect(existsSync(join(dest, 'README.zh.md'))).toBe(true);
   });
 
   it('strips optional capabilities on thin preset and ysk add restores them', () => {
@@ -239,5 +310,65 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'packages/sdk/src/index.ts'), 'utf8')).toContain(
       'devices: devicesResource',
     );
+  });
+
+  it('keeps Expo org screens on full + mobile', () => {
+    const dest = join(mkdtempSync(join(tmpdir(), 'ysk-full-mobile-')), 'clinic');
+    createYskApp({
+      name: 'clinic',
+      dest,
+      kitRoot,
+      flavor: 'saas',
+      db: 'sqlite',
+      preset: 'full',
+      admin: false,
+      mobile: true,
+    });
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(true);
+    expect(readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8')).toContain("'orgs'");
+  });
+
+  it('strips Expo org screens on thin + mobile and ysk add team restores them', () => {
+    const dest = join(mkdtempSync(join(tmpdir(), 'ysk-thin-mobile-')), 'clinic');
+    createYskApp({
+      name: 'clinic',
+      dest,
+      kitRoot,
+      flavor: 'saas',
+      db: 'sqlite',
+      preset: 'thin',
+      admin: false,
+      mobile: true,
+    });
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(false);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(false);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(false);
+    const app = readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8');
+    expect(app).not.toContain("'orgs'");
+    expect(app).not.toContain('OrgsScreen');
+    expect(
+      readFileSync(join(dest, 'apps/mobile/src/screens/home-screen.tsx'), 'utf8'),
+    ).not.toContain('Organizations');
+    expect(
+      readFileSync(join(dest, 'apps/mobile/src/screens/login-screen.tsx'), 'utf8'),
+    ).not.toContain('Accept invite');
+
+    expect(yskAdd('team', dest)).toContain('ysk add team: applied');
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(true);
+    expect(readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8')).toContain("'orgs'");
+    expect(readFileSync(join(dest, 'apps/mobile/src/screens/home-screen.tsx'), 'utf8')).toContain(
+      'Organizations',
+    );
+    expect(readFileSync(join(dest, 'apps/mobile/src/screens/login-screen.tsx'), 'utf8')).toContain(
+      'Accept invite',
+    );
+    yskAdd('team', dest);
+    expect(
+      readFileSync(join(dest, 'apps/mobile/src/app.tsx'), 'utf8').match(/<OrgsScreen/g),
+    ).toHaveLength(1);
   });
 });

@@ -1,0 +1,70 @@
+# Testing
+
+Language: [中文](testing.zh.md) · English
+
+## Vitest (default)
+
+API tests inject memory ports. They do not start MySQL, Redis, Stripe, Twilio, FCM, Jaeger, or Grafana. `create-memory-input.ts` builds the same services composition uses in production.
+
+```bash
+pnpm test
+```
+
+Enum literals: `pnpm --filter @ysk/db-prisma test` compares Prisma schema to `@ysk/contracts`.
+
+## Testing Library
+
+Web login has a component test for invalid email. Run with the web package Vitest task (`pnpm test` includes it). Prefer the create-command Zod schema for form fields.
+
+## Playwright
+
+One Chromium smoke in `apps/web/e2e`. It starts the compiled API and a Vite preview on 5173.
+
+```bash
+pnpm --filter @ysk/web exec playwright install chromium
+pnpm --filter @ysk/api build
+pnpm --filter @ysk/web build
+pnpm e2e
+```
+
+Needs free ports 3001 and 5173, a migrated database, and seed (CI does this). Locally, `reuseExistingServer` is on when `CI` is unset.
+
+## Layers
+
+```bash
+pnpm layers
+```
+
+Must stay green. See [hexagonal](hexagonal.md).
+
+## Agent scan
+
+```bash
+pnpm ysk check agent
+```
+
+Text scan of the product root. Exit 1 on any finding.
+
+| Rule | Meaning |
+|---|---|
+| `no-ts-enum` | TypeScript `enum` / `const enum` in `apps`, `packages`, or `modules` |
+| `clients-no-prisma` | web / admin / mobile / desktop imported Prisma or the generated client |
+| `clients-no-raw-fetch` | those apps called `fetch(` |
+
+`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk check agent`](../cli/ysk.md#ysk-check-agent).
+
+Biome `style.noEnum` is `error` in `@ysk/biome`, so `pnpm lint` also rejects TypeScript enums.
+
+## CI
+
+| Job | What it runs |
+|---|---|
+| `check` | `pnpm lint && pnpm layers && pnpm ysk check agent && pnpm typecheck && pnpm test` |
+| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk check agent` / typecheck / test / OpenAPI |
+| `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
+
+After a feature, the local bar is:
+
+```bash
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
+```

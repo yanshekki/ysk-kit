@@ -1,51 +1,59 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { HELP } from './help';
+import { resolveCreateOptions, withReadlineAsk } from './prompt';
 import { createYskApp, parseArgs } from './scaffold';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
-const help = () => {
-  console.log(
-    `usage: pnpm create @ysk/app <name> [--preset thin|full] [--db mysql|postgresql|sqlite] [--no-admin] [--no-mobile] [--flavor saas|desktop|gateway|php-bridge|trading|static-web3]`,
-  );
+const help = (): void => {
+  console.log(HELP);
 };
 
-const args = parseArgs(process.argv.slice(2));
+const main = async (): Promise<void> => {
+  const parsed = parseArgs(process.argv.slice(2));
+  const tty = Boolean(process.stdin.isTTY && process.stdout.isTTY);
+  const resolved =
+    !tty || parsed.yes
+      ? await resolveCreateOptions(parsed, { tty: false, ask: async () => '' })
+      : await withReadlineAsk((ask) => resolveCreateOptions(parsed, { tty: true, ask }));
 
-if (!args.name) {
-  help();
-  process.exit(1);
-}
+  if (!resolved.name) {
+    help();
+    process.exit(1);
+  }
 
-try {
   const dest = createYskApp({
-    name: args.name,
-    dest: resolve(process.cwd(), args.name),
+    name: resolved.name,
+    dest: resolve(process.cwd(), resolved.name),
     kitRoot,
-    flavor: args.flavor,
-    db: args.db,
-    preset: args.preset,
-    admin: args.admin,
-    mobile: args.mobile,
+    flavor: resolved.flavor,
+    db: resolved.db,
+    preset: resolved.preset,
+    admin: resolved.admin,
+    mobile: resolved.mobile,
   });
-  const dbService = args.db === 'postgresql' ? 'postgres' : args.db === 'mysql' ? 'mysql' : '';
+  const dbService =
+    resolved.db === 'postgresql' ? 'postgres' : resolved.db === 'mysql' ? 'mysql' : '';
   console.log(`created ${dest}`);
   console.log('next:');
-  console.log(`  cd ${args.name}`);
+  console.log(`  cd ${resolved.name}`);
   console.log('  pnpm install');
   console.log('  cp .env.example .env');
   if (dbService) console.log(`  docker compose up -d ${dbService}`);
-  if (args.flavor !== 'php-bridge' && args.flavor !== 'static-web3') {
+  if (resolved.flavor !== 'php-bridge' && resolved.flavor !== 'static-web3') {
     console.log('  pnpm db:generate && pnpm db:migrate && pnpm db:seed');
     console.log('  pnpm ysk add module <kebab> --prisma --web');
     console.log('  pnpm gen:openapi');
   }
   console.log('  pnpm dev');
-  if (args.preset === 'thin') {
+  if (resolved.preset === 'thin') {
     console.log('optional: pnpm ysk add llm|team|billing|push  (source trees + Express/Fastify)');
     console.log('full living copy: --preset full');
   }
-} catch (error) {
+};
+
+main().catch((error: unknown) => {
   console.error(error instanceof Error ? error.message : error);
   process.exit(1);
-}
+});

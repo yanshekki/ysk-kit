@@ -402,5 +402,54 @@ export const applyThinPreset = (dest: string): void => {
     ),
   );
 
+  for (const rel of [
+    'apps/mobile/src/screens/orgs-screen.tsx',
+    'apps/mobile/src/screens/org-detail-screen.tsx',
+    'apps/mobile/src/screens/invite-screen.tsx',
+  ]) {
+    rmIfExists(join(dest, rel));
+  }
+
+  patchIfExists(join(dest, 'apps/mobile/src/app.tsx'), (src) => {
+    let next = dropImportsMentioning(src, [
+      './screens/orgs-screen',
+      './screens/org-detail-screen',
+      './screens/invite-screen',
+    ]);
+    next = next.replace(
+      "type Screen = 'login' | 'home' | 'inbox' | 'orgs' | 'org-detail' | 'invite';",
+      "type Screen = 'login' | 'home' | 'inbox';",
+    );
+    next = dropJsxFrom(next, "{screen === 'orgs' ?", ') : null}');
+    next = dropJsxFrom(next, "{screen === 'org-detail'", ') : null}');
+    next = dropJsxFrom(next, "{screen === 'invite' ?", ') : null}');
+    next = next.replace(
+      `{screen === 'login' ? (
+        <LoginScreen
+          onSignedIn={() => setScreen('home')}
+          onAcceptInvite={() => setScreen('invite')}
+        />
+      ) : null}`,
+      `{screen === 'login' ? <LoginScreen onSignedIn={() => setScreen('home')} /> : null}`,
+    );
+    next = next.replace(
+      `<HomeScreen
+          onInbox={() => setScreen('inbox')}
+          onOrgs={() => setScreen('orgs')}
+          onLogout={() => setScreen('login')}
+        />`,
+      `<HomeScreen onInbox={() => setScreen('inbox')} onLogout={() => setScreen('login')} />`,
+    );
+    return dropLinesContaining(next, ['organizationId']);
+  });
+
+  patchIfExists(join(dest, 'apps/mobile/src/screens/home-screen.tsx'), (src) =>
+    dropLinesContaining(src, ['onOrgs', 'Organizations']),
+  );
+
+  patchIfExists(join(dest, 'apps/mobile/src/screens/login-screen.tsx'), (src) =>
+    dropLinesContaining(src, ['onAcceptInvite', 'Accept invite']),
+  );
+
   collapseEmptyDirs(join(dest, 'apps/web/src/features'));
 };

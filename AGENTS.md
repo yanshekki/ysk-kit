@@ -1,10 +1,12 @@
 # YSK Kit — agent law
 
-Read this file before changing code. History lives in `docs/history.md`. Product roadmap: `docs/product-plan.md`. Architecture law: `docs/architecture.md`. Add-module recipe: `docs/recipes/add-module.md`.
+Language: [中文](AGENTS.zh.md) · English
+
+Read this file before changing code. Architecture: `docs/architecture.md`. How-to: `docs/recipes/`. Commands: `docs/cli/`. Procedures: `docs/skills/`. Changelog: `docs/history.md`. Roadmap: `docs/product-plan.md`.
 
 ## What this repo is
 
-A contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). Product domains stay out of the kit. The living tree is the `saas` flavor.
+A contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). Product domains stay out of the kit. This tree is the living `saas` flavor: identity, files, notifications, jobs, mail, API keys, crypto, and realtime are already wired.
 
 ## Before you invent a folder
 
@@ -15,7 +17,7 @@ pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor
 pnpm ysk add module <kebab-name> --prisma --web
 ```
 
-`--preset full` copies the living demo (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first). After migrate: `pnpm db:seed` then sign in as `admin@ysk.hk` / `ysk-admin-dev` (passwords live in `.env.example`). Local browser smoke (ports 3001/5173 free): `pnpm --filter @ysk/web exec playwright install chromium && pnpm --filter @ysk/api build && pnpm --filter @ysk/web build && pnpm e2e`.
+`--preset full` copies the living demonstration (llm, billing, orgs, push already mounted). Restore a stripped capability with `pnpm ysk add llm|team|billing|push` (`billing` needs `team` first). After migrate: `pnpm db:seed` then sign in as `admin@ysk.hk` / `ysk-admin-dev` (passwords live in `.env.example`).
 
 New HTTP feature in this repo or a generated product:
 
@@ -41,10 +43,10 @@ That command writes the hexagonal slice, ts-rest contract, SDK resource, web-sdk
 ## After every feature
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent
 ```
 
-`pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK).
+`pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK). `pnpm ysk check agent` must stay green (no TypeScript `enum`, no Prisma in clients, no raw `fetch` in web/admin/mobile/desktop).
 
 ## Do not
 

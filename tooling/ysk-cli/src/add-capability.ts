@@ -68,7 +68,7 @@ const HINTS: Record<Capability, string[]> = {
     'Expo Go uses ExponentPushToken[...]; native FCM uses HTTP v1',
   ],
   mobile: [
-    'apps/mobile is the Expo template (login, home, inbox, DevicePort + FilePickerPort)',
+    'apps/mobile is the Expo template (login, home, inbox, organisations, invite, DevicePort + FilePickerPort)',
     'eas.json preview/production; app.config.ts slug ysk-kit',
     'run pnpm --filter @ysk/mobile start; Expo 57 / RN 0.86',
   ],
@@ -76,6 +76,7 @@ const HINTS: Record<Capability, string[]> = {
     'Organization + Membership + email invite; platform User.role stays global',
     'org roles: OWNER | ADMIN | MEMBER; last OWNER cannot leave',
     'invite links use WEB_PUBLIC_URL/invite?token=',
+    'when apps/mobile exists, restores organisation list, detail, and accept-invite screens',
   ],
   apikey: [
     'POST/GET/DELETE /v1/me/api-keys; Bearer ysk_live_… for machine clients',

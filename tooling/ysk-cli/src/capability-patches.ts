@@ -243,6 +243,145 @@ const inviteRoute = createRoute({
 export const patchTeamContracts = (src: string): string =>
   ensureContract(src, 'organizations', 'organizationsContract', 'organizations');
 
+export const patchTeamMobileApp = (src: string): string => {
+  let next = insertAfterLastImport(src, "import { InviteScreen } from './screens/invite-screen';");
+  next = insertAfterLastImport(
+    next,
+    "import { OrgDetailScreen } from './screens/org-detail-screen';",
+  );
+  next = insertAfterLastImport(next, "import { OrgsScreen } from './screens/orgs-screen';");
+  next = next.replace(
+    "type Screen = 'login' | 'home' | 'inbox';",
+    "type Screen = 'login' | 'home' | 'inbox' | 'orgs' | 'org-detail' | 'invite';",
+  );
+  if (!next.includes('organizationId')) {
+    next = next.replace(
+      "  const [screen, setScreen] = useState<Screen>('login');\n",
+      "  const [screen, setScreen] = useState<Screen>('login');\n  const [organizationId, setOrganizationId] = useState<string | null>(null);\n",
+    );
+  }
+  if (!next.includes('onAcceptInvite')) {
+    next = next.replace(
+      `{screen === 'login' ? <LoginScreen onSignedIn={() => setScreen('home')} /> : null}`,
+      `{screen === 'login' ? (
+        <LoginScreen
+          onSignedIn={() => setScreen('home')}
+          onAcceptInvite={() => setScreen('invite')}
+        />
+      ) : null}`,
+    );
+  }
+  if (!next.includes('onOrgs')) {
+    next = next.replace(
+      `<HomeScreen onInbox={() => setScreen('inbox')} onLogout={() => setScreen('login')} />`,
+      `<HomeScreen
+          onInbox={() => setScreen('inbox')}
+          onOrgs={() => setScreen('orgs')}
+          onLogout={() => setScreen('login')}
+        />`,
+    );
+  }
+  if (!next.includes('<OrgsScreen')) {
+    next = next.replace(
+      `{screen === 'inbox' ? <InboxScreen onBack={() => setScreen('home')} /> : null}`,
+      `{screen === 'inbox' ? <InboxScreen onBack={() => setScreen('home')} /> : null}
+      {screen === 'orgs' ? (
+        <OrgsScreen
+          onBack={() => setScreen('home')}
+          onOpen={(id) => {
+            setOrganizationId(id);
+            setScreen('org-detail');
+          }}
+        />
+      ) : null}
+      {screen === 'org-detail' && organizationId ? (
+        <OrgDetailScreen organizationId={organizationId} onBack={() => setScreen('orgs')} />
+      ) : null}
+      {screen === 'invite' ? (
+        <InviteScreen onDone={() => setScreen('login')} />
+      ) : null}`,
+    );
+  }
+  return next;
+};
+
+export const patchTeamMobileHome = (src: string): string => {
+  if (src.includes('onOrgs')) return src;
+  let next = src.replace(
+    `export function HomeScreen({
+  onInbox,
+  onLogout,
+}: {
+  onInbox: () => void;
+  onLogout: () => void;
+}) {`,
+    `export function HomeScreen({
+  onInbox,
+  onOrgs,
+  onLogout,
+}: {
+  onInbox: () => void;
+  onOrgs: () => void;
+  onLogout: () => void;
+}) {`,
+  );
+  next = next.replace(
+    'export function HomeScreen({ onInbox, onLogout }: { onInbox: () => void; onLogout: () => void }) {',
+    `export function HomeScreen({
+  onInbox,
+  onOrgs,
+  onLogout,
+}: {
+  onInbox: () => void;
+  onOrgs: () => void;
+  onLogout: () => void;
+}) {`,
+  );
+  if (!next.includes('title="Organizations"')) {
+    next = next.replace(
+      '<Button title="Inbox" onPress={onInbox} />',
+      `<Button title="Inbox" onPress={onInbox} />
+      <Button title="Organizations" onPress={onOrgs} />`,
+    );
+  }
+  return next;
+};
+
+export const patchTeamMobileLogin = (src: string): string => {
+  if (src.includes('onAcceptInvite')) return src;
+  let next = src.replace(
+    `export function LoginScreen({
+  onSignedIn,
+}: {
+  onSignedIn: () => void;
+}) {`,
+    `export function LoginScreen({
+  onSignedIn,
+  onAcceptInvite,
+}: {
+  onSignedIn: () => void;
+  onAcceptInvite: () => void;
+}) {`,
+  );
+  next = next.replace(
+    'export function LoginScreen({ onSignedIn }: { onSignedIn: () => void }) {',
+    `export function LoginScreen({
+  onSignedIn,
+  onAcceptInvite,
+}: {
+  onSignedIn: () => void;
+  onAcceptInvite: () => void;
+}) {`,
+  );
+  if (!next.includes('title="Accept invite"')) {
+    next = next.replace(
+      /<Button title="Sign in" onPress=\{[^}]+\} \/>/,
+      (match) => `${match}\n      <Button title="Accept invite" onPress={onAcceptInvite} />`,
+    );
+  }
+  return next;
+};
+
 export const patchLlmApp = (src: string): string => {
   let next = insertAfterLastImport(
     src,

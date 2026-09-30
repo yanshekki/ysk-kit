@@ -1,11 +1,13 @@
 # Notes-shaped module template
 
-The clone source for `ysk add module` lives in `tooling/ysk-cli/templates/module/`.
+Language: [中文](README.zh.md) · English
 
-Living saas does not mount a notes route. Generate one in a product:
+The clone source for `ysk add module` lives in `tooling/ysk-cli/templates/module/`. This directory documents that shape.
+
+The API in this repository does not mount a notes route, so demonstration business data stays out of the platform. Generate a module in a product:
 
 ```bash
 pnpm ysk add module note --prisma --web
 ```
 
-See `docs/recipes/add-module.md`.
+See [docs/recipes/add-module.md](../../docs/recipes/add-module.md).

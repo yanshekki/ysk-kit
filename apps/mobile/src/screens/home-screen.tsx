@@ -3,7 +3,15 @@ import { Button, Text, View } from 'react-native';
 import { createDevicePort, enablePush } from '../adapters/push';
 import { api, mobilePlatform } from '../lib/client';
 
-export function HomeScreen({ onInbox, onLogout }: { onInbox: () => void; onLogout: () => void }) {
+export function HomeScreen({
+  onInbox,
+  onOrgs,
+  onLogout,
+}: {
+  onInbox: () => void;
+  onOrgs: () => void;
+  onLogout: () => void;
+}) {
   const [name, setName] = useState('…');
   const [pushOk, setPushOk] = useState<string | null>(null);
 
@@ -25,6 +33,7 @@ export function HomeScreen({ onInbox, onLogout }: { onInbox: () => void; onLogou
     <View>
       <Text>Hello {name}</Text>
       <Button title="Inbox" onPress={onInbox} />
+      <Button title="Organizations" onPress={onOrgs} />
       <Button title="Enable notifications" onPress={register} />
       {pushOk ? <Text>{pushOk}</Text> : null}
       <Button

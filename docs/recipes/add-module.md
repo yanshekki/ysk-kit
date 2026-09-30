@@ -1,6 +1,8 @@
-# Recipe: add a module
+# Add a module
 
-For humans and agents. Law: [AGENTS.md](../../AGENTS.md).
+Language: [中文](add-module.zh.md) · English
+
+For humans and agents. Law: [AGENTS.md](../../AGENTS.md). CLI flags: [ysk](../cli/ysk.md).
 
 ## Command
 
@@ -13,7 +15,7 @@ pnpm layers && pnpm typecheck && pnpm test
 
 Use a kebab-case name (`appointment`, `note`, `inventory-item`). The URL is `/v1/<name>`. The Prisma model is PascalCase of that name.
 
-`--web` is on by default. `--no-web` skips the Vite page. `--prisma` merges a `title` / `body` / `authorId` model; uncomment-and-edit is no longer the path.
+`--web` is on by default. `--no-web` skips the Vite page. `--prisma` merges a `title` / `body` / `authorId` model.
 
 ## What the generator writes
 
@@ -21,15 +23,15 @@ Use a kebab-case name (`appointment`, `note`, `inventory-item`). The URL is `/v1
 |---|---|
 | `packages/contracts/src/dto/<name>.ts` | DTO + create command |
 | `packages/contracts/src/api/<name>.ts` | ts-rest list + create, `OkSchema` / `ErrSchema` |
-| `apps/api/src/modules/<name>/domain/` | repository port |
-| `apps/api/src/modules/<name>/application/` | service |
-| `apps/api/src/modules/<name>/infra/` | memory + prisma repos, `HttpHandler` map, Express register, service test |
-| `modules/<name>/prisma/<name>.prisma` | fragment merged into `apps/api/prisma/schema.prisma` |
+| `apps/api/src/modules/<name>/domain/` | Repository port |
+| `apps/api/src/modules/<name>/application/` | Service — **put business rules here** |
+| `apps/api/src/modules/<name>/infra/` | Memory + Prisma repos, `HttpHandler` map, Express register, service test |
+| `modules/<name>/prisma/<name>.prisma` | Fragment merged into `apps/api/prisma/schema.prisma` |
 | `packages/sdk/src/resources/<name>.ts` | `client.<name>.list/create` |
 | `packages/web-sdk/src/<name>-hooks.ts` | `useList` / `useCreate` |
-| `apps/web/src/features/<name>/<name>-page.tsx` | list + create form using the create command schema |
+| `apps/web/src/features/<name>/<name>-page.tsx` | List + create form using the create command schema |
 
-It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, `create-memory-input.ts` when those files exist.
+It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composition.ts`, `main.ts`, and `create-memory-input.ts` when those files exist. Existing files are left in place (idempotent).
 
 ## After generate
 
@@ -37,8 +39,11 @@ It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composi
 2. Put rules in `application/<name>-service.ts` only.
 3. Keep Prisma inside `infra/`.
 4. Do not add a TypeScript `enum`. Extra literals go in `@ysk/contracts`.
+5. Do not `fetch` from the web page; use `@ysk/web-sdk` hooks.
 
-## Prompt
+The notes-shaped tree under `modules/notes` documents the template. This repository’s API does not mount a notes route, so platform code stays free of demo business data.
+
+## Prompt for an agent
 
 ```text
 Follow AGENTS.md.

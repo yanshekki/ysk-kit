@@ -4,6 +4,11 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { addCapability } from './add-capability';
+import {
+  patchTeamMobileApp,
+  patchTeamMobileHome,
+  patchTeamMobileLogin,
+} from './capability-patches';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const hasTeam = existsSync(join(kitRoot, 'apps/api/src/modules/organizations'));
@@ -208,6 +213,131 @@ describe('addCapability', () => {
       'model User {\n  id String @id\n}\n',
     );
     expect(() => addCapability('billing', root)).toThrow(/requires team/);
+  });
+
+  it('patches Expo org screens onto a thin mobile tree', () => {
+    const root = mkdtempSync(join(tmpdir(), 'ysk-add-team-mobile-'));
+    mkdirSync(join(root, 'apps/api/prisma'), { recursive: true });
+    mkdirSync(join(root, 'apps/api/src'), { recursive: true });
+    mkdirSync(join(root, 'apps/mobile/src/screens'), { recursive: true });
+    mkdirSync(join(root, 'modules/team/prisma'), { recursive: true });
+    writeFileSync(
+      join(root, 'apps/api/prisma/schema.prisma'),
+      'model User {\n  id String @id\n}\n',
+    );
+    writeFileSync(
+      join(root, 'modules/team/prisma/organization.prisma'),
+      readFileSync(join(kitRoot, 'modules/team/prisma/organization.prisma'), 'utf8'),
+    );
+    writeFileSync(
+      join(root, 'apps/api/src/app.ts'),
+      `import express from 'express';\n\nexport const createApp = (input: { organizationService: never }) => {\n  const app = express();\n  return app;\n};\n`,
+    );
+    writeFileSync(
+      join(root, 'apps/api/src/composition.ts'),
+      `export const createComposition = () => {\n  const prisma = {};\n  const users = {};\n  const queue = {};\n  const audit = {};\n  const env = { WEB_PUBLIC_URL: 'http://x' };\n  return {\n    ok: true,\n  };\n};\n`,
+    );
+    writeFileSync(
+      join(root, 'apps/mobile/src/app.tsx'),
+      `import { useState } from 'react';
+import { HomeScreen } from './screens/home-screen';
+import { InboxScreen } from './screens/inbox-screen';
+import { LoginScreen } from './screens/login-screen';
+
+type Screen = 'login' | 'home' | 'inbox';
+
+export function App() {
+  const [screen, setScreen] = useState<Screen>('login');
+  return (
+    <>
+      {screen === 'login' ? <LoginScreen onSignedIn={() => setScreen('home')} /> : null}
+      {screen === 'home' ? (
+        <HomeScreen onInbox={() => setScreen('inbox')} onLogout={() => setScreen('login')} />
+      ) : null}
+      {screen === 'inbox' ? <InboxScreen onBack={() => setScreen('home')} /> : null}
+    </>
+  );
+}
+`,
+    );
+    writeFileSync(
+      join(root, 'apps/mobile/src/screens/home-screen.tsx'),
+      `export function HomeScreen({ onInbox, onLogout }: { onInbox: () => void; onLogout: () => void }) {
+  return (
+    <>
+      <Button title="Inbox" onPress={onInbox} />
+      <Button title="Logout" onPress={onLogout} />
+    </>
+  );
+}
+`,
+    );
+    writeFileSync(
+      join(root, 'apps/mobile/src/screens/login-screen.tsx'),
+      `export function LoginScreen({ onSignedIn }: { onSignedIn: () => void }) {
+  return <Button title="Sign in" onPress={onSignedIn} />;
+}
+`,
+    );
+    const logs = addCapability('team', root);
+    expect(logs[0]).toBe('ysk add team: applied');
+    expect(existsSync(join(root, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);
+    expect(existsSync(join(root, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(true);
+    expect(existsSync(join(root, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(true);
+    const app = readFileSync(join(root, 'apps/mobile/src/app.tsx'), 'utf8');
+    expect(app).toContain("'orgs'");
+    expect(app).toContain('OrgsScreen');
+    expect(readFileSync(join(root, 'apps/mobile/src/screens/home-screen.tsx'), 'utf8')).toContain(
+      'Organizations',
+    );
+    expect(readFileSync(join(root, 'apps/mobile/src/screens/login-screen.tsx'), 'utf8')).toContain(
+      'Accept invite',
+    );
+    addCapability('team', root);
+    expect(
+      readFileSync(join(root, 'apps/mobile/src/app.tsx'), 'utf8').match(/OrgsScreen/g),
+    ).toHaveLength(2);
+  });
+
+  it('patchTeamMobile is idempotent on a thin app.tsx', () => {
+    const app = `import { useState } from 'react';
+import { HomeScreen } from './screens/home-screen';
+import { InboxScreen } from './screens/inbox-screen';
+import { LoginScreen } from './screens/login-screen';
+
+type Screen = 'login' | 'home' | 'inbox';
+
+export function App() {
+  const [screen, setScreen] = useState<Screen>('login');
+  return (
+    <>
+      {screen === 'login' ? <LoginScreen onSignedIn={() => setScreen('home')} /> : null}
+      {screen === 'home' ? (
+        <HomeScreen onInbox={() => setScreen('inbox')} onLogout={() => setScreen('login')} />
+      ) : null}
+      {screen === 'inbox' ? <InboxScreen onBack={() => setScreen('home')} /> : null}
+    </>
+  );
+}
+`;
+    const first = patchTeamMobileApp(app);
+    expect(first).toContain("'orgs' | 'org-detail' | 'invite'");
+    expect(first).toContain('onOrgs');
+    expect(patchTeamMobileApp(first)).toBe(first);
+    const home = `export function HomeScreen({ onInbox, onLogout }: { onInbox: () => void; onLogout: () => void }) {
+  return <Button title="Inbox" onPress={onInbox} />;
+}
+`;
+    const homeOnce = patchTeamMobileHome(home);
+    expect(homeOnce).toContain('Organizations');
+    expect(patchTeamMobileHome(homeOnce)).toBe(homeOnce);
+    const login = `export function LoginScreen({ onSignedIn }: { onSignedIn: () => void }) {
+  return <Button title="Sign in" onPress={onSignedIn} />;
+}
+`;
+    const loginOnce = patchTeamMobileLogin(login);
+    expect(loginOnce).toContain('Accept invite');
+    expect(patchTeamMobileLogin(loginOnce)).toBe(loginOnce);
   });
 
   it('ships a PM2 ecosystem with api and worker', () => {

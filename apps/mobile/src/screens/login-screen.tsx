@@ -3,7 +3,13 @@ import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { api } from '../lib/client';
 
-export function LoginScreen({ onSignedIn }: { onSignedIn: () => void }) {
+export function LoginScreen({
+  onSignedIn,
+  onAcceptInvite,
+}: {
+  onSignedIn: () => void;
+  onAcceptInvite: () => void;
+}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +37,7 @@ export function LoginScreen({ onSignedIn }: { onSignedIn: () => void }) {
       />
       <TextInput secureTextEntry onChangeText={setPassword} value={password} />
       <Button title="Sign in" onPress={submit} />
+      <Button title="Accept invite" onPress={onAcceptInvite} />
       {error ? <Text>{error}</Text> : null}
     </View>
   );

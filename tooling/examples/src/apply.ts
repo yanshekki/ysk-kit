@@ -126,7 +126,7 @@ export const applyExample = (opts: ApplyOptions): { dest: string; logs: string[]
   }
 
   run('pnpm', ['layers'], { cwd: dest, env: destEnv, stdio });
-  run('pnpm', ['ysk', 'check', 'agent'], { cwd: dest, env: destEnv, stdio });
+  run('pnpm', ['ysk-kit', 'check', 'agent'], { cwd: dest, env: destEnv, stdio });
   run('pnpm', ['typecheck'], { cwd: dest, env: destEnv, stdio });
   run('pnpm', ['test'], { cwd: dest, env: destEnv, stdio });
   run('pnpm', ['gen:openapi'], { cwd: dest, env: destEnv, stdio });

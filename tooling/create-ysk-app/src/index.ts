@@ -48,7 +48,9 @@ const main = async (): Promise<void> => {
   }
   console.log('  pnpm dev');
   if (resolved.preset === 'thin') {
-    console.log('optional: pnpm ysk-kit add llm|team|billing|push  (source trees + Express/Fastify)');
+    console.log(
+      'optional: pnpm ysk-kit add llm|team|billing|push  (source trees + Express/Fastify)',
+    );
     console.log('full living copy: --preset full');
   }
 };

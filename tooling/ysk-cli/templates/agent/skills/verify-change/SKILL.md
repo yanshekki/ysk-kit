@@ -1,7 +1,7 @@
 ---
 name: verify-change
 description: >
-  Verify a YSK Kit change with pnpm layers, typecheck, test, gen:openapi, and ysk check agent.
+  Verify a YSK Kit change with pnpm layers, typecheck, test, gen:openapi, and ysk-kit check agent.
   Use when a feature is done, before finishing, after a module, or /verify-change.
 ---
 

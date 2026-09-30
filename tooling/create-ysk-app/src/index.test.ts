@@ -128,6 +128,10 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'tooling/examples/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/create-ysk-app/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'examples'))).toBe(false);
+    const lock = readFileSync(join(dest, 'pnpm-lock.yaml'), 'utf8');
+    expect(lock).toContain('\n  apps/web:\n');
+    expect(lock).toContain('\n  apps/api:\n');
+    expect(lock).not.toContain('\n  apps/mobile:\n');
   });
 
   it('scaffolds php-bridge without apps', () => {

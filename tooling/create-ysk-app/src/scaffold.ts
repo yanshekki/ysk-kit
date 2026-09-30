@@ -59,6 +59,34 @@ const SKIP = new Set([
 export const shouldSkipCopyEntry = (entry: string): boolean =>
   SKIP.has(entry) || (entry.startsWith('.env') && entry !== '.env.example');
 
+export const pruneLockfileImporters = (dest: string): void => {
+  const lockPath = join(dest, 'pnpm-lock.yaml');
+  if (!existsSync(lockPath)) return;
+  const lines = readFileSync(lockPath, 'utf8').split('\n');
+  const out: string[] = [];
+  let inImporters = false;
+  let skipBlock = false;
+  for (const line of lines) {
+    if (line === 'importers:') {
+      inImporters = true;
+      skipBlock = false;
+      out.push(line);
+      continue;
+    }
+    if (inImporters && /^[A-Za-z]/.test(line)) {
+      inImporters = false;
+      skipBlock = false;
+    }
+    if (inImporters && /^ {2}[^ \n].*:$/.test(line)) {
+      const key = line.slice(2, -1);
+      const pkgJson = key === '.' ? join(dest, 'package.json') : join(dest, key, 'package.json');
+      skipBlock = !existsSync(pkgJson);
+    }
+    if (!skipBlock) out.push(line);
+  }
+  writeFileSync(lockPath, out.join('\n'));
+};
+
 const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<string>): void => {
   mkdirSync(to, { recursive: true });
   for (const entry of readdirSync(from)) {
@@ -476,6 +504,7 @@ Language: [English](GATEWAY.md) · 中文
     );
   }
 
+  pruneLockfileImporters(dest);
   return dest;
 };
 

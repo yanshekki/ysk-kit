@@ -30,7 +30,7 @@ On a TTY, omitted choices are prompted (name, flavor, preset, database, admin, m
 | `--no-mobile` | flag | mobile on | Skip `apps/mobile`. Ignored when the flavor already omits mobile. |
 | `--yes` / `-y` | flag | off | Do not prompt. Use defaults and any other flags. |
 
-Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, the kit-root `examples/` tutorials, `.runs`, `.cursor`, `.grok`, editor trees, and any `.env*` file except `.env.example`. `tooling/examples` and `tooling/create-ysk-app` stay so the copied lockfile matches the dest workspace. After copy, workspace flavors write Cursor/Grok skill wrappers from `tooling/ysk-cli/templates/agent/`. The copied `.gitignore` ignores `.env` and `.env.*` (keeps `.env.example`), sqlite `*.db` (including `apps/api/dev.db`), `.cursor/`, `.grok/`, generated Prisma, `node_modules`, build output, Playwright reports, and `.runs/`.
+Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, the kit-root `examples/` tutorials, `.runs`, `.cursor`, `.grok`, editor trees, and any `.env*` file except `.env.example`. `tooling/examples` and `tooling/create-ysk-app` stay. After copy, skipped apps (mobile, admin, …) are dropped from dest `pnpm-lock.yaml` importers so `pnpm install` works with a frozen lockfile. Workspace flavors then write Cursor/Grok skill wrappers from `tooling/ysk-cli/templates/agent/`. The copied `.gitignore` ignores `.env` and `.env.*` (keeps `.env.example`), sqlite `*.db` (including `apps/api/dev.db`), `.cursor/`, `.grok/`, generated Prisma, `node_modules`, build output, Playwright reports, and `.runs/`.
 
 ## Flavors
 

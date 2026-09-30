@@ -48,7 +48,7 @@ Documentation is public. Write so a third party who has never seen the company o
 
 Do not translate `LICENSE`, `docs/openapi.yaml`, source comments, or Prisma schema.
 
-Tool stubs stay English-only: `CLAUDE.md`, `.cursor/rules/`, `.grok/skills/*/SKILL.md`, `.cursor/skills/*/SKILL.md`. They point at `AGENTS.md` and `docs/skills/`.
+Tool stubs stay English-only: `CLAUDE.md`, and the generated Cursor/Grok wrappers from `tooling/ysk-cli/templates/agent/`. They point at `AGENTS.md` and `docs/skills/`. `.cursor/` and `.grok/` are gitignored.
 
 ### One home per fact
 
@@ -59,7 +59,7 @@ Tool stubs stay English-only: `CLAUDE.md`, `.cursor/rules/`, `.grok/skills/*/SKI
 | Commands and flags | `docs/cli/` |
 | Concepts | `docs/guides/` |
 | Step-by-step how-to | `docs/recipes/` |
-| Agent procedures | `docs/skills/` (wrappers under `.grok/skills` and `.cursor/skills` only point here) |
+| Agent procedures | `docs/skills/` (generated `.grok/skills` and `.cursor/skills` wrappers only point here) |
 | Changelog | `docs/history.md` |
 | Roadmap | `docs/product-plan.md` |
 

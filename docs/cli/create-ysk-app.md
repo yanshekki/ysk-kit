@@ -30,7 +30,7 @@ On a TTY, omitted choices are prompted (name, flavor, preset, database, admin, m
 | `--no-mobile` | flag | mobile on | Skip `apps/mobile`. Ignored when the flavor already omits mobile. |
 | `--yes` / `-y` | flag | off | Do not prompt. Use defaults and any other flags. |
 
-Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, `examples`, `.runs`, `.env`, and `.env.local`. Destination drops `tooling/create-ysk-app` from the copy set used internally; the product still receives `tooling/ysk-cli`. The copied `.gitignore` ignores `.env`, sqlite `*.db` (including `apps/api/dev.db`), generated Prisma, `node_modules`, build output, Playwright reports, and `.runs/`.
+Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, `examples`, `.runs`, `.cursor`, `.grok`, editor trees, and any `.env*` file except `.env.example`. Destination drops `tooling/create-ysk-app` from the copy set used internally; the product still receives `tooling/ysk-cli`. After copy, workspace flavors write Cursor/Grok skill wrappers from `tooling/ysk-cli/templates/agent/`. The copied `.gitignore` ignores `.env` and `.env.*` (keeps `.env.example`), sqlite `*.db` (including `apps/api/dev.db`), `.cursor/`, `.grok/`, generated Prisma, `node_modules`, build output, Playwright reports, and `.runs/`.
 
 ## Flavors
 

@@ -107,3 +107,5 @@ Language: [English](history.md) · 中文
 **Phase 50:** 已完成實例 `course-enrollment`（名額與電郵唯一）與 `invoice-quotes`（金額以港元仙計，DRAFT → SENT → ACCEPTED）。
 
 **Phase 51:** 已完成實例 `event-rsvp`、`job-board`（未發布職位報名回 CONFLICT）與 `field-work-orders`（`ysk add push`，指派會把 `work.assigned` 寫入 Inbox）。十個系統的目錄現已提供。CI `example-smoke` 為 10 slug 矩陣（`fail-fast: false`）。擷取按 `capture.json` 在埠 13001／15173 逐步操作。sqlite dest 上的 `ysk add` 會去掉 `@db` native types（Device.token）。thin + mobile 的 Expo 應用在沒有組織畫面時仍能通過型別檢查。`ysk add push` 會把 `push` 放回 memory harness 的回傳值。
+
+Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `create-ysk-app` 與 `ysk upgrade` 寫入已 gitignore 的 `.cursor/` 與 `.grok/`。`.gitignore` 同時覆蓋 `.env.*`（保留 `.env.example`）、編輯器目錄，以及 `*.pem`／`*.key`。

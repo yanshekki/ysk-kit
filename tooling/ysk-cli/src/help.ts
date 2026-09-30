@@ -33,8 +33,9 @@ Commands:
   upgrade [--dry-run]
       Copy allowlisted guardrail files from this kit checkout into the
       product root (YSK_ROOT). Overwrites AGENTS.md, skills, TypeScript
-      and Biome config, and dependency-cruiser. Does not touch apps,
-      modules, product README, .env, or Prisma.
+      and Biome config, and dependency-cruiser. Workspace products also
+      receive generated Cursor/Grok skill wrappers (gitignored). Does
+      not touch apps, modules, product README, .env, or Prisma.
       --dry-run   List will copy / skip without writing
 
   check agent

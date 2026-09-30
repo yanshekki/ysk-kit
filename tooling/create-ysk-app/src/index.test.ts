@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { HELP } from './help';
-import { createYskApp, parseArgs } from './scaffold';
+import { createYskApp, parseArgs, shouldSkipCopyEntry } from './scaffold';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const kitVersion = (
@@ -68,6 +68,13 @@ describe('create-ysk-app', () => {
     ).toThrow('not in this phase');
   });
 
+  it('skips env variants and editor trees when copying', () => {
+    expect(shouldSkipCopyEntry('.cursor')).toBe(true);
+    expect(shouldSkipCopyEntry('.grok')).toBe(true);
+    expect(shouldSkipCopyEntry('.env.production')).toBe(true);
+    expect(shouldSkipCopyEntry('.env.example')).toBe(false);
+  });
+
   it('parses flags', () => {
     expect(parseArgs(['acme', '--db', 'postgresql', '--no-mobile']).db).toBe('postgresql');
     expect(parseArgs(['acme', '--db', 'postgresql', '--no-mobile']).mobile).toBe(false);
@@ -115,6 +122,9 @@ describe('create-ysk-app', () => {
     expect(readme).toContain('pnpm ysk upgrade');
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
   });
 
   it('scaffolds php-bridge without apps', () => {
@@ -143,6 +153,8 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
     expect(readFileSync(join(dest, 'README.md'), 'utf8')).toContain('pnpm ysk upgrade');
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk upgrade');
+    expect(existsSync(join(dest, '.cursor'))).toBe(false);
+    expect(existsSync(join(dest, '.grok'))).toBe(false);
   });
 
   it('copies static-web3 flavor with web only', () => {
@@ -237,7 +249,12 @@ describe('create-ysk-app', () => {
     const ignore = readFileSync(join(dest, '.gitignore'), 'utf8');
     expect(ignore).toMatch(/^\*\.db$/m);
     expect(ignore).toContain('.env');
+    expect(ignore).toContain('.env.*');
+    expect(ignore).toContain('!.env.example');
+    expect(ignore).toContain('.cursor/');
+    expect(ignore).toContain('.grok/');
     expect(ignore).toContain('.runs/');
+    expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/admin'))).toBe(false);

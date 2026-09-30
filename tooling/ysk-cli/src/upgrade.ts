@@ -8,18 +8,16 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { writeAgentStubs } from './agent-stubs';
 
 export const UPGRADE_PATHS = [
   'AGENTS.md',
   'AGENTS.zh.md',
   'CLAUDE.md',
-  '.cursor/rules/ysk-kit.mdc',
   '.dependency-cruiser.cjs',
   'packages/typescript-config',
   'packages/biome-config',
   'docs/skills',
-  '.grok/skills',
-  '.cursor/skills',
 ] as const;
 
 const SKIP_ENTRIES = new Set(['node_modules', 'dist']);
@@ -113,6 +111,15 @@ export const upgrade = (opts: UpgradeOptions): string[] => {
     }
     copyEntry(from, to);
     logs.push(`copied ${rel}`);
+  }
+
+  if (workspaceProduct) {
+    if (opts.dryRun) {
+      logs.push('will write agent stubs');
+    } else {
+      writeAgentStubs(opts.productRoot, opts.kitRoot);
+      logs.push('wrote agent stubs');
+    }
   }
 
   const kitVersion = readKitVersion(opts.kitRoot);

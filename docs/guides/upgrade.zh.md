@@ -42,7 +42,7 @@ YSK_ROOT=/path/to/your-product pnpm ysk upgrade
 YSK_ROOT=/path/to/your-product pnpm ysk upgrade --dry-run
 ```
 
-未設定時，`YSK_ROOT` 預設為擁有該 CLI 的倉。在本 kit 內執行 `pnpm ysk upgrade` 是冪等的（來源與目的是同一棵樹）。`--dry-run` 只列印 `will copy` / `skip`，不寫檔。
+未設定時，`YSK_ROOT` 預設為擁有該 CLI 的倉。在本 kit 內執行 `pnpm ysk upgrade` 是冪等的（來源與目的是同一棵樹）。`--dry-run` 只列印 `will copy` / `skip` / `will write agent stubs`，不寫檔。
 
 若沒有 `.ysk-kit.json`，只要存在 `pnpm-workspace.yaml` 或 `AGENTS.md`，命令仍會執行，然後寫入標記；`flavor` / `preset` / `db` 在檔案尚未有值時為 `unknown`。否則結束並提示：請在產品根目錄執行，或設定 `YSK_ROOT`。
 
@@ -52,12 +52,12 @@ YSK_ROOT=/path/to/your-product pnpm ysk upgrade --dry-run
 |---|---|
 | `AGENTS.md` · `AGENTS.zh.md` | Agent 法律 |
 | `CLAUDE.md` | Agent 入口 |
-| `.cursor/rules/ysk-kit.mdc` | Cursor 法律 |
 | `.dependency-cruiser.cjs` | `pnpm layers` |
 | `packages/typescript-config/` | 編譯設定（沒有業務型別） |
 | `packages/biome-config/` | lint 設定 |
 | `docs/skills/` | Agent 程序正文 |
-| `.grok/skills/` · `.cursor/skills/` | skill 包裝 |
+
+工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 Cursor／Grok skill 包裝到 `.cursor/` 與 `.grok/`（已 gitignore）。`php-bridge` 不會收到這些包裝。
 
 複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過（`php-bridge` 沒有 TypeScript 工作區套件時屬常見情況）。產品端若缺少父目錄，會先建立。
 

@@ -48,7 +48,7 @@ Language: [English](foo.md) · 中文
 
 不翻譯 `LICENSE`、`docs/openapi.yaml`、程式碼註解或 Prisma schema。
 
-工具入口維持英文：`CLAUDE.md`、`.cursor/rules/`、`.grok/skills/*/SKILL.md`、`.cursor/skills/*/SKILL.md`。它們指向 `AGENTS.md` 與 `docs/skills/`。
+工具入口維持英文：`CLAUDE.md`，以及由 `tooling/ysk-cli/templates/agent/` 產生的 Cursor／Grok 包裝。它們指向 `AGENTS.md` 與 `docs/skills/`。`.cursor/` 與 `.grok/` 已 gitignore。
 
 ### 單一事實來源
 
@@ -59,7 +59,7 @@ Language: [English](foo.md) · 中文
 | 命令與旗標 | `docs/cli/` |
 | 概念 | `docs/guides/` |
 | 逐步操作 | `docs/recipes/` |
-| Agent 程序 | `docs/skills/`（`.grok/skills` 與 `.cursor/skills` 的包裝只指向此處） |
+| Agent 程序 | `docs/skills/`（產生出來的 `.grok/skills` 與 `.cursor/skills` 包裝只指向此處） |
 | 變更紀錄 | `docs/history.md` |
 | 路線圖 | `docs/product-plan.md` |
 

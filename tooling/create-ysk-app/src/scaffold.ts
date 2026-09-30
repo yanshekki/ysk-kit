@@ -50,7 +50,37 @@ const SKIP = new Set([
   '.runs',
   '.env',
   '.env.local',
+  '.cursor',
+  '.grok',
+  '.idea',
+  '.vscode',
+  '.claude',
+  '.codex',
 ]);
+
+export const shouldSkipCopyEntry = (entry: string): boolean =>
+  SKIP.has(entry) || (entry.startsWith('.env') && entry !== '.env.example');
+
+const writeAgentStubs = (kitRoot: string, dest: string): void => {
+  const templates = join(kitRoot, 'tooling/ysk-cli/templates/agent');
+  const rule = join(templates, 'ysk-kit.mdc');
+  const skillsDir = join(templates, 'skills');
+  if (!existsSync(rule) || !existsSync(skillsDir)) {
+    throw new Error('agent templates missing');
+  }
+  mkdirSync(join(dest, '.cursor/rules'), { recursive: true });
+  cpSync(rule, join(dest, '.cursor/rules/ysk-kit.mdc'));
+  for (const name of readdirSync(skillsDir)) {
+    const skillDir = join(skillsDir, name);
+    const src = join(skillDir, 'SKILL.md');
+    if (!statSync(skillDir).isDirectory() || !existsSync(src)) continue;
+    for (const tree of ['.grok/skills', '.cursor/skills'] as const) {
+      const dir = join(dest, tree, name);
+      mkdirSync(dir, { recursive: true });
+      cpSync(src, join(dir, 'SKILL.md'));
+    }
+  }
+};
 
 const hasOpt = (argv: string[], name: string): boolean =>
   argv.includes(`--${name}`) || argv.some((arg) => arg.startsWith(`--${name}=`));
@@ -122,7 +152,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
 const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<string>): void => {
   mkdirSync(to, { recursive: true });
   for (const entry of readdirSync(from)) {
-    if (SKIP.has(entry)) continue;
+    if (shouldSkipCopyEntry(entry)) continue;
     const source = join(from, entry);
     const dest = join(to, entry);
     const stat = statSync(source);
@@ -307,6 +337,7 @@ export const createYskApp = (opts: CreateAppOptions): string => {
 
   copyTree(opts.kitRoot, dest, opts.kitRoot, skipApps);
   rmSync(join(dest, 'tooling/create-ysk-app'), { recursive: true, force: true });
+  writeAgentStubs(opts.kitRoot, dest);
 
   const pkgPath = join(dest, 'package.json');
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as { name: string; description?: string };

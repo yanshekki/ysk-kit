@@ -57,18 +57,16 @@ describe('public docs language pairs', () => {
     expect(missing.map((path) => relative(kitRoot, path))).toEqual([]);
   });
 
-  it('ships six Grok and Cursor skill wrappers that point at docs and law', () => {
+  it('ships six agent skill templates that point at docs and law', () => {
+    const rule = join(kitRoot, 'tooling/ysk-cli/templates/agent/ysk-kit.mdc');
+    expect(existsSync(rule), rule).toBe(true);
+    expect(readFileSync(rule, 'utf8')).toContain('AGENTS.md');
     for (const name of SKILLS) {
-      const grok = join(kitRoot, '.grok/skills', name, 'SKILL.md');
-      const cursor = join(kitRoot, '.cursor/skills', name, 'SKILL.md');
-      expect(existsSync(grok), grok).toBe(true);
-      expect(existsSync(cursor), cursor).toBe(true);
-      const grokBody = readFileSync(grok, 'utf8');
-      const cursorBody = readFileSync(cursor, 'utf8');
-      expect(grokBody).toContain(`docs/skills/${name}.md`);
-      expect(grokBody).toContain('AGENTS.md');
-      expect(cursorBody).toContain(`docs/skills/${name}.md`);
-      expect(cursorBody).toContain('AGENTS.md');
+      const tmpl = join(kitRoot, 'tooling/ysk-cli/templates/agent/skills', name, 'SKILL.md');
+      expect(existsSync(tmpl), tmpl).toBe(true);
+      const body = readFileSync(tmpl, 'utf8');
+      expect(body).toContain(`docs/skills/${name}.md`);
+      expect(body).toContain('AGENTS.md');
     }
   });
 });

@@ -56,6 +56,10 @@ describe('ysk upgrade', () => {
     expect(marker.db).toBe('unknown');
     expect(existsSync(join(dest, 'docs/skills/new-product.md'))).toBe(true);
     expect(existsSync(join(dest, 'packages/typescript-config/package.json'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
+    expect(logs.some((line) => line === 'wrote agent stubs')).toBe(true);
   });
 
   it('dry-run lists paths and does not write', () => {
@@ -67,9 +71,11 @@ describe('ysk upgrade', () => {
 
     const logs = upgrade({ productRoot: dest, kitRoot, dryRun: true });
     expect(logs.some((line) => line === 'will copy AGENTS.md')).toBe(true);
+    expect(logs.some((line) => line === 'will write agent stubs')).toBe(true);
     expect(logs.some((line) => line === 'will write .ysk-kit.json')).toBe(true);
     expect(readFileSync(join(dest, 'AGENTS.md'), 'utf8')).toBe('# old agents\n');
     expect(existsSync(join(dest, '.ysk-kit.json'))).toBe(false);
+    expect(existsSync(join(dest, '.cursor'))).toBe(false);
   });
 
   it('keeps flavor/preset/db when bumping version', () => {
@@ -117,6 +123,8 @@ describe('ysk upgrade', () => {
     expect(logs.some((line) => line === 'skip packages/typescript-config')).toBe(true);
     expect(existsSync(join(dest, 'AGENTS.md'))).toBe(false);
     expect(existsSync(join(dest, 'packages/typescript-config'))).toBe(false);
+    expect(existsSync(join(dest, '.cursor'))).toBe(false);
+    expect(existsSync(join(dest, '.grok'))).toBe(false);
     expect(readFileSync(join(dest, 'docs/openapi.yaml'), 'utf8')).toBe('openapi: 3.1.0\n');
     expect(readFileSync(join(dest, 'README.md'), 'utf8')).toBe('# bridge\n');
     const marker = JSON.parse(readFileSync(join(dest, '.ysk-kit.json'), 'utf8')) as {

@@ -94,9 +94,9 @@ pnpm ysk upgrade --dry-run
 
 | 旗標 | 作用 |
 |---|---|
-| `--dry-run` | 列印 `will copy` / `skip` / `will write .ysk-kit.json`，不寫檔 |
+| `--dry-run` | 列印 `will copy` / `skip` / `will write agent stubs` / `will write .ysk-kit.json`，不寫檔 |
 
-會覆寫的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`.cursor/rules/ysk-kit.mdc`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`、`.grok/skills/`、`.cursor/skills/`。複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過。
+會覆寫的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`。複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過。工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 Cursor／Grok skill 包裝（`.cursor/` 與 `.grok/` 已 gitignore）。
 
 不會改動：`apps/**`、`modules/**`、產品 DTO、產品 `README.md`、`.env`、Prisma 遷移、`docs/openapi.yaml`。
 

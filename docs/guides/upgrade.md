@@ -42,7 +42,7 @@ YSK_ROOT=/path/to/your-product pnpm ysk upgrade
 YSK_ROOT=/path/to/your-product pnpm ysk upgrade --dry-run
 ```
 
-`YSK_ROOT` defaults to the repository that owns the CLI. Running `pnpm ysk upgrade` inside this kit is idempotent (source and destination are the same tree). `--dry-run` prints `will copy` / `skip` and does not write files.
+`YSK_ROOT` defaults to the repository that owns the CLI. Running `pnpm ysk upgrade` inside this kit is idempotent (source and destination are the same tree). `--dry-run` prints `will copy` / `skip` / `will write agent stubs` and does not write files.
 
 If `.ysk-kit.json` is missing, the command still runs when `pnpm-workspace.yaml` or `AGENTS.md` is present, then writes a marker with `flavor` / `preset` / `db` set to `unknown` unless those fields already exist. Otherwise it exits with: run from a product root, or set `YSK_ROOT`.
 
@@ -52,12 +52,12 @@ If `.ysk-kit.json` is missing, the command still runs when `pnpm-workspace.yaml`
 |---|---|
 | `AGENTS.md` · `AGENTS.zh.md` | Agent law |
 | `CLAUDE.md` | Agent entry |
-| `.cursor/rules/ysk-kit.mdc` | Cursor law |
 | `.dependency-cruiser.cjs` | `pnpm layers` |
 | `packages/typescript-config/` | Compiler config (no business types) |
 | `packages/biome-config/` | Lint config |
 | `docs/skills/` | Agent procedures |
-| `.grok/skills/` · `.cursor/skills/` | Skill wrappers |
+
+Workspace products also receive Cursor/Grok skill wrappers generated from `tooling/ysk-cli/templates/agent/` into `.cursor/` and `.grok/` (gitignored). `php-bridge` does not receive those stubs.
 
 Directory copies skip `node_modules` and `dist`. A path that does not exist in the kit is skipped (typical for `php-bridge`, which has no TypeScript workspace packages). Missing parent directories on the product side are created.
 

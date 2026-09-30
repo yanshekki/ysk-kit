@@ -5,8 +5,17 @@ coverage
 *.tsbuildinfo
 
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+.cursor/
+.grok/
+.idea/
+.vscode/
+.claude/
+.codex/
+*.pem
+*.key
 
 *.log
 .DS_Store

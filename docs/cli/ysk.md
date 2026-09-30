@@ -94,9 +94,9 @@ pnpm ysk upgrade --dry-run
 
 | Flag | Effect |
 |---|---|
-| `--dry-run` | Print `will copy` / `skip` / `will write .ysk-kit.json` without writing files |
+| `--dry-run` | Print `will copy` / `skip` / `will write agent stubs` / `will write .ysk-kit.json` without writing files |
 
-Overwritten paths: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `.cursor/rules/ysk-kit.mdc`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`, `.grok/skills/`, `.cursor/skills/`. Directory copies skip `node_modules` and `dist`. Missing kit paths are skipped.
+Overwritten paths: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`. Directory copies skip `node_modules` and `dist`. Missing kit paths are skipped. Workspace products also receive Cursor/Grok skill wrappers generated from `tooling/ysk-cli/templates/agent/` (gitignored `.cursor/` and `.grok/`).
 
 Left alone: `apps/**`, `modules/**`, product DTOs, product `README.md`, `.env`, Prisma migrations, `docs/openapi.yaml`.
 

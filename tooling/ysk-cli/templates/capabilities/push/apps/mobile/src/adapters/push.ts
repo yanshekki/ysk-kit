@@ -1,4 +1,4 @@
-import type { DevicePort, YskClient } from '@ysk/sdk';
+import type { DevicePort, YskClient } from '@ysk-kit/sdk';
 
 export const createDevicePort = (opts: {
   api: YskClient;

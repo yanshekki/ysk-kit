@@ -1,6 +1,6 @@
-import { type HttpHandler, mountContract } from '@ysk/api-express';
-import { appContract, type CreateMemberProfileCommand, type PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import { type HttpHandler, mountContract } from '@ysk-kit/api-express';
+import { appContract, type CreateMemberProfileCommand, type PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 import type { MemberProfileService } from '../application/member-profile-service';
 

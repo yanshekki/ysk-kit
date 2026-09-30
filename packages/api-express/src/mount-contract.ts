@@ -4,13 +4,13 @@ import {
   type HttpHandler,
   type HttpResult,
   REQUEST_ID_HEADER,
-} from '@ysk/api-http';
-import type { AccessClaims } from '@ysk/auth';
-import { claimsHasPermission } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/api-http';
+import type { AccessClaims } from '@ysk-kit/auth';
+import { claimsHasPermission } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 
-export { type ContractRouter, flattenContract } from '@ysk/api-http';
+export { type ContractRouter, flattenContract } from '@ysk-kit/api-http';
 export type RouteResult = HttpResult;
 export type MountedHandler = HttpHandler | HttpHandler['handle'];
 

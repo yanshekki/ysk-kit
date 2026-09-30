@@ -1,5 +1,5 @@
-import { defaultPublicConfig } from '@ysk/config';
-import { Button } from '@ysk/ui';
+import { defaultPublicConfig } from '@ysk-kit/config';
+import { Button } from '@ysk-kit/ui';
 import { useEffect, useState } from 'react';
 import { tokenStore } from '../../lib/client';
 

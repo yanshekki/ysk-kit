@@ -1,5 +1,5 @@
-import { Platform } from '@ysk/contracts';
-import type { TokenStore } from '@ysk/sdk';
+import { Platform } from '@ysk-kit/contracts';
+import type { TokenStore } from '@ysk-kit/sdk';
 import * as SecureStore from 'expo-secure-store';
 
 const ACCESS = 'ysk.access';

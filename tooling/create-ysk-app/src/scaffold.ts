@@ -433,7 +433,7 @@ export const createYskApp = (opts: CreateAppOptions): string => {
 
 Language: [中文](WEB3.zh.md) · English
 
-Vite web plus \`@ysk/config\` / \`@ysk/sdk\`. This product has no API.
+Vite web plus \`@ysk-kit/config\` / \`@ysk-kit/sdk\`. This product has no API.
 
 - Point \`API_PUBLIC_URL\` at a remote Kit API if the UI needs one.
 - Add wallet connect (viem, wagmi, or similar) in this product.
@@ -445,7 +445,7 @@ Vite web plus \`@ysk/config\` / \`@ysk/sdk\`. This product has no API.
 
 Language: [English](WEB3.md) · 中文
 
-Vite 前端，連同 \`@ysk/config\` / \`@ysk/sdk\`。此產品沒有 API。
+Vite 前端，連同 \`@ysk-kit/config\` / \`@ysk-kit/sdk\`。此產品沒有 API。
 
 - 若介面需要後端，將 \`API_PUBLIC_URL\` 指向一套遠端 Kit API。
 - 錢包連線（viem、wagmi 等）寫在此產品內。
@@ -463,7 +463,7 @@ Language: [中文](TRADING.zh.md) · English
 API + web + worker skeleton. Market data, orders, and exchange connectors stay in this product.
 
 - Run \`pnpm worker\` or PM2 \`ysk-worker\` (set \`REDIS_URL\` in production).
-- Enqueue work with \`@ysk/jobs\`.
+- Enqueue work with \`@ysk-kit/jobs\`.
 `,
     );
     writeFileSync(
@@ -475,7 +475,7 @@ Language: [English](TRADING.md) · 中文
 API、Web 與 worker 骨架。行情、下單與交易所連接器寫在此產品內。
 
 - 執行 \`pnpm worker\` 或 PM2 \`ysk-worker\`（生產環境設定 \`REDIS_URL\`）。
-- 用 \`@ysk/jobs\` 入列工作。
+- 用 \`@ysk-kit/jobs\` 入列工作。
 `,
     );
   }
@@ -492,7 +492,7 @@ This product has API + Admin (no public web, mobile, or desktop).
 1. Create a user in Admin or \`POST /v1/auth/register\`.
 2. Mint a machine token: \`POST /v1/me/api-keys\` with a JWT, then call the API with \`Authorization: Bearer ysk_live_…\`.
 3. Run \`pnpm worker\` or PM2 \`ysk-worker\` (set \`REDIS_URL\` in production).
-4. Optional: \`CRYPTO_MASTER_KEY\` (64 hex chars) for \`@ysk/crypto\`.
+4. Optional: \`CRYPTO_MASTER_KEY\` (64 hex chars) for \`@ysk-kit/crypto\`.
 `,
     );
     writeFileSync(
@@ -506,7 +506,7 @@ Language: [English](GATEWAY.md) · 中文
 1. 在 Admin 建立帳戶，或呼叫 \`POST /v1/auth/register\`。
 2. 以 JWT 呼叫 \`POST /v1/me/api-keys\` 產生機器權杖，其後以 \`Authorization: Bearer ysk_live_…\` 呼叫 API。
 3. 執行 \`pnpm worker\` 或 PM2 \`ysk-worker\`（生產環境設定 \`REDIS_URL\`）。
-4. 可選：為 \`@ysk/crypto\` 設定 \`CRYPTO_MASTER_KEY\`（64 個十六進位字元）。
+4. 可選：為 \`@ysk-kit/crypto\` 設定 \`CRYPTO_MASTER_KEY\`（64 個十六進位字元）。
 `,
     );
   }
@@ -552,14 +552,14 @@ const writeProductReadme = (dest: string, opts: CreateAppOptions, includeAdmin: 
       : '';
   const adminLine = includeAdmin ? '- Admin http://localhost:5174\n' : '';
   const desktopLine =
-    opts.flavor === 'desktop' ? '- Desktop: pnpm --filter @ysk/desktop start\n' : '';
+    opts.flavor === 'desktop' ? '- Desktop: pnpm --filter @ysk-kit/desktop start\n' : '';
   const webLineZh =
     opts.flavor === 'saas' || opts.flavor === 'trading' || opts.flavor === 'static-web3'
       ? '- Web http://localhost:5173\n'
       : '';
   const adminLineZh = includeAdmin ? '- Admin http://localhost:5174\n' : '';
   const desktopLineZh =
-    opts.flavor === 'desktop' ? '- 桌面應用：pnpm --filter @ysk/desktop start\n' : '';
+    opts.flavor === 'desktop' ? '- 桌面應用：pnpm --filter @ysk-kit/desktop start\n' : '';
   const compose =
     opts.db === 'sqlite'
       ? ''
@@ -578,7 +578,7 @@ ${generatedFromEn(opts)}
 # Node 24 + pnpm 12
 pnpm install
 cp .env.example .env
-pnpm --filter @ysk/web dev
+pnpm --filter @ysk-kit/web dev
 \`\`\`
 
 ${webLine}
@@ -597,7 +597,7 @@ ${generatedFromZh(opts)}
 # Node 24 + pnpm 12
 pnpm install
 cp .env.example .env
-pnpm --filter @ysk/web dev
+pnpm --filter @ysk-kit/web dev
 \`\`\`
 
 ${webLineZh}

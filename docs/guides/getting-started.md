@@ -32,7 +32,7 @@ Fastify: set `HTTP_ADAPTER=fastify` in `.env` and restart the API.
 On a TTY you may omit the flags; the command prompts for flavor, preset, and database. Flags and `--yes` skip prompts.
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 cd my-product
 pnpm install
 cp .env.example .env
@@ -52,7 +52,7 @@ The product root contains `.ysk-kit.json` (kit version, flavor, preset, database
 Follow a finished product instead of an empty `title` / `body` module. Ten systems are in the [examples catalogue](../../examples/README.md). The applicator scaffolds a thin destination, adds the listed modules and capabilities, copies the overlay, seeds, and verifies. Clinic booking is the shortest walk:
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 cd ~/Projects/my-clinic
 pnpm dev
 ```

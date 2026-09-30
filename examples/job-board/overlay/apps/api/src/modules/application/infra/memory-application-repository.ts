@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { ApplicationDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { ApplicationDto } from '@ysk-kit/contracts';
 import type {
   ApplicationJobRef,
   ApplicationRecord,

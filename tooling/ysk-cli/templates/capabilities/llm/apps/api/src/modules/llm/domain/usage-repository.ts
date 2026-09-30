@@ -1,4 +1,4 @@
-import type { LlmUsage } from '@ysk/contracts';
+import type { LlmUsage } from '@ysk-kit/contracts';
 
 export interface ILlmUsageRepository {
   create(input: {

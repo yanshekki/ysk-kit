@@ -18,14 +18,15 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [
     {
-      command: 'pnpm --filter @ysk/api exec tsx --env-file=../../.env src/main.ts',
+      command: 'pnpm --filter @ysk-kit/api exec tsx --env-file=../../.env src/main.ts',
       cwd: root,
       url: 'http://localhost:3001/health',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },
     {
-      command: 'pnpm --filter @ysk/web exec vite preview --host localhost --port 5173 --strictPort',
+      command:
+        'pnpm --filter @ysk-kit/web exec vite preview --host localhost --port 5173 --strictPort',
       cwd: root,
       url: 'http://localhost:5173',
       reuseExistingServer: !process.env.CI,

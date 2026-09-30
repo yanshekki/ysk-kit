@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CancelCommand, CheckoutCommand, PortalCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CancelCommand, CheckoutCommand, PortalCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const billingQueryKey = (organizationId: string) => ['billing', organizationId] as const;
 

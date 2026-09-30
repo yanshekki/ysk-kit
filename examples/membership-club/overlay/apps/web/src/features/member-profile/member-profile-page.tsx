@@ -1,4 +1,4 @@
-import { CreateMemberProfileCommandSchema } from '@ysk/contracts';
+import { CreateMemberProfileCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   EmptyState,
@@ -13,8 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { createMemberProfileHooks, createOrganizationHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { createMemberProfileHooks, createOrganizationHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

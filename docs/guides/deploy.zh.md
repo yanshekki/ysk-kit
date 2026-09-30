@@ -28,7 +28,7 @@ Language: [English](deploy.md) · 中文
 | Worker | `apps/api/dist/worker.js` | 消費 BullMQ／記憶體佇列 |
 
 ```bash
-pnpm --filter @ysk/api build
+pnpm --filter @ysk-kit/api build
 pm2 start ecosystem.config.cjs
 ```
 

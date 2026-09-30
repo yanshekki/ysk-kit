@@ -1,4 +1,4 @@
-import { CreateContactCommandSchema } from '@ysk/contracts';
+import { CreateContactCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   EmptyState,
@@ -13,8 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { createContactHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { createContactHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

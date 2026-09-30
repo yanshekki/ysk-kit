@@ -13,7 +13,7 @@ Language: [English](AGENTS.md) · 中文
 開新產品：
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 pnpm ysk add module <kebab-name> --prisma --web
 ```
 
@@ -29,16 +29,16 @@ pnpm ysk add module <kebab-name> --prisma --web
 
 ## 硬規則
 
-1. `@ysk/contracts` 是 enum、DTO、error code、ts-rest 路徑的唯一來源。先加 DTO 與 `OkSchema` / `ErrSchema`。
+1. `@ysk-kit/contracts` 是 enum、DTO、error code、ts-rest 路徑的唯一來源。先加 DTO 與 `OkSchema` / `ErrSchema`。
 2. 不用 TypeScript `enum`。在 contracts 用 `as const` + Zod。
 3. Prisma 只留在 `apps/api/src/modules/*/infra`。客戶端永不 import `@prisma/client` 或 `apps/api/src/generated`。
-4. Web / admin / mobile / desktop 只經 `@ysk/sdk` 呼叫 API（React Query 經 `@ysk/web-sdk`）。不要對 kit 路徑直接 `fetch`。
+4. Web / admin / mobile / desktop 只經 `@ysk-kit/sdk` 呼叫 API（React Query 經 `@ysk-kit/web-sdk`）。不要對 kit 路徑直接 `fetch`。
 5. domain 與 application 層不 import Express、Fastify、Prisma、React 或 BullMQ。
 6. 每條 JSON 路由的 envelope 都是 `{ ok: true, data }` / `{ ok: false, error }`。
 7. Envelope 例外只有：LLM SSE（`POST /v1/llm/stream`）、發票 PDF 的 HTTP 302、`GET /docs`、`GET /openapi.json`。
 8. 已開啟 `exactOptionalPropertyTypes`：省略可選鍵，不要傳 `undefined`。
 9. 測試使用記憶體 port。CI 不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
-10. 從 `GET /openapi.json` 或 `docs/openapi.yaml` 發現路徑。呼叫仍然經 `@ysk/sdk`。
+10. 從 `GET /openapi.json` 或 `docs/openapi.yaml` 發現路徑。呼叫仍然經 `@ysk-kit/sdk`。
 
 ## 每個功能之後
 
@@ -50,7 +50,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 ## 不要
 
-- 把沙龍、交易、地圖或其他行業 domain 放進本 kit。已完成教程在 `examples/`，套用到新目的地（`pnpm --filter @ysk/examples start apply <slug> --yes`）。
-- 從 web/admin/mobile/desktop import `@ysk/observability`。
+- 把沙龍、交易、地圖或其他行業 domain 放進本 kit。已完成教程在 `examples/`，套用到新目的地（`pnpm --filter @ysk-kit/examples start apply <slug> --yes`）。
+- 從 web/admin/mobile/desktop import `@ysk-kit/observability`。
 - 把 Hono / Drizzle / Nest / Next 設為預設。
 - 把密鑰、OTP 代碼、Stripe `sk_` 或 webhook 密鑰寫進日誌。

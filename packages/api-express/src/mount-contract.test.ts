@@ -1,4 +1,4 @@
-import { appContract } from '@ysk/contracts';
+import { appContract } from '@ysk-kit/contracts';
 import { describe, expect, it } from 'vitest';
 import { flattenContract } from './mount-contract';
 

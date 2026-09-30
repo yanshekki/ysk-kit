@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, type ErrorCode } from '@ysk/contracts';
+import { ERROR_MESSAGE, type ErrorCode } from '@ysk-kit/contracts';
 
 const HTTP_STATUS: Record<ErrorCode, number> = {
   VALIDATION_FAILED: 422,

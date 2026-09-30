@@ -49,19 +49,19 @@ Industry booking does **not** mount on the living kit API. Overlay files copy in
 From the kit checkout:
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 ```
 
 `--yes` is passed to `create-ysk-app` so agents and CI never wait for a TTY. Default destination (gitignored) is `examples/.runs/clinic-booking`. Replacing a previous run:
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --yes --force
+pnpm --filter @ysk-kit/examples start apply clinic-booking --yes --force
 ```
 
 Equivalent manual steps (MySQL):
 
 ```bash
-pnpm --filter @ysk/create-app start my-clinic --preset thin --flavor saas --db mysql --no-admin --no-mobile --yes
+pnpm --filter @ysk-kit/create-app start my-clinic --preset thin --flavor saas --db mysql --no-admin --no-mobile --yes
 cd my-clinic
 pnpm install
 cp .env.example .env
@@ -94,7 +94,7 @@ Prisma model `Appointment` (status is a `String`, not a TypeScript `enum`):
 | `phone` | `+852` and eight digits | `HkPhoneSchema` |
 | `startsAt` | ISO datetime | Must be ≥ now at create |
 | `durationMin` | int 15–180 | Default 30 |
-| `status` | `SCHEDULED` \| `CANCELLED` \| `DONE` | `as const` + Zod in `@ysk/contracts` |
+| `status` | `SCHEDULED` \| `CANCELLED` \| `DONE` | `as const` + Zod in `@ysk-kit/contracts` |
 | `authorId` | UUID | Owner of the row (the signed-in user) |
 | `createdAt` / `updatedAt` | datetime | Prisma |
 

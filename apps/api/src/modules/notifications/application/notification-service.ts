@@ -1,5 +1,5 @@
-import type { PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { INotificationRepository } from '../domain/notification-repository';
 
 export const createNotificationService = (repo: INotificationRepository) => ({

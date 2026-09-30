@@ -13,7 +13,7 @@ A contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). Product domains 
 New product:
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 pnpm ysk add module <kebab-name> --prisma --web
 ```
 
@@ -29,16 +29,16 @@ That command writes the hexagonal slice, ts-rest contract, SDK resource, web-sdk
 
 ## Hard rules
 
-1. `@ysk/contracts` is the only source of enums, DTOs, error codes, and ts-rest paths. Add DTO + `OkSchema` / `ErrSchema` first.
+1. `@ysk-kit/contracts` is the only source of enums, DTOs, error codes, and ts-rest paths. Add DTO + `OkSchema` / `ErrSchema` first.
 2. No TypeScript `enum`. Use `as const` + Zod in contracts.
 3. Prisma stays in `apps/api/src/modules/*/infra`. Clients never import `@prisma/client` or `apps/api/src/generated`.
-4. Web / admin / mobile / desktop talk to the API only through `@ysk/sdk` (React Query via `@ysk/web-sdk`). No raw `fetch` to kit paths.
+4. Web / admin / mobile / desktop talk to the API only through `@ysk-kit/sdk` (React Query via `@ysk-kit/web-sdk`). No raw `fetch` to kit paths.
 5. Domain and application layers do not import Express, Fastify, Prisma, React, or BullMQ.
 6. Envelope is `{ ok: true, data }` / `{ ok: false, error }` on every JSON route.
 7. Envelope exceptions only: LLM SSE (`POST /v1/llm/stream`), invoice PDF HTTP 302, `GET /docs`, `GET /openapi.json`.
 8. `exactOptionalPropertyTypes` is on: omit optional keys; do not pass `undefined`.
 9. Tests use in-memory ports. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana in CI.
-10. Discover paths from `GET /openapi.json` or `docs/openapi.yaml`. Still call them through `@ysk/sdk`.
+10. Discover paths from `GET /openapi.json` or `docs/openapi.yaml`. Still call them through `@ysk-kit/sdk`.
 
 ## After every feature
 
@@ -50,7 +50,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check
 
 ## Do not
 
-- Put salon, trading, map, or other industry domain in this kit. Worked tutorials live in `examples/` and apply onto a new destination (`pnpm --filter @ysk/examples start apply <slug> --yes`).
-- Import `@ysk/observability` from web/admin/mobile/desktop.
+- Put salon, trading, map, or other industry domain in this kit. Worked tutorials live in `examples/` and apply onto a new destination (`pnpm --filter @ysk-kit/examples start apply <slug> --yes`).
+- Import `@ysk-kit/observability` from web/admin/mobile/desktop.
 - Add Hono / Drizzle / Nest / Next as a default.
 - Log secrets, OTP codes, Stripe `sk_`, or webhook secrets.

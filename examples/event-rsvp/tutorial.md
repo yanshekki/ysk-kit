@@ -44,7 +44,7 @@ Industry events do **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply event-rsvp --dest ~/Projects/my-events --yes
+pnpm --filter @ysk-kit/examples start apply event-rsvp --dest ~/Projects/my-events --yes
 ```
 
 Default destination (gitignored): `examples/.runs/event-rsvp`. Replace a previous run with `--force`.

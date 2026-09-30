@@ -3,7 +3,7 @@ import type {
   CreateApplicationCommand,
   PageQuery,
   PaginatedApplication,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type ApplicationRecord = {
   id: string;

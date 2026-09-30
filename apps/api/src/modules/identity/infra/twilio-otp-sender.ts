@@ -1,5 +1,5 @@
-import { AppError } from '@ysk/domain-kernel';
-import type { Logger } from '@ysk/logger';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { Logger } from '@ysk-kit/logger';
 import type { IOtpSender } from '../domain/otp-sender';
 import { createDevOtpSender } from './dev-otp-sender';
 

@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import { AppError } from '@ysk/domain-kernel';
+import { slicePage } from '@ysk-kit/application';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 import type { IOtpRepository, OtpRecord } from '../domain/otp-repository';
 import type { IOtpSender } from '../domain/otp-sender';

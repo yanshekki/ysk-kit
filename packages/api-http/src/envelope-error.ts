@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import { ERROR_MESSAGE } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import { ZodError } from 'zod';
 
 export type EnvelopeErrorJson = {

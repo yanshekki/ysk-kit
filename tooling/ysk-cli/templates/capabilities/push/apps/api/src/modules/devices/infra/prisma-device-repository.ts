@@ -1,4 +1,4 @@
-import type { DevicePlatform } from '@ysk/contracts';
+import type { DevicePlatform } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { DeviceRecord, IDeviceRepository } from '../domain/device-repository';
 

@@ -1,5 +1,5 @@
-import type { AccessClaims } from '@ysk/auth';
-import type { Permission } from '@ysk/contracts';
+import type { AccessClaims } from '@ysk-kit/auth';
+import type { Permission } from '@ysk-kit/contracts';
 
 export type HttpCtx = {
   auth?: AccessClaims;

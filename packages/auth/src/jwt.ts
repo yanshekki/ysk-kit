@@ -1,4 +1,4 @@
-import type { Permission, Platform, UserRole } from '@ysk/contracts';
+import type { Permission, Platform, UserRole } from '@ysk-kit/contracts';
 import { type JWTPayload, jwtVerify, SignJWT } from 'jose';
 
 export type AccessClaims = {

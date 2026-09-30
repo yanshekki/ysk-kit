@@ -13,7 +13,7 @@ pnpm test:coverage
 
 Coverage is Vitest v8 over `apps/*/src`, `packages/*/src`, and the two CLI `src` trees. It excludes generated Prisma, templates, e2e, `infra/prisma-*.ts`, and process entrypoints (`main.ts`, `worker.ts`, Vite `main.tsx`). The configured gate is 95% lines, functions, statements, and branches. `pnpm test:coverage` is the report; CI `check` stays on `pnpm test` until the remaining client pages and live adapters close the gap. Unit tests stay on memory ports.
 
-Enum literals: `pnpm --filter @ysk/db-prisma test` compares Prisma schema to `@ysk/contracts`.
+Enum literals: `pnpm --filter @ysk-kit/db-prisma test` compares Prisma schema to `@ysk-kit/contracts`.
 
 ## Testing Library
 
@@ -24,8 +24,8 @@ Web login has a component test for invalid email. Run with the web package Vites
 One Chromium smoke in `apps/web/e2e`. It starts the API with `tsx` (workspace packages export TypeScript) and a Vite preview on 5173.
 
 ```bash
-pnpm --filter @ysk/web exec playwright install chromium
-pnpm --filter @ysk/web build
+pnpm --filter @ysk-kit/web exec playwright install chromium
+pnpm --filter @ysk-kit/web build
 pnpm e2e
 ```
 
@@ -55,7 +55,7 @@ Text scan of the product root. Exit 1 on any finding.
 
 `*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk check agent`](../cli/ysk.md#ysk-check-agent).
 
-Biome `style.noEnum` is `error` in `@ysk/biome`, so `pnpm lint` also rejects TypeScript enums.
+Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects TypeScript enums.
 
 ## CI
 

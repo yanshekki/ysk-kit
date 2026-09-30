@@ -1,4 +1,4 @@
-import { hashPassword } from '@ysk/auth';
+import { hashPassword } from '@ysk-kit/auth';
 import request from 'supertest';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createApp } from './app';

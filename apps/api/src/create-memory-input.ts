@@ -1,9 +1,9 @@
-import { createMemoryQueue, type IJobQueue } from '@ysk/jobs';
-import { createFakeLlm } from '@ysk/llm';
-import { createLogMailer } from '@ysk/mail';
-import { createLogPush } from '@ysk/push';
-import { createMemoryRealtime } from '@ysk/realtime';
-import { createLocalStorage } from '@ysk/storage';
+import { createMemoryQueue, type IJobQueue } from '@ysk-kit/jobs';
+import { createFakeLlm } from '@ysk-kit/llm';
+import { createLogMailer } from '@ysk-kit/mail';
+import { createLogPush } from '@ysk-kit/push';
+import { createMemoryRealtime } from '@ysk-kit/realtime';
+import { createLocalStorage } from '@ysk-kit/storage';
 import pino from 'pino';
 import type { CreateAppInput } from './app';
 import { createApiKeyService } from './modules/api-keys/application/api-key-service';

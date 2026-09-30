@@ -1,4 +1,4 @@
-import type { Platform } from '@ysk/contracts';
+import type { Platform } from '@ysk-kit/contracts';
 import { HttpClient } from './http';
 import { connectRealtime } from './realtime';
 import { apiKeysResource } from './resources/api-keys';

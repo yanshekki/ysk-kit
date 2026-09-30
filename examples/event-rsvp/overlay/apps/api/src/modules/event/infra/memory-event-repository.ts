@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { EventDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { EventDto } from '@ysk-kit/contracts';
 import type { EventRecord, IEventRepository } from '../domain/event-repository';
 
 const toDto = (row: EventRecord): EventDto => ({

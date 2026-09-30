@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-router';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { RegisterCommandSchema } from '@ysk/contracts';
+import { RegisterCommandSchema } from '@ysk-kit/contracts';
 import { describe, expect, it } from 'vitest';
 import { RegisterPage } from './register-page';
 

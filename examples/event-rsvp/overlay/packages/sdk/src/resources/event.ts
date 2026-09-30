@@ -1,4 +1,4 @@
-import type { CreateEventCommand, EventDto, PaginatedEvent } from '@ysk/contracts';
+import type { CreateEventCommand, EventDto, PaginatedEvent } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

@@ -1,6 +1,6 @@
-import type { LlmCompleteCommand, LlmCompleteDto } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { ILlmPort } from '@ysk/llm';
+import type { LlmCompleteCommand, LlmCompleteDto } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { ILlmPort } from '@ysk-kit/llm';
 import type { ILlmUsageRepository } from '../domain/usage-repository';
 
 export const createLlmService = (opts: {

@@ -1,4 +1,4 @@
-import { CreateTicketCommandSchema } from '@ysk/contracts';
+import { CreateTicketCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   EmptyState,
@@ -13,8 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { createOrganizationHooks, createTicketHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { createOrganizationHooks, createTicketHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

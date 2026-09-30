@@ -29,8 +29,8 @@ const HINTS: Record<Capability, string[]> = {
     'run pnpm db:migrate after pulling Session / OtpChallenge schema',
   ],
   rbac: [
-    'permissions live in @ysk/contracts ROLE_PERMISSIONS',
-    'requirePermission() is in @ysk/api-express',
+    'permissions live in @ysk-kit/contracts ROLE_PERMISSIONS',
+    'requirePermission() is in @ysk-kit/api-express',
   ],
   'audit-log': [
     'GET /v1/audit-logs requires audit.read',
@@ -40,7 +40,7 @@ const HINTS: Record<Capability, string[]> = {
     'POST /v1/files/presign requires file.upload',
     'local adapter is default; set S3_* for an S3-compatible bucket later',
   ],
-  i18n: ['@ysk/i18n t(dict, key, locale) default zh-HK'],
+  i18n: ['@ysk-kit/i18n t(dict, key, locale) default zh-HK'],
   jobs: [
     'REDIS_URL + pnpm worker (memory queue in tests / when Redis unset)',
     'Bull Board at /admin/queues when Redis is on (ADMIN JWT, Express and Fastify)',
@@ -70,7 +70,7 @@ const HINTS: Record<Capability, string[]> = {
   mobile: [
     'apps/mobile is the Expo template (login, home, inbox, organisations, invite, DevicePort + FilePickerPort)',
     'eas.json preview/production; app.config.ts slug ysk-kit',
-    'run pnpm --filter @ysk/mobile start; Expo 57 / RN 0.86',
+    'run pnpm --filter @ysk-kit/mobile start; Expo 57 / RN 0.86',
   ],
   team: [
     'Organization + Membership + email invite; platform User.role stays global',

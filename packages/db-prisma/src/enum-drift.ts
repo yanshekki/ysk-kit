@@ -1,4 +1,4 @@
-import { ORG_ROLE_VALUES, USER_ROLE_VALUES, USER_STATUS_VALUES } from '@ysk/contracts';
+import { ORG_ROLE_VALUES, USER_ROLE_VALUES, USER_STATUS_VALUES } from '@ysk-kit/contracts';
 
 export const parsePrismaEnum = (schema: string, name: string): string[] => {
   const block = schema.match(new RegExp(`enum\\s+${name}\\s*\\{([^}]+)\\}`));

@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { SkuDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { SkuDto } from '@ysk-kit/contracts';
 import type { ISkuRepository, SkuRecord } from '../domain/sku-repository';
 
 const toDto = (row: SkuRecord): SkuDto => ({

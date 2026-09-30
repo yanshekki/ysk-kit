@@ -1,4 +1,4 @@
-import type { CreateFollowUpCommand, FollowUpDto, PaginatedFollowUp } from '@ysk/contracts';
+import type { CreateFollowUpCommand, FollowUpDto, PaginatedFollowUp } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

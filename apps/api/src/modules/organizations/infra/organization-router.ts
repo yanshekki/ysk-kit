@@ -1,13 +1,13 @@
-import { type HttpHandler, mountContract } from '@ysk/api-express';
-import type { AccessClaims } from '@ysk/auth';
+import { type HttpHandler, mountContract } from '@ysk-kit/api-express';
+import type { AccessClaims } from '@ysk-kit/auth';
 import {
   type AcceptInviteCommand,
   appContract,
   type CreateOrganizationCommand,
   type InviteMemberCommand,
   type UpdateOrganizationCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 import type { OrganizationService } from '../application/organization-service';
 

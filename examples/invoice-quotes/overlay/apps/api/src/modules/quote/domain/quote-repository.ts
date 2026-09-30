@@ -4,7 +4,7 @@ import type {
   PaginatedQuote,
   QuoteDto,
   QuoteStatus,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type QuoteRecord = {
   id: string;

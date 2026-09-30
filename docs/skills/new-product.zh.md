@@ -10,7 +10,7 @@ Language: [English](new-product.md) · 中文
 2. 執行：
 
 ```bash
-pnpm --filter @ysk/create-app start <name> --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas
 ```
 
 3. 在新目錄：`pnpm install`，把 `.env.example` 複製為 `.env`，若資料庫是 MySQL 或 PostgreSQL 就啟動 Compose。
@@ -21,4 +21,4 @@ pnpm --filter @ysk/create-app start <name> --preset thin --db mysql --flavor saa
 
 不要另起一套 monorepo 佈局。不要人手複製本 kit。`php-bridge` 與 `static-web3` 略過 migrate／seed；改跟產生出來的 README。其後以 [升級](../guides/upgrade.zh.md) 更新 kit 護欄。
 
-十個已完成的產品系統在 [`examples/`](../../examples/README.zh.md)。用 `pnpm --filter @ysk/examples start apply <slug> --yes` 套用，不要在 living kit 上發明行業模組。
+十個已完成的產品系統在 [`examples/`](../../examples/README.zh.md)。用 `pnpm --filter @ysk-kit/examples start apply <slug> --yes` 套用，不要在 living kit 上發明行業模組。

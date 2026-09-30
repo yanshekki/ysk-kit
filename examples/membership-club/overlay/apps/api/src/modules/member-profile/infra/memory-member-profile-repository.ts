@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { MemberProfileDto, OrgRole } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { MemberProfileDto, OrgRole } from '@ysk-kit/contracts';
 import type {
   IMemberProfileRepository,
   MemberProfileRecord,

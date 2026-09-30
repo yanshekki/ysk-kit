@@ -192,7 +192,7 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^5.0.2
         version: 5.0.2(vitest@5.0.2)
-      '@ysk/biome':
+      '@ysk-kit/biome':
         specifier: workspace:*
         version: link:packages/biome-config
       dependency-cruiser:
@@ -219,22 +219,22 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.120.3
         version: 1.170.40(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@ysk/config':
+      '@ysk-kit/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@ysk/sdk':
+      '@ysk-kit/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@ysk/ui':
+      '@ysk-kit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@ysk/ui-logic':
+      '@ysk-kit/ui-logic':
         specifier: workspace:*
         version: link:../../packages/ui-logic
-      '@ysk/web-sdk':
+      '@ysk-kit/web-sdk':
         specifier: workspace:*
         version: link:../../packages/web-sdk
       react:
@@ -307,55 +307,55 @@ importers:
       '@prisma/client':
         specifier: 7.10.0
         version: 7.10.0(prisma@7.10.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(better-sqlite3@12.11.1)(magicast@0.5.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@6.0.3))(typescript@6.0.3)
-      '@ysk/api-express':
+      '@ysk-kit/api-express':
         specifier: workspace:*
         version: link:../../packages/api-express
-      '@ysk/api-fastify':
+      '@ysk-kit/api-fastify':
         specifier: workspace:*
         version: link:../../packages/api-fastify
-      '@ysk/api-http':
+      '@ysk-kit/api-http':
         specifier: workspace:*
         version: link:../../packages/api-http
-      '@ysk/apikey':
+      '@ysk-kit/apikey':
         specifier: workspace:*
         version: link:../../packages/apikey
-      '@ysk/application':
+      '@ysk-kit/application':
         specifier: workspace:*
         version: link:../../packages/application
-      '@ysk/auth':
+      '@ysk-kit/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@ysk/config':
+      '@ysk-kit/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@ysk/domain-kernel':
+      '@ysk-kit/domain-kernel':
         specifier: workspace:*
         version: link:../../packages/domain-kernel
-      '@ysk/jobs':
+      '@ysk-kit/jobs':
         specifier: workspace:*
         version: link:../../packages/jobs
-      '@ysk/llm':
+      '@ysk-kit/llm':
         specifier: workspace:*
         version: link:../../packages/llm
-      '@ysk/logger':
+      '@ysk-kit/logger':
         specifier: workspace:*
         version: link:../../packages/logger
-      '@ysk/mail':
+      '@ysk-kit/mail':
         specifier: workspace:*
         version: link:../../packages/mail
-      '@ysk/observability':
+      '@ysk-kit/observability':
         specifier: workspace:*
         version: link:../../packages/observability
-      '@ysk/push':
+      '@ysk-kit/push':
         specifier: workspace:*
         version: link:../../packages/push
-      '@ysk/realtime':
+      '@ysk-kit/realtime':
         specifier: workspace:*
         version: link:../../packages/realtime
-      '@ysk/storage':
+      '@ysk-kit/storage':
         specifier: workspace:*
         version: link:../../packages/storage
       cors:
@@ -413,19 +413,19 @@ importers:
 
   apps/desktop:
     dependencies:
-      '@ysk/config':
+      '@ysk-kit/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@ysk/sdk':
+      '@ysk-kit/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@ysk/ui':
+      '@ysk-kit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@ysk/ui-logic':
+      '@ysk-kit/ui-logic':
         specifier: workspace:*
         version: link:../../packages/ui-logic
       react:
@@ -471,16 +471,16 @@ importers:
 
   apps/mobile:
     dependencies:
-      '@ysk/config':
+      '@ysk-kit/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@ysk/sdk':
+      '@ysk-kit/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@ysk/ui-logic':
+      '@ysk-kit/ui-logic':
         specifier: workspace:*
         version: link:../../packages/ui-logic
       expo:
@@ -520,22 +520,22 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.120.3
         version: 1.170.40(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@ysk/config':
+      '@ysk-kit/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
-      '@ysk/sdk':
+      '@ysk-kit/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@ysk/ui':
+      '@ysk-kit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@ysk/ui-logic':
+      '@ysk-kit/ui-logic':
         specifier: workspace:*
         version: link:../../packages/ui-logic
-      '@ysk/web-sdk':
+      '@ysk-kit/web-sdk':
         specifier: workspace:*
         version: link:../../packages/web-sdk
       react:
@@ -587,19 +587,19 @@ importers:
 
   packages/api-express:
     dependencies:
-      '@ysk/api-http':
+      '@ysk-kit/api-http':
         specifier: workspace:*
         version: link:../api-http
-      '@ysk/apikey':
+      '@ysk-kit/apikey':
         specifier: workspace:*
         version: link:../apikey
-      '@ysk/auth':
+      '@ysk-kit/auth':
         specifier: workspace:*
         version: link:../auth
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/domain-kernel':
+      '@ysk-kit/domain-kernel':
         specifier: workspace:*
         version: link:../domain-kernel
       express:
@@ -633,19 +633,19 @@ importers:
       '@fastify/cors':
         specifier: ^11.0.1
         version: 11.3.0
-      '@ysk/api-http':
+      '@ysk-kit/api-http':
         specifier: workspace:*
         version: link:../api-http
-      '@ysk/apikey':
+      '@ysk-kit/apikey':
         specifier: workspace:*
         version: link:../apikey
-      '@ysk/auth':
+      '@ysk-kit/auth':
         specifier: workspace:*
         version: link:../auth
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/domain-kernel':
+      '@ysk-kit/domain-kernel':
         specifier: workspace:*
         version: link:../domain-kernel
       fastify:
@@ -664,13 +664,13 @@ importers:
 
   packages/api-http:
     dependencies:
-      '@ysk/auth':
+      '@ysk-kit/auth':
         specifier: workspace:*
         version: link:../auth
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/domain-kernel':
+      '@ysk-kit/domain-kernel':
         specifier: workspace:*
         version: link:../domain-kernel
       zod:
@@ -701,7 +701,7 @@ importers:
 
   packages/application:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -717,7 +717,7 @@ importers:
 
   packages/auth:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
       argon2:
@@ -788,7 +788,7 @@ importers:
 
   packages/db-prisma:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -804,7 +804,7 @@ importers:
 
   packages/domain-kernel:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -832,7 +832,7 @@ importers:
 
   packages/jobs:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
       bullmq:
@@ -854,7 +854,7 @@ importers:
 
   packages/llm:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -889,7 +889,7 @@ importers:
 
   packages/mail:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
       nodemailer:
@@ -948,7 +948,7 @@ importers:
       '@types/node':
         specifier: ^24.5.2
         version: 24.19.0
-      '@ysk/logger':
+      '@ysk-kit/logger':
         specifier: workspace:*
         version: link:../logger
       express:
@@ -981,7 +981,7 @@ importers:
       '@socket.io/redis-emitter':
         specifier: ^5.1.0
         version: 5.1.0(supports-color@8.1.1)
-      '@ysk/auth':
+      '@ysk-kit/auth':
         specifier: workspace:*
         version: link:../auth
       ioredis:
@@ -1003,10 +1003,10 @@ importers:
 
   packages/sdk:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/domain-kernel':
+      '@ysk-kit/domain-kernel':
         specifier: workspace:*
         version: link:../domain-kernel
       socket.io-client:
@@ -1046,10 +1046,10 @@ importers:
 
   packages/ui:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/ui-logic':
+      '@ysk-kit/ui-logic':
         specifier: workspace:*
         version: link:../ui-logic
       class-variance-authority:
@@ -1095,7 +1095,7 @@ importers:
 
   packages/ui-logic:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
     devDependencies:
@@ -1111,10 +1111,10 @@ importers:
 
   packages/web-sdk:
     dependencies:
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../contracts
-      '@ysk/sdk':
+      '@ysk-kit/sdk':
         specifier: workspace:*
         version: link:../sdk
     devDependencies:
@@ -1181,10 +1181,10 @@ importers:
 
   tooling/ysk-cli:
     dependencies:
-      '@ysk/api-http':
+      '@ysk-kit/api-http':
         specifier: workspace:*
         version: link:../../packages/api-http
-      '@ysk/contracts':
+      '@ysk-kit/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
       zod:

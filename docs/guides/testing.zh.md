@@ -13,7 +13,7 @@ pnpm test:coverage
 
 Coverage 用 Vitest v8，範圍是 `apps/*/src`、`packages/*/src` 與兩套 CLI 的 `src`。略過 generated Prisma、templates、e2e、`infra/prisma-*.ts` 與行程入口（`main.ts`、`worker.ts`、Vite `main.tsx`）。設定門檻是行、函式、陳述式、分支均 95%。`pnpm test:coverage` 出報告；CI `check` 仍跑 `pnpm test`，直至其餘 client 頁面與 live adapter 補上缺口。單元測試維持記憶體 port。
 
-Enum 字面值：`pnpm --filter @ysk/db-prisma test` 比較 Prisma schema 與 `@ysk/contracts`。
+Enum 字面值：`pnpm --filter @ysk-kit/db-prisma test` 比較 Prisma schema 與 `@ysk-kit/contracts`。
 
 ## Testing Library
 
@@ -24,8 +24,8 @@ Web 登入有一個無效電郵的元件測試。隨 web 套件的 Vitest 任務
 `apps/web/e2e` 有一條 Chromium smoke。它用 `tsx` 啟動 API（工作區套件匯出 TypeScript），以及 5173 的 Vite preview。
 
 ```bash
-pnpm --filter @ysk/web exec playwright install chromium
-pnpm --filter @ysk/web build
+pnpm --filter @ysk-kit/web exec playwright install chromium
+pnpm --filter @ysk-kit/web build
 pnpm e2e
 ```
 
@@ -55,7 +55,7 @@ pnpm ysk check agent
 
 略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk check agent`](../cli/ysk.zh.md#ysk-check-agent)。
 
-`@ysk/biome` 把 Biome `style.noEnum` 設為 `error`，因此 `pnpm lint` 也會拒絕 TypeScript enum。
+`@ysk-kit/biome` 把 Biome `style.noEnum` 設為 `error`，因此 `pnpm lint` 也會拒絕 TypeScript enum。
 
 ## CI
 

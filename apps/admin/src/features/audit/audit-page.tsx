@@ -1,4 +1,4 @@
-import { Can, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ysk/ui';
+import { Can, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ysk-kit/ui';
 import { userHooks } from '../../lib/client';
 
 export function AuditPage() {

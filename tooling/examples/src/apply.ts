@@ -107,7 +107,7 @@ export const applyExample = (opts: ApplyOptions): { dest: string; logs: string[]
   logs.push('db:generate');
 
   if (spec.db === 'sqlite') {
-    run('pnpm', ['--filter', '@ysk/api', 'exec', 'prisma', 'db', 'push'], {
+    run('pnpm', ['--filter', '@ysk-kit/api', 'exec', 'prisma', 'db', 'push'], {
       cwd: dest,
       env: destEnv,
       stdio,

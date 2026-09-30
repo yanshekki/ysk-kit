@@ -1,4 +1,4 @@
-import type { LlmMessage, LlmUsage } from '@ysk/contracts';
+import type { LlmMessage, LlmUsage } from '@ysk-kit/contracts';
 
 export type LlmInput = {
   messages: LlmMessage[];

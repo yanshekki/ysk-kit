@@ -1,4 +1,4 @@
-import { BILLING_PLANS } from '@ysk/contracts';
+import { BILLING_PLANS } from '@ysk-kit/contracts';
 import {
   Button,
   Input,
@@ -8,9 +8,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { formatHkd, orgRoleCan } from '@ysk/ui-logic';
-import { createBillingHooks, createOrganizationHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { formatHkd, orgRoleCan } from '@ysk-kit/ui-logic';
+import { createBillingHooks, createOrganizationHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api, userHooks } from '../../lib/client';
 

@@ -17,7 +17,7 @@ Language: [English](flavors.md) · 中文
 
 **saas** — 多端產品：公開 web、營運 admin、可選 Expo 應用、一套 API。
 
-**desktop** — Electron 經 `@ysk/sdk` 呼叫同一套 API（`platform: desktop`）。Prisma 留在 API 行程，包括本機 SQLite。
+**desktop** — Electron 經 `@ysk-kit/sdk` 呼叫同一套 API（`platform: desktop`）。Prisma 留在 API 行程，包括本機 SQLite。
 
 **gateway** — 機器客戶端與營運主控台。以 `POST /v1/me/api-keys` 產生金鑰，其後 `Authorization: Bearer ysk_live_…`。寫出 `GATEWAY.md`。
 
@@ -25,6 +25,6 @@ Language: [English](flavors.md) · 中文
 
 **trading** — API + web + 既有 BullMQ worker。行情與交易所連接器寫在產品內。寫出 `TRADING.md`。
 
-**static-web3** — 只有 Vite web 與 `@ysk/*` 客戶端程式庫。沒有 Prisma，沒有 `DATABASE_URL`。若介面需要後端，將 `API_PUBLIC_URL` 指向遠端 API。錢包程式庫寫在產品內。寫出 `WEB3.md`。
+**static-web3** — 只有 Vite web 與 `@ysk-kit/*` 客戶端程式庫。沒有 Prisma，沒有 `DATABASE_URL`。若介面需要後端，將 `API_PUBLIC_URL` 指向遠端 API。錢包程式庫寫在產品內。寫出 `WEB3.md`。
 
 CLI 旗標：[create-ysk-app](../cli/create-ysk-app.zh.md)。

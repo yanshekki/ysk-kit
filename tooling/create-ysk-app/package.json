@@ -1,6 +1,6 @@
 {
-  "name": "@ysk/create-app",
-  "version": "0.1.0",
+  "name": "@ysk-kit/create-app",
+  "version": "1.0.0",
   "type": "module",
   "bin": {
     "create-ysk-app": "./src/index.ts"
@@ -22,8 +22,8 @@
     "templates"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted",
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {

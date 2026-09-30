@@ -1,4 +1,4 @@
-import { AppError } from '@ysk/domain-kernel';
+import { AppError } from '@ysk-kit/domain-kernel';
 
 export type RateLimitOpts = {
   windowMs: number;

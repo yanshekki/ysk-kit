@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { buildOpenApiDocument } from '@ysk/api-http';
-import { appContract } from '@ysk/contracts';
+import { buildOpenApiDocument } from '@ysk-kit/api-http';
+import { appContract } from '@ysk-kit/contracts';
 
 export const generateOpenApi = (root: string): string => {
   const spec = buildOpenApiDocument(appContract);

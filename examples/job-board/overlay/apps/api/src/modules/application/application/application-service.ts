@@ -1,5 +1,5 @@
-import type { CreateApplicationCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateApplicationCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IApplicationRepository } from '../domain/application-repository';
 
 export const createApplicationService = (repo: IApplicationRepository) => ({

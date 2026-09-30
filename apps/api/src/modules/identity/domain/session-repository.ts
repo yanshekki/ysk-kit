@@ -1,4 +1,4 @@
-import type { Platform } from '@ysk/contracts';
+import type { Platform } from '@ysk-kit/contracts';
 
 export type SessionRecord = {
   id: string;

@@ -1,4 +1,4 @@
-import { REQUEST_ID_HEADER } from '@ysk/api-http';
+import { REQUEST_ID_HEADER } from '@ysk-kit/api-http';
 import type { RequestHandler } from 'express';
 
 export { REQUEST_ID_HEADER };

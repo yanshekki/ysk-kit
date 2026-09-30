@@ -2,11 +2,11 @@
 
 Language: [English](examples.md) · 中文
 
-套件 `@ysk/examples`，位於 `tooling/examples`。目錄與教程：[examples/README.zh.md](../../examples/README.zh.md)。
+套件 `@ysk-kit/examples`，位於 `tooling/examples`。目錄與教程：[examples/README.zh.md](../../examples/README.zh.md)。
 
 ```text
-pnpm --filter @ysk/examples start apply <slug> [--dest <path>] [--yes] [--db sqlite|mysql|postgresql] [--force] [--skip-install] [--skip-verify]
-pnpm --filter @ysk/examples start capture <slug> [--dest <path>]
+pnpm --filter @ysk-kit/examples start apply <slug> [--dest <path>] [--yes] [--db sqlite|mysql|postgresql] [--force] [--skip-install] [--skip-verify]
+pnpm --filter @ysk-kit/examples start capture <slug> [--dest <path>]
 ```
 
 缺少 `<slug>` 會列印 `--help` 並以狀態 1 結束。

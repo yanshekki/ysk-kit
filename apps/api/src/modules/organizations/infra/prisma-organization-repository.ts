@@ -1,4 +1,4 @@
-import type { InviteOrgRole } from '@ysk/contracts';
+import type { InviteOrgRole } from '@ysk-kit/contracts';
 import type { Organization, OrgInvite, PrismaClient } from '../../../generated/prisma/client';
 import type {
   IOrganizationRepository,

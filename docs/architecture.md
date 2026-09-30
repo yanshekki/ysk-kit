@@ -8,7 +8,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 
 ## Principles
 
-1. **Contracts are the only source of truth** for enums, DTOs, error codes, and API paths (`@ysk/contracts`).
+1. **Contracts are the only source of truth** for enums, DTOs, error codes, and API paths (`@ysk-kit/contracts`).
 2. **The business core does not know Express, Prisma, or React.** Domain and application depend on ports.
 3. **No downward imports.** Domain does not import infra. Contracts do not import apps.
 4. **REST + OpenAPI by default**, so browsers, phones, partners, and agents share one HTTP surface.
@@ -29,7 +29,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 | Database | Prisma 7.10 (`prisma-client` generator, MariaDB adapter, client at `apps/api/src/generated/prisma`) | PostgreSQL or SQLite adapters via `--db` |
 | Queue / cache | Redis 8 + BullMQ; in-memory queue when `REDIS_URL` is unset | — |
 | Auth | JWT + refresh behind `IAuthPort`; email/password and `+852` OTP | Twilio Messages REST when `TWILIO_*` are set |
-| UI | `@ysk/ui` (AppShell, PageHeader, EmptyState, ErrorBanner, FormField, Spinner, Can) | — |
+| UI | `@ysk-kit/ui` (AppShell, PageHeader, EmptyState, ErrorBanner, FormField, Spinner, Can) | — |
 | Logger | Pino (JSON in production) | — |
 | Lint | Biome | — |
 | Test | Vitest 5, Testing Library, one Playwright Chromium smoke | — |
@@ -50,7 +50,7 @@ ysk-kit/
 │   ├── admin/        Vite 8
 │   ├── mobile/       Expo 57
 │   └── desktop/      Electron 44 + Vite 7
-├── packages/         @ysk/* libraries (contracts, sdk, ui, jobs, …)
+├── packages/         @ysk-kit/* libraries (contracts, sdk, ui, jobs, …)
 ├── modules/          Prisma fragments and the notes-shaped generator example
 ├── tooling/
 │   ├── create-ysk-app/
@@ -64,25 +64,25 @@ A generated product adds its own bounded context under `apps/api/src/modules/<na
 
 | Package | Role |
 |---|---|
-| `@ysk/contracts` | Enums, DTOs, error codes, ts-rest routers, mail templates |
-| `@ysk/domain-kernel` | Shared domain primitives |
-| `@ysk/application` | Pagination helpers (`parsePageQuery`, `slicePage`) |
-| `@ysk/api-http` | Framework-free `HttpHandler`, envelope helpers, OpenAPI flatten, rate limit, security headers |
-| `@ysk/api-express` / `@ysk/api-fastify` | HTTP adapters |
-| `@ysk/sdk` / `@ysk/web-sdk` | Typed client and React Query hooks |
-| `@ysk/ui` / `@ysk/ui-logic` | DOM components; DOM-free view rules |
-| `@ysk/auth` / `@ysk/apikey` / `@ysk/crypto` | Passwords, JWT, hashed API keys, AES-256-GCM |
-| `@ysk/jobs` / `@ysk/mail` / `@ysk/storage` / `@ysk/i18n` | Queue, mail port, presign, dictionaries |
-| `@ysk/llm` / `@ysk/push` / `@ysk/realtime` | Chat Completions, device push, Socket.IO |
-| `@ysk/logger` / `@ysk/observability` / `@ysk/config` | Pino, OTel, env |
-| `@ysk/db-prisma` | Enum-drift tests against Prisma schema |
+| `@ysk-kit/contracts` | Enums, DTOs, error codes, ts-rest routers, mail templates |
+| `@ysk-kit/domain-kernel` | Shared domain primitives |
+| `@ysk-kit/application` | Pagination helpers (`parsePageQuery`, `slicePage`) |
+| `@ysk-kit/api-http` | Framework-free `HttpHandler`, envelope helpers, OpenAPI flatten, rate limit, security headers |
+| `@ysk-kit/api-express` / `@ysk-kit/api-fastify` | HTTP adapters |
+| `@ysk-kit/sdk` / `@ysk-kit/web-sdk` | Typed client and React Query hooks |
+| `@ysk-kit/ui` / `@ysk-kit/ui-logic` | DOM components; DOM-free view rules |
+| `@ysk-kit/auth` / `@ysk-kit/apikey` / `@ysk-kit/crypto` | Passwords, JWT, hashed API keys, AES-256-GCM |
+| `@ysk-kit/jobs` / `@ysk-kit/mail` / `@ysk-kit/storage` / `@ysk-kit/i18n` | Queue, mail port, presign, dictionaries |
+| `@ysk-kit/llm` / `@ysk-kit/push` / `@ysk-kit/realtime` | Chat Completions, device push, Socket.IO |
+| `@ysk-kit/logger` / `@ysk-kit/observability` / `@ysk-kit/config` | Pino, OTel, env |
+| `@ysk-kit/db-prisma` | Enum-drift tests against Prisma schema |
 
-Publishable libraries emit `dist/` and set `publishConfig` for GitHub Packages (`@ysk` scope). The workspace resolves TypeScript source.
+Publishable libraries emit `dist/` and set `publishConfig` for npmjs (`@ysk-kit` scope). The workspace resolves TypeScript source.
 
 ## Layers
 
 ```
-apps/web  ──►  @ysk/web-sdk  ──►  @ysk/contracts
+apps/web  ──►  @ysk-kit/web-sdk  ──►  @ysk-kit/contracts
                                       ▲
 apps/api (HTTP adapter) ──────────────┤
       │                               │
@@ -96,11 +96,11 @@ apps/api (HTTP adapter) ──────────────┤
  infra (prisma, redis, s3, mail)
 ```
 
-- `domain` may import `@ysk/domain-kernel` and `@ysk/contracts` only.
+- `domain` may import `@ysk-kit/domain-kernel` and `@ysk-kit/contracts` only.
 - `application` may import domain and contracts only.
 - `infra` implements ports. HTTP handlers map transport to use-cases; they do not hold Prisma.
-- `apps/web` must not import Prisma, Express, Fastify, `@ysk/auth`, jobs, mail, push, or AWS SDK.
-- `apps/api` must not import React or `@ysk/ui`.
+- `apps/web` must not import Prisma, Express, Fastify, `@ysk-kit/auth`, jobs, mail, push, or AWS SDK.
+- `apps/api` must not import React or `@ysk-kit/ui`.
 - `pnpm layers` (dependency-cruiser) enforces this. Walkthrough: [hexagonal guide](guides/hexagonal.md).
 
 Identity is the reference module: `apps/api/src/modules/identity/{domain,application,infra}`.
@@ -124,15 +124,15 @@ Keep three shapes separate:
 
 | Shape | Where | Example |
 |---|---|---|
-| Wire DTO | `@ysk/contracts` | `UserDtoSchema` |
-| Command | `@ysk/contracts` | `CreateUserCommandSchema` |
+| Wire DTO | `@ysk-kit/contracts` | `UserDtoSchema` |
+| Command | `@ysk-kit/contracts` | `CreateUserCommandSchema` |
 | Domain entity | module `domain/` | `User` with behaviour |
 
-`pnpm --filter @ysk/db-prisma test` fails when Prisma enum literals drift from contracts.
+`pnpm --filter @ysk-kit/db-prisma test` fails when Prisma enum literals drift from contracts.
 
 ## Envelope
 
-Every JSON route returns `{ ok: true, data }` or `{ ok: false, error }`, including single resources. Pagination lives inside `data`. Helpers: `OkSchema` / `ErrSchema` in `@ysk/contracts`.
+Every JSON route returns `{ ok: true, data }` or `{ ok: false, error }`, including single resources. Pagination lives inside `data`. Helpers: `OkSchema` / `ErrSchema` in `@ysk-kit/contracts`.
 
 Exceptions (and only these):
 
@@ -147,13 +147,13 @@ Details: [envelope guide](guides/envelope.md).
 
 ## HTTP adapters
 
-Handlers are framework-free maps in `@ysk/api-http`. Express 5 is the default. Fastify 5 serves the same contracts when `HTTP_ADAPTER=fastify`. LLM SSE and local file PUT exist on both. Composition (`apps/api/src/composition.ts`) is the only place that `new`s adapters.
+Handlers are framework-free maps in `@ysk-kit/api-http`. Express 5 is the default. Fastify 5 serves the same contracts when `HTTP_ADAPTER=fastify`. LLM SSE and local file PUT exist on both. Composition (`apps/api/src/composition.ts`) is the only place that `new`s adapters.
 
 ## Clients
 
-Web and admin use TanStack Router and `features/*`. Forms reuse command Zod schemas. Permissions use contracts `Permission` plus `@ysk/ui` `<Can>`. AppShell is `{ brand, nav, trailing?, children }`.
+Web and admin use TanStack Router and `features/*`. Forms reuse command Zod schemas. Permissions use contracts `Permission` plus `@ysk-kit/ui` `<Can>`. AppShell is `{ brand, nav, trailing?, children }`.
 
-Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk/sdk` with `platform: desktop`; tokens use Electron `safeStorage` when available. Prisma never runs inside Electron.
+Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens use Electron `safeStorage` when available. Prisma never runs inside Electron.
 
 ## Generators
 
@@ -166,7 +166,7 @@ Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `Fi
 | `ysk upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
 | `ysk check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
 
-`--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk upgrade`; they do not install `@ysk/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
+`--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk upgrade`; they do not install `@ysk-kit/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
 
 ## Product scope
 
@@ -178,4 +178,4 @@ These are product decisions, not unfinished homework:
 - Industry domains live in product repositories.
 - CI uses in-memory ports. It does not start Redis, Stripe, Twilio, FCM, Jaeger, Grafana, or an OTLP collector.
 - Kit tables have no `ysk_` prefix.
-- Transactions, when a product needs them, wrap Prisma `$transaction` in API infra. `@ysk/application` ships pagination helpers, not a unit-of-work port.
+- Transactions, when a product needs them, wrap Prisma `$transaction` in API infra. `@ysk-kit/application` ships pagination helpers, not a unit-of-work port.

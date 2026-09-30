@@ -1,5 +1,5 @@
 {
-  "name": "@ysk/mobile",
+  "name": "@ysk-kit/mobile",
   "version": "0.1.0",
   "private": true,
   "main": "expo/AppEntry.js",
@@ -9,10 +9,10 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@ysk/config": "workspace:*",
-    "@ysk/contracts": "workspace:*",
-    "@ysk/sdk": "workspace:*",
-    "@ysk/ui-logic": "workspace:*",
+    "@ysk-kit/config": "workspace:*",
+    "@ysk-kit/contracts": "workspace:*",
+    "@ysk-kit/sdk": "workspace:*",
+    "@ysk-kit/ui-logic": "workspace:*",
     "expo": "^57.0.25",
     "expo-secure-store": "~57.0.4",
     "expo-status-bar": "~57.0.1",

@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { ContactDto, ContactStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { ContactDto, ContactStatus } from '@ysk-kit/contracts';
 import type { ContactRecord, IContactRepository } from '../domain/contact-repository';
 
 const toDto = (row: ContactRecord): ContactDto => ({

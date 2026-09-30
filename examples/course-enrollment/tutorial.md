@@ -50,13 +50,13 @@ Industry enrolment does **not** mount on the living kit API. Overlay files copy 
 From the kit checkout:
 
 ```bash
-pnpm --filter @ysk/examples start apply course-enrollment --dest ~/Projects/my-courses --yes
+pnpm --filter @ysk-kit/examples start apply course-enrollment --dest ~/Projects/my-courses --yes
 ```
 
 `--yes` is passed to `create-ysk-app` so agents and CI never wait for a TTY. Default destination (gitignored) is `examples/.runs/course-enrollment`. Replacing a previous run:
 
 ```bash
-pnpm --filter @ysk/examples start apply course-enrollment --yes --force
+pnpm --filter @ysk-kit/examples start apply course-enrollment --yes --force
 ```
 
 Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module course --prisma --web`, `ysk add module enrollment --prisma --web`, copy this overlay, replace Prisma models `Course` and `Enrollment`, `prisma db push`, seed.

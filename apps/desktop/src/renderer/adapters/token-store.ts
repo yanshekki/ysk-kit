@@ -1,4 +1,4 @@
-import type { TokenStore } from '@ysk/sdk';
+import type { TokenStore } from '@ysk-kit/sdk';
 
 export type DesktopTokenBridge = {
   get(): Promise<string | null>;

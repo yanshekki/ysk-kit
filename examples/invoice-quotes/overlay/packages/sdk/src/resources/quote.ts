@@ -1,4 +1,4 @@
-import type { CreateQuoteCommand, PaginatedQuote, QuoteDto } from '@ysk/contracts';
+import type { CreateQuoteCommand, PaginatedQuote, QuoteDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

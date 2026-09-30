@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateCourseCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateCourseCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const courseQueryKey = ['course'] as const;
 

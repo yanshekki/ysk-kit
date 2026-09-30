@@ -1,5 +1,5 @@
-import type { CreateStockMoveCommand, PageQuery, StockMoveReason } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateStockMoveCommand, PageQuery, StockMoveReason } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IStockMoveRepository } from '../domain/stock-move-repository';
 
 export const nextQtyOnHand = (

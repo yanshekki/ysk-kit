@@ -1,4 +1,4 @@
-import type { DevicePlatform } from '@ysk/contracts';
+import type { DevicePlatform } from '@ysk-kit/contracts';
 
 export type DeviceRecord = {
   id: string;

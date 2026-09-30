@@ -1,5 +1,5 @@
 {
-  "name": "@ysk/desktop",
+  "name": "@ysk-kit/desktop",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -11,11 +11,11 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@ysk/config": "workspace:*",
-    "@ysk/contracts": "workspace:*",
-    "@ysk/sdk": "workspace:*",
-    "@ysk/ui": "workspace:*",
-    "@ysk/ui-logic": "workspace:*",
+    "@ysk-kit/config": "workspace:*",
+    "@ysk-kit/contracts": "workspace:*",
+    "@ysk-kit/sdk": "workspace:*",
+    "@ysk-kit/ui": "workspace:*",
+    "@ysk-kit/ui-logic": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

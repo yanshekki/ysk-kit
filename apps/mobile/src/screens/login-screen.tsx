@@ -1,4 +1,4 @@
-import { LoginPasswordCommandSchema } from '@ysk/contracts';
+import { LoginPasswordCommandSchema } from '@ysk-kit/contracts';
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { api } from '../lib/client';

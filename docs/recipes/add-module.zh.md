@@ -38,8 +38,8 @@ pnpm layers && pnpm typecheck && pnpm test
 1. 若需要更多欄位，改 Prisma model；保持 DTO 與 command 同步。
 2. 規則只放在 `application/<name>-service.ts`。
 3. Prisma 留在 `infra/`。
-4. 不要加 TypeScript `enum`。額外字面值放進 `@ysk/contracts`。
-5. Web 頁面不要 `fetch`；使用 `@ysk/web-sdk` hooks。
+4. 不要加 TypeScript `enum`。額外字面值放進 `@ysk-kit/contracts`。
+5. Web 頁面不要 `fetch`；使用 `@ysk-kit/web-sdk` hooks。
 
 `modules/notes` 下 notes 形狀的樹說明模板。本倉的 API 不掛載 notes 路由，平台程式才不會混入示範業務資料。
 

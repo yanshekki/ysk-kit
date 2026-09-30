@@ -50,13 +50,13 @@ SQLite 不需要 Compose。套用命令依 `spec.json` 預設 sqlite。
 在 kit 工作副本執行：
 
 ```bash
-pnpm --filter @ysk/examples start apply course-enrollment --dest ~/Projects/my-courses --yes
+pnpm --filter @ysk-kit/examples start apply course-enrollment --dest ~/Projects/my-courses --yes
 ```
 
 `--yes` 會傳給 `create-ysk-app`，agent 與 CI 不會等待 TTY。預設目的地（已 gitignore）是 `examples/.runs/course-enrollment`。覆蓋上一次結果：
 
 ```bash
-pnpm --filter @ysk/examples start apply course-enrollment --yes --force
+pnpm --filter @ysk-kit/examples start apply course-enrollment --yes --force
 ```
 
 人手等價步驟（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module course --prisma --web`、`ysk add module enrollment --prisma --web`，複製此 overlay，替換 Prisma 模型 `Course` 與 `Enrollment`，`prisma db push`，seed。

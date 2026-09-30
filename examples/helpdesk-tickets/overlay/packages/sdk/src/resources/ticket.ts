@@ -3,7 +3,7 @@ import type {
   PaginatedTicket,
   TicketDto,
   UpdateTicketStatusCommand,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query: { organizationId: string; cursor?: string; limit?: number }): string => {

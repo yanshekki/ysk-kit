@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import { AppError } from '@ysk/domain-kernel';
+import { slicePage } from '@ysk-kit/application';
+import { AppError } from '@ysk-kit/domain-kernel';
 import { Prisma, type PrismaClient } from '../../../generated/prisma/client';
 import { prismaIdCursor } from '../../../infra/prisma-page';
 import type { IUserRepository } from '../domain/user-repository';

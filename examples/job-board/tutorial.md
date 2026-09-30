@@ -44,7 +44,7 @@ Industry jobs do **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply job-board --dest ~/Projects/my-jobs --yes
+pnpm --filter @ysk-kit/examples start apply job-board --dest ~/Projects/my-jobs --yes
 ```
 
 Default destination (gitignored): `examples/.runs/job-board`. Replace a previous run with `--force`.

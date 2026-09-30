@@ -1,4 +1,4 @@
-import type { BillingPlanCode, SubscriptionStatus } from '@ysk/contracts';
+import type { BillingPlanCode, SubscriptionStatus } from '@ysk-kit/contracts';
 
 export type SubscriptionRecord = {
   id: string;

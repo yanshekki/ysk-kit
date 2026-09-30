@@ -1,6 +1,6 @@
-import { CreateUserCommandSchema, type PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { IJobQueue } from '@ysk/jobs';
+import { CreateUserCommandSchema, type PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { IJobQueue } from '@ysk-kit/jobs';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 import type { ISessionRepository } from '../domain/session-repository';
 import type { IUserRepository } from '../domain/user-repository';

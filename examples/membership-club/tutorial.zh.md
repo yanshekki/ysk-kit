@@ -43,7 +43,7 @@ Language: [English](tutorial.md) · 中文
 ## 5. 開倉命令
 
 ```bash
-pnpm --filter @ysk/examples start apply membership-club --dest ~/Projects/my-club --yes
+pnpm --filter @ysk-kit/examples start apply membership-club --dest ~/Projects/my-club --yes
 ```
 
 預設目的地（已 gitignore）：`examples/.runs/membership-club`。覆蓋上一次結果請加 `--force`。

@@ -178,7 +178,9 @@ describe('addCapability', () => {
     const logs = addCapability('websocket', root);
     expect(logs[0]).toBe('ysk add websocket: applied');
     expect(readFileSync(join(root, '.env.example'), 'utf8')).toContain('RUN_WORKERS=');
-    expect(readFileSync(join(root, 'apps/api/package.json'), 'utf8')).toContain('@ysk/realtime');
+    expect(readFileSync(join(root, 'apps/api/package.json'), 'utf8')).toContain(
+      '@ysk-kit/realtime',
+    );
     expect(readFileSync(join(root, 'apps/api/src/composition.ts'), 'utf8')).toContain(
       'createRealtimeFromEnv',
     );
@@ -200,7 +202,7 @@ describe('addCapability', () => {
     writeFileSync(join(root, 'apps/api/package.json'), '{"name":"api","dependencies":{}}\n');
     addCapability('jobs', root);
     expect(readFileSync(join(root, '.env.example'), 'utf8')).toContain('REDIS_URL=');
-    expect(readFileSync(join(root, 'apps/api/package.json'), 'utf8')).toContain('@ysk/jobs');
+    expect(readFileSync(join(root, 'apps/api/package.json'), 'utf8')).toContain('@ysk-kit/jobs');
     const env = readFileSync(join(root, '.env.example'), 'utf8');
     addCapability('jobs', root);
     expect(readFileSync(join(root, '.env.example'), 'utf8')).toBe(env);

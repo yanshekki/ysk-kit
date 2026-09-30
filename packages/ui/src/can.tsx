@@ -1,5 +1,5 @@
-import type { Permission, UserRole } from '@ysk/contracts';
-import { canAct } from '@ysk/ui-logic';
+import type { Permission, UserRole } from '@ysk-kit/contracts';
+import { canAct } from '@ysk-kit/ui-logic';
 import type { ReactNode } from 'react';
 
 export function Can({

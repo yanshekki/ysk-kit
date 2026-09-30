@@ -8,7 +8,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 
 ## 原則
 
-1. **合約是唯一真相來源**：enum、DTO、error code、API 路徑都在 `@ysk/contracts`。
+1. **合約是唯一真相來源**：enum、DTO、error code、API 路徑都在 `@ysk-kit/contracts`。
 2. **業務核心不認識 Express、Prisma 或 React。** Domain 與 application 依賴 port。
 3. **禁止向下依賴。** Domain 不 import infra。Contracts 不 import apps。
 4. **預設 REST + OpenAPI**，瀏覽器、手機、合作方與 agent 共用同一 HTTP 介面。
@@ -29,7 +29,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 | 資料庫 | Prisma 7.10（`prisma-client` generator、MariaDB adapter、客戶端在 `apps/api/src/generated/prisma`） | `--db` 可改 PostgreSQL 或 SQLite adapter |
 | 佇列 / 快取 | Redis 8 + BullMQ；未設 `REDIS_URL` 時用記憶體佇列 | — |
 | 驗證 | JWT + refresh，經 `IAuthPort`；電郵／密碼與 `+852` OTP | 設齊 `TWILIO_*` 時用 Twilio Messages REST |
-| UI | `@ysk/ui`（AppShell、PageHeader、EmptyState、ErrorBanner、FormField、Spinner、Can） | — |
+| UI | `@ysk-kit/ui`（AppShell、PageHeader、EmptyState、ErrorBanner、FormField、Spinner、Can） | — |
 | 日誌 | Pino（生產環境 JSON） | — |
 | Lint | Biome | — |
 | 測試 | Vitest 5、Testing Library、一條 Playwright Chromium smoke | — |
@@ -50,7 +50,7 @@ ysk-kit/
 │   ├── admin/        Vite 8
 │   ├── mobile/       Expo 57
 │   └── desktop/      Electron 44 + Vite 7
-├── packages/         @ysk/* 程式庫（contracts、sdk、ui、jobs、…）
+├── packages/         @ysk-kit/* 程式庫（contracts、sdk、ui、jobs、…）
 ├── modules/          Prisma fragments 與 notes 形狀的產生器例子
 ├── tooling/
 │   ├── create-ysk-app/
@@ -64,25 +64,25 @@ ysk-kit/
 
 | 套件 | 職責 |
 |---|---|
-| `@ysk/contracts` | enum、DTO、error code、ts-rest router、郵件模板 |
-| `@ysk/domain-kernel` | 共用 domain 原語 |
-| `@ysk/application` | 分頁輔助（`parsePageQuery`、`slicePage`） |
-| `@ysk/api-http` | 與框架無關的 `HttpHandler`、envelope 輔助、OpenAPI flatten、速率限制、安全標頭 |
-| `@ysk/api-express` / `@ysk/api-fastify` | HTTP adapter |
-| `@ysk/sdk` / `@ysk/web-sdk` | 有型別的客戶端與 React Query hooks |
-| `@ysk/ui` / `@ysk/ui-logic` | DOM 元件；不含 DOM 的畫面規則 |
-| `@ysk/auth` / `@ysk/apikey` / `@ysk/crypto` | 密碼、JWT、雜湊 API 金鑰、AES-256-GCM |
-| `@ysk/jobs` / `@ysk/mail` / `@ysk/storage` / `@ysk/i18n` | 佇列、郵件 port、預簽署、字典 |
-| `@ysk/llm` / `@ysk/push` / `@ysk/realtime` | Chat Completions、裝置推送、Socket.IO |
-| `@ysk/logger` / `@ysk/observability` / `@ysk/config` | Pino、OTel、環境變數 |
-| `@ysk/db-prisma` | 對 Prisma schema 的 enum-drift 測試 |
+| `@ysk-kit/contracts` | enum、DTO、error code、ts-rest router、郵件模板 |
+| `@ysk-kit/domain-kernel` | 共用 domain 原語 |
+| `@ysk-kit/application` | 分頁輔助（`parsePageQuery`、`slicePage`） |
+| `@ysk-kit/api-http` | 與框架無關的 `HttpHandler`、envelope 輔助、OpenAPI flatten、速率限制、安全標頭 |
+| `@ysk-kit/api-express` / `@ysk-kit/api-fastify` | HTTP adapter |
+| `@ysk-kit/sdk` / `@ysk-kit/web-sdk` | 有型別的客戶端與 React Query hooks |
+| `@ysk-kit/ui` / `@ysk-kit/ui-logic` | DOM 元件；不含 DOM 的畫面規則 |
+| `@ysk-kit/auth` / `@ysk-kit/apikey` / `@ysk-kit/crypto` | 密碼、JWT、雜湊 API 金鑰、AES-256-GCM |
+| `@ysk-kit/jobs` / `@ysk-kit/mail` / `@ysk-kit/storage` / `@ysk-kit/i18n` | 佇列、郵件 port、預簽署、字典 |
+| `@ysk-kit/llm` / `@ysk-kit/push` / `@ysk-kit/realtime` | Chat Completions、裝置推送、Socket.IO |
+| `@ysk-kit/logger` / `@ysk-kit/observability` / `@ysk-kit/config` | Pino、OTel、環境變數 |
+| `@ysk-kit/db-prisma` | 對 Prisma schema 的 enum-drift 測試 |
 
-可發布的程式庫輸出 `dist/`，並為 GitHub Packages（`@ysk` scope）設定 `publishConfig`。工作區解析 TypeScript 原始碼。
+可發布的程式庫輸出 `dist/`，並為 npmjs（`@ysk-kit` scope）設定 `publishConfig`。工作區解析 TypeScript 原始碼。
 
 ## 分層
 
 ```
-apps/web  ──►  @ysk/web-sdk  ──►  @ysk/contracts
+apps/web  ──►  @ysk-kit/web-sdk  ──►  @ysk-kit/contracts
                                       ▲
 apps/api (HTTP adapter) ──────────────┤
       │                               │
@@ -96,11 +96,11 @@ apps/api (HTTP adapter) ──────────────┤
  infra (prisma, redis, s3, mail)
 ```
 
-- `domain` 只可 import `@ysk/domain-kernel` 與 `@ysk/contracts`。
+- `domain` 只可 import `@ysk-kit/domain-kernel` 與 `@ysk-kit/contracts`。
 - `application` 只可 import domain 與 contracts。
 - `infra` 實作 port。HTTP handler 把傳輸對應到 use-case，不持有 Prisma。
-- `apps/web` 不可 import Prisma、Express、Fastify、`@ysk/auth`、jobs、mail、push 或 AWS SDK。
-- `apps/api` 不可 import React 或 `@ysk/ui`。
+- `apps/web` 不可 import Prisma、Express、Fastify、`@ysk-kit/auth`、jobs、mail、push 或 AWS SDK。
+- `apps/api` 不可 import React 或 `@ysk-kit/ui`。
 - `pnpm layers`（dependency-cruiser）強制這些方向。逐步說明：[hexagonal 指南](guides/hexagonal.zh.md)。
 
 身分模組是參考實作：`apps/api/src/modules/identity/{domain,application,infra}`。
@@ -124,15 +124,15 @@ export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
 
 | 形狀 | 位置 | 例子 |
 |---|---|---|
-| 線上 DTO | `@ysk/contracts` | `UserDtoSchema` |
-| Command | `@ysk/contracts` | `CreateUserCommandSchema` |
+| 線上 DTO | `@ysk-kit/contracts` | `UserDtoSchema` |
+| Command | `@ysk-kit/contracts` | `CreateUserCommandSchema` |
 | Domain entity | 模組 `domain/` | 帶行為的 `User` |
 
-Prisma enum 字面值與 contracts 漂移時，`pnpm --filter @ysk/db-prisma test` 會失敗。
+Prisma enum 字面值與 contracts 漂移時，`pnpm --filter @ysk-kit/db-prisma test` 會失敗。
 
 ## Envelope
 
-每條 JSON 路由都回 `{ ok: true, data }` 或 `{ ok: false, error }`，單一資源也是。分頁放在 `data` 內。輔助：`@ysk/contracts` 的 `OkSchema` / `ErrSchema`。
+每條 JSON 路由都回 `{ ok: true, data }` 或 `{ ok: false, error }`，單一資源也是。分頁放在 `data` 內。輔助：`@ysk-kit/contracts` 的 `OkSchema` / `ErrSchema`。
 
 例外（只有這些）：
 
@@ -147,13 +147,13 @@ Prisma enum 字面值與 contracts 漂移時，`pnpm --filter @ysk/db-prisma tes
 
 ## HTTP adapter
 
-Handler 是 `@ysk/api-http` 裏與框架無關的 map。預設 Express 5。設 `HTTP_ADAPTER=fastify` 時 Fastify 5 服務同一套合約。LLM SSE 與本地檔案 PUT 兩邊都有。只有 composition（`apps/api/src/composition.ts`）會 `new` adapter。
+Handler 是 `@ysk-kit/api-http` 裏與框架無關的 map。預設 Express 5。設 `HTTP_ADAPTER=fastify` 時 Fastify 5 服務同一套合約。LLM SSE 與本地檔案 PUT 兩邊都有。只有 composition（`apps/api/src/composition.ts`）會 `new` adapter。
 
 ## 客戶端
 
-Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的 Zod schema。權限用 contracts 的 `Permission` 加 `@ysk/ui` 的 `<Can>`。AppShell 的合約是 `{ brand, nav, trailing?, children }`。
+Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的 Zod schema。權限用 contracts 的 `Permission` 加 `@ysk-kit/ui` 的 `<Can>`。AppShell 的合約是 `{ brand, nav, trailing?, children }`。
 
-流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk/sdk` 呼叫 API，`platform: desktop`；權杖在可用時使用 Electron `safeStorage`。Prisma 永不在 Electron 內運行。
+流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在可用時使用 Electron `safeStorage`。Prisma 永不在 Electron 內運行。
 
 ## 產生器
 
@@ -166,7 +166,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 | `ysk upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
 | `ysk check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
 
-`--preset thin`（預設）複製後剝走 llm、billing、organizations 與 devices。`--preset full` 保留完整示範。`php-bridge` 與 `static-web3` 忽略 preset。產品以 `ysk upgrade` 更新 kit 護欄；日常路徑不會從 registry 安裝 `@ysk/*`。手冊：[CLI](cli/index.zh.md)、[flavors](guides/flavors.zh.md)、[能力](guides/capabilities.zh.md)、[升級](guides/upgrade.zh.md)。
+`--preset thin`（預設）複製後剝走 llm、billing、organizations 與 devices。`--preset full` 保留完整示範。`php-bridge` 與 `static-web3` 忽略 preset。產品以 `ysk upgrade` 更新 kit 護欄；日常路徑不會從 registry 安裝 `@ysk-kit/*`。手冊：[CLI](cli/index.zh.md)、[flavors](guides/flavors.zh.md)、[能力](guides/capabilities.zh.md)、[升級](guides/upgrade.zh.md)。
 
 ## 產品範圍
 
@@ -178,4 +178,4 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 - 行業 domain 寫在產品倉。
 - CI 使用記憶體 port。不啟動 Redis、Stripe、Twilio、FCM、Jaeger、Grafana 或 OTLP collector。
 - Kit 的資料表沒有 `ysk_` 前綴。
-- 產品需要交易時，在 API infra 包 Prisma `$transaction`。`@ysk/application` 提供分頁輔助，沒有 unit-of-work port。
+- 產品需要交易時，在 API infra 包 Prisma `$transaction`。`@ysk-kit/application` 提供分頁輔助，沒有 unit-of-work port。

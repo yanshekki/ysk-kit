@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import type { DeviceDto, RegisterDeviceCommand } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { DeviceDto, RegisterDeviceCommand } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IDeviceRepository } from '../domain/device-repository';
 
 export const hashDeviceToken = (token: string): string =>

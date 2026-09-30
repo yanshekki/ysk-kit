@@ -3,8 +3,8 @@ import type {
   AcceptInviteCommand,
   CreateOrganizationCommand,
   InviteMemberCommand,
-} from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+} from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const organizationsQueryKey = ['organizations'] as const;
 export const organizationQueryKey = (id: string) => ['organization', id] as const;

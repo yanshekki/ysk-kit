@@ -1,4 +1,4 @@
-import type { CreateSkuCommand, PaginatedSku, SkuDto } from '@ysk/contracts';
+import type { CreateSkuCommand, PaginatedSku, SkuDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

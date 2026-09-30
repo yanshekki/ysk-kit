@@ -7,7 +7,7 @@ import {
   USER_STATUS_LABELS,
   type UserRole,
   type UserStatus,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export const formatHkd = (amount: number): string => `$${amount.toLocaleString('en-HK')}`;
 

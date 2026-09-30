@@ -1,5 +1,5 @@
 import cors from '@fastify/cors';
-import { mountFastify, registerErrorHandler, registerOptionalJwt } from '@ysk/api-fastify';
+import { mountFastify, registerErrorHandler, registerOptionalJwt } from '@ysk-kit/api-fastify';
 import {
   applySecurityHeaders,
   buildOpenApiDocument,
@@ -7,9 +7,9 @@ import {
   createMemoryRateLimit,
   REQUEST_ID_HEADER,
   scalarDocsHtml,
-} from '@ysk/api-http';
-import { appContract, claimsHasPermission, LlmCompleteCommandSchema } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/api-http';
+import { appContract, claimsHasPermission, LlmCompleteCommandSchema } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import Fastify, { type FastifyInstance } from 'fastify';
 import type { CreateAppInput } from './app';
 import { healthHandlers } from './health-handlers';

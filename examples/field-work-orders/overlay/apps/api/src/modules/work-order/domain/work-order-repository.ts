@@ -4,7 +4,7 @@ import type {
   PaginatedWorkOrder,
   WorkOrderDto,
   WorkOrderStatus,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type WorkOrderRecord = {
   id: string;

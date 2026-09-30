@@ -1,6 +1,6 @@
 {
-  "name": "@ysk/api-fastify",
-  "version": "0.1.0",
+  "name": "@ysk-kit/api-fastify",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "@fastify/cors": "^11.0.1",
-    "@ysk/apikey": "workspace:*",
-    "@ysk/api-http": "workspace:*",
-    "@ysk/auth": "workspace:*",
-    "@ysk/contracts": "workspace:*",
-    "@ysk/domain-kernel": "workspace:*",
+    "@ysk-kit/apikey": "workspace:*",
+    "@ysk-kit/api-http": "workspace:*",
+    "@ysk-kit/auth": "workspace:*",
+    "@ysk-kit/contracts": "workspace:*",
+    "@ysk-kit/domain-kernel": "workspace:*",
     "fastify": "^5.12.5"
   },
   "devDependencies": {
@@ -30,8 +30,8 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted",
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {

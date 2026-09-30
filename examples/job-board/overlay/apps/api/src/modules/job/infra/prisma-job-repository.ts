@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { JobDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { JobDto } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { IJobRepository } from '../domain/job-repository';
 

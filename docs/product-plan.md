@@ -32,7 +32,7 @@ Result: `GET/POST /v1/appointments` in the envelope, SDK `client.appointments`, 
 
 | Work | Why |
 |---|---|
-| GitHub Packages when the owner matches `@ysk` | Publishable libraries already set `publishConfig`. The registry path is usable when the GitHub owner matches the npm scope. Daily refresh uses `ysk upgrade`. |
+| npmjs `@ysk-kit/*` | Public libraries and `@ysk-kit/create-app` publish to the npm org `ysk-kit`. Daily dest refresh still uses copy-tree plus `ysk upgrade`. |
 
 ## Outside the default stack
 

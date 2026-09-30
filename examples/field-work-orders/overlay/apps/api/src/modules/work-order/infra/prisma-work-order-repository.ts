@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { WorkOrderDto, WorkOrderStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { WorkOrderDto, WorkOrderStatus } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { IWorkOrderRepository } from '../domain/work-order-repository';
 

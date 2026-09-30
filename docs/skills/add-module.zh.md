@@ -10,6 +10,6 @@ Language: [English](add-module.md) · 中文
 2. `pnpm ysk add module <name> --prisma --web`（若沒有 Vite 應用則用 `--no-web`）。
 3. 擴充 DTO、command 與 Prisma 欄位。
 4. 規則放在 `application/<name>-service.ts`。
-5. Prisma 留在 `infra/`。客戶端只用 `@ysk/sdk` / `@ysk/web-sdk`。
+5. Prisma 留在 `infra/`。客戶端只用 `@ysk-kit/sdk` / `@ysk-kit/web-sdk`。
 6. `pnpm db:migrate && pnpm gen:openapi`。
 7. [驗證改動](verify-change.zh.md)。

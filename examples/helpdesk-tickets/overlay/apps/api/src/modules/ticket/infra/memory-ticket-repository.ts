@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { OrgRole, TicketDto, TicketStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { OrgRole, TicketDto, TicketStatus } from '@ysk-kit/contracts';
 import type { ITicketRepository, TicketRecord } from '../domain/ticket-repository';
 
 const toDto = (row: TicketRecord): TicketDto => ({

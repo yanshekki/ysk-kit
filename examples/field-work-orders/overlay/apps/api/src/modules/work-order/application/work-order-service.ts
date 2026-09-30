@@ -1,6 +1,6 @@
-import type { CreateWorkOrderCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { IJobQueue } from '@ysk/jobs';
+import type { CreateWorkOrderCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { IJobQueue } from '@ysk-kit/jobs';
 import type { IWorkOrderRepository } from '../domain/work-order-repository';
 
 export const createWorkOrderService = (repo: IWorkOrderRepository, jobs?: IJobQueue) => ({

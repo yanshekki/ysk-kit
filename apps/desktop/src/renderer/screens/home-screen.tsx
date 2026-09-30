@@ -1,4 +1,4 @@
-import { Button } from '@ysk/ui';
+import { Button } from '@ysk-kit/ui';
 import { useEffect, useState } from 'react';
 import { api } from '../lib/client';
 

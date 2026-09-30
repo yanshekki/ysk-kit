@@ -11,9 +11,9 @@ Language: [English](upgrade.md) · 中文
 | 路徑 | 何時使用 |
 |---|---|
 | 複製 + `ysk upgrade` | 預設。適用於 `create-ysk-app` 的每一個 flavor。 |
-| GitHub Packages（`@ysk/*`） | 只在 GitHub 擁有者與 `@ysk` npm scope 一致時使用。可發布程式庫已為 `https://npm.pkg.github.com` 設定 `publishConfig`。本 kit 的日常流程不會從 registry 執行 `npm install` 那些套件。 |
+| npmjs（`@ysk-kit/*`） | 公開程式庫與 `@ysk-kit/create-app` 發佈到 `https://registry.npmjs.org`。產品 dest 仍然以 `workspace:*` 解析 TypeScript 原始碼。 |
 
-工作區產品仍然以 `workspace:*` 解析 TypeScript 原始碼中的 `@ysk/*`。
+工作區產品仍然以 `workspace:*` 解析 TypeScript 原始碼中的 `@ysk-kit/*`。
 
 ## 來源標記
 
@@ -71,7 +71,7 @@ YSK_ROOT=/path/to/your-product pnpm ysk upgrade --dry-run
 - `.env` 與 Prisma 遷移
 - `docs/openapi.yaml`（產品可能描述另一套 API）
 
-Envelope 規則留在 `AGENTS.md`。Envelope 輔助函式留在產品已複製的 `@ysk/contracts`。合約實作的修復不會自動合併。
+Envelope 規則留在 `AGENTS.md`。Envelope 輔助函式留在產品已複製的 `@ysk-kit/contracts`。合約實作的修復不會自動合併。
 
 ## `php-bridge`
 

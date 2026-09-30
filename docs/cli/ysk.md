@@ -2,7 +2,7 @@
 
 Language: [中文](ysk.zh.md) · English
 
-Generator binary at `tooling/ysk-cli`. Invoke with `pnpm ysk …` from the product root (or `pnpm --filter @ysk/cli start …`).
+Generator binary at `tooling/ysk-cli`. Invoke with `pnpm ysk …` from the product root (or `pnpm --filter @ysk-kit/cli start …`).
 
 ```text
 pnpm ysk add module <kebab-name> [--prisma] [--web] [--no-web]
@@ -54,21 +54,21 @@ Merges a catalogued platform capability. Unknown names throw `unknown capability
 
 | Capability | What it adds |
 |---|---|
-| `auth` | Session / OTP Prisma, `JWT_*`, `OTP_TTL_SECONDS`, `TWILIO_*`, `@ysk/auth` |
+| `auth` | Session / OTP Prisma, `JWT_*`, `OTP_TTL_SECONDS`, `TWILIO_*`, `@ysk-kit/auth` |
 | `rbac` | Permissions already live in `ROLE_PERMISSIONS`; no files copied |
 | `audit-log` | Audit Prisma fragment |
-| `storage` | FileObject fragment, `S3_*`, `@ysk/storage` |
-| `i18n` | `@ysk/i18n` (default locale zh-HK) |
-| `jobs` | `REDIS_URL`, `@ysk/jobs` |
-| `mail` | `SMTP_URL`, `MAIL_FROM`, `@ysk/mail` |
+| `storage` | FileObject fragment, `S3_*`, `@ysk-kit/storage` |
+| `i18n` | `@ysk-kit/i18n` (default locale zh-HK) |
+| `jobs` | `REDIS_URL`, `@ysk-kit/jobs` |
+| `mail` | `SMTP_URL`, `MAIL_FROM`, `@ysk-kit/mail` |
 | `notifications` | In-app notification routes |
 | `llm` | `LlmUsage`, source tree + Express/Fastify/composition/SDK/web patches, `LLM_*` / `XAI_API_KEY` |
-| `websocket` | `@ysk/realtime`, patches `composition.ts` with `createRealtimeFromEnv` |
+| `websocket` | `@ysk-kit/realtime`, patches `composition.ts` with `createRealtimeFromEnv` |
 | `push` | Device fragment, source tree + worker patch, `EXPO_ACCESS_TOKEN`, `FCM_*` |
 | `mobile` | Points at `apps/mobile` Expo template |
 | `team` | Organization + Membership fragment, source tree + web and Expo org screens |
 | `apikey` | ApiKey fragment |
-| `crypto` | `CRYPTO_MASTER_KEY`, `@ysk/crypto` |
+| `crypto` | `CRYPTO_MASTER_KEY`, `@ysk-kit/crypto` |
 | `billing` | Subscription fragment on Organization; **requires `team` first** |
 
 For `llm`, `team`, `billing`, and `push`, the command copies `tooling/ysk-cli/templates/capabilities/<name>/` when the product does not already contain the skip token (`createLlmService`, `createOrganizationService`, `createBillingService`, `createDeviceService`) in `app.ts` or `composition.ts`. This repository already wires those services, so a second add is a no-op.
@@ -123,11 +123,11 @@ Exit 0 prints `ysk check agent: ok`. Exit 1 prints one line per finding: `rule  
 | Rule | Where | What it flags |
 |---|---|---|
 | `no-ts-enum` | `apps/**`, `packages/**`, `modules/**` (`.ts` / `.tsx`) | TypeScript `enum` / `const enum` |
-| `clients-no-prisma` | `apps/web`, `apps/admin`, `apps/mobile`, `apps/desktop` | Import of `@prisma/client`, `@ysk/db-prisma`, `apps/api/src/generated`, or `generated/prisma` |
+| `clients-no-prisma` | `apps/web`, `apps/admin`, `apps/mobile`, `apps/desktop` | Import of `@prisma/client`, `@ysk-kit/db-prisma`, `apps/api/src/generated`, or `generated/prisma` |
 | `clients-no-raw-fetch` | Same four client apps | `fetch(` |
 
 Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `generated`, `coverage`. Prisma schema `enum UserStatus` in `.prisma` files is not TypeScript and is not scanned.
 
-Allowlisted raw `fetch`: `apps/admin/src/features/queues/queues-page.tsx` (Bull Board HTML probe). `@ysk/sdk` HTTP lives under `packages/sdk` and is not a client app.
+Allowlisted raw `fetch`: `apps/admin/src/features/queues/queues-page.tsx` (Bull Board HTML probe). `@ysk-kit/sdk` HTTP lives under `packages/sdk` and is not a client app.
 
 Testing: [testing guide](../guides/testing.md).

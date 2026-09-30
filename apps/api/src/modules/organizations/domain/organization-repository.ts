@@ -1,4 +1,4 @@
-import type { InviteOrgRole, OrgRole } from '@ysk/contracts';
+import type { InviteOrgRole, OrgRole } from '@ysk-kit/contracts';
 
 export type OrganizationRecord = {
   id: string;

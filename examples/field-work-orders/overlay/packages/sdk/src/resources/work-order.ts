@@ -1,4 +1,4 @@
-import type { CreateWorkOrderCommand, PaginatedWorkOrder, WorkOrderDto } from '@ysk/contracts';
+import type { CreateWorkOrderCommand, PaginatedWorkOrder, WorkOrderDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

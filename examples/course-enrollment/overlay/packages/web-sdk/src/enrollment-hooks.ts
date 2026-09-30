@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateEnrollmentCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateEnrollmentCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const enrollmentQueryKey = ['enrollment'] as const;
 

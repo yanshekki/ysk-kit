@@ -2,9 +2,9 @@ import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { ExpressAdapter } from '@bull-board/express';
 import { FastifyAdapter } from '@bull-board/fastify';
-import type { AccessClaims } from '@ysk/auth';
-import { ERROR_MESSAGE } from '@ysk/contracts';
-import type { BullmqQueue } from '@ysk/jobs';
+import type { AccessClaims } from '@ysk-kit/auth';
+import { ERROR_MESSAGE } from '@ysk-kit/contracts';
+import type { BullmqQueue } from '@ysk-kit/jobs';
 import type { Express, RequestHandler } from 'express';
 import type { FastifyInstance } from 'fastify';
 

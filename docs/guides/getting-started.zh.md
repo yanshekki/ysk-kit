@@ -32,7 +32,7 @@ Fastify：在 `.env` 設 `HTTP_ADAPTER=fastify` 並重啟 API。
 在 TTY 可省略旗標；命令會提示 flavor、preset 與資料庫。旗標與 `--yes` 會略過提問。
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 cd my-product
 pnpm install
 cp .env.example .env
@@ -52,7 +52,7 @@ Thin 包含身分、檔案、通知、工作、郵件、API 金鑰、加密與�
 跟隨一個做完的產品，而不是空白的 `title`／`body` 模組。十個系統見[實例目錄](../../examples/README.zh.md)。套用器會開出 thin 目的地、加入所列模組與能力、複製 overlay、seed 並驗證。診所預約是最短的一條：
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 cd ~/Projects/my-clinic
 pnpm dev
 ```

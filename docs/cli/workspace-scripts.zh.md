@@ -17,9 +17,9 @@ Language: [English](workspace-scripts.md) · 中文
 | `pnpm db:migrate` | Prisma migrate | 開發遷移 |
 | `pnpm db:seed` | `apps/api/src/infra/seed.ts` | Upsert admin + user（生產環境需要 `ALLOW_SEED=1`） |
 | `pnpm db:studio` | Prisma Studio | 檢視資料庫 |
-| `pnpm e2e` | `@ysk/web` 的 Playwright | 一條 Chromium smoke；需要 API 3001 與 web 5173 |
+| `pnpm e2e` | `@ysk-kit/web` 的 Playwright | 一條 Chromium smoke；需要 API 3001 與 web 5173 |
 | `pnpm worker` | API worker 入口 | BullMQ（或記憶體）消費者 |
-| `pnpm ysk` | `@ysk/cli start` | 產生器 |
+| `pnpm ysk` | `@ysk-kit/cli start` | 產生器 |
 | `pnpm gen:openapi` | `ysk generate openapi` | 寫出 `docs/openapi.yaml` |
 | `pnpm gen:module` | `ysk add module` | 與 `pnpm ysk add module` 相同（仍須提供名稱） |
 | `pnpm pm2:start` | `pm2 start ecosystem.config.cjs` | 生產 API + worker |
@@ -30,9 +30,9 @@ Language: [English](workspace-scripts.md) · 中文
 
 | Script | 用途 |
 |---|---|
-| `pnpm --filter @ysk/api start` | 編譯後的 API（`dist/main.js`） |
-| `pnpm --filter @ysk/desktop start` | Electron（script 名是 `start`，不是 `dev`） |
-| `pnpm --filter @ysk/mobile start` | Expo |
-| `pnpm --filter @ysk/web exec playwright install chromium` | 本機 Playwright 瀏覽器 |
+| `pnpm --filter @ysk-kit/api start` | 編譯後的 API（`dist/main.js`） |
+| `pnpm --filter @ysk-kit/desktop start` | Electron（script 名是 `start`，不是 `dev`） |
+| `pnpm --filter @ysk-kit/mobile start` | Expo |
+| `pnpm --filter @ysk-kit/web exec playwright install chromium` | 本機 Playwright 瀏覽器 |
 
 `.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`example-smoke`（matrix：把目錄裡每一個 slug 套用到 sqlite）、`e2e`（MySQL 8.4 + Chromium）。

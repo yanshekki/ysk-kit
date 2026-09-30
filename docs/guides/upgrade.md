@@ -11,9 +11,9 @@ Daily path: **copy-tree, then `ysk upgrade`**.
 | Path | When to use |
 |---|---|
 | Copy-tree + `ysk upgrade` | Default. Every flavor of `create-ysk-app`. |
-| GitHub Packages (`@ysk/*`) | Only when the GitHub owner matches the `@ysk` npm scope. Publishable libraries already set `publishConfig` for `https://npm.pkg.github.com`. This kit’s daily workflow does not `npm install` those packages from a registry. |
+| npmjs (`@ysk-kit/*`) | Public libraries and `@ysk-kit/create-app` publish to `https://registry.npmjs.org`. Dest products still resolve `@ysk-kit/*` as `workspace:*` TypeScript source. |
 
-Workspace products continue to resolve `@ysk/*` as `workspace:*` TypeScript source.
+Workspace products continue to resolve `@ysk-kit/*` as `workspace:*` TypeScript source.
 
 ## Origin marker
 
@@ -71,7 +71,7 @@ After a successful run, `.ysk-kit.json` `version` becomes the current kit versio
 - `.env` and Prisma migrations
 - `docs/openapi.yaml` (a product may describe a different API)
 
-Envelope rules stay in `AGENTS.md`. Envelope helpers stay in the product’s copied `@ysk/contracts`. Contract implementation fixes are not auto-merged.
+Envelope rules stay in `AGENTS.md`. Envelope helpers stay in the product’s copied `@ysk-kit/contracts`. Contract implementation fixes are not auto-merged.
 
 ## `php-bridge`
 

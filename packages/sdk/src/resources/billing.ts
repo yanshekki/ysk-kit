@@ -6,7 +6,7 @@ import type {
   InvoiceDto,
   PortalCommand,
   SubscriptionDto,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const withOrg = (path: string, organizationId: string): string =>

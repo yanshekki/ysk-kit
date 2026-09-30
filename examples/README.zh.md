@@ -26,7 +26,7 @@ Gateway、php-bridge、trading 與 static-web3 已有 flavor 手冊（`docs/guid
 在 kit 工作副本執行：
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 ```
 
 預設目的地（`.runs/` 已 gitignore）：`examples/.runs/<slug>/`。傳 `--force` 可覆蓋上一次結果。`--db sqlite|mysql|postgresql` 會覆寫 `spec.json`。`--skip-install` 與 `--skip-verify` 供產生器測試使用。
@@ -44,7 +44,7 @@ pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clin
 ## 截圖
 
 ```bash
-pnpm --filter @ysk/examples start capture clinic-booking
+pnpm --filter @ysk-kit/examples start capture clinic-booking
 ```
 
 在 API **13001** 與 web **15173** 啟動已套用的目的地，逐步操作教程介面，並把 PNG 寫入 `examples/<slug>/screenshots/`。sqlite 目的地會重建 `apps/api/dev.db` 並重新 seed，空白列表截圖才保持空白。擷取是文件工具；CI 不比對像素。

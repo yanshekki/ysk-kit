@@ -45,7 +45,7 @@ Expo 會一併開倉；完成網頁逐步不必接真機。
 ## 5. 開倉命令
 
 ```bash
-pnpm --filter @ysk/examples start apply field-work-orders --dest ~/Projects/my-field --yes
+pnpm --filter @ysk-kit/examples start apply field-work-orders --dest ~/Projects/my-field --yes
 ```
 
 預設目的地（已 gitignore）：`examples/.runs/field-work-orders`。覆蓋上一次結果請加 `--force`。
@@ -61,7 +61,7 @@ pnpm --filter @ysk/examples start apply field-work-orders --dest ~/Projects/my-f
 1. `apps/api/src/composition.ts` — `createWorkOrderService(..., queue)`
 2. `apps/api/src/create-memory-input.ts` — memory harness 同樣
 
-overlay 亦覆寫 `packages/contracts/src/enums/notification-type.ts`，在 `AUTH_WELCOME`、`AUTH_RESET`、`USER_CREATED`、`ORG_INVITED` 旁邊加上 `WORK_ASSIGNED: 'work.assigned'`。不要 import BullMQ；應用層用 `@ysk/jobs` 的 `IJobQueue`（auth-service 已經這樣做）。
+overlay 亦覆寫 `packages/contracts/src/enums/notification-type.ts`，在 `AUTH_WELCOME`、`AUTH_RESET`、`USER_CREATED`、`ORG_INVITED` 旁邊加上 `WORK_ASSIGNED: 'work.assigned'`。不要 import BullMQ；應用層用 `@ysk-kit/jobs` 的 `IJobQueue`（auth-service 已經這樣做）。
 
 ## 7. 資料模型
 

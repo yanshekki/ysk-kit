@@ -1,4 +1,4 @@
-import type { CreateRsvpCommand, PaginatedRsvp, RsvpDto } from '@ysk/contracts';
+import type { CreateRsvpCommand, PaginatedRsvp, RsvpDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

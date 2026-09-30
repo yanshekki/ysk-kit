@@ -4,7 +4,7 @@ import type {
   LlmModelsDto,
   LlmUsage,
   Platform,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 import type { TokenStore } from '../token-store';
 

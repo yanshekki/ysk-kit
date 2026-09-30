@@ -1,4 +1,4 @@
-import { envelopeError, REQUEST_ID_HEADER } from '@ysk/api-http';
+import { envelopeError, REQUEST_ID_HEADER } from '@ysk-kit/api-http';
 import type { FastifyInstance } from 'fastify';
 
 export const registerErrorHandler = (app: FastifyInstance): void => {

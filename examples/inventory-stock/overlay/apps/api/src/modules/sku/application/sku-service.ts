@@ -1,5 +1,5 @@
-import type { CreateSkuCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateSkuCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { ISkuRepository } from '../domain/sku-repository';
 
 export const createSkuService = (repo: ISkuRepository) => ({

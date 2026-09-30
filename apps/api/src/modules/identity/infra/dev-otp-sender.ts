@@ -1,4 +1,4 @@
-import type { Logger } from '@ysk/logger';
+import type { Logger } from '@ysk-kit/logger';
 import type { IOtpSender } from '../domain/otp-sender';
 
 export const createDevOtpSender = (logger: Logger): IOtpSender => ({

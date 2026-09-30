@@ -4,8 +4,8 @@ import {
   type OrganizationDto,
   type OrgInviteDto,
   type UserDto,
-} from '@ysk/contracts';
-import { orgRoleCan } from '@ysk/ui-logic';
+} from '@ysk-kit/contracts';
+import { orgRoleCan } from '@ysk-kit/ui-logic';
 import { useEffect, useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { api } from '../lib/client';

@@ -1,11 +1,11 @@
-import { type HttpHandler, mountContract } from '@ysk/api-express';
+import { type HttpHandler, mountContract } from '@ysk-kit/api-express';
 import {
   appContract,
   type CreateTicketCommand,
   type TicketListQuery,
   type UpdateTicketStatusCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 import type { TicketService } from '../application/ticket-service';
 

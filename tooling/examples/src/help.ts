@@ -1,8 +1,8 @@
 export const HELP = `YSK Kit worked examples
 
 Usage:
-  pnpm --filter @ysk/examples start apply <slug> [options]
-  pnpm --filter @ysk/examples start capture <slug> [options]
+  pnpm --filter @ysk-kit/examples start apply <slug> [options]
+  pnpm --filter @ysk-kit/examples start capture <slug> [options]
 
 apply
   Scaffold a product from this kit, add the example modules, copy the overlay,

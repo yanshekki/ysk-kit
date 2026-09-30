@@ -2,12 +2,14 @@
 
 Language: [中文](create-ysk-app.zh.md) · English
 
-Scaffold a product from this kit. Package: `@ysk/create-app`.
+Scaffold a product from this kit. Package: `@ysk-kit/create-app`.
 
 ```text
-pnpm --filter @ysk/create-app start <name> [options]
-pnpm create @ysk/app <name> [options]
+pnpm --filter @ysk-kit/create-app start <name> [options]
+pnpm create @ysk-kit/app <name> [options]
 ```
+
+From a kit checkout the CLI copies this tree. From npm it downloads `yanshekki/ysk-kit` at tag `v{version}`.
 
 Missing `<name>` on a non-TTY prints `--help` and exits 1. Unknown `--flavor` throws `not in this phase`.
 

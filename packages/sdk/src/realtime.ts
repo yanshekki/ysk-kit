@@ -1,4 +1,4 @@
-import type { Platform } from '@ysk/contracts';
+import type { Platform } from '@ysk-kit/contracts';
 import { io, type Socket } from 'socket.io-client';
 import type { TokenStore } from './token-store';
 

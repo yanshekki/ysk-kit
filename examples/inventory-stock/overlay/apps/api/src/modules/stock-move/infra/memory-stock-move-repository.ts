@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { StockMoveDto, StockMoveReason } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { StockMoveDto, StockMoveReason } from '@ysk-kit/contracts';
 import type {
   IStockMoveRepository,
   StockMoveRecord,

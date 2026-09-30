@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateEventCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateEventCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const eventQueryKey = ['event'] as const;
 

@@ -50,19 +50,19 @@ SQLite 不需要 Compose。套用命令依 `spec.json` 預設 sqlite。
 在 kit 工作副本執行：
 
 ```bash
-pnpm --filter @ysk/examples start apply helpdesk-tickets --dest ~/Projects/my-helpdesk --yes
+pnpm --filter @ysk-kit/examples start apply helpdesk-tickets --dest ~/Projects/my-helpdesk --yes
 ```
 
 `--yes` 會傳給 `create-ysk-app`，agent 與 CI 不會等待 TTY。預設目的地（已 gitignore）是 `examples/.runs/helpdesk-tickets`。覆蓋上一次結果：
 
 ```bash
-pnpm --filter @ysk/examples start apply helpdesk-tickets --yes --force
+pnpm --filter @ysk-kit/examples start apply helpdesk-tickets --yes --force
 ```
 
 人手等價步驟（sqlite）：
 
 ```bash
-pnpm --filter @ysk/create-app start my-helpdesk --preset thin --flavor saas --db sqlite --no-admin --no-mobile --yes
+pnpm --filter @ysk-kit/create-app start my-helpdesk --preset thin --flavor saas --db sqlite --no-admin --no-mobile --yes
 cd my-helpdesk
 pnpm install
 cp .env.example .env
@@ -71,7 +71,7 @@ pnpm ysk add module ticket --prisma --web
 # 然後把 examples/helpdesk-tickets/overlay/ 覆寫進此樹
 # 用 overlay 片段取代 apps/api/prisma/schema.prisma 內的 model Ticket
 # 套用 examples/helpdesk-tickets/patches.json，讓記憶體工單倉庫讀同一份組織會籍
-pnpm db:generate && pnpm --filter @ysk/api exec prisma db push && pnpm db:seed
+pnpm db:generate && pnpm --filter @ysk-kit/api exec prisma db push && pnpm db:seed
 pnpm gen:openapi
 pnpm dev
 ```
@@ -96,7 +96,7 @@ Prisma model `Ticket`（狀態是 `String`，不是 TypeScript `enum`）。**沒
 | `title` | 字串，1–200 | 必填 |
 | `body` | 字串，≤ 8000 | 預設 `""` |
 | `organizationId` | UUID | 工單所屬組織 |
-| `status` | `OPEN` \| `PENDING` \| `RESOLVED` | `@ysk/contracts` 內 `as const` + Zod。建立時為 `OPEN` |
+| `status` | `OPEN` \| `PENDING` \| `RESOLVED` | `@ysk-kit/contracts` 內 `as const` + Zod。建立時為 `OPEN` |
 | `authorId` | UUID | 開單的已登入使用者 |
 | `createdAt`／`updatedAt` | datetime | Prisma |
 

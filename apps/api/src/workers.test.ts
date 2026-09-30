@@ -1,6 +1,6 @@
-import { createMemoryQueue } from '@ysk/jobs';
-import { createLogMailer } from '@ysk/mail';
-import { createMemoryRealtime } from '@ysk/realtime';
+import { createMemoryQueue } from '@ysk-kit/jobs';
+import { createLogMailer } from '@ysk-kit/mail';
+import { createMemoryRealtime } from '@ysk-kit/realtime';
 import { describe, expect, it } from 'vitest';
 import { createMemoryNotificationRepository } from './modules/notifications/infra/memory-notification-repository';
 import { registerWorkers } from './workers';

@@ -1,4 +1,4 @@
-import { CreateUserCommandSchema } from '@ysk/contracts';
+import { CreateUserCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   Can,
@@ -14,8 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { userStatusLabel } from '@ysk/ui-logic';
+} from '@ysk-kit/ui';
+import { userStatusLabel } from '@ysk-kit/ui-logic';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 

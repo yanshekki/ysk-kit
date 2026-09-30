@@ -32,7 +32,7 @@ pnpm db:migrate && pnpm db:seed && pnpm test && pnpm layers && pnpm dev
 
 | 工作 | 原因 |
 |---|---|
-| GitHub Packages 在擁有者與 `@ysk` 一致時 | 可發布程式庫已設定 `publishConfig`。GitHub 擁有者與 npm scope 一致時，registry 路徑才用得着。日常更新使用 `ysk upgrade`。 |
+| npmjs `@ysk-kit/*` | 公開程式庫與 `@ysk-kit/create-app` 發佈到 npm org `ysk-kit`。產品 dest 日常更新仍然是 copy-tree 加 `ysk upgrade`。 |
 
 ## 預設棧以外
 

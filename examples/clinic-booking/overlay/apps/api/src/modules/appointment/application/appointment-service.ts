@@ -1,5 +1,5 @@
-import type { AppointmentStatus, CreateAppointmentCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { AppointmentStatus, CreateAppointmentCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IAppointmentRepository } from '../domain/appointment-repository';
 
 const addMinutes = (date: Date, minutes: number): Date =>

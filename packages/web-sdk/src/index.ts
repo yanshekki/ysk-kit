@@ -8,9 +8,9 @@ import type {
   RequestAdminOtpCommand,
   ResetPasswordCommand,
   VerifyAdminOtpCommand,
-} from '@ysk/contracts';
-import { RealtimeEvent } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+} from '@ysk-kit/contracts';
+import { RealtimeEvent } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 import { useEffect } from 'react';
 
 export const usersQueryKey = ['users'] as const;

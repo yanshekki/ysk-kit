@@ -1,8 +1,8 @@
-import { hashesMatch, hashKey, last4Of, newApiKey, prefixOf } from '@ysk/apikey';
-import type { AccessClaims } from '@ysk/auth';
-import type { CreateApiKeyCommand } from '@ysk/contracts';
-import { ROLE_PERMISSIONS } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import { hashesMatch, hashKey, last4Of, newApiKey, prefixOf } from '@ysk-kit/apikey';
+import type { AccessClaims } from '@ysk-kit/auth';
+import type { CreateApiKeyCommand } from '@ysk-kit/contracts';
+import { ROLE_PERMISSIONS } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 import type { IUserRepository } from '../../identity/domain/user-repository';
 import type { ApiKeyRecord, IApiKeyRepository } from '../domain/api-key-repository';

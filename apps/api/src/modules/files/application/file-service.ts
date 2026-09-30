@@ -1,5 +1,5 @@
-import type { PresignDto, PresignUploadCommand } from '@ysk/contracts';
-import type { IStoragePort } from '@ysk/storage';
+import type { PresignDto, PresignUploadCommand } from '@ysk-kit/contracts';
+import type { IStoragePort } from '@ysk-kit/storage';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 
 export type FileMeta = {

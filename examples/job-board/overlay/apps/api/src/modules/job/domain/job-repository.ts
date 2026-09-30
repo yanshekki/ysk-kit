@@ -1,4 +1,4 @@
-import type { CreateJobCommand, JobDto, PageQuery, PaginatedJob } from '@ysk/contracts';
+import type { CreateJobCommand, JobDto, PageQuery, PaginatedJob } from '@ysk-kit/contracts';
 
 export type JobRecord = {
   id: string;

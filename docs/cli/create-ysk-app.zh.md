@@ -2,12 +2,14 @@
 
 Language: [English](create-ysk-app.md) · 中文
 
-從本 kit 產生一個產品。套件：`@ysk/create-app`。
+從本 kit 產生一個產品。套件：`@ysk-kit/create-app`。
 
 ```text
-pnpm --filter @ysk/create-app start <name> [options]
-pnpm create @ysk/app <name> [options]
+pnpm --filter @ysk-kit/create-app start <name> [options]
+pnpm create @ysk-kit/app <name> [options]
 ```
+
+在 kit checkout 入面，CLI 複製呢棵樹。從 npm 安裝時，會下載 `yanshekki/ysk-kit` 的 tag `v{version}`。
 
 在非 TTY 缺少 `<name>` 會列印 `--help` 並以狀態 1 結束。未知 `--flavor` 丟出 `not in this phase`。
 

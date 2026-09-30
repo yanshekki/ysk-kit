@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { NotificationDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { NotificationDto } from '@ysk-kit/contracts';
 import type {
   INotificationRepository,
   NotificationRecord,

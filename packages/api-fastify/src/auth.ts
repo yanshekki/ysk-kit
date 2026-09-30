@@ -1,6 +1,6 @@
-import { isApiKeyToken } from '@ysk/apikey';
-import type { AccessClaims } from '@ysk/auth';
-import { verifyAccessToken } from '@ysk/auth';
+import { isApiKeyToken } from '@ysk-kit/apikey';
+import type { AccessClaims } from '@ysk-kit/auth';
+import { verifyAccessToken } from '@ysk-kit/auth';
 import type { FastifyInstance } from 'fastify';
 
 export type ApiKeyLookup = (token: string) => Promise<AccessClaims | null>;

@@ -3,7 +3,7 @@ import type {
   PageQuery,
   PaginatedStockMove,
   StockMoveDto,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type StockMoveRecord = {
   id: string;

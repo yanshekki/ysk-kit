@@ -3,7 +3,7 @@ import type {
   FollowUpDto,
   PageQuery,
   PaginatedFollowUp,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type FollowUpRecord = {
   id: string;

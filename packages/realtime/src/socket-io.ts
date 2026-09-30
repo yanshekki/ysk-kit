@@ -1,6 +1,6 @@
 import type { Server as HttpServer } from 'node:http';
 import { createAdapter } from '@socket.io/redis-adapter';
-import { verifyAccessToken } from '@ysk/auth';
+import { verifyAccessToken } from '@ysk-kit/auth';
 import Redis from 'ioredis';
 import { Server } from 'socket.io';
 import { type IRealtimePort, SOCKET_IO_REDIS_KEY } from './port';

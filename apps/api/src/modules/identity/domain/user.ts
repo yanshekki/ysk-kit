@@ -1,4 +1,4 @@
-import type { UserRole, UserStatus } from '@ysk/contracts';
+import type { UserRole, UserStatus } from '@ysk-kit/contracts';
 
 export type UserRecord = {
   id: string;

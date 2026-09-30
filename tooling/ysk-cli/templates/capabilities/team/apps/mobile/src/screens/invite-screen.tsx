@@ -1,4 +1,4 @@
-import { AcceptInviteCommandSchema } from '@ysk/contracts';
+import { AcceptInviteCommandSchema } from '@ysk-kit/contracts';
 import { useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { api } from '../lib/client';

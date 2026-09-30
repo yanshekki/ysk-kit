@@ -19,9 +19,9 @@ describe('patch-text', () => {
   });
 
   it('adds a workspace dependency once', () => {
-    const first = ensureJsonDep('{"name":"api","dependencies":{}}', '@ysk/jobs', 'workspace:*');
+    const first = ensureJsonDep('{"name":"api","dependencies":{}}', '@ysk-kit/jobs', 'workspace:*');
     expect(first.added).toBe(true);
-    const second = ensureJsonDep(first.source, '@ysk/jobs', 'workspace:*');
+    const second = ensureJsonDep(first.source, '@ysk-kit/jobs', 'workspace:*');
     expect(second.added).toBe(false);
   });
 
@@ -47,12 +47,12 @@ describe('patch-text', () => {
   });
 
   it('adds named specifiers to an existing import', () => {
-    const source = `import { appContract } from '@ysk/contracts';\n`;
-    const next = ensureNamedImport(source, '@ysk/contracts', [
+    const source = `import { appContract } from '@ysk-kit/contracts';\n`;
+    const next = ensureNamedImport(source, '@ysk-kit/contracts', [
       'LlmCompleteCommandSchema',
       'appContract',
     ]);
     expect(next).toContain('LlmCompleteCommandSchema');
-    expect(next.match(/from '@ysk\/contracts'/g)).toHaveLength(1);
+    expect(next.match(/from '@ysk-kit\/contracts'/g)).toHaveLength(1);
   });
 });

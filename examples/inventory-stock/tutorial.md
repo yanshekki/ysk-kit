@@ -41,7 +41,7 @@ Industry stock does **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply inventory-stock --dest ~/Projects/my-stock --yes
+pnpm --filter @ysk-kit/examples start apply inventory-stock --dest ~/Projects/my-stock --yes
 ```
 
 Default destination: `examples/.runs/inventory-stock`. Pass `--force` to replace a previous run.

@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
-import { LoginPasswordCommandSchema, VerifyAdminOtpCommandSchema } from '@ysk/contracts';
-import { Button, Input } from '@ysk/ui';
+import { LoginPasswordCommandSchema, VerifyAdminOtpCommandSchema } from '@ysk-kit/contracts';
+import { Button, Input } from '@ysk-kit/ui';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 

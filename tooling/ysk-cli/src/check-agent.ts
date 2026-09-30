@@ -24,7 +24,7 @@ const CLIENT_PREFIXES = ['apps/web/', 'apps/admin/', 'apps/mobile/', 'apps/deskt
 export const RAW_FETCH_ALLOWLIST = new Set(['apps/admin/src/features/queues/queues-page.tsx']);
 
 const ENUM_RE = /\b(?:const\s+)?enum\s+[A-Za-z_][\w]*\s*\{/;
-const PRISMA_RE = /@prisma\/client|@ysk\/db-prisma|apps\/api\/src\/generated|generated\/prisma/;
+const PRISMA_RE = /@prisma\/client|@ysk-kit\/db-prisma|apps\/api\/src\/generated|generated\/prisma/;
 const FETCH_RE = /\bfetch\s*\(/;
 
 const toPosix = (rel: string): string => rel.split(sep).join('/');

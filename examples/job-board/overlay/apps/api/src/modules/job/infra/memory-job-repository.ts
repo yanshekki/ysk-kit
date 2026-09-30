@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { JobDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { JobDto } from '@ysk-kit/contracts';
 import type { IJobRepository, JobRecord } from '../domain/job-repository';
 
 const toDto = (row: JobRecord): JobDto => ({

@@ -1,4 +1,4 @@
-import type { AppError } from '@ysk/domain-kernel';
+import type { AppError } from '@ysk-kit/domain-kernel';
 import request from 'supertest';
 import { describe, expect, it } from 'vitest';
 import { createApp } from '../../../app';

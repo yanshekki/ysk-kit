@@ -1,4 +1,4 @@
-export { type HttpCtx, type HttpHandler, headerValue } from '@ysk/api-http';
+export { type HttpCtx, type HttpHandler, headerValue } from '@ysk-kit/api-http';
 export {
   type ApiKeyLookup,
   type AuthContext,

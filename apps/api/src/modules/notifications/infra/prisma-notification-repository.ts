@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { NotificationType } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { NotificationType } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import { prismaIdCursor } from '../../../infra/prisma-page';
 import type { INotificationRepository } from '../domain/notification-repository';

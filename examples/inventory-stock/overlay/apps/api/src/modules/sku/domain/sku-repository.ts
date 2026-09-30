@@ -1,4 +1,4 @@
-import type { CreateSkuCommand, PageQuery, PaginatedSku, SkuDto } from '@ysk/contracts';
+import type { CreateSkuCommand, PageQuery, PaginatedSku, SkuDto } from '@ysk-kit/contracts';
 
 export type SkuRecord = {
   id: string;

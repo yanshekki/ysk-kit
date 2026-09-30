@@ -6,7 +6,7 @@ Language: [中文](README.zh.md) · English
 
 | | |
 |---|---|
-| **Version** | 0.1.0 |
+| **Version** | 1.0.0 |
 | **License** | MIT |
 | **Company** | [YSK Limited](https://ysk.hk/) |
 | **Contact** | email@ysk.hk |
@@ -18,7 +18,7 @@ This repository is the living `saas` flavor. Identity, files, notifications, job
 ## Fifteen minutes to a product
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 cd my-product
 pnpm install
 cp .env.example .env
@@ -31,7 +31,7 @@ pnpm dev
 
 Default preset is **thin**: a copy of this tree with llm, billing, organizations, and push devices removed. `--preset full` keeps the living demonstration. Restore a capability with `pnpm ysk add llm|team|billing|push`.
 
-Ten finished product systems (fields, rules, screenshots) live in [examples/](examples/README.md). Apply one with `pnpm --filter @ysk/examples start apply <slug> --yes`.
+Ten finished product systems (fields, rules, screenshots) live in [examples/](examples/README.md). Apply one with `pnpm --filter @ysk-kit/examples start apply <slug> --yes`.
 
 ## Run this repository
 
@@ -66,7 +66,7 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk add <capability>` | Merge a catalogued capability |
 | `pnpm ysk upgrade` | Refresh allowlisted kit guardrails |
 | `pnpm ysk check agent` | Flag TypeScript enum, client Prisma, raw fetch |
-| `pnpm --filter @ysk/create-app start <name>` | Scaffold a product |
+| `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent` | Verify a change |
 
 Full tables: [CLI](docs/cli/index.md), [workspace scripts](docs/cli/workspace-scripts.md), [environment](docs/cli/env.md).
@@ -86,9 +86,9 @@ Details: [flavors](docs/guides/flavors.md).
 
 ## Rules (short)
 
-- `@ysk/contracts` is the only source of enums, DTOs, error codes, and ts-rest routes.
+- `@ysk-kit/contracts` is the only source of enums, DTOs, error codes, and ts-rest routes.
 - Do not use TypeScript `enum`.
-- Clients talk to the API only through `@ysk/sdk`.
+- Clients talk to the API only through `@ysk-kit/sdk`.
 - Prisma stays in API infra.
 - JSON responses use `{ ok, data }` / `{ ok, error }` except the four documented envelope exceptions.
 

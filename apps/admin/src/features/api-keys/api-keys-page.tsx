@@ -1,4 +1,4 @@
-import { CreateApiKeyCommandSchema } from '@ysk/contracts';
+import { CreateApiKeyCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   Input,
@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
+} from '@ysk-kit/ui';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 

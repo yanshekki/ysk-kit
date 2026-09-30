@@ -50,19 +50,19 @@ Industry tickets do **not** mount on the living kit API. Overlay files copy into
 From the kit checkout:
 
 ```bash
-pnpm --filter @ysk/examples start apply helpdesk-tickets --dest ~/Projects/my-helpdesk --yes
+pnpm --filter @ysk-kit/examples start apply helpdesk-tickets --dest ~/Projects/my-helpdesk --yes
 ```
 
 `--yes` is passed to `create-ysk-app` so agents and CI never wait for a TTY. Default destination (gitignored) is `examples/.runs/helpdesk-tickets`. Replacing a previous run:
 
 ```bash
-pnpm --filter @ysk/examples start apply helpdesk-tickets --yes --force
+pnpm --filter @ysk-kit/examples start apply helpdesk-tickets --yes --force
 ```
 
 Equivalent manual steps (sqlite):
 
 ```bash
-pnpm --filter @ysk/create-app start my-helpdesk --preset thin --flavor saas --db sqlite --no-admin --no-mobile --yes
+pnpm --filter @ysk-kit/create-app start my-helpdesk --preset thin --flavor saas --db sqlite --no-admin --no-mobile --yes
 cd my-helpdesk
 pnpm install
 cp .env.example .env
@@ -71,7 +71,7 @@ pnpm ysk add module ticket --prisma --web
 # then copy examples/helpdesk-tickets/overlay/ over this tree
 # replace model Ticket in apps/api/prisma/schema.prisma with the overlay fragment
 # apply examples/helpdesk-tickets/patches.json so the memory ticket repo reads org memberships
-pnpm db:generate && pnpm --filter @ysk/api exec prisma db push && pnpm db:seed
+pnpm db:generate && pnpm --filter @ysk-kit/api exec prisma db push && pnpm db:seed
 pnpm gen:openapi
 pnpm dev
 ```
@@ -96,7 +96,7 @@ Prisma model `Ticket` (status is a `String`, not a TypeScript `enum`). There is 
 | `title` | string, 1–200 | Required |
 | `body` | string, ≤ 8000 | Default `""` |
 | `organizationId` | UUID | Org the ticket belongs to |
-| `status` | `OPEN` \| `PENDING` \| `RESOLVED` | `as const` + Zod in `@ysk/contracts`. Create starts at `OPEN` |
+| `status` | `OPEN` \| `PENDING` \| `RESOLVED` | `as const` + Zod in `@ysk-kit/contracts`. Create starts at `OPEN` |
 | `authorId` | UUID | Signed-in user who opened the ticket |
 | `createdAt` / `updatedAt` | datetime | Prisma |
 

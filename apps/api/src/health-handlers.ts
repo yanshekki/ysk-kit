@@ -1,4 +1,4 @@
-import type { HttpHandler } from '@ysk/api-http';
+import type { HttpHandler } from '@ysk-kit/api-http';
 
 export const healthHandlers = (pingReady: () => Promise<boolean>): Record<string, HttpHandler> => ({
   get: {

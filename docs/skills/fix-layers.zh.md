@@ -9,7 +9,7 @@ Language: [English](fix-layers.md) · 中文
 1. 讀 cruiser 規則名稱（`clients-no-server-infra`、`domain-no-infra`、`api-no-react-ui`、`contracts-leaf`、`sdk-ui-logic-no-node-react-prisma`）。
 2. 移動 import，不要關閉規則。
 3. 典型修復：
-   - 客戶端需要資料 → 呼叫 `@ysk/sdk` / `@ysk/web-sdk`。
+   - 客戶端需要資料 → 呼叫 `@ysk-kit/sdk` / `@ysk-kit/web-sdk`。
    - application 需要 Prisma → 注入 port；在 `infra/` 實作。
    - domain import 了 router → 刪掉。
 4. 再跑 `pnpm layers`。

@@ -10,6 +10,6 @@ Add a business HTTP resource. Follow [docs/recipes/add-module.md](../recipes/add
 2. `pnpm ysk add module <name> --prisma --web` (or `--no-web` if there is no Vite app).
 3. Extend DTO, command, and Prisma fields.
 4. Put rules in `application/<name>-service.ts`.
-5. Keep Prisma in `infra/`. Clients use `@ysk/sdk` / `@ysk/web-sdk` only.
+5. Keep Prisma in `infra/`. Clients use `@ysk-kit/sdk` / `@ysk-kit/web-sdk` only.
 6. `pnpm db:migrate && pnpm gen:openapi`.
 7. [verify-change](verify-change.md).

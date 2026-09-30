@@ -1,11 +1,11 @@
-import { type HttpHandler, mountContract } from '@ysk/api-express';
+import { type HttpHandler, mountContract } from '@ysk-kit/api-express';
 import {
   appContract,
   type CreateContactCommand,
   type PageQuery,
   type UpdateContactStatusCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 import type { ContactService } from '../application/contact-service';
 

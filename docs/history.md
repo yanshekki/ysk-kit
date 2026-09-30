@@ -6,15 +6,15 @@ Dated record of what this kit shipped. Current behaviour is defined by [architec
 
 Releases are labelled Phase 1 … Phase 51.
 
-**Phase 1:** pnpm + Turborepo + Biome, `@ysk/contracts` (Zod 4 + ts-rest), envelope `{ok,data}/{ok,error}`, domain-kernel, Express 5 adapter and composition root, Prisma MySQL, Vite web/admin, Expo mobile skeleton, `@ysk/sdk` + `@ysk/web-sdk`, `@ysk/ui-logic`, `ysk add module`, `create-ysk-app --flavor saas`, CI, Docker Compose, dependency-cruiser, enum-drift tests.
+**Phase 1:** pnpm + Turborepo + Biome, `@ysk-kit/contracts` (Zod 4 + ts-rest), envelope `{ok,data}/{ok,error}`, domain-kernel, Express 5 adapter and composition root, Prisma MySQL, Vite web/admin, Expo mobile skeleton, `@ysk-kit/sdk` + `@ysk-kit/web-sdk`, `@ysk-kit/ui-logic`, `ysk add module`, `create-ysk-app --flavor saas`, CI, Docker Compose, dependency-cruiser, enum-drift tests.
 
-**Phase 2:** JWT + refresh sessions, email register/login, `+852` OTP (dev log sender), RBAC `ROLE_PERMISSIONS`, audit log, `/ready` + `/metrics`, local file presign, `@ysk/i18n`, web/admin login. Users API requires a session.
+**Phase 2:** JWT + refresh sessions, email register/login, `+852` OTP (dev log sender), RBAC `ROLE_PERMISSIONS`, audit log, `/ready` + `/metrics`, local file presign, `@ysk-kit/i18n`, web/admin login. Users API requires a session.
 
-**Phase 3:** BullMQ jobs (`@ysk/jobs`, memory in tests), mail port (log + SMTP), welcome + password-reset mail, in-app notifications, S3-compatible storage when `S3_*` is set, `pnpm worker`.
+**Phase 3:** BullMQ jobs (`@ysk-kit/jobs`, memory in tests), mail port (log + SMTP), welcome + password-reset mail, in-app notifications, S3-compatible storage when `S3_*` is set, `pnpm worker`.
 
-**Phase 4:** `@ysk/llm` OpenAI-compatible client (SpaceXAI / `https://api.x.ai/v1`, model `grok-4.7`) + `LlmUsage` table; `POST /v1/llm/complete` envelope; `POST /v1/llm/stream` SSE; Socket.IO realtime + `notification.created`.
+**Phase 4:** `@ysk-kit/llm` OpenAI-compatible client (SpaceXAI / `https://api.x.ai/v1`, model `grok-4.7`) + `LlmUsage` table; `POST /v1/llm/complete` envelope; `POST /v1/llm/stream` SSE; Socket.IO realtime + `notification.created`.
 
-**Phase 5:** `@ysk/push` (log + Expo Push API), `Device` + `/v1/me/devices`, `push.send` after `notification.create`, SDK `DevicePort`/`FilePickerPort`, mobile login/home/inbox + EAS.
+**Phase 5:** `@ysk-kit/push` (log + Expo Push API), `Device` + `/v1/me/devices`, `push.send` after `notification.create`, SDK `DevicePort`/`FilePickerPort`, mobile login/home/inbox + EAS.
 
 **Phase 6:** Organization + Membership + email invite (`OrgRole` OWNER/ADMIN/MEMBER; platform `User.role` stays global). `POST /v1/users/:id/suspend`. Invite tokens hashed.
 
@@ -24,11 +24,11 @@ Releases are labelled Phase 1 … Phase 51.
 
 **Phase 9:** `apps/desktop` Electron + Vite (`platform: desktop`, `safeStorage` TokenStore). `create-ysk-app --flavor desktop` keeps api+desktop. Prisma stays in the API.
 
-**Phase 10:** Framework-free `HttpHandler` maps in `@ysk/api-http`. `@ysk/api-fastify` serves the same contracts (`HTTP_ADAPTER=fastify`). Express 5 remains default.
+**Phase 10:** Framework-free `HttpHandler` maps in `@ysk-kit/api-http`. `@ysk-kit/api-fastify` serves the same contracts (`HTTP_ADAPTER=fastify`). Express 5 remains default.
 
-**Phase 11:** `@ysk/crypto` AES-256-GCM; `@ysk/apikey` hashed `ysk_live_` tokens. `POST/GET/DELETE /v1/me/api-keys`. Machine Bearer cannot mint keys.
+**Phase 11:** `@ysk-kit/crypto` AES-256-GCM; `@ysk-kit/apikey` hashed `ysk_live_` tokens. `POST/GET/DELETE /v1/me/api-keys`. Machine Bearer cannot mint keys.
 
-**Phase 12:** Public `@ysk/*` libraries emit `dist/` and set `publishConfig` for GitHub Packages. Changesets ignore apps.
+**Phase 12:** Public `@ysk-kit/*` libraries emit `dist/` and set `publishConfig` for GitHub Packages. Changesets ignore apps.
 
 **Phase 13:** `create-ysk-app --flavor gateway` copies api + admin, skips web/mobile/desktop.
 
@@ -72,7 +72,7 @@ Releases are labelled Phase 1 … Phase 51.
 
 **Phase 33:** Optional OTLP metrics via `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` (separate from traces).
 
-**Phase 34:** Job handlers run inside `withJobSpan` (`job.name` attribute). `@ysk/jobs` stays OTel-free.
+**Phase 34:** Job handlers run inside `withJobSpan` (`job.name` attribute). `@ysk-kit/jobs` stays OTel-free.
 
 **Phase 35:** Fastify `onResponse` writes access logs through the composition pino logger. Built-in Fastify logger stays off.
 
@@ -86,7 +86,7 @@ Releases are labelled Phase 1 … Phase 51.
 
 **Phase 40:** `create-ysk-app --preset thin|full` (default thin) copies the living tree then strips llm / billing / organizations / devices. `ysk add llm|team|billing|push` copies source trees and patches Express, Fastify, composition, main, SDK, web-sdk, and the web router. CI job `thin-smoke` uses sqlite + `--no-admin --no-mobile`.
 
-**Phase 41:** `@ysk/ui` AppShell / PageHeader / EmptyState / ErrorBanner / FormField / Spinner. `pnpm db:seed` at `apps/api/src/infra/seed.ts`. Web login Testing Library. CI job `e2e` runs one Chromium Playwright smoke against MySQL 8.4.
+**Phase 41:** `@ysk-kit/ui` AppShell / PageHeader / EmptyState / ErrorBanner / FormField / Spinner. `pnpm db:seed` at `apps/api/src/infra/seed.ts`. Web login Testing Library. CI job `e2e` runs one Chromium Playwright smoke against MySQL 8.4.
 
 **Phase 42:** Public bilingual documentation (English `.md` + Hong Kong written Chinese `.zh.md`), agent skills, and full CLI manuals. `ysk` and `create-ysk-app` print command help. Generated products receive `README.md` and `README.zh.md`.
 
@@ -96,9 +96,9 @@ Releases are labelled Phase 1 … Phase 51.
 
 **Phase 45:** `create-ysk-app` prompts on a TTY for omitted name, flavor, preset, database, admin, and mobile. `--yes` / `-y` and non-TTY (CI) never prompt. Flags already passed are not asked again.
 
-**Phase 46:** Expo organisation list, detail (members / invite / leave), and accept-invite screens on `apps/mobile`, wired through `@ysk/sdk` `organizations` and `orgRoleCan`. `--preset thin` strips them; `ysk add team` restores them when `apps/mobile` exists.
+**Phase 46:** Expo organisation list, detail (members / invite / leave), and accept-invite screens on `apps/mobile`, wired through `@ysk-kit/sdk` `organizations` and `orgRoleCan`. `--preset thin` strips them; `ysk add team` restores them when `apps/mobile` exists.
 
-**Phase 47:** Worked-example applicator `@ysk/examples` plus gold tutorial `clinic-booking` (overlay, bilingual steps, expected envelopes, Playwright screenshots). Living kit still does not mount industry routes. `ysk add module` and capability Express patches mount routers before `errorHandler`.
+**Phase 47:** Worked-example applicator `@ysk-kit/examples` plus gold tutorial `clinic-booking` (overlay, bilingual steps, expected envelopes, Playwright screenshots). Living kit still does not mount industry routes. `ysk add module` and capability Express patches mount routers before `errorHandler`.
 
 **Phase 48:** Worked examples `crm-contacts` (contact + follow-up) and `inventory-stock` (sku + stock-move). Dual-module memory harness shares the parent repository through `patches.json`.
 
@@ -111,3 +111,5 @@ Releases are labelled Phase 1 … Phase 51.
 Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are written to gitignored `.cursor/` and `.grok/` by `create-ysk-app` and `ysk upgrade`. `.gitignore` also covers `.env.*` (keeps `.env.example`), editor trees, and `*.pem` / `*.key`.
 
 **Phase 52:** CI green on sqlite dests (all three Prisma adapters in the lockfile), create-app Vitest 30s timeout, Release gated to GitHub owner `ysk`, e2e API via `tsx`. `pnpm test:coverage` reports Vitest v8 coverage (95% configured). Shared web-storage token store and Prisma id-cursor helper. Thin dest SDK tests cover remaining resources; optional llm/billing/orgs/devices tests stay on the living kit.
+
+**v1.0.0:** Workspace scope `@ysk-kit/*`. Public packages publish to npmjs org `ysk-kit`. GitHub Releases stay on `yanshekki/ysk-kit`. `create-ysk-app` from the registry downloads the matching GitHub tag tarball. GitHub Packages is unused.

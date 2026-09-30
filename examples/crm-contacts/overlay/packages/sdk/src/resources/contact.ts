@@ -3,7 +3,7 @@ import type {
   CreateContactCommand,
   PaginatedContact,
   UpdateContactStatusCommand,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

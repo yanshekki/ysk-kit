@@ -1,5 +1,5 @@
-import { type HttpHandler, mountContract } from '@ysk/api-express';
-import { appContract, type PageQuery } from '@ysk/contracts';
+import { type HttpHandler, mountContract } from '@ysk-kit/api-express';
+import { appContract, type PageQuery } from '@ysk-kit/contracts';
 import type { Express } from 'express';
 import type { IAuditLogger } from '../domain/audit-logger';
 

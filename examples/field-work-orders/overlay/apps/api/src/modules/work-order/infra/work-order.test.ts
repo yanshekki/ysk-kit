@@ -1,5 +1,5 @@
-import type { AppError } from '@ysk/domain-kernel';
-import type { IJobQueue } from '@ysk/jobs';
+import type { AppError } from '@ysk-kit/domain-kernel';
+import type { IJobQueue } from '@ysk-kit/jobs';
 import request from 'supertest';
 import { describe, expect, it, vi } from 'vitest';
 import { createApp } from '../../../app';

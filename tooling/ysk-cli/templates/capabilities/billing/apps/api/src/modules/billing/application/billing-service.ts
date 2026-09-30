@@ -1,6 +1,6 @@
-import type { CheckoutCommand, SubscriptionDto } from '@ysk/contracts';
-import { BILLING_PLANS, orgRoleCan } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CheckoutCommand, SubscriptionDto } from '@ysk-kit/contracts';
+import { BILLING_PLANS, orgRoleCan } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IOrganizationRepository } from '../../organizations/domain/organization-repository';
 import type { IBillingPort } from '../domain/billing-port';
 import type { ISubscriptionRepository } from '../domain/subscription-repository';

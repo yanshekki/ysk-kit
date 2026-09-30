@@ -1,4 +1,4 @@
-import type { Permission } from '@ysk/contracts';
+import type { Permission } from '@ysk-kit/contracts';
 
 export type ApiKeyRecord = {
   id: string;

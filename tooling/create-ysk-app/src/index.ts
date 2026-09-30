@@ -1,10 +1,9 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HELP } from './help';
+import { resolveKitRoot } from './kit-root';
 import { resolveCreateOptions, withReadlineAsk } from './prompt';
 import { createYskApp, parseArgs } from './scaffold';
-
-const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
 const help = (): void => {
   console.log(HELP);
@@ -23,6 +22,7 @@ const main = async (): Promise<void> => {
     process.exit(1);
   }
 
+  const kitRoot = await resolveKitRoot({ from: dirname(fileURLToPath(import.meta.url)) });
   const dest = createYskApp({
     name: resolved.name,
     dest: resolve(process.cwd(), resolved.name),

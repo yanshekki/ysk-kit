@@ -2,8 +2,8 @@ import type {
   CreateTicketCommand,
   TicketListQuery,
   UpdateTicketStatusCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { ITicketRepository } from '../domain/ticket-repository';
 
 export const createTicketService = (repo: ITicketRepository) => {

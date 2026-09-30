@@ -1,4 +1,4 @@
-import { hashPassword, hashRefresh, newRefreshToken } from '@ysk/auth';
+import { hashPassword, hashRefresh, newRefreshToken } from '@ysk-kit/auth';
 import type {
   AcceptInviteCommand,
   CreateOrganizationCommand,
@@ -7,10 +7,10 @@ import type {
   OrganizationDto,
   OrgInviteDto,
   UpdateOrganizationCommand,
-} from '@ysk/contracts';
-import { orgRoleCan } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { IJobQueue } from '@ysk/jobs';
+} from '@ysk-kit/contracts';
+import { orgRoleCan } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { IJobQueue } from '@ysk-kit/jobs';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 import type { IUserRepository } from '../../identity/domain/user-repository';
 import type { IOrganizationRepository } from '../domain/organization-repository';

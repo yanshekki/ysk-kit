@@ -161,18 +161,18 @@ export const captureExample = async (opts: CaptureOptions): Promise<string[]> =>
   if (spec.db === 'sqlite') {
     const dbFile = join(dest, 'apps/api/dev.db');
     if (existsSync(dbFile)) rmSync(dbFile);
-    run('pnpm', ['--filter', '@ysk/api', 'exec', 'prisma', 'db', 'push'], {
+    run('pnpm', ['--filter', '@ysk-kit/api', 'exec', 'prisma', 'db', 'push'], {
       cwd: dest,
       env,
       stdio: 'inherit',
     });
     run('pnpm', ['db:seed'], { cwd: dest, env, stdio: 'inherit' });
   }
-  run('pnpm', ['--filter', '@ysk/web', 'build'], { cwd: dest, env, stdio: 'inherit' });
+  run('pnpm', ['--filter', '@ysk-kit/web', 'build'], { cwd: dest, env, stdio: 'inherit' });
 
   const api = spawn(
     'pnpm',
-    ['--filter', '@ysk/api', 'exec', 'tsx', '--env-file=../../.env', 'src/main.ts'],
+    ['--filter', '@ysk-kit/api', 'exec', 'tsx', '--env-file=../../.env', 'src/main.ts'],
     {
       cwd: dest,
       env,
@@ -184,7 +184,7 @@ export const captureExample = async (opts: CaptureOptions): Promise<string[]> =>
     'pnpm',
     [
       '--filter',
-      '@ysk/web',
+      '@ysk-kit/web',
       'exec',
       'vite',
       'preview',

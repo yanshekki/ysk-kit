@@ -41,7 +41,7 @@
 ## 5. 開倉命令
 
 ```bash
-pnpm --filter @ysk/examples start apply inventory-stock --dest ~/Projects/my-stock --yes
+pnpm --filter @ysk-kit/examples start apply inventory-stock --dest ~/Projects/my-stock --yes
 ```
 
 預設目的地：`examples/.runs/inventory-stock`。覆蓋上一次結果請加 `--force`。

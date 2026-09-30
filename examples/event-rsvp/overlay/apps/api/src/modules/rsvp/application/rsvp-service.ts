@@ -1,5 +1,5 @@
-import type { CreateRsvpCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateRsvpCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IRsvpRepository } from '../domain/rsvp-repository';
 
 export const createRsvpService = (repo: IRsvpRepository) => ({

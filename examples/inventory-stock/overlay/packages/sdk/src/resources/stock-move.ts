@@ -1,4 +1,4 @@
-import type { CreateStockMoveCommand, PaginatedStockMove, StockMoveDto } from '@ysk/contracts';
+import type { CreateStockMoveCommand, PaginatedStockMove, StockMoveDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

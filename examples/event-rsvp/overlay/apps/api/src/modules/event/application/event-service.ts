@@ -1,5 +1,5 @@
-import type { CreateEventCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateEventCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IEventRepository } from '../domain/event-repository';
 
 export const createEventService = (repo: IEventRepository) => ({

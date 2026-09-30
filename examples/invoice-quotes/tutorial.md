@@ -12,7 +12,7 @@ After you finish:
 
 - A new product directory (not this kit) with identity, files, notifications, jobs, mail, API keys, crypto, and realtime from `--preset thin`.
 - Hexagonal module `quote` at `GET/POST /v1/quote`, plus send and accept.
-- Web page `/quote`: list, create form, **Send** on `DRAFT` rows and **Accept** on `SENT` rows. Amounts render with `formatHkd` from `@ysk/ui-logic`.
+- Web page `/quote`: list, create form, **Send** on `DRAFT` rows and **Accept** on `SENT` rows. Amounts render with `formatHkd` from `@ysk-kit/ui-logic`.
 - Seed accounts `admin@ysk.hk` / `ysk-admin-dev` and `user@ysk.hk` / `ysk-user-dev`. One admin draft; the user list starts empty.
 - Memory-port tests for amount `0`, send/accept transitions, and missing rows.
 
@@ -49,13 +49,13 @@ Industry quotes do **not** mount on the living kit API. Overlay files copy into 
 From the kit checkout:
 
 ```bash
-pnpm --filter @ysk/examples start apply invoice-quotes --dest ~/Projects/my-quotes --yes
+pnpm --filter @ysk-kit/examples start apply invoice-quotes --dest ~/Projects/my-quotes --yes
 ```
 
 `--yes` is passed to `create-ysk-app` so agents and CI never wait for a TTY. Default destination (gitignored) is `examples/.runs/invoice-quotes`. Replacing a previous run:
 
 ```bash
-pnpm --filter @ysk/examples start apply invoice-quotes --yes --force
+pnpm --filter @ysk-kit/examples start apply invoice-quotes --yes --force
 ```
 
 Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`, then `ysk add module quote --prisma --web`, copy this overlay, replace Prisma model `Quote`, `prisma db push`, seed.
@@ -75,7 +75,7 @@ Prisma model `Quote` (status is a `String`, not a TypeScript `enum`):
 | `id` | UUID | Generated |
 | `clientName` | string, 1–80 | Required |
 | `amountHkd` | int `> 0` | Cents. `z.number().int().positive()` |
-| `status` | `DRAFT` \| `SENT` \| `ACCEPTED` | `as const` + Zod in `@ysk/contracts`. Create starts at `DRAFT` |
+| `status` | `DRAFT` \| `SENT` \| `ACCEPTED` | `as const` + Zod in `@ysk-kit/contracts`. Create starts at `DRAFT` |
 | `authorId` | UUID | Owner of the row (the signed-in user) |
 | `createdAt` / `updatedAt` | datetime | Prisma |
 

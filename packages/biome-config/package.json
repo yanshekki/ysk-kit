@@ -1,5 +1,5 @@
 {
-  "name": "@ysk/biome",
+  "name": "@ysk-kit/biome",
   "version": "0.1.0",
   "private": true,
   "type": "module",

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateContactCommand, UpdateContactStatusCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateContactCommand, UpdateContactStatusCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const contactQueryKey = ['contact'] as const;
 

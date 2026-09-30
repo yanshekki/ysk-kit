@@ -4,7 +4,7 @@ import type {
   OrgRole,
   PageQuery,
   PaginatedMemberProfile,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type MemberProfileRecord = {
   id: string;

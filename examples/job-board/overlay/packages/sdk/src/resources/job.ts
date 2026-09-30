@@ -1,4 +1,4 @@
-import type { CreateJobCommand, JobDto, PaginatedJob } from '@ysk/contracts';
+import type { CreateJobCommand, JobDto, PaginatedJob } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

@@ -65,7 +65,10 @@ export type CapabilityRecipe = {
 };
 
 const patchWebsocketComposition = (src: string): string => {
-  const next = insertAfterLastImport(src, "import { createRealtimeFromEnv } from '@ysk/realtime';");
+  const next = insertAfterLastImport(
+    src,
+    "import { createRealtimeFromEnv } from '@ysk-kit/realtime';",
+  );
   return ensureMarkerBlock(
     next,
     'websocket',
@@ -85,7 +88,7 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
       'TWILIO_AUTH_TOKEN',
       'TWILIO_FROM',
     ],
-    apiDeps: ['@ysk/auth'],
+    apiDeps: ['@ysk-kit/auth'],
   },
   rbac: {},
   'audit-log': {
@@ -95,23 +98,23 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
     prisma: 'modules/files/prisma/file-object.prisma',
     userFields: ['files FileObject[]'],
     env: ['S3_ENDPOINT', 'S3_BUCKET', 'S3_ACCESS_KEY', 'S3_SECRET_KEY', 'S3_REGION'],
-    apiDeps: ['@ysk/storage'],
+    apiDeps: ['@ysk-kit/storage'],
   },
   i18n: {},
   jobs: {
     env: ['REDIS_URL'],
-    apiDeps: ['@ysk/jobs'],
+    apiDeps: ['@ysk-kit/jobs'],
   },
   mail: {
     env: ['SMTP_URL', 'MAIL_FROM'],
-    apiDeps: ['@ysk/mail'],
+    apiDeps: ['@ysk-kit/mail'],
   },
   notifications: {},
   llm: {
     prisma: 'modules/llm/prisma/llm-usage.prisma',
     userFields: ['llmUsages LlmUsage[]'],
     env: ['LLM_BASE_URL', 'LLM_API_KEY', 'XAI_API_KEY', 'LLM_MODEL'],
-    apiDeps: ['@ysk/llm'],
+    apiDeps: ['@ysk-kit/llm'],
     skipSourceIf: 'createLlmService',
     copySource: true,
     patchApp: patchLlmApp,
@@ -126,7 +129,7 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
   },
   websocket: {
     env: ['RUN_WORKERS'],
-    apiDeps: ['@ysk/realtime'],
+    apiDeps: ['@ysk-kit/realtime'],
     skipSourceIf: 'createRealtimeFromEnv',
     patchComposition: patchWebsocketComposition,
   },
@@ -134,7 +137,7 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
     prisma: 'modules/push/prisma/device.prisma',
     userFields: ['devices Device[]'],
     env: ['EXPO_ACCESS_TOKEN', 'FCM_PROJECT_ID', 'FCM_CLIENT_EMAIL', 'FCM_PRIVATE_KEY'],
-    apiDeps: ['@ysk/push'],
+    apiDeps: ['@ysk-kit/push'],
     skipSourceIf: 'createDeviceService',
     copySource: true,
     patchApp: patchPushApp,
@@ -172,7 +175,7 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
   },
   crypto: {
     env: ['CRYPTO_MASTER_KEY'],
-    apiDeps: ['@ysk/crypto'],
+    apiDeps: ['@ysk-kit/crypto'],
   },
   billing: {
     prisma: 'modules/billing/prisma/subscription.prisma',

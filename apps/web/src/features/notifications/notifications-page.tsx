@@ -1,4 +1,4 @@
-import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ysk/ui';
+import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ysk-kit/ui';
 import { userHooks } from '../../lib/client';
 
 export function NotificationsPage() {

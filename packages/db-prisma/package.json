@@ -1,6 +1,6 @@
 {
-  "name": "@ysk/db-prisma",
-  "version": "0.1.0",
+  "name": "@ysk-kit/db-prisma",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -13,7 +13,7 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@ysk/contracts": "workspace:*"
+    "@ysk-kit/contracts": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^24.5.2",
@@ -24,8 +24,8 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted",
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {

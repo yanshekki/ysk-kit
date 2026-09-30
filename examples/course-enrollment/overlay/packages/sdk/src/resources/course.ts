@@ -1,4 +1,4 @@
-import type { CourseDto, CreateCourseCommand, PaginatedCourse } from '@ysk/contracts';
+import type { CourseDto, CreateCourseCommand, PaginatedCourse } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

@@ -39,8 +39,8 @@ export * from './health';
   };
 };
 `,
-      'apps/api/src/app-fastify.ts': `import { mountFastify } from '@ysk/api-fastify';
-import { appContract } from '@ysk/contracts';
+      'apps/api/src/app-fastify.ts': `import { mountFastify } from '@ysk-kit/api-fastify';
+import { appContract } from '@ysk-kit/contracts';
 
 export const createFastifyApp = async (input: { bookingService: never }) => {
   const app = { register() {} };
@@ -146,7 +146,7 @@ export const appContract = c.router({
 export * from './health';
 `,
       'packages/contracts/src/dto/index.ts': `export * from './user';\n`,
-      'apps/api/src/app.ts': `import { errorHandler } from '@ysk/api-express';
+      'apps/api/src/app.ts': `import { errorHandler } from '@ysk-kit/api-express';
 
 export const createApp = (input: { userService: never }) => {
   const app = { use(_fn: unknown) {} };

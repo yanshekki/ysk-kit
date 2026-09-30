@@ -7,20 +7,20 @@ import {
   requestId,
   requireAuth,
   requirePermission,
-} from '@ysk/api-express';
+} from '@ysk-kit/api-express';
 import {
   applySecurityHeaders,
   buildOpenApiDocument,
   clientIp,
   createMemoryRateLimit,
   scalarDocsHtml,
-} from '@ysk/api-http';
-import { appContract } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { BullmqQueue } from '@ysk/jobs';
-import type { Logger } from '@ysk/logger';
-import { mountMetrics, type Registry } from '@ysk/observability';
-import type { IStoragePort } from '@ysk/storage';
+} from '@ysk-kit/api-http';
+import { appContract } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { BullmqQueue } from '@ysk-kit/jobs';
+import type { Logger } from '@ysk-kit/logger';
+import { mountMetrics, type Registry } from '@ysk-kit/observability';
+import type { IStoragePort } from '@ysk-kit/storage';
 import cors from 'cors';
 import express, { type Express } from 'express';
 import { healthHandlers } from './health-handlers';

@@ -1,5 +1,5 @@
-import type { CreateMemberProfileCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateMemberProfileCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IMemberProfileRepository } from '../domain/member-profile-repository';
 
 export const createMemberProfileService = (repo: IMemberProfileRepository) => ({

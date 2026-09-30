@@ -45,7 +45,7 @@ Industry membership does **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply membership-club --dest ~/Projects/my-club --yes
+pnpm --filter @ysk-kit/examples start apply membership-club --dest ~/Projects/my-club --yes
 ```
 
 Default destination (gitignored): `examples/.runs/membership-club`. Replace a previous run with `--force`.

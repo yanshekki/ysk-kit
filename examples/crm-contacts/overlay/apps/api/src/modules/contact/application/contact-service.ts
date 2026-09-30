@@ -3,8 +3,8 @@ import type {
   CreateContactCommand,
   PageQuery,
   UpdateContactStatusCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IContactRepository } from '../domain/contact-repository';
 
 export const createContactService = (repo: IContactRepository) => ({

@@ -1,4 +1,4 @@
-import type { CreateUserCommand, PageQuery, PaginatedUsers } from '@ysk/contracts';
+import type { CreateUserCommand, PageQuery, PaginatedUsers } from '@ysk-kit/contracts';
 import type { UserRecord } from './user';
 
 export interface IUserRepository {

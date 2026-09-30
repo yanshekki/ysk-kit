@@ -138,8 +138,8 @@ const apiImportNeedles = [
   'modules/billing',
   'modules/organizations',
   'modules/devices',
-  '@ysk/llm',
-  '@ysk/push',
+  '@ysk-kit/llm',
+  '@ysk-kit/push',
 ];
 
 const dropNamedSpecifiers = (src: string, names: string[]): string =>

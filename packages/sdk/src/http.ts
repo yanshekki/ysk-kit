@@ -1,5 +1,5 @@
-import { ErrSchema, type Platform } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import { ErrSchema, type Platform } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { TokenStore } from './token-store';
 
 export class HttpClient {

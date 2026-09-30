@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { CreateOrganizationCommandSchema } from '@ysk/contracts';
+import { CreateOrganizationCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   Input,
@@ -9,8 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { createOrganizationHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { createOrganizationHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

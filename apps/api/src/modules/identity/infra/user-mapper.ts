@@ -1,4 +1,4 @@
-import type { UserDto } from '@ysk/contracts';
+import type { UserDto } from '@ysk-kit/contracts';
 import type { User } from '../../../generated/prisma/client';
 import type { UserRecord } from '../domain/user';
 

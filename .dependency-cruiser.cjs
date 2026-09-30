@@ -7,7 +7,7 @@ module.exports = {
       severity: 'error',
       from: { path: '^apps/(web|admin|mobile|desktop)' },
       to: {
-        path: '(^express|^fastify|^@prisma|packages/db-prisma|packages/api-express|packages/api-fastify|packages/auth|packages/jobs|packages/mail|packages/llm|packages/realtime|packages/push|packages/crypto|packages/apikey|@ysk/db-prisma|@ysk/api-express|@ysk/api-fastify|@ysk/logger|@ysk/auth|@ysk/observability|@ysk/jobs|@ysk/mail|@ysk/llm|@ysk/realtime|@ysk/push|@ysk/crypto|@ysk/apikey|bullmq|nodemailer|@aws-sdk|socket.io/|@socket.io/redis)',
+        path: '(^express|^fastify|^@prisma|packages/db-prisma|packages/api-express|packages/api-fastify|packages/auth|packages/jobs|packages/mail|packages/llm|packages/realtime|packages/push|packages/crypto|packages/apikey|@ysk-kit/db-prisma|@ysk-kit/api-express|@ysk-kit/api-fastify|@ysk-kit/logger|@ysk-kit/auth|@ysk-kit/observability|@ysk-kit/jobs|@ysk-kit/mail|@ysk-kit/llm|@ysk-kit/realtime|@ysk-kit/push|@ysk-kit/crypto|@ysk-kit/apikey|bullmq|nodemailer|@aws-sdk|socket.io/|@socket.io/redis)',
       },
     },
     {
@@ -15,7 +15,9 @@ module.exports = {
       comment: 'apps/api must not import React or web UI packages.',
       severity: 'error',
       from: { path: '^apps/api' },
-      to: { path: '(^react|^react-dom|@ysk/ui$|@ysk/web-sdk|packages/ui|packages/web-sdk)' },
+      to: {
+        path: '(^react|^react-dom|@ysk-kit/ui$|@ysk-kit/web-sdk|packages/ui|packages/web-sdk)',
+      },
     },
     {
       name: 'contracts-leaf',
@@ -31,14 +33,14 @@ module.exports = {
       comment: 'sdk and ui-logic stay React-free, Node-fs-free, and Prisma-free.',
       severity: 'error',
       from: { path: '^packages/(sdk|ui-logic)/' },
-      to: { path: '(^react|^express|^@prisma|node:fs|node:path|@ysk/ui$|@ysk/web-sdk)' },
+      to: { path: '(^react|^express|^@prisma|node:fs|node:path|@ysk-kit/ui$|@ysk-kit/web-sdk)' },
     },
     {
       name: 'domain-no-infra',
       comment: 'domain folders may not import Express, Prisma, or infra.',
       severity: 'error',
       from: { path: 'modules/.*/domain' },
-      to: { path: '(express|fastify|@prisma|@ysk/db-prisma|/infra/)' },
+      to: { path: '(express|fastify|@prisma|@ysk-kit/db-prisma|/infra/)' },
     },
   ],
   options: {

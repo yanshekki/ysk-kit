@@ -1,8 +1,8 @@
-import { isApiKeyToken } from '@ysk/apikey';
-import type { AccessClaims } from '@ysk/auth';
-import { verifyAccessToken } from '@ysk/auth';
-import { claimsHasPermission, type Permission } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import { isApiKeyToken } from '@ysk-kit/apikey';
+import type { AccessClaims } from '@ysk-kit/auth';
+import { verifyAccessToken } from '@ysk-kit/auth';
+import { claimsHasPermission, type Permission } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
 export type AuthContext = AccessClaims;

@@ -1,5 +1,5 @@
-import { Button, Input } from '@ysk/ui';
-import { createLlmHooks } from '@ysk/web-sdk';
+import { Button, Input } from '@ysk-kit/ui';
+import { createLlmHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

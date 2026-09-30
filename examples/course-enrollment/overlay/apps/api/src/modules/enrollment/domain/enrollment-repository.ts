@@ -3,7 +3,7 @@ import type {
   EnrollmentDto,
   PageQuery,
   PaginatedEnrollment,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type EnrollmentRecord = {
   id: string;

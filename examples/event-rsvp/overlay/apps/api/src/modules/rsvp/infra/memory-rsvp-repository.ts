@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { RsvpDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { RsvpDto } from '@ysk-kit/contracts';
 import type { IRsvpRepository, RsvpEventRef, RsvpRecord } from '../domain/rsvp-repository';
 
 const toDto = (row: RsvpRecord): RsvpDto => ({

@@ -1,5 +1,5 @@
-import type { CreateJobCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateJobCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IJobRepository } from '../domain/job-repository';
 
 export const createJobService = (repo: IJobRepository) => ({

@@ -1,4 +1,4 @@
-import type { CreateCourseCommand, PageQuery } from '@ysk/contracts';
+import type { CreateCourseCommand, PageQuery } from '@ysk-kit/contracts';
 import type { ICourseRepository } from '../domain/course-repository';
 
 export const createCourseService = (repo: ICourseRepository) => ({

@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { QuoteDto, QuoteStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { QuoteDto, QuoteStatus } from '@ysk-kit/contracts';
 import type { IQuoteRepository, QuoteRecord } from '../domain/quote-repository';
 
 const toDto = (row: QuoteRecord): QuoteDto => ({

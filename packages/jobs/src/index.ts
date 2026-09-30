@@ -1,4 +1,9 @@
-import { JOB_NAME_VALUES, type JobName, type JobPayload, JobPayloadSchema } from '@ysk/contracts';
+import {
+  JOB_NAME_VALUES,
+  type JobName,
+  type JobPayload,
+  JobPayloadSchema,
+} from '@ysk-kit/contracts';
 import type { Queue } from 'bullmq';
 
 export type { Queue as BullmqQueue } from 'bullmq';

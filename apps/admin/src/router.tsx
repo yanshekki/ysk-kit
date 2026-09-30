@@ -1,5 +1,5 @@
 import { createRootRoute, createRoute, createRouter, Link, Outlet } from '@tanstack/react-router';
-import { AppShell, PageHeader } from '@ysk/ui';
+import { AppShell, PageHeader } from '@ysk-kit/ui';
 import { ApiKeysPage } from './features/api-keys/api-keys-page';
 import { AuditPage } from './features/audit/audit-page';
 import { LoginPage } from './features/auth/login-page';

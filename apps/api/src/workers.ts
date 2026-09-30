@@ -1,10 +1,10 @@
 import { createHash } from 'node:crypto';
-import { type JobName, type JobPayload, RealtimeEvent } from '@ysk/contracts';
-import type { IJobQueue } from '@ysk/jobs';
-import type { IMailPort } from '@ysk/mail';
-import { withJobSpan } from '@ysk/observability';
-import type { IPushPort } from '@ysk/push';
-import type { IRealtimePort } from '@ysk/realtime';
+import { type JobName, type JobPayload, RealtimeEvent } from '@ysk-kit/contracts';
+import type { IJobQueue } from '@ysk-kit/jobs';
+import type { IMailPort } from '@ysk-kit/mail';
+import { withJobSpan } from '@ysk-kit/observability';
+import type { IPushPort } from '@ysk-kit/push';
+import type { IRealtimePort } from '@ysk-kit/realtime';
 import type { INotificationRepository } from './modules/notifications/domain/notification-repository';
 
 type PushDeviceStore = {

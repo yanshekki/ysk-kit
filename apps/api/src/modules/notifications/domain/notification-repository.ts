@@ -1,4 +1,4 @@
-import type { NotificationType, PageQuery, PaginatedNotifications } from '@ysk/contracts';
+import type { NotificationType, PageQuery, PaginatedNotifications } from '@ysk-kit/contracts';
 
 export type NotificationRecord = {
   id: string;

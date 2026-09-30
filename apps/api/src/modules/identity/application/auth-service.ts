@@ -8,7 +8,7 @@ import {
   parseTtlSeconds,
   signAccessToken,
   verifyPassword,
-} from '@ysk/auth';
+} from '@ysk-kit/auth';
 import type {
   ForgotPasswordCommand,
   LoginPasswordCommand,
@@ -22,9 +22,9 @@ import type {
   UserDto,
   VerifyAdminOtpCommand,
   VerifyOtpCommand,
-} from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
-import type { IJobQueue } from '@ysk/jobs';
+} from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
+import type { IJobQueue } from '@ysk-kit/jobs';
 import type { IAuditLogger } from '../../audit-log/domain/audit-logger';
 import type { IOtpRepository } from '../domain/otp-repository';
 import type { IOtpSender } from '../domain/otp-sender';

@@ -1,7 +1,7 @@
 import type { Server as HttpServer } from 'node:http';
-import { rateLimitFromEnv } from '@ysk/config';
-import { createMetricsRegistry, startOtelFromEnv } from '@ysk/observability';
-import { attachSocketIoRealtime } from '@ysk/realtime';
+import { rateLimitFromEnv } from '@ysk-kit/config';
+import { createMetricsRegistry, startOtelFromEnv } from '@ysk-kit/observability';
+import { attachSocketIoRealtime } from '@ysk-kit/realtime';
 import { createApp } from './app';
 import { createFastifyApp } from './app-fastify';
 import { createComposition } from './composition';

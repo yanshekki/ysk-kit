@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { AuditAction } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { AuditAction } from '@ysk-kit/contracts';
 import type { Prisma, PrismaClient } from '../../../generated/prisma/client';
 import { prismaIdCursor } from '../../../infra/prisma-page';
 import type { IAuditLogger } from '../domain/audit-logger';

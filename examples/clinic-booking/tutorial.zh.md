@@ -49,19 +49,19 @@ SQLite 不需要 Compose。套用命令依 `spec.json` 預設 sqlite。
 在 kit 工作副本執行：
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 ```
 
 `--yes` 會傳給 `create-ysk-app`，agent 與 CI 不會等待 TTY。預設目的地（已 gitignore）是 `examples/.runs/clinic-booking`。覆蓋上一次結果：
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --yes --force
+pnpm --filter @ysk-kit/examples start apply clinic-booking --yes --force
 ```
 
 人手等價步驟（MySQL）：
 
 ```bash
-pnpm --filter @ysk/create-app start my-clinic --preset thin --flavor saas --db mysql --no-admin --no-mobile --yes
+pnpm --filter @ysk-kit/create-app start my-clinic --preset thin --flavor saas --db mysql --no-admin --no-mobile --yes
 cd my-clinic
 pnpm install
 cp .env.example .env
@@ -94,7 +94,7 @@ Prisma model `Appointment`（狀態是 `String`，不是 TypeScript `enum`）：
 | `phone` | `+852` 加八位數字 | `HkPhoneSchema` |
 | `startsAt` | ISO datetime | 建立時必須 ≥ 現在 |
 | `durationMin` | 整數 15–180 | 預設 30 |
-| `status` | `SCHEDULED` \| `CANCELLED` \| `DONE` | `@ysk/contracts` 內 `as const` + Zod |
+| `status` | `SCHEDULED` \| `CANCELLED` \| `DONE` | `@ysk-kit/contracts` 內 `as const` + Zod |
 | `authorId` | UUID | 列的擁有者（已登入使用者） |
 | `createdAt`／`updatedAt` | datetime | Prisma |
 

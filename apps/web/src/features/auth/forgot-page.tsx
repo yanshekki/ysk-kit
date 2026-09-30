@@ -1,5 +1,5 @@
-import { ForgotPasswordCommandSchema } from '@ysk/contracts';
-import { Button, Input } from '@ysk/ui';
+import { ForgotPasswordCommandSchema } from '@ysk-kit/contracts';
+import { Button, Input } from '@ysk-kit/ui';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 

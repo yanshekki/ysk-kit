@@ -16,7 +16,7 @@ afterEach(() => {
   cleanup();
 });
 
-describe('@ysk/ui', () => {
+describe('@ysk-kit/ui', () => {
   it('merges class names', () => {
     expect(cn('px-2', 'px-4')).toContain('px-4');
   });

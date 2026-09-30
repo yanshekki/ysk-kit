@@ -1,4 +1,4 @@
-import { hashPassword } from '@ysk/auth';
+import { hashPassword } from '@ysk-kit/auth';
 import { createPrisma } from './create-prisma';
 
 export const assertSeedAllowed = (env: NodeJS.ProcessEnv = process.env): void => {

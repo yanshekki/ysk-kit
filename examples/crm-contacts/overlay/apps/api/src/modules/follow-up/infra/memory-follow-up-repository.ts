@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { FollowUpDto } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { FollowUpDto } from '@ysk-kit/contracts';
 import type {
   FollowUpContactRef,
   FollowUpRecord,

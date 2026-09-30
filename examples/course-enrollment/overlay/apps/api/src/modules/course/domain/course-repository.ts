@@ -1,4 +1,9 @@
-import type { CourseDto, CreateCourseCommand, PageQuery, PaginatedCourse } from '@ysk/contracts';
+import type {
+  CourseDto,
+  CreateCourseCommand,
+  PageQuery,
+  PaginatedCourse,
+} from '@ysk-kit/contracts';
 
 export type CourseRecord = {
   id: string;

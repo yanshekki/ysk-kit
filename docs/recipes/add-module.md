@@ -38,8 +38,8 @@ It also patches `appContract`, `apps/api/src/app.ts`, `app-fastify.ts`, `composi
 1. Edit the Prisma model if you need more fields; keep DTO and command in sync.
 2. Put rules in `application/<name>-service.ts` only.
 3. Keep Prisma inside `infra/`.
-4. Do not add a TypeScript `enum`. Extra literals go in `@ysk/contracts`.
-5. Do not `fetch` from the web page; use `@ysk/web-sdk` hooks.
+4. Do not add a TypeScript `enum`. Extra literals go in `@ysk-kit/contracts`.
+5. Do not `fetch` from the web page; use `@ysk-kit/web-sdk` hooks.
 
 The notes-shaped tree under `modules/notes` documents the template. This repository’s API does not mount a notes route, so platform code stays free of demo business data.
 

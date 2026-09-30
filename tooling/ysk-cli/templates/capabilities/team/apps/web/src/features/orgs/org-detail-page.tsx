@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { InviteMemberCommandSchema } from '@ysk/contracts';
+import { InviteMemberCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   Input,
@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { orgRoleCan } from '@ysk/ui-logic';
-import { createOrganizationHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { orgRoleCan } from '@ysk-kit/ui-logic';
+import { createOrganizationHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api, userHooks } from '../../lib/client';
 

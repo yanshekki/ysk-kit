@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateTicketCommand, UpdateTicketStatusCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateTicketCommand, UpdateTicketStatusCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const ticketQueryKey = ['ticket'] as const;
 

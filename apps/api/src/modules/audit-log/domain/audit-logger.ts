@@ -1,4 +1,4 @@
-import type { AuditAction, PageQuery, PaginatedAuditLogs } from '@ysk/contracts';
+import type { AuditAction, PageQuery, PaginatedAuditLogs } from '@ysk-kit/contracts';
 
 export type AuditRecordInput = {
   actorId: string | null;

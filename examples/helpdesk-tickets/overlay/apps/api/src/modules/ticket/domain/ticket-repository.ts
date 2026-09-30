@@ -5,7 +5,7 @@ import type {
   PaginatedTicket,
   TicketDto,
   TicketStatus,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type TicketRecord = {
   id: string;

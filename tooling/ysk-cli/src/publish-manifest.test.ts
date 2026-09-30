@@ -6,13 +6,13 @@ import { describe, expect, it } from 'vitest';
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
 const PRIVATE_PACKAGES = new Set([
-  '@ysk/biome',
-  '@ysk/typescript-config',
-  '@ysk/api',
-  '@ysk/web',
-  '@ysk/admin',
-  '@ysk/mobile',
-  '@ysk/desktop',
+  '@ysk-kit/biome',
+  '@ysk-kit/typescript-config',
+  '@ysk-kit/api',
+  '@ysk-kit/web',
+  '@ysk-kit/admin',
+  '@ysk-kit/mobile',
+  '@ysk-kit/desktop',
 ]);
 
 describe('publish manifest', () => {
@@ -35,7 +35,7 @@ describe('publish manifest', () => {
     }
   });
 
-  it('gives public libraries a GitHub Packages publishConfig and dist files', () => {
+  it('gives public libraries an npmjs publishConfig and dist files', () => {
     const dirs = [
       ...readdirSync(join(kitRoot, 'packages')).map((name) => join(kitRoot, 'packages', name)),
       join(kitRoot, 'tooling/ysk-cli'),
@@ -49,11 +49,12 @@ describe('publish manifest', () => {
         name: string;
         private?: boolean;
         files?: string[];
-        publishConfig?: { registry?: string };
+        publishConfig?: { registry?: string; access?: string };
       };
       if (pkg.private || PRIVATE_PACKAGES.has(pkg.name)) continue;
       publicPkgs.push(pkg.name);
-      expect(pkg.publishConfig?.registry).toContain('npm.pkg.github.com');
+      expect(pkg.publishConfig?.registry).toContain('registry.npmjs.org');
+      expect(pkg.publishConfig?.access).toBe('public');
       expect(pkg.files).toContain('dist');
       expect(existsSync(join(dir, 'tsconfig.build.json'))).toBe(true);
     }
@@ -65,7 +66,13 @@ describe('publish manifest', () => {
       ignore: string[];
     };
     expect(cfg.ignore).toEqual(
-      expect.arrayContaining(['@ysk/api', '@ysk/web', '@ysk/admin', '@ysk/mobile', '@ysk/desktop']),
+      expect.arrayContaining([
+        '@ysk-kit/api',
+        '@ysk-kit/web',
+        '@ysk-kit/admin',
+        '@ysk-kit/mobile',
+        '@ysk-kit/desktop',
+      ]),
     );
   });
 });

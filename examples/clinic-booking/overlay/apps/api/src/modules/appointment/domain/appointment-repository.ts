@@ -4,7 +4,7 @@ import type {
   CreateAppointmentCommand,
   PageQuery,
   PaginatedAppointment,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type AppointmentRecord = {
   id: string;

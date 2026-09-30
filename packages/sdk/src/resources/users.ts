@@ -1,4 +1,4 @@
-import type { CreateUserCommand, PaginatedUsers, UserDto } from '@ysk/contracts';
+import type { CreateUserCommand, PaginatedUsers, UserDto } from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

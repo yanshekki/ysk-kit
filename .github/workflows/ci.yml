@@ -39,7 +39,7 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install
-      - run: pnpm --filter @ysk/create-app start /tmp/ysk-thin-smoke --preset thin --flavor saas --no-admin --no-mobile --db sqlite
+      - run: pnpm --filter @ysk-kit/create-app start /tmp/ysk-thin-smoke --preset thin --flavor saas --no-admin --no-mobile --db sqlite
       - name: verify thin dest
         working-directory: /tmp/ysk-thin-smoke
         run: |
@@ -80,7 +80,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: apply ${{ matrix.slug }}
-        run: pnpm --filter @ysk/examples start apply ${{ matrix.slug }} --dest /tmp/ysk-example --yes --force
+        run: pnpm --filter @ysk-kit/examples start apply ${{ matrix.slug }} --dest /tmp/ysk-example --yes --force
 
   e2e:
     runs-on: ubuntu-latest
@@ -144,8 +144,8 @@ jobs:
             'SEED_USER_PASSWORD=ysk-user-dev' \
             > .env
       - run: pnpm db:generate
-      - run: pnpm --filter @ysk/api prisma:migrate:deploy
+      - run: pnpm --filter @ysk-kit/api prisma:migrate:deploy
       - run: pnpm db:seed
-      - run: pnpm --filter @ysk/web build
-      - run: pnpm --filter @ysk/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @ysk-kit/web build
+      - run: pnpm --filter @ysk-kit/web exec playwright install --with-deps chromium
       - run: pnpm e2e

@@ -6,15 +6,15 @@ Language: [English](history.md) · 中文
 
 版本以 Phase 1 … Phase 51 標示。
 
-**Phase 1:** pnpm + Turborepo + Biome、`@ysk/contracts`（Zod 4 + ts-rest）、envelope `{ok,data}/{ok,error}`、domain-kernel、Express 5 adapter 與 composition root、Prisma MySQL、Vite web/admin、Expo mobile 骨架、`@ysk/sdk` + `@ysk/web-sdk`、`@ysk/ui-logic`、`ysk add module`、`create-ysk-app --flavor saas`、CI、Docker Compose、dependency-cruiser、enum-drift 測試。
+**Phase 1:** pnpm + Turborepo + Biome、`@ysk-kit/contracts`（Zod 4 + ts-rest）、envelope `{ok,data}/{ok,error}`、domain-kernel、Express 5 adapter 與 composition root、Prisma MySQL、Vite web/admin、Expo mobile 骨架、`@ysk-kit/sdk` + `@ysk-kit/web-sdk`、`@ysk-kit/ui-logic`、`ysk add module`、`create-ysk-app --flavor saas`、CI、Docker Compose、dependency-cruiser、enum-drift 測試。
 
-**Phase 2:** JWT + refresh session、電郵註冊／登入、`+852` OTP（開發用日誌 sender）、RBAC `ROLE_PERMISSIONS`、審計日誌、`/ready` + `/metrics`、本地檔案預簽署、`@ysk/i18n`、web/admin 登入。Users API 需要 session。
+**Phase 2:** JWT + refresh session、電郵註冊／登入、`+852` OTP（開發用日誌 sender）、RBAC `ROLE_PERMISSIONS`、審計日誌、`/ready` + `/metrics`、本地檔案預簽署、`@ysk-kit/i18n`、web/admin 登入。Users API 需要 session。
 
-**Phase 3:** BullMQ 工作（`@ysk/jobs`，測試用記憶體）、郵件 port（日誌 + SMTP）、歡迎與重設密碼郵件、站內通知、設齊 `S3_*` 時的 S3 相容儲存、`pnpm worker`。
+**Phase 3:** BullMQ 工作（`@ysk-kit/jobs`，測試用記憶體）、郵件 port（日誌 + SMTP）、歡迎與重設密碼郵件、站內通知、設齊 `S3_*` 時的 S3 相容儲存、`pnpm worker`。
 
-**Phase 4:** `@ysk/llm` OpenAI 相容客戶端（SpaceXAI / `https://api.x.ai/v1`，模型 `grok-4.7`）+ `LlmUsage` 表；`POST /v1/llm/complete` envelope；`POST /v1/llm/stream` SSE；Socket.IO 即時通訊 + `notification.created`。
+**Phase 4:** `@ysk-kit/llm` OpenAI 相容客戶端（SpaceXAI / `https://api.x.ai/v1`，模型 `grok-4.7`）+ `LlmUsage` 表；`POST /v1/llm/complete` envelope；`POST /v1/llm/stream` SSE；Socket.IO 即時通訊 + `notification.created`。
 
-**Phase 5:** `@ysk/push`（日誌 + Expo Push API）、`Device` + `/v1/me/devices`、`notification.create` 之後入列 `push.send`、SDK `DevicePort`/`FilePickerPort`、流動應用登入／主頁／收件箱 + EAS。
+**Phase 5:** `@ysk-kit/push`（日誌 + Expo Push API）、`Device` + `/v1/me/devices`、`notification.create` 之後入列 `push.send`、SDK `DevicePort`/`FilePickerPort`、流動應用登入／主頁／收件箱 + EAS。
 
 **Phase 6:** Organization + Membership + 電郵邀請（`OrgRole` OWNER/ADMIN/MEMBER；平台 `User.role` 維持全域）。`POST /v1/users/:id/suspend`。邀請權杖經雜湊。
 
@@ -24,11 +24,11 @@ Language: [English](history.md) · 中文
 
 **Phase 9:** `apps/desktop` Electron + Vite（`platform: desktop`、`safeStorage` TokenStore）。`create-ysk-app --flavor desktop` 保留 api+desktop。Prisma 留在 API。
 
-**Phase 10:** `@ysk/api-http` 提供與框架無關的 `HttpHandler` map。`@ysk/api-fastify` 服務同一套合約（`HTTP_ADAPTER=fastify`）。預設仍是 Express 5。
+**Phase 10:** `@ysk-kit/api-http` 提供與框架無關的 `HttpHandler` map。`@ysk-kit/api-fastify` 服務同一套合約（`HTTP_ADAPTER=fastify`）。預設仍是 Express 5。
 
-**Phase 11:** `@ysk/crypto` AES-256-GCM；`@ysk/apikey` 雜湊 `ysk_live_` 權杖。`POST/GET/DELETE /v1/me/api-keys`。機器 Bearer 不能再產生金鑰。
+**Phase 11:** `@ysk-kit/crypto` AES-256-GCM；`@ysk-kit/apikey` 雜湊 `ysk_live_` 權杖。`POST/GET/DELETE /v1/me/api-keys`。機器 Bearer 不能再產生金鑰。
 
-**Phase 12:** 公開 `@ysk/*` 程式庫輸出 `dist/`，並為 GitHub Packages 設定 `publishConfig`。Changesets 忽略 apps。
+**Phase 12:** 公開 `@ysk-kit/*` 程式庫輸出 `dist/`，並為 GitHub Packages 設定 `publishConfig`。Changesets 忽略 apps。
 
 **Phase 13:** `create-ysk-app --flavor gateway` 複製 api + admin，略過 web/mobile/desktop。
 
@@ -72,7 +72,7 @@ Language: [English](history.md) · 中文
 
 **Phase 33:** 可選 OTLP metrics（`OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`，與 traces 分開）。
 
-**Phase 34:** Job handler 在 `withJobSpan` 內運行（屬性 `job.name`）。`@ysk/jobs` 不含 OTel。
+**Phase 34:** Job handler 在 `withJobSpan` 內運行（屬性 `job.name`）。`@ysk-kit/jobs` 不含 OTel。
 
 **Phase 35:** Fastify `onResponse` 經 composition 的 pino logger 寫 access log。內建 Fastify logger 維持關閉。
 
@@ -86,7 +86,7 @@ Language: [English](history.md) · 中文
 
 **Phase 40:** `create-ysk-app --preset thin|full`（預設 thin）複製可運行樹後剝走 llm / billing / organizations / devices。`ysk add llm|team|billing|push` 複製源碼樹並修補 Express、Fastify、composition、main、SDK、web-sdk 與 web router。CI job `thin-smoke` 使用 sqlite + `--no-admin --no-mobile`。
 
-**Phase 41:** `@ysk/ui` AppShell / PageHeader / EmptyState / ErrorBanner / FormField / Spinner。`pnpm db:seed` 位於 `apps/api/src/infra/seed.ts`。Web 登入 Testing Library。CI job `e2e` 對 MySQL 8.4 跑一條 Chromium Playwright smoke。
+**Phase 41:** `@ysk-kit/ui` AppShell / PageHeader / EmptyState / ErrorBanner / FormField / Spinner。`pnpm db:seed` 位於 `apps/api/src/infra/seed.ts`。Web 登入 Testing Library。CI job `e2e` 對 MySQL 8.4 跑一條 Chromium Playwright smoke。
 
 **Phase 42:** 公開雙語文件（英文 `.md` + 香港書面語 `.zh.md`）、agent skills，以及完整 CLI 手冊。`ysk` 與 `create-ysk-app` 列印命令說明。產生出來的產品獲得 `README.md` 與 `README.zh.md`。
 
@@ -96,9 +96,9 @@ Language: [English](history.md) · 中文
 
 **Phase 45:** `create-ysk-app` 在 TTY 下對未傳的名稱、flavor、preset、資料庫、admin、mobile 提問。`--yes` / `-y` 與非 TTY（CI）永不提問。已傳的旗標不會再問。
 
-**Phase 46:** Expo 組織列表、詳情（成員／邀請／離開）與接受邀請畫面接上 `@ysk/sdk` 的 `organizations` 與 `orgRoleCan`。`--preset thin` 會剝走它們；產品有 `apps/mobile` 時，`ysk add team` 會還原。
+**Phase 46:** Expo 組織列表、詳情（成員／邀請／離開）與接受邀請畫面接上 `@ysk-kit/sdk` 的 `organizations` 與 `orgRoleCan`。`--preset thin` 會剝走它們；產品有 `apps/mobile` 時，`ysk add team` 會還原。
 
-**Phase 47:** 已完成實例套用器 `@ysk/examples` 與金牌教程 `clinic-booking`（overlay、雙語步驟、預期 envelope、Playwright 截圖）。living kit 仍然不掛行業路由。`ysk add module` 與 capability 的 Express 修補把路由掛在 `errorHandler` 之前。
+**Phase 47:** 已完成實例套用器 `@ysk-kit/examples` 與金牌教程 `clinic-booking`（overlay、雙語步驟、預期 envelope、Playwright 截圖）。living kit 仍然不掛行業路由。`ysk add module` 與 capability 的 Express 修補把路由掛在 `errorHandler` 之前。
 
 **Phase 48:** 已完成實例 `crm-contacts`（客戶與跟進）與 `inventory-stock`（SKU 與庫存異動）。雙模組記憶體 harness 透過 `patches.json` 共用父 repository。
 
@@ -111,3 +111,5 @@ Language: [English](history.md) · 中文
 Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `create-ysk-app` 與 `ysk upgrade` 寫入已 gitignore 的 `.cursor/` 與 `.grok/`。`.gitignore` 同時覆蓋 `.env.*`（保留 `.env.example`）、編輯器目錄，以及 `*.pem`／`*.key`。
 
 **Phase 52:** sqlite dest 的 CI 變綠（lockfile 含三種 Prisma adapter）、create-app Vitest 30 秒 timeout、Release 只在 GitHub owner 為 `ysk` 時運行、e2e API 用 `tsx`。`pnpm test:coverage` 用 Vitest v8 出覆蓋率報告（已設 95%）。共用 web-storage token store 與 Prisma id-cursor helper。Thin dest 的 SDK 測試只覆蓋常駐 resource；llm/billing/orgs/devices 測試留在 living kit。
+
+**v1.0.0:** 工作區 scope 改為 `@ysk-kit/*`。公開套件發佈到 npm org `ysk-kit`。GitHub Releases 留在 `yanshekki/ysk-kit`。從 registry 跑 `create-ysk-app` 會下載對應 GitHub tag 的 tarball。唔再用 GitHub Packages。

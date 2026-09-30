@@ -1,5 +1,5 @@
-import type { CreateQuoteCommand, PageQuery } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { CreateQuoteCommand, PageQuery } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IQuoteRepository } from '../domain/quote-repository';
 
 export const createQuoteService = (repo: IQuoteRepository) => ({

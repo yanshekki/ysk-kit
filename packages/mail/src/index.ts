@@ -1,4 +1,4 @@
-import { MAIL_COPY, type MailLocale, type MailTemplate } from '@ysk/contracts';
+import { MAIL_COPY, type MailLocale, type MailTemplate } from '@ysk-kit/contracts';
 import type { Transporter } from 'nodemailer';
 
 export type MailMessage = {

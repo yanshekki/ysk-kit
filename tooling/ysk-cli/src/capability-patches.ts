@@ -425,7 +425,7 @@ export const patchLlmApp = (src: string): string => {
 export const patchLlmComposition = (src: string): string => {
   let next = insertAfterLastImport(
     src,
-    "import { createLlmFromEnv, type ILlmPort } from '@ysk/llm';",
+    "import { createLlmFromEnv, type ILlmPort } from '@ysk-kit/llm';",
   );
   next = insertAfterLastImport(
     next,
@@ -461,7 +461,7 @@ export const patchLlmFastify = (src: string): string => {
     src,
     "import { llmHandlers, writeLlmSse } from './modules/llm/infra/llm-router';",
   );
-  next = ensureNamedImport(next, '@ysk/contracts', [
+  next = ensureNamedImport(next, '@ysk-kit/contracts', [
     'appContract',
     'claimsHasPermission',
     'LlmCompleteCommandSchema',
@@ -510,7 +510,7 @@ export const patchLlmMain = (src: string): string =>
   );
 
 export const patchLlmMemory = (src: string): string => {
-  let next = insertAfterLastImport(src, "import { createFakeLlm } from '@ysk/llm';");
+  let next = insertAfterLastImport(src, "import { createFakeLlm } from '@ysk-kit/llm';");
   next = insertAfterLastImport(
     next,
     "import { createLlmService } from './modules/llm/application/llm-service';",
@@ -622,7 +622,7 @@ export const patchPushApp = (src: string): string => {
 export const patchPushComposition = (src: string): string => {
   let next = insertAfterLastImport(
     src,
-    "import { createPushFromEnv, type IPushPort } from '@ysk/push';",
+    "import { createPushFromEnv, type IPushPort } from '@ysk-kit/push';",
   );
   next = insertAfterLastImport(
     next,
@@ -697,7 +697,7 @@ export const patchPushWorker = (src: string): string => {
 };
 
 export const patchPushMemory = (src: string): string => {
-  let next = insertAfterLastImport(src, "import { createLogPush } from '@ysk/push';");
+  let next = insertAfterLastImport(src, "import { createLogPush } from '@ysk-kit/push';");
   next = insertAfterLastImport(
     next,
     "import { createDeviceService } from './modules/devices/application/device-service';",
@@ -767,7 +767,7 @@ export const patchBillingApp = (src: string): string => {
     next,
     "import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';",
   );
-  next = ensureNamedImport(next, '@ysk/api-express', ['requireAuth', 'requirePermission']);
+  next = ensureNamedImport(next, '@ysk-kit/api-express', ['requireAuth', 'requirePermission']);
   next = ensureTypeField(next, 'apiKeyService: ApiKeyService;', 'billingService: BillingService;');
   if (!next.includes('stripeWebhookSecret?: string;')) {
     next = ensureTypeField(next, 'jwtSecret: string;', 'stripeWebhookSecret?: string;');
@@ -878,7 +878,7 @@ export const patchBillingFastify = (src: string): string => {
     next,
     "import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';",
   );
-  next = ensureNamedImport(next, '@ysk/contracts', ['appContract', 'claimsHasPermission']);
+  next = ensureNamedImport(next, '@ysk-kit/contracts', ['appContract', 'claimsHasPermission']);
   next = ensureMarkerBlock(
     next,
     'billing:webhook',

@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { OrgRole, TicketDto, TicketStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { OrgRole, TicketDto, TicketStatus } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { ITicketRepository } from '../domain/ticket-repository';
 

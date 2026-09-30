@@ -1,5 +1,5 @@
-import { LoginPasswordCommandSchema } from '@ysk/contracts';
-import { Button, Input } from '@ysk/ui';
+import { LoginPasswordCommandSchema } from '@ysk-kit/contracts';
+import { Button, Input } from '@ysk-kit/ui';
 import { type FormEvent, useState } from 'react';
 import { api } from '../lib/client';
 

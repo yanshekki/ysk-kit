@@ -42,7 +42,7 @@ Language: [English](tutorial.md) · 中文
 ## 5. 開倉命令
 
 ```bash
-pnpm --filter @ysk/examples start apply event-rsvp --dest ~/Projects/my-events --yes
+pnpm --filter @ysk-kit/examples start apply event-rsvp --dest ~/Projects/my-events --yes
 ```
 
 預設目的地（已 gitignore）：`examples/.runs/event-rsvp`。覆蓋上一次結果請加 `--force`。

@@ -1,5 +1,5 @@
-import { defaultPublicConfig } from '@ysk/config';
-import { createYskClient } from '@ysk/sdk';
+import { defaultPublicConfig } from '@ysk-kit/config';
+import { createYskClient } from '@ysk-kit/sdk';
 import { Platform } from 'react-native';
 import { createSecureTokenStore } from '../adapters/token-store';
 

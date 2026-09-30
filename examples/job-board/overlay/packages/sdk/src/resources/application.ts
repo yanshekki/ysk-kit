@@ -2,7 +2,7 @@ import type {
   ApplicationDto,
   CreateApplicationCommand,
   PaginatedApplication,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

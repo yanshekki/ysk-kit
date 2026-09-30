@@ -47,7 +47,7 @@ Industry work orders do **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply field-work-orders --dest ~/Projects/my-field --yes
+pnpm --filter @ysk-kit/examples start apply field-work-orders --dest ~/Projects/my-field --yes
 ```
 
 Default destination (gitignored): `examples/.runs/field-work-orders`. Replace a previous run with `--force`.
@@ -63,7 +63,7 @@ Equivalent manual steps (sqlite): `create-ysk-app` thin saas sqlite `--no-admin 
 1. `apps/api/src/composition.ts` — `createWorkOrderService(..., queue)`
 2. `apps/api/src/create-memory-input.ts` — same for the memory harness
 
-The overlay also replaces `packages/contracts/src/enums/notification-type.ts` so `WORK_ASSIGNED: 'work.assigned'` sits next to `AUTH_WELCOME`, `AUTH_RESET`, `USER_CREATED`, and `ORG_INVITED`. Do not import BullMQ; the application layer uses `IJobQueue` from `@ysk/jobs` (auth-service already does).
+The overlay also replaces `packages/contracts/src/enums/notification-type.ts` so `WORK_ASSIGNED: 'work.assigned'` sits next to `AUTH_WELCOME`, `AUTH_RESET`, `USER_CREATED`, and `ORG_INVITED`. Do not import BullMQ; the application layer uses `IJobQueue` from `@ysk-kit/jobs` (auth-service already does).
 
 ## 7. Data model
 

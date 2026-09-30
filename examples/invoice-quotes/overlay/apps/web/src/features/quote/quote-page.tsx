@@ -1,4 +1,4 @@
-import { CreateQuoteCommandSchema } from '@ysk/contracts';
+import { CreateQuoteCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   EmptyState,
@@ -13,9 +13,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { formatHkd } from '@ysk/ui-logic';
-import { createQuoteHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { formatHkd } from '@ysk-kit/ui-logic';
+import { createQuoteHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

@@ -1,4 +1,4 @@
-import { startOtelFromEnv } from '@ysk/observability';
+import { startOtelFromEnv } from '@ysk-kit/observability';
 import { createComposition } from './composition';
 import { registerWorkers } from './workers';
 

@@ -4,7 +4,7 @@ import type {
   CreateContactCommand,
   PageQuery,
   PaginatedContact,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 
 export type ContactRecord = {
   id: string;

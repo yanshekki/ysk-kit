@@ -12,7 +12,7 @@ Language: [English](tutorial.md) · 中文
 
 - 一個**新產品目錄**（不是本 kit），來自 `--preset thin`：身分、檔案、通知、工作、郵件、API 金鑰、加密與即時通訊。
 - Hexagonal 模組 `quote`，路徑 `GET/POST /v1/quote`，另有送出與接受。
-- Web 頁 `/quote`：列表、建立表單，`DRAFT` 列上的 **Send** 與 `SENT` 列上的 **Accept**。金額用 `@ysk/ui-logic` 的 `formatHkd` 顯示。
+- Web 頁 `/quote`：列表、建立表單，`DRAFT` 列上的 **Send** 與 `SENT` 列上的 **Accept**。金額用 `@ysk-kit/ui-logic` 的 `formatHkd` 顯示。
 - 種子帳戶 `admin@ysk.hk`／`ysk-admin-dev` 與 `user@ysk.hk`／`ysk-user-dev`。管理員有一張草稿；使用者列表由空白開始。
 - 記憶體 port 測試：金額 `0`、送出／接受轉換、列不存在。
 
@@ -49,13 +49,13 @@ SQLite 不需要 Compose。套用命令依 `spec.json` 預設 sqlite。
 在 kit 工作副本執行：
 
 ```bash
-pnpm --filter @ysk/examples start apply invoice-quotes --dest ~/Projects/my-quotes --yes
+pnpm --filter @ysk-kit/examples start apply invoice-quotes --dest ~/Projects/my-quotes --yes
 ```
 
 `--yes` 會傳給 `create-ysk-app`，agent 與 CI 不會等待 TTY。預設目的地（已 gitignore）是 `examples/.runs/invoice-quotes`。覆蓋上一次結果：
 
 ```bash
-pnpm --filter @ysk/examples start apply invoice-quotes --yes --force
+pnpm --filter @ysk-kit/examples start apply invoice-quotes --yes --force
 ```
 
 人手等價步驟（sqlite）：`create-ysk-app` thin saas sqlite `--no-admin --no-mobile --yes`，然後 `ysk add module quote --prisma --web`，複製此 overlay，替換 Prisma 模型 `Quote`，`prisma db push`，seed。
@@ -75,7 +75,7 @@ Prisma model `Quote`（狀態是 `String`，不是 TypeScript `enum`）：
 | `id` | UUID | 自動產生 |
 | `clientName` | 字串，1–80 | 必填 |
 | `amountHkd` | 整數 `> 0` | 以仙為單位。`z.number().int().positive()` |
-| `status` | `DRAFT` \| `SENT` \| `ACCEPTED` | `@ysk/contracts` 內 `as const` + Zod。建立時為 `DRAFT` |
+| `status` | `DRAFT` \| `SENT` \| `ACCEPTED` | `@ysk-kit/contracts` 內 `as const` + Zod。建立時為 `DRAFT` |
 | `authorId` | UUID | 列的擁有者（已登入使用者） |
 | `createdAt`／`updatedAt` | datetime | Prisma |
 

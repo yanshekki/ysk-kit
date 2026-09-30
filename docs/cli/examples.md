@@ -2,11 +2,11 @@
 
 Language: [中文](examples.zh.md) · English
 
-Package `@ysk/examples` at `tooling/examples`. Catalogue and tutorials: [examples/README.md](../../examples/README.md).
+Package `@ysk-kit/examples` at `tooling/examples`. Catalogue and tutorials: [examples/README.md](../../examples/README.md).
 
 ```text
-pnpm --filter @ysk/examples start apply <slug> [--dest <path>] [--yes] [--db sqlite|mysql|postgresql] [--force] [--skip-install] [--skip-verify]
-pnpm --filter @ysk/examples start capture <slug> [--dest <path>]
+pnpm --filter @ysk-kit/examples start apply <slug> [--dest <path>] [--yes] [--db sqlite|mysql|postgresql] [--force] [--skip-install] [--skip-verify]
+pnpm --filter @ysk-kit/examples start capture <slug> [--dest <path>]
 ```
 
 Missing `<slug>` prints `--help` and exits 1.

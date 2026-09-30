@@ -1,4 +1,4 @@
-import { type PageQuery, PageQuerySchema } from '@ysk/contracts';
+import { type PageQuery, PageQuerySchema } from '@ysk-kit/contracts';
 
 export const parsePageQuery = (raw: unknown): PageQuery => PageQuerySchema.parse(raw);
 

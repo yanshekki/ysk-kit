@@ -1,4 +1,4 @@
-import type { CreateRsvpCommand, PageQuery, PaginatedRsvp, RsvpDto } from '@ysk/contracts';
+import type { CreateRsvpCommand, PageQuery, PaginatedRsvp, RsvpDto } from '@ysk-kit/contracts';
 
 export type RsvpRecord = {
   id: string;

@@ -1,4 +1,4 @@
-import type { CreateEventCommand, EventDto, PageQuery, PaginatedEvent } from '@ysk/contracts';
+import type { CreateEventCommand, EventDto, PageQuery, PaginatedEvent } from '@ysk-kit/contracts';
 
 export type EventRecord = {
   id: string;

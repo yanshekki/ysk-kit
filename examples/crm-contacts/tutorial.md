@@ -44,7 +44,7 @@ Industry CRM does **not** mount on the living kit API.
 ## 5. Scaffold commands
 
 ```bash
-pnpm --filter @ysk/examples start apply crm-contacts --dest ~/Projects/my-crm --yes
+pnpm --filter @ysk-kit/examples start apply crm-contacts --dest ~/Projects/my-crm --yes
 ```
 
 Default destination (gitignored): `examples/.runs/crm-contacts`. Replace a previous run with `--force`.

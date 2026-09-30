@@ -1,4 +1,4 @@
-import type { Platform } from '@ysk/contracts';
+import type { Platform } from '@ysk-kit/contracts';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { ISessionRepository, SessionRecord } from '../domain/session-repository';
 

@@ -1,4 +1,4 @@
-import { CreateOrganizationCommandSchema, type OrganizationDto } from '@ysk/contracts';
+import { CreateOrganizationCommandSchema, type OrganizationDto } from '@ysk-kit/contracts';
 import { useEffect, useState } from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { api } from '../lib/client';

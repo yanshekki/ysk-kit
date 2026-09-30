@@ -1,6 +1,11 @@
-import { type HttpHandler, mountContract, requireAuth, requirePermission } from '@ysk/api-express';
-import { appContract, type LlmCompleteCommand, LlmCompleteCommandSchema } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import {
+  type HttpHandler,
+  mountContract,
+  requireAuth,
+  requirePermission,
+} from '@ysk-kit/api-express';
+import { appContract, type LlmCompleteCommand, LlmCompleteCommandSchema } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { Express } from 'express';
 import type { LlmService } from '../application/llm-service';
 

@@ -10,7 +10,7 @@ Scaffold a product from YSK Kit. Law: [AGENTS.md](../../AGENTS.md). Manual: [cre
 2. Run:
 
 ```bash
-pnpm --filter @ysk/create-app start <name> --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas
 ```
 
 3. In the new directory: `pnpm install`, copy `.env.example` to `.env`, start Compose if the database is MySQL or PostgreSQL.
@@ -21,4 +21,4 @@ pnpm --filter @ysk/create-app start <name> --preset thin --db mysql --flavor saa
 
 Do not invent a parallel monorepo layout. Do not copy this kit by hand. `php-bridge` and `static-web3` skip migrate/seed; follow the generated README instead. Later, refresh kit guardrails with [upgrade](../guides/upgrade.md).
 
-Ten worked product systems live in [`examples/`](../../examples/README.md). Apply them with `pnpm --filter @ysk/examples start apply <slug> --yes` instead of inventing an industry module on the living kit.
+Ten worked product systems live in [`examples/`](../../examples/README.md). Apply them with `pnpm --filter @ysk-kit/examples start apply <slug> --yes` instead of inventing an industry module on the living kit.

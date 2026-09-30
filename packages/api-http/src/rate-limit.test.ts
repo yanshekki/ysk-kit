@@ -1,4 +1,4 @@
-import { AppError } from '@ysk/domain-kernel';
+import { AppError } from '@ysk-kit/domain-kernel';
 import { describe, expect, it } from 'vitest';
 import { clientIp, createMemoryRateLimit } from './rate-limit';
 

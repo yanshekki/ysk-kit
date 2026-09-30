@@ -1,4 +1,4 @@
-import { CreateJobCommandSchema } from '@ysk/contracts';
+import { CreateJobCommandSchema } from '@ysk-kit/contracts';
 import {
   Button,
   EmptyState,
@@ -13,8 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@ysk/ui';
-import { createJobHooks } from '@ysk/web-sdk';
+} from '@ysk-kit/ui';
+import { createJobHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useState } from 'react';
 import { api } from '../../lib/client';
 

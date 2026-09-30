@@ -1,5 +1,5 @@
-import { slicePage } from '@ysk/application';
-import type { AppointmentDto, AppointmentStatus } from '@ysk/contracts';
+import { slicePage } from '@ysk-kit/application';
+import type { AppointmentDto, AppointmentStatus } from '@ysk-kit/contracts';
 import type { AppointmentRecord, IAppointmentRepository } from '../domain/appointment-repository';
 
 const toDto = (row: AppointmentRecord): AppointmentDto => ({

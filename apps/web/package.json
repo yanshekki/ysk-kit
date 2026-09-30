@@ -1,5 +1,5 @@
 {
-  "name": "@ysk/web",
+  "name": "@ysk-kit/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,12 +13,12 @@
   "dependencies": {
     "@tanstack/react-query": "^5.75.0",
     "@tanstack/react-router": "^1.120.3",
-    "@ysk/config": "workspace:*",
-    "@ysk/contracts": "workspace:*",
-    "@ysk/sdk": "workspace:*",
-    "@ysk/ui": "workspace:*",
-    "@ysk/ui-logic": "workspace:*",
-    "@ysk/web-sdk": "workspace:*",
+    "@ysk-kit/config": "workspace:*",
+    "@ysk-kit/contracts": "workspace:*",
+    "@ysk-kit/sdk": "workspace:*",
+    "@ysk-kit/ui": "workspace:*",
+    "@ysk-kit/ui-logic": "workspace:*",
+    "@ysk-kit/web-sdk": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

@@ -17,7 +17,7 @@ Language: [中文](flavors.zh.md) · English
 
 **saas** — multi-surface product: public web, operator admin, optional Expo app, one API.
 
-**desktop** — Electron talks to the same API through `@ysk/sdk` (`platform: desktop`). Prisma stays in the API process, including localhost SQLite.
+**desktop** — Electron talks to the same API through `@ysk-kit/sdk` (`platform: desktop`). Prisma stays in the API process, including localhost SQLite.
 
 **gateway** — machine clients and an operator console. Mint keys with `POST /v1/me/api-keys`, then `Authorization: Bearer ysk_live_…`. Writes `GATEWAY.md`.
 
@@ -25,6 +25,6 @@ Language: [中文](flavors.zh.md) · English
 
 **trading** — API + web + the existing BullMQ worker. Market data and exchange connectors stay in the product. Writes `TRADING.md`.
 
-**static-web3** — Vite web and `@ysk/*` client libraries only. No Prisma, no `DATABASE_URL`. Point `API_PUBLIC_URL` at a remote API if the UI needs one. Wallet libraries belong in the product. Writes `WEB3.md`.
+**static-web3** — Vite web and `@ysk-kit/*` client libraries only. No Prisma, no `DATABASE_URL`. Point `API_PUBLIC_URL` at a remote API if the UI needs one. Wallet libraries belong in the product. Writes `WEB3.md`.
 
 CLI flags: [create-ysk-app](../cli/create-ysk-app.md).

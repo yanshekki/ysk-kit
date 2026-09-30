@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import type { InvoiceDto } from '@ysk/contracts';
-import { AppError } from '@ysk/domain-kernel';
+import type { InvoiceDto } from '@ysk-kit/contracts';
+import { AppError } from '@ysk-kit/domain-kernel';
 import type { IBillingPort } from '../domain/billing-port';
 
 export const verifyStripeSignature = (

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { CreateRsvpCommand } from '@ysk/contracts';
-import type { YskClient } from '@ysk/sdk';
+import type { CreateRsvpCommand } from '@ysk-kit/contracts';
+import type { YskClient } from '@ysk-kit/sdk';
 
 export const rsvpQueryKey = ['rsvp'] as const;
 

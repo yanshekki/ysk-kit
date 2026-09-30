@@ -12,7 +12,7 @@ export type CheckoutResult = {
   pending?: true;
 };
 
-import type { InvoiceDto } from '@ysk/contracts';
+import type { InvoiceDto } from '@ysk-kit/contracts';
 
 export interface IBillingPort {
   checkout(input: CheckoutInput): Promise<CheckoutResult>;

@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
-import { AcceptInviteCommandSchema } from '@ysk/contracts';
-import { Button, Input } from '@ysk/ui';
-import { createOrganizationHooks } from '@ysk/web-sdk';
+import { AcceptInviteCommandSchema } from '@ysk-kit/contracts';
+import { Button, Input } from '@ysk-kit/ui';
+import { createOrganizationHooks } from '@ysk-kit/web-sdk';
 import { type FormEvent, useEffect, useState } from 'react';
 import { api } from '../../lib/client';
 

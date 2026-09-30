@@ -28,7 +28,7 @@ Two Node processes in production:
 | Worker | `apps/api/dist/worker.js` | consumes BullMQ / memory queue |
 
 ```bash
-pnpm --filter @ysk/api build
+pnpm --filter @ysk-kit/api build
 pm2 start ecosystem.config.cjs
 ```
 

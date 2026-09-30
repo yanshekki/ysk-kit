@@ -26,7 +26,7 @@ Gateway, php-bridge, trading, and static-web3 already have flavor manuals under 
 From the kit checkout:
 
 ```bash
-pnpm --filter @ysk/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
+pnpm --filter @ysk-kit/examples start apply clinic-booking --dest ~/Projects/my-clinic --yes
 ```
 
 Default destination (gitignored via `.runs/`): `examples/.runs/<slug>/`. Pass `--force` to replace a previous run. `--db sqlite|mysql|postgresql` overrides `spec.json`. `--skip-install` and `--skip-verify` are for generator tests.
@@ -44,7 +44,7 @@ Command reference: [docs/cli/examples.md](../docs/cli/examples.md).
 ## Screenshots
 
 ```bash
-pnpm --filter @ysk/examples start capture clinic-booking
+pnpm --filter @ysk-kit/examples start capture clinic-booking
 ```
 
 Starts the applied destination on API **13001** and web **15173**, walks the tutorial UI, and writes PNG files into `examples/<slug>/screenshots/`. For sqlite destinations, capture recreates `apps/api/dev.db` and re-seeds so the empty-list screenshot stays empty. Capture is a documentation tool; CI does not compare pixels.

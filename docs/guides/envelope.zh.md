@@ -9,7 +9,7 @@ JSON 路由只回兩種形狀。列表、單一資源與空的成功一律使用
 { ok: false, error: { code, message, details?, requestId? } }
 ```
 
-`@ysk/contracts` 的輔助：
+`@ysk-kit/contracts` 的輔助：
 
 ```ts
 export const OkSchema = <T extends z.ZodType>(data: T) =>
@@ -21,7 +21,7 @@ export const ErrSchema = z.object({
 });
 ```
 
-每條 ts-rest 成功與錯誤回應都應以 `OkSchema` / `ErrSchema` 包裝。`@ysk/sdk` 會解開 `ok: true`，並在 `ok: false` 時丟出錯誤。客戶端不要對 kit 路徑直接 `fetch`。
+每條 ts-rest 成功與錯誤回應都應以 `OkSchema` / `ErrSchema` 包裝。`@ysk-kit/sdk` 會解開 `ok: true`，並在 `ok: false` 時丟出錯誤。客戶端不要對 kit 路徑直接 `fetch`。
 
 錯誤 `code` 寫在 contracts（`VALIDATION_FAILED`、`UNAUTHENTICATED`、`FORBIDDEN`、`NOT_FOUND`、`CONFLICT`、`RATE_LIMITED`、`INTERNAL`……）。前端、日誌與監控以 `code` 為鍵，不以翻譯後的 `message` 為鍵。
 
@@ -34,7 +34,7 @@ export const ErrSchema = z.object({
 | `POST /v1/llm/stream` | SSE：`event: delta` 然後 `event: done` | 權杖串流不能等一個 JSON body |
 | `GET /v1/billing/invoices/:id/pdf` | HTTP 302 到 Stripe `invoice_pdf`（後備 `hosted_invoice_url`） | 瀏覽器下載；kit 不存放 PDF 位元組 |
 | `GET /docs` | Scalar HTML | 給人看的 OpenAPI 介面 |
-| `GET /openapi.json` | OpenAPI 文件 | 機器發現；呼叫路由仍然經 `@ysk/sdk` |
+| `GET /openapi.json` | OpenAPI 文件 | 機器發現；呼叫路由仍然經 `@ysk-kit/sdk` |
 
 LLM complete（`POST /v1/llm/complete`）仍用 envelope。發票列表（`GET /v1/billing/invoices`）仍用 envelope。
 

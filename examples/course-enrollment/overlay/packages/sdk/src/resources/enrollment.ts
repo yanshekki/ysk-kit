@@ -1,4 +1,8 @@
-import type { CreateEnrollmentCommand, EnrollmentDto, PaginatedEnrollment } from '@ysk/contracts';
+import type {
+  CreateEnrollmentCommand,
+  EnrollmentDto,
+  PaginatedEnrollment,
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {

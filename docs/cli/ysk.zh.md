@@ -2,7 +2,7 @@
 
 Language: [English](ysk.md) · 中文
 
-產生器位於 `tooling/ysk-cli`。在產品根目錄執行 `pnpm ysk …`（或 `pnpm --filter @ysk/cli start …`）。
+產生器位於 `tooling/ysk-cli`。在產品根目錄執行 `pnpm ysk …`（或 `pnpm --filter @ysk-kit/cli start …`）。
 
 ```text
 pnpm ysk add module <kebab-name> [--prisma] [--web] [--no-web]
@@ -54,21 +54,21 @@ pnpm layers && pnpm typecheck && pnpm test
 
 | 能力 | 加入甚麼 |
 |---|---|
-| `auth` | Session／OTP Prisma、`JWT_*`、`OTP_TTL_SECONDS`、`TWILIO_*`、`@ysk/auth` |
+| `auth` | Session／OTP Prisma、`JWT_*`、`OTP_TTL_SECONDS`、`TWILIO_*`、`@ysk-kit/auth` |
 | `rbac` | 權限已在 `ROLE_PERMISSIONS`；不複製檔案 |
 | `audit-log` | 審計 Prisma fragment |
-| `storage` | FileObject fragment、`S3_*`、`@ysk/storage` |
-| `i18n` | `@ysk/i18n`（預設 locale zh-HK） |
-| `jobs` | `REDIS_URL`、`@ysk/jobs` |
-| `mail` | `SMTP_URL`、`MAIL_FROM`、`@ysk/mail` |
+| `storage` | FileObject fragment、`S3_*`、`@ysk-kit/storage` |
+| `i18n` | `@ysk-kit/i18n`（預設 locale zh-HK） |
+| `jobs` | `REDIS_URL`、`@ysk-kit/jobs` |
+| `mail` | `SMTP_URL`、`MAIL_FROM`、`@ysk-kit/mail` |
 | `notifications` | 站內通知路由 |
 | `llm` | `LlmUsage`、源碼樹 + Express/Fastify/composition/SDK/web 修補、`LLM_*` / `XAI_API_KEY` |
-| `websocket` | `@ysk/realtime`，以 `createRealtimeFromEnv` 修補 `composition.ts` |
+| `websocket` | `@ysk-kit/realtime`，以 `createRealtimeFromEnv` 修補 `composition.ts` |
 | `push` | Device fragment、源碼樹 + worker 修補、`EXPO_ACCESS_TOKEN`、`FCM_*` |
 | `mobile` | 指向 `apps/mobile` Expo 模板 |
 | `team` | Organization + Membership fragment、源碼樹 + web 與 Expo 組織畫面 |
 | `apikey` | ApiKey fragment |
-| `crypto` | `CRYPTO_MASTER_KEY`、`@ysk/crypto` |
+| `crypto` | `CRYPTO_MASTER_KEY`、`@ysk-kit/crypto` |
 | `billing` | Organization 上的 Subscription fragment；**須先有 `team`** |
 
 對 `llm`、`team`、`billing`、`push`，若產品的 `app.ts` 或 `composition.ts` 尚未包含略過標記（`createLlmService`、`createOrganizationService`、`createBillingService`、`createDeviceService`），命令會複製 `tooling/ysk-cli/templates/capabilities/<name>/`。本倉已經接上那些 service，再加一次是空操作。
@@ -123,11 +123,11 @@ pnpm ysk check agent
 | 規則 | 掃描範圍 | 標記甚麼 |
 |---|---|---|
 | `no-ts-enum` | `apps/**`、`packages/**`、`modules/**`（`.ts` / `.tsx`） | TypeScript `enum` / `const enum` |
-| `clients-no-prisma` | `apps/web`、`apps/admin`、`apps/mobile`、`apps/desktop` | import `@prisma/client`、`@ysk/db-prisma`、`apps/api/src/generated` 或 `generated/prisma` |
+| `clients-no-prisma` | `apps/web`、`apps/admin`、`apps/mobile`、`apps/desktop` | import `@prisma/client`、`@ysk-kit/db-prisma`、`apps/api/src/generated` 或 `generated/prisma` |
 | `clients-no-raw-fetch` | 同上四個 client app | `fetch(` |
 
 略過：`*.test.ts` / `*.test.tsx`、註解行、`node_modules`、`dist`、`generated`、`coverage`。Prisma schema 的 `enum UserStatus` 在 `.prisma` 檔，不是 TypeScript，不會掃描。
 
-允許的 raw `fetch`：`apps/admin/src/features/queues/queues-page.tsx`（Bull Board HTML 探測）。`@ysk/sdk` 的 HTTP 在 `packages/sdk`，不是 client app。
+允許的 raw `fetch`：`apps/admin/src/features/queues/queues-page.tsx`（Bull Board HTML 探測）。`@ysk-kit/sdk` 的 HTTP 在 `packages/sdk`，不是 client app。
 
 測試：[測試指南](../guides/testing.zh.md)。

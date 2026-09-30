@@ -1,8 +1,8 @@
 export const HELP = `create-ysk-app — scaffold a product from YSK Kit
 
 Usage:
-  pnpm --filter @ysk/create-app start <name> [options]
-  pnpm create @ysk/app <name> [options]
+  pnpm --filter @ysk-kit/create-app start <name> [options]
+  pnpm create @ysk-kit/app <name> [options]
 
 Options:
   --preset thin|full

@@ -6,7 +6,7 @@ Language: [English](README.md) · 中文
 
 | | |
 |---|---|
-| **版本** | 0.1.0 |
+| **版本** | 1.0.0 |
 | **授權** | MIT |
 | **公司** | [YSK Limited](https://ysk.hk/) |
 | **聯絡** | email@ysk.hk |
@@ -18,7 +18,7 @@ Language: [English](README.md) · 中文
 ## 十五分鐘開一個產品
 
 ```bash
-pnpm --filter @ysk/create-app start my-product --preset thin --db mysql --flavor saas
+pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 cd my-product
 pnpm install
 cp .env.example .env
@@ -31,7 +31,7 @@ pnpm dev
 
 預設 preset 是 **thin**：複製本樹後剝走 llm、billing、organizations 與 push 裝置。`--preset full` 保留完整示範。還原能力：`pnpm ysk add llm|team|billing|push`。
 
-十個已完成的產品系統（欄位、規則、截圖）見 [examples/](examples/README.zh.md)。套用：`pnpm --filter @ysk/examples start apply <slug> --yes`。
+十個已完成的產品系統（欄位、規則、截圖）見 [examples/](examples/README.zh.md)。套用：`pnpm --filter @ysk-kit/examples start apply <slug> --yes`。
 
 ## 運行本倉
 
@@ -66,7 +66,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk add <capability>` | 合併一項已編目的能力 |
 | `pnpm ysk upgrade` | 更新允許清單上的 kit 護欄 |
 | `pnpm ysk check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch |
-| `pnpm --filter @ysk/create-app start <name>` | 產生一個產品 |
+| `pnpm --filter @ysk-kit/create-app start <name>` | 產生一個產品 |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk check agent` | 驗證一次改動 |
 
 完整表格：[CLI](docs/cli/index.zh.md)、[工作區 script](docs/cli/workspace-scripts.zh.md)、[環境變數](docs/cli/env.zh.md)。
@@ -86,9 +86,9 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 ## 規則（短）
 
-- `@ysk/contracts` 是 enum、DTO、error code 與 ts-rest 路由的唯一來源。
+- `@ysk-kit/contracts` 是 enum、DTO、error code 與 ts-rest 路由的唯一來源。
 - 不用 TypeScript `enum`。
-- 客戶端只經 `@ysk/sdk` 呼叫 API。
+- 客戶端只經 `@ysk-kit/sdk` 呼叫 API。
 - Prisma 只留在 API infra。
 - JSON 回應用 `{ ok, data }` / `{ ok, error }`，四個已文件化的 envelope 例外除外。
 

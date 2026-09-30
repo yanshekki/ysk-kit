@@ -8,7 +8,7 @@ import type {
   UserDto,
   VerifyAdminOtpCommand,
   VerifyOtpCommand,
-} from '@ysk/contracts';
+} from '@ysk-kit/contracts';
 import type { HttpClient } from '../http';
 import type { TokenStore } from '../token-store';
 

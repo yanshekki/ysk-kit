@@ -1,5 +1,5 @@
 import { Writable } from 'node:stream';
-import { REQUEST_ID_HEADER } from '@ysk/api-http';
+import { REQUEST_ID_HEADER } from '@ysk-kit/api-http';
 import pino from 'pino';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createFastifyApp } from './app-fastify';

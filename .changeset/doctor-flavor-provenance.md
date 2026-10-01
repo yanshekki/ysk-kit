@@ -28,3 +28,5 @@
 ---
 
 `ysk-kit doctor` checks Node/pnpm engines, required env, insecure defaults, database reachability and migrations, guardrail drift versus `upgrade`, and `check agent`. `--json` prints the report. Exit 1 when any check is an error.
+
+Thin products stub mobile push until `ysk-kit add push`, and that stub's test matches. `static-web3` skips the Prisma enum comparison because that flavor has no API.

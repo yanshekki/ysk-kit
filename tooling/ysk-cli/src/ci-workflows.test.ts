@@ -39,7 +39,14 @@ describe('CI workflows', () => {
     expect(publishScript).toContain('changeset publish');
     expect(publishScript).not.toContain('changeset publish --provenance');
     expect(release).toContain('create-github-releases: false');
-    expect(release).toContain('node .github/sync-kit-version.mjs');
+    expect(release).toContain('pnpm version:packages');
+    const versionScript = (
+      JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')) as {
+        scripts: Record<string, string>;
+      }
+    ).scripts['version:packages'];
+    expect(versionScript).toBe('changeset version && node .github/sync-kit-version.mjs');
+    expect(release).not.toContain('changeset version &&');
   });
 
   it('still versions when the published versions are already on npm', () => {

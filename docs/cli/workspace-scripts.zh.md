@@ -25,7 +25,7 @@ Language: [English](workspace-scripts.md) · 中文
 | `pnpm pm2:start` | `pm2 start ecosystem.config.cjs` | 生產 API + worker |
 | `pnpm changeset` | Changesets | 為可發布套件版本 |
 | `pnpm build:packages` | 篩選 `packages/**` 與 `tooling/**` | 為程式庫輸出 `dist/` |
-| `pnpm release:publish` | 編譯然後 `NPM_CONFIG_PROVENANCE=true pnpm changeset publish` | 把 `@ysk-kit/*` 連同 provenance 發佈到 npmjs |
+| `pnpm release:publish` | 編譯，然後 `.github/publish-packages.mjs` | 用 `pnpm publish --provenance` 發佈 `@ysk-kit/*`，並要求 `npm view` 成功 |
 
 應用層：
 
@@ -38,13 +38,15 @@ Language: [English](workspace-scripts.md) · 中文
 
 `.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`flavor-smoke`（matrix：每個 flavor × `thin`／`full`，sqlite，然後 install／typecheck／test／build）、`example-smoke`（matrix：把目錄裡每一個 slug 套用到 sqlite）、`e2e`（MySQL 8.4 + Chromium）。`flavor-smoke` 快取 pnpm store 與 Electron 下載。`php-bridge` 與 `static-web3` 忽略 `--preset`；matrix 仍然產生兩種 preset，以確認旗標可被接受。
 
-Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PUBLISH` 為 `true` 時運行。只有每個 public `name@version` 已在 npmjs、而且沒有待處理的 changeset 檔時，才跳過 Changesets action（`.github/unpublished-packages.mjs`）。已發佈版本仍是 1.0.2 時，待處理的 changeset 仍然會打開版本 PR。版本指令是 `pnpm version:packages`（先 `changeset version`，然後 `.github/sync-kit-version.mjs`）。Changesets action 不會用 shell 執行該字串，所以 `&&` 留在 pnpm script 裡面。後一步把 `@ysk-kit/create-app` 的版本寫入私有的根 `package.json`，這就是 `create-ysk-app` 在 `vX.Y.Z` tarball 裡核對的版本。`create-github-releases` 設為 `false`，因此 action 不會為每個套件各開一個 GitHub Release。產品發佈維持單一 tag `vX.Y.Z`，與 v1.0.0、v1.0.1 相同。
+Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PUBLISH` 為 `true` 時運行。只有每個 public `name@version` 已經可以安裝（`npm view`，即 install packument），而且沒有待處理的 changeset 檔時，才跳過 Changesets action（`.github/unpublished-packages.mjs`）。版本文件已存在但 tarball 還不能下載，不算已發佈。待處理的 changeset 仍然會打開版本 PR。版本指令是 `pnpm version:packages`（先 `changeset version`，然後 `.github/sync-kit-version.mjs`）。Changesets action 不會用 shell 執行該字串，所以 `&&` 留在 pnpm script 裡面。後一步把 `@ysk-kit/create-app` 的版本寫入私有的根 `package.json`，這就是 `create-ysk-app` 在 `vX.Y.Z` tarball 裡核對的版本。`create-github-releases` 與 `push-git-tags` 都設為 `false`，因此發佈不會為每個套件各開一個 GitHub Release，也不會推送每個套件的 tag。產品發佈維持單一 annotated tag `vX.Y.Z`。`workflow_dispatch` 只記錄認證方式、registry 與 `npm view`，不會發佈。
 
 ### npm provenance 與 Trusted Publishing
 
-`pnpm release:publish` 在 `changeset publish` 之前設定 `NPM_CONFIG_PROVENANCE=true`。npm 把這個變數當成 `npm publish --provenance`。`@changesets/cli` 3.0.3 不接受 `--provenance` 參數；傳入會令發佈失敗。工作流程仍然把 `secrets.NPM_TOKEN` 傳入 `NODE_AUTH_TOKEN`，因此現有的 token 發佈路徑保留。release job 的權限是 `contents: write`、`pull-requests: write`（Changesets 版本 PR 與 tag）與 `id-token: write`（GitHub OIDC）。工作流程預設是 `contents: read`。
+`pnpm release:publish` 先編譯，然後執行 `.github/publish-packages.mjs`。pnpm 12 自己發佈（`pnpm publish` 不會呼叫 npm CLI），也不把 `NPM_CONFIG_PROVENANCE` 當成 `--provenance`，所以腳本對每個套件傳入 `--provenance --access public`。`@changesets/cli` 3.0.3 沒有 `--provenance` 旗標；`changeset publish` 還會吃掉 pnpm 的輸出，並把退出碼 0 當成已發佈。pnpm 12.8.1 在 registry 接受 PUT 後就返回 0（`--publish-wait-timeout` 預設是 0）。腳本會記錄 OIDC 是否可用、`NODE_AUTH_TOKEN` 是否已設定、`pnpm config get` 的 registry，以及實際執行的 pnpm 指令。然後在五分鐘內重試 `npm view <name>@<version>`。仍有套件看不到就讓 job 失敗。registry 已經接受的版本不會再發佈一次。
 
-Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明。在啟用 Trusted Publishing 之前，npm token 仍然負責上傳認證。
+工作流程仍然把 `secrets.NPM_TOKEN` 傳入 `NODE_AUTH_TOKEN`。在 pnpm 12，這個 token 只是後備：job 有 `id-token: write`，而且 npm 已為本倉與 `release.yml` 設定 Trusted Publisher 時，OIDC 交換會蓋過靜態 token。release job 的權限是 `contents: write`、`pull-requests: write`（Changesets 版本 PR）與 `id-token: write`（GitHub OIDC）。工作流程預設是 `contents: read`。
+
+Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明。
 
 在 npmjs.com 為每個公開的 `@ysk-kit/*` 套件開啟（`packages/` 與 `tooling/` 底下、`private` 不是 true 的套件）：
 
@@ -54,6 +56,6 @@ Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明�
 4. 使用 GitHub 託管的 runner（此工作流程用 `ubuntu-latest`）。自託管 runner 不能鑄造 npm 的 OIDC token。
 5. 本倉已使用 Node 24，其 npm 可以交換 OIDC token（npm 11.5.1 或更新）。
 
-Trusted Publisher 成功發佈一次之後，從 release job 移除 `NODE_AUTH_TOKEN`／`secrets.NPM_TOKEN`。該變數存在時，npm 用 token 認證，不會走 trusted-publisher 交換。兩種模式的 provenance 都使用 `id-token: write`。不要設定 `NPM_CONFIG_PROVENANCE=false`。
+Trusted Publisher 成功發佈一次之後，從 release job 移除 `NODE_AUTH_TOKEN`／`secrets.NPM_TOKEN`。在那之前，token 保留作 OIDC 交換不適用時的後備。不要設定 `NPM_CONFIG_PROVENANCE=false`。
 
 2026 年 5 月 20 日之後在 npmjs 建立的設定，必須明確允許 `npm publish` 動作。

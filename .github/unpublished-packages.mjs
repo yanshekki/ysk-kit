@@ -19,23 +19,32 @@ const publicPackages = () => {
         continue;
       }
       if (pkg.private === true || !pkg.name || !pkg.version) continue;
-      out.push({ name: pkg.name, version: pkg.version });
+      out.push({ name: pkg.name, version: pkg.version, dir: join(base, name) });
     }
   }
   return out;
 };
 
+export { publicPackages };
+
+/** True when the install packument lists this version. `npm view` reads that document. */
+export const versionIsInstallable = (packument, version) => packument?.versions?.[version] != null;
+
 const encodedName = (name) =>
   name.startsWith('@') ? `@${encodeURIComponent(name.slice(1))}` : encodeURIComponent(name);
 
 const isOnRegistry = async (name, version, token) => {
-  const url = `${REGISTRY}/${encodedName(name)}/${version}`;
-  const headers = { Accept: 'application/json', 'User-Agent': 'ysk-kit-release' };
+  const url = `${REGISTRY}/${encodedName(name)}`;
+  const headers = {
+    Accept: 'application/vnd.npm.install-v1+json',
+    'User-Agent': 'ysk-kit-release',
+    'Cache-Control': 'no-cache',
+  };
   if (token) headers.Authorization = `Bearer ${token}`;
   const res = await fetch(url, { headers });
-  if (res.status === 200) return true;
   if (res.status === 404) return false;
-  throw new Error(`${name}@${version}: registry HTTP ${res.status}`);
+  if (res.status !== 200) throw new Error(`${name}@${version}: registry HTTP ${res.status}`);
+  return versionIsInstallable(await res.json(), version);
 };
 
 export const pendingChangesetFiles = (root = ROOT) =>

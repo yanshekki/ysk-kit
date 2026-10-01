@@ -2,7 +2,7 @@
 
 Language: [English](add-capability.md) · 中文
 
-還原或合併一項已編目的平台功能。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。目錄：[能力](../guides/capabilities.zh.md)、[ysk-kit CLI](../cli/ysk.zh.md)。
+還原或合併一項已編目的平台功能。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。目錄：[能力](../guides/capabilities.zh.md)、[ysk-kit CLI](../cli/ysk-kit.zh.md)。
 
 ## 何時使用
 

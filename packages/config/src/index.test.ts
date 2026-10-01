@@ -16,4 +16,14 @@ describe('config', () => {
   it('rejects invalid public urls', () => {
     expect(() => PublicConfigSchema.parse({ apiPublicUrl: 'nope' })).toThrow();
   });
+
+  it('rejects the development JWT secret and short secrets in production', () => {
+    const base = { NODE_ENV: 'production', DATABASE_URL: 'mysql://ysk:ysk@localhost:3306/ysk_kit' };
+    expect(() => loadServerEnv({ ...base, JWT_SECRET: 'change-me-in-dev-only' })).toThrow(
+      /JWT_SECRET/,
+    );
+    expect(() => loadServerEnv({ ...base, JWT_SECRET: 'short-but-over-8' })).toThrow(/JWT_SECRET/);
+    const env = loadServerEnv({ ...base, JWT_SECRET: 'p'.repeat(32) });
+    expect(env.JWT_SECRET).toHaveLength(32);
+  });
 });

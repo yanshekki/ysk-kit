@@ -4,7 +4,7 @@ import {
   applySecurityHeaders,
   buildOpenApiDocument,
   clientIp,
-  createMemoryRateLimit,
+  createRateLimit,
   REQUEST_ID_HEADER,
   scalarDocsHtml,
 } from '@ysk-kit/api-http';
@@ -29,7 +29,7 @@ import { mountBullBoardFastify } from './mount-bull-board';
 export const createFastifyApp = async (input: CreateAppInput): Promise<FastifyInstance> => {
   const app = Fastify({ logger: false });
   const production = input.production === true;
-  const limiter = input.rateLimit ? createMemoryRateLimit(input.rateLimit) : undefined;
+  const limiter = input.rateLimit ? createRateLimit(input.rateLimit) : undefined;
   await app.register(cors, { origin: input.corsOrigins });
   app.addHook('onRequest', async (req, reply) => {
     const id = String(req.headers[REQUEST_ID_HEADER] ?? crypto.randomUUID());
@@ -42,7 +42,9 @@ export const createFastifyApp = async (input: CreateAppInput): Promise<FastifyIn
       },
       { production, ...(path === '/docs' ? { docs: true } : {}) },
     );
-    limiter?.check(clientIp(req.headers['x-forwarded-for'], req.ip), path);
+    if (limiter) {
+      await limiter.check(clientIp(req.headers['x-forwarded-for'], req.ip), path);
+    }
   });
   app.addHook('onResponse', async (req, reply) => {
     input.logger.info(

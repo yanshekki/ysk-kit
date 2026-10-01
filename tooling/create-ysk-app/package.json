@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/create-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "bin": {
     "create-ysk-app": "./src/index.ts"
@@ -12,10 +12,10 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
-    "tsx": "^4.19.3",
+    "@types/node": "^24.19.0",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist",
@@ -35,5 +35,13 @@
     "bin": {
       "create-ysk-app": "./dist/index.js"
     }
+  },
+  "license": "MIT",
+  "description": "Scaffold a product from the YSK Kit tree.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "tooling/create-ysk-app"
   }
 }

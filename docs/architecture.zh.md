@@ -19,20 +19,20 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 
 | 層 | 預設 | 備選 |
 |---|---|---|
-| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2 | — |
-| 語言 | TypeScript 6 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 在 compiler API 推出之後（dependency-cruiser 需要它） |
-| Web / admin | Vite 8 + React 19 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
-| 桌面 | Electron 44 + electron-vite 5 + Vite 7 | — |
+| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2.11 | — |
+| 語言 | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 要等 dependency-cruiser 支援該 compiler API |
+| Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
+| 桌面 | Electron 44 + electron-vite 5 + Vite 7 | 穩定版 electron-vite 支援 Vite 8 之後（6 仍是 beta） |
 | 流動應用 | Expo 57 / React Native 0.86 / React 19.2 | — |
 | HTTP API | Express 5 adapter（預設） | `HTTP_ADAPTER=fastify` 切 Fastify 5 |
 | 合約 | ts-rest + Zod 4 | — |
 | 資料庫 | Prisma 7.10（`prisma-client` generator、MariaDB adapter、客戶端在 `apps/api/src/generated/prisma`） | `--db` 可改 PostgreSQL 或 SQLite adapter |
-| 佇列 / 快取 | Redis 8 + BullMQ；未設 `REDIS_URL` 時用記憶體佇列 | — |
+| 佇列 / 快取 | Redis 8.10 + BullMQ；未設 `REDIS_URL` 時用記憶體佇列 | — |
 | 驗證 | JWT + refresh，經 `IAuthPort`；電郵／密碼與 `+852` OTP | 設齊 `TWILIO_*` 時用 Twilio Messages REST |
 | UI | `@ysk-kit/ui`（AppShell、PageHeader、EmptyState、ErrorBanner、FormField、Spinner、Can） | — |
 | 日誌 | Pino（生產環境 JSON） | — |
-| Lint | Biome | — |
-| 測試 | Vitest 5、Testing Library、一條 Playwright Chromium smoke | — |
+| Lint | Biome 2.5 | — |
+| 測試 | Vitest 5.0、Testing Library、一條 Playwright Chromium smoke | — |
 | 文件 | ts-rest → OpenAPI → Scalar（`GET /docs`） | — |
 | 運行時 | Node 24 LTS | — |
 | 觀測 | Prometheus `GET /metrics`；可選 OTLP traces／metrics；Compose 可選 Jaeger／Grafana | — |
@@ -162,7 +162,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 | `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。TTY 會提示未傳的旗標；`--yes` 略過提問 |
 | `ysk-kit add module` | 一條 hexagonal HTTP 切片 |
 | `ysk-kit add <capability>` | 合併 Prisma、環境變數、依賴；llm／team／billing／push 在缺失時複製源碼 |
-| `ysk generate openapi` | 寫出 `docs/openapi.yaml` |
+| `ysk-kit generate openapi` | 寫出 `docs/openapi.yaml` |
 | `ysk-kit upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
 | `ysk-kit check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
 

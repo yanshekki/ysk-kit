@@ -6,16 +6,16 @@ Language: [English](env.md) · 中文
 
 | 變數 | 用途 |
 |---|---|
-| `NODE_ENV` | `development` / `production`。生產環境種子需要 `ALLOW_SEED=1`。生產環境 OTP 需要 `TWILIO_*`。生產環境加密需要 `CRYPTO_MASTER_KEY`。 |
+| `NODE_ENV` | `development` / `production`。生產環境種子需要 `ALLOW_SEED=1`。生產環境 OTP 需要 `TWILIO_*`。生產環境加密需要 `CRYPTO_MASTER_KEY`。生產環境 `JWT_SECRET` 至少 32 個字元，而且不可以是 `change-me-in-dev-only`。 |
 | `API_PORT` | HTTP 監聽埠（預設 3001）。 |
 | `API_PUBLIC_URL` | 客戶端與 OpenAPI 使用的絕對 API 網址。 |
 | `WEB_PUBLIC_URL` | Web origin；重設密碼與邀請連結。 |
 | `ADMIN_PUBLIC_URL` | Admin origin。 |
 | `DATABASE_URL` | Prisma 連線字串。 |
-| `JWT_SECRET` | Access token 的 HMAC 密鑰。 |
+| `JWT_SECRET` | Access token 的 HMAC 密鑰。開發環境至少 8 個字元。生產環境至少 32 個字元，並拒絕 `change-me-in-dev-only`。 |
 | `JWT_ACCESS_TTL` | Access token 有效期（預設 `15m`）。 |
 | `OTP_TTL_SECONDS` | 電話／admin OTP 有效期（預設 300）。 |
-| `REDIS_URL` | BullMQ + Socket.IO Redis adapter。空白 → 記憶體佇列與行程內即時通訊。 |
+| `REDIS_URL` | BullMQ、Socket.IO Redis adapter，以及共用的 IP 速率視窗。空白 → 記憶體佇列、行程內即時通訊，以及每個行程自己的速率限制。 |
 | `SMTP_URL` | Nodemailer 傳輸。空白 → 日誌郵件 adapter。 |
 | `MAIL_FROM` | 寄件地址（預設 `ysk-kit@localhost`）。 |
 | `S3_ENDPOINT`、`S3_BUCKET`、`S3_ACCESS_KEY`、`S3_SECRET_KEY`、`S3_REGION` | S3 相容儲存。未齊 → 本地檔案。 |
@@ -31,7 +31,7 @@ Language: [English](env.md) · 中文
 | `OTEL_SERVICE_NAME` | 覆寫；API 預設 `ysk-api`，worker 預設 `ysk-worker`。 |
 | `STRIPE_SECRET_KEY`、`STRIPE_PRICE_PRO` | 啟用 Stripe Checkout。未設時預設日誌 billing adapter。 |
 | `STRIPE_WEBHOOK_SECRET` | `POST /v1/billing/webhook`。缺失 → 404。 |
-| `RATE_LIMIT_MAX` | 每個 IP 在視窗內的請求數。`0` 關閉。預設 300。略過 `/health` `/ready` `/metrics`。 |
+| `RATE_LIMIT_MAX` | 每個 IP 在視窗內的請求數。`0` 關閉。預設 300。略過 `/health` `/ready` `/metrics`。未設 `REDIS_URL` 時每個行程用記憶體；設了之後多個 API 行程共用同一個 Redis 固定視窗。 |
 | `RATE_LIMIT_WINDOW_MS` | 視窗（預設 60000）。 |
 | `EXPO_ACCESS_TOKEN` | Expo Push API。 |
 | `FCM_PROJECT_ID`、`FCM_CLIENT_EMAIL`、`FCM_PRIVATE_KEY` | 非 Expo 權杖的 FCM HTTP v1。未齊 → 日誌 adapter。 |

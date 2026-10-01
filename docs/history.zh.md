@@ -4,7 +4,7 @@ Language: [English](history.md) · 中文
 
 本檔按日期記錄 kit 已發布的內容。現行行為以 [architecture.zh.md](architecture.zh.md) 與指南為準。Agent 寫功能時不必讀本檔。
 
-版本以 Phase 1 … Phase 51 標示。
+版本以 Phase 1 … Phase 52 標示，其後由 v1.0.0 起用 semver。
 
 **Phase 1:** pnpm + Turborepo + Biome、`@ysk-kit/contracts`（Zod 4 + ts-rest）、envelope `{ok,data}/{ok,error}`、domain-kernel、Express 5 adapter 與 composition root、Prisma MySQL、Vite web/admin、Expo mobile 骨架、`@ysk-kit/sdk` + `@ysk-kit/web-sdk`、`@ysk-kit/ui-logic`、`ysk-kit add module`、`create-ysk-app --flavor saas`、CI、Docker Compose、dependency-cruiser、enum-drift 測試。
 
@@ -114,4 +114,6 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 
 **v1.0.0:** 工作區 scope 改為 `@ysk-kit/*`。公開套件發佈到 npm org `ysk-kit`。GitHub Releases 留在 `yanshekki/ysk-kit`。從 registry 跑 `create-ysk-app` 會下載對應 GitHub tag 的 tarball。唔再用 GitHub Packages。
 
-**v1.0.1:** CLI 命令是 `ysk-kit`，短名 `yskk`。唔再用 `ysk` 做產生器。
+**v1.0.1:** CLI 命令是 `ysk-kit`，短名 `yskk`。唔再用 `ysk` 做產生器。發佈時若該版本已在 npm 就略過。README Author 對齊 ysk-omni。
+
+**v1.0.2:** 安全依賴更新（Biome 2.5.15、Turborepo 2.11.6、Vitest 5.0.3、web/admin Vite 8.3.2、React 19.2.8、Expo 57.0.26、Electron 44.5.1、Redis 8.10.2）。pnpm overrides 把 `deepmerge-ts` 升到 8.0.2、`mariadb` 升到 3.4.7、`mysql2` 升到 3.24.5。暫緩：TypeScript 7、Prisma 8 rc、桌面 Vite 7（electron-vite 5）、`@ts-rest/core` 3.53.0-rc.1、React 19.3（React Native 0.86）。生產環境 `JWT_SECRET` 至少 32 個字元。`create-ysk-app` 下載 tag 對應 commit 的壓縮檔。設了 `REDIS_URL` 時速率限制走 Redis。Actions 釘在 commit SHA，npm 發佈要求 provenance。Turborepo `agentGuidance` 關閉，本倉 `AGENTS.md` 繼續做 agent 規範。

@@ -11,6 +11,11 @@ const start = async () => {
   const composition = await createComposition();
   const otel = startOtelFromEnv(composition.env);
   const rateLimit = rateLimitFromEnv(composition.env);
+  const rateLimitRedis = await (async () => {
+    if (!rateLimit || !composition.env.REDIS_URL) return undefined;
+    const { default: IORedis } = await import('ioredis');
+    return new IORedis(composition.env.REDIS_URL, { maxRetriesPerRequest: 1 });
+  })();
   const input = {
     authService: composition.authService,
     userService: composition.userService,
@@ -37,7 +42,9 @@ const start = async () => {
       ? { bullmqQueues: composition.queue.bullBoardQueues() }
       : {}),
     ...(composition.env.NODE_ENV === 'production' ? { production: true } : {}),
-    ...(rateLimit ? { rateLimit } : {}),
+    ...(rateLimit
+      ? { rateLimit: rateLimitRedis ? { ...rateLimit, redis: rateLimitRedis } : rateLimit }
+      : {}),
   };
 
   let server: HttpServer;
@@ -73,6 +80,7 @@ const start = async () => {
 
   const shutdown = async () => {
     await otel.shutdown();
+    await rateLimitRedis?.quit();
     await composition.queue.close();
     process.exit(0);
   };

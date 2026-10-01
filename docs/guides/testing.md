@@ -53,7 +53,7 @@ Text scan of the product root. Exit 1 on any finding.
 | `clients-no-prisma` | web / admin / mobile / desktop imported Prisma or the generated client |
 | `clients-no-raw-fetch` | those apps called `fetch(` |
 
-`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk-kit check agent`](../cli/ysk.md#ysk-kit-check-agent).
+`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk-kit check agent`](../cli/ysk-kit.md#ysk-kit-check-agent).
 
 Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects TypeScript enums.
 

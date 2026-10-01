@@ -2,7 +2,7 @@
 
 Language: [中文](add-capability.zh.md) · English
 
-Restore or merge a catalogued platform feature. Law: [AGENTS.md](../../AGENTS.md). Catalogue: [capabilities](../guides/capabilities.md), [ysk-kit CLI](../cli/ysk.md).
+Restore or merge a catalogued platform feature. Law: [AGENTS.md](../../AGENTS.md). Catalogue: [capabilities](../guides/capabilities.md), [ysk-kit CLI](../cli/ysk-kit.md).
 
 ## When to use this
 

@@ -214,7 +214,8 @@ export const createAuthService = (deps: AuthServiceDeps) => {
         throw new AppError('UNAUTHENTICATED', 'Invalid or expired code');
       }
       const user = await deps.users.findByEmail(email);
-      if (!user || user.role !== 'ADMIN' || user.status !== 'ACTIVE') {
+      if (!user) throw new AppError('UNAUTHENTICATED', 'Invalid or expired code');
+      if (user.role !== 'ADMIN' || user.status !== 'ACTIVE') {
         throw new AppError('UNAUTHENTICATED', 'Invalid or expired code');
       }
       await deps.otps.consume(challenge.id, now());

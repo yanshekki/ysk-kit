@@ -6,16 +6,16 @@ Aligned with `.env.example`. Copy to `.env` for local runs. Never commit secrets
 
 | Variable | Purpose |
 |---|---|
-| `NODE_ENV` | `development` / `production`. Production seed requires `ALLOW_SEED=1`. Production OTP requires `TWILIO_*`. Production crypto requires `CRYPTO_MASTER_KEY`. |
+| `NODE_ENV` | `development` / `production`. Production seed requires `ALLOW_SEED=1`. Production OTP requires `TWILIO_*`. Production crypto requires `CRYPTO_MASTER_KEY`. Production `JWT_SECRET` must be at least 32 characters and must not be `change-me-in-dev-only`. |
 | `API_PORT` | HTTP listen port (default 3001). |
 | `API_PUBLIC_URL` | Absolute API URL for clients and OpenAPI. |
 | `WEB_PUBLIC_URL` | Web origin; password-reset and invite links. |
 | `ADMIN_PUBLIC_URL` | Admin origin. |
 | `DATABASE_URL` | Prisma connection string. |
-| `JWT_SECRET` | Access-token HMAC secret. |
+| `JWT_SECRET` | Access-token HMAC secret. At least 8 characters in development. Production requires 32 or more and rejects `change-me-in-dev-only`. |
 | `JWT_ACCESS_TTL` | Access-token lifetime (default `15m`). |
 | `OTP_TTL_SECONDS` | Phone/admin OTP lifetime (default 300). |
-| `REDIS_URL` | BullMQ + Socket.IO Redis adapter. Empty → in-memory queue and in-process realtime. |
+| `REDIS_URL` | BullMQ, Socket.IO Redis adapter, and a shared IP rate-limit window. Empty → in-memory queue, in-process realtime, and a per-process rate limit. |
 | `SMTP_URL` | Nodemailer transport. Empty → log mail adapter. |
 | `MAIL_FROM` | From address (default `ysk-kit@localhost`). |
 | `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_REGION` | S3-compatible storage. Incomplete set → local files. |
@@ -31,7 +31,7 @@ Aligned with `.env.example`. Copy to `.env` for local runs. Never commit secrets
 | `OTEL_SERVICE_NAME` | Override; API defaults `ysk-api`, worker `ysk-worker`. |
 | `STRIPE_SECRET_KEY`, `STRIPE_PRICE_PRO` | Enable Stripe Checkout. Log billing adapter is the default without them. |
 | `STRIPE_WEBHOOK_SECRET` | `POST /v1/billing/webhook`. Missing → 404. |
-| `RATE_LIMIT_MAX` | Requests per window per IP. `0` disables. Default 300. Skips `/health` `/ready` `/metrics`. |
+| `RATE_LIMIT_MAX` | Requests per window per IP. `0` disables. Default 300. Skips `/health` `/ready` `/metrics`. In-memory per process unless `REDIS_URL` is set, in which case the window is a Redis fixed window shared by every API process. |
 | `RATE_LIMIT_WINDOW_MS` | Window (default 60000). |
 | `EXPO_ACCESS_TOKEN` | Expo Push API. |
 | `FCM_PROJECT_ID`, `FCM_CLIENT_EMAIL`, `FCM_PRIVATE_KEY` | FCM HTTP v1 for non-Expo tokens. Incomplete set → log adapter. |

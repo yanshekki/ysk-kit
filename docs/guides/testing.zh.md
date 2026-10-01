@@ -53,7 +53,7 @@ pnpm ysk-kit check agent
 | `clients-no-prisma` | web／admin／mobile／desktop import 了 Prisma 或 generated client |
 | `clients-no-raw-fetch` | 那些 app 呼叫了 `fetch(` |
 
-略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk-kit check agent`](../cli/ysk.zh.md#ysk-kit-check-agent)。
+略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk-kit check agent`](../cli/ysk-kit.zh.md#ysk-kit-check-agent)。
 
 `@ysk-kit/biome` 把 Biome `style.noEnum` 設為 `error`，因此 `pnpm lint` 也會拒絕 TypeScript enum。
 

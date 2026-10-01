@@ -19,7 +19,7 @@ This repository keeps the full set. `ysk-kit add` on a tree that already contain
 
 ## Catalogue
 
-See the table in [ysk-kit CLI](../cli/ysk.md). Sixteen names: `auth`, `rbac`, `audit-log`, `storage`, `i18n`, `jobs`, `mail`, `notifications`, `llm`, `websocket`, `push`, `mobile`, `team`, `apikey`, `crypto`, `billing`. Alias `org` → `team`.
+See the table in [ysk-kit CLI](../cli/ysk-kit.md). Sixteen names: `auth`, `rbac`, `audit-log`, `storage`, `i18n`, `jobs`, `mail`, `notifications`, `llm`, `websocket`, `push`, `mobile`, `team`, `apikey`, `crypto`, `billing`. Alias `org` → `team`.
 
 Source trees are copied only for `llm`, `team`, `billing`, and `push`, from `tooling/ysk-cli/templates/capabilities/<name>/`, and only when `app.ts` / `composition.ts` do not already contain the skip token.
 

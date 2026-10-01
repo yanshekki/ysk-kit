@@ -4,7 +4,7 @@ Language: [中文](history.zh.md) · English
 
 Dated record of what this kit shipped. Current behaviour is defined by [architecture.md](architecture.md) and the guides. Agents do not need this file to write a feature.
 
-Releases are labelled Phase 1 … Phase 51.
+Releases are labelled Phase 1 … Phase 52, then semver from v1.0.0.
 
 **Phase 1:** pnpm + Turborepo + Biome, `@ysk-kit/contracts` (Zod 4 + ts-rest), envelope `{ok,data}/{ok,error}`, domain-kernel, Express 5 adapter and composition root, Prisma MySQL, Vite web/admin, Expo mobile skeleton, `@ysk-kit/sdk` + `@ysk-kit/web-sdk`, `@ysk-kit/ui-logic`, `ysk-kit add module`, `create-ysk-app --flavor saas`, CI, Docker Compose, dependency-cruiser, enum-drift tests.
 
@@ -115,3 +115,5 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 **v1.0.0:** Workspace scope `@ysk-kit/*`. Public packages publish to npmjs org `ysk-kit`. GitHub Releases stay on `yanshekki/ysk-kit`. `create-ysk-app` from the registry downloads the matching GitHub tag tarball. GitHub Packages is unused.
 
 **v1.0.1:** CLI binary is `ysk-kit` with alias `yskk`. The `ysk` command is no longer the generator. Release skips npm publish when those versions are already on the registry. README Author matches ysk-omni.
+
+**v1.0.2:** Safe dependency refresh (Biome 2.5.15, Turborepo 2.11.6, Vitest 5.0.3, Vite 8.3.2 on web/admin, React 19.2.8, Expo 57.0.26, Electron 44.5.1, Redis 8.10.2). pnpm overrides move `deepmerge-ts` to 8.0.2, `mariadb` to 3.4.7, and `mysql2` to 3.24.5. Held: TypeScript 7, Prisma 8 release candidate, desktop Vite 7 (electron-vite 5), `@ts-rest/core` 3.53.0-rc.1, React 19.3 (React Native 0.86). Production `JWT_SECRET` must be at least 32 characters. `create-ysk-app` downloads the commit archive for the tag. Rate limit uses Redis when `REDIS_URL` is set. Actions are pinned to commit SHAs and npm publish requests provenance. Turborepo `agentGuidance` is off so this repo's `AGENTS.md` stays the agent law.

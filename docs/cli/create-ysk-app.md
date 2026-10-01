@@ -9,7 +9,7 @@ pnpm --filter @ysk-kit/create-app start <name> [options]
 pnpm create @ysk-kit/app <name> [options]
 ```
 
-From a kit checkout the CLI copies this tree. From npm it downloads `yanshekki/ysk-kit` at tag `v{version}`.
+From a kit checkout the CLI copies this tree. From npm it resolves tag `v{version}` to a commit SHA, downloads that commit's archive, and checks the extracted `package.json` name and version.
 
 Missing `<name>` on a non-TTY prints `--help` and exits 1. Unknown `--flavor` throws `not in this phase`.
 

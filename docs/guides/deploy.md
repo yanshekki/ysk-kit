@@ -9,12 +9,12 @@ Language: [中文](deploy.zh.md) · English
 | Service | Image | Ports |
 |---|---|---|
 | mysql | `mysql:8.4` | 3306 |
-| redis | `redis:8.10-alpine` | 6379 |
+| redis | `redis:8.10.2-alpine` | 6379 |
 | jaeger | `jaegertracing/jaeger:2.21.0` | 16686 UI, 4318 OTLP HTTP |
 | prometheus | `prom/prometheus:v3.15.0` | 9090 |
 | grafana | `grafana/grafana:13.2.3` | 3000 (`admin` / `admin`) |
 
-Start only what you need. `docker compose up -d mysql` is enough for the API. Redis is required for multi-process Socket.IO and durable BullMQ. Jaeger / Prometheus / Grafana are opt-in UIs.
+Start only what you need. `docker compose up -d mysql` is enough for the API. Redis is required for multi-process Socket.IO, durable BullMQ, and a shared IP rate-limit window. Without `REDIS_URL` the rate limit is in-memory per API process. Jaeger / Prometheus / Grafana are opt-in UIs.
 
 Generated products with `--db postgresql` get `postgres:18-alpine`. `--db sqlite` does not start a database container. `static-web3` writes a comment Compose file.
 

@@ -1,5 +1,5 @@
 // Fragment already applied in apps/api/prisma/schema.prisma (LlmUsage).
-// ysk add llm is idempotent for the saas flavor.
+// ysk-kit add llm is idempotent for the saas flavor.
 
 model LlmUsage {
   id               String   @id @default(uuid())

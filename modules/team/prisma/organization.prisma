@@ -1,5 +1,5 @@
 // Fragment already applied in apps/api/prisma/schema.prisma (Organization, Membership, OrgInvite).
-// ysk add team is idempotent for the saas flavor.
+// ysk-kit add team is idempotent for the saas flavor.
 
 enum OrgRole {
   OWNER

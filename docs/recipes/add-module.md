@@ -2,7 +2,7 @@
 
 Language: [中文](add-module.zh.md) · English
 
-For humans and agents. Law: [AGENTS.md](../../AGENTS.md). CLI flags: [ysk-kit](../cli/ysk.md).
+For humans and agents. Law: [AGENTS.md](../../AGENTS.md). CLI flags: [ysk-kit](../cli/ysk-kit.md).
 
 ## Command
 

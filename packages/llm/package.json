@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/llm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -16,9 +16,9 @@
     "@ysk-kit/contracts": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.19.0",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist"
@@ -34,5 +34,13 @@
         "import": "./dist/index.js"
       }
     }
+  },
+  "license": "MIT",
+  "description": "OpenAI-compatible chat client for YSK Kit.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "packages/llm"
   }
 }

@@ -16,7 +16,7 @@
     "@ysk-kit/sdk": "workspace:*",
     "@ysk-kit/ui": "workspace:*",
     "@ysk-kit/ui-logic": "workspace:*",
-    "react": "19.2.8",
+    "react": "19.3.0",
     "react-dom": "19.2.8"
   },
   "devDependencies": {

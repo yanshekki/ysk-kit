@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Generate one flavor and preset, then install, typecheck, test, and build.
+# php-bridge is not a pnpm workspace: install and compile the TypeScript client,
+# assert envelope unwrapping, and syntax-check the PHP client.
+set -euo pipefail
+
+export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+export TURBO_TELEMETRY_DISABLED=1
+
+FLAVOR="${1:?flavor}"
+PRESET="${2:?preset}"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+DEST="/tmp/ysk-smoke-${FLAVOR}-${PRESET}"
+
+rm -rf "$DEST"
+cd "$ROOT"
+pnpm --filter @ysk-kit/create-app start "$DEST" \
+  --flavor "$FLAVOR" \
+  --preset "$PRESET" \
+  --db sqlite \
+  --yes
+
+if [[ "$FLAVOR" == "php-bridge" ]]; then
+  pnpm install --dir "$DEST/ts"
+  pnpm exec tsc --pretty false --noEmit --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 \
+    "$DEST/ts/src/client.ts"
+  node --experimental-strip-types --input-type=module <<EOF
+import { pathToFileURL } from 'node:url';
+const { unwrapEnvelope, YskApiError } = await import(pathToFileURL('${DEST}/ts/src/client.ts').href);
+const data = unwrapEnvelope({ ok: true, data: { status: 'ok' } });
+if (data.status !== 'ok') process.exit(1);
+let threw = false;
+try {
+  unwrapEnvelope({ ok: false, error: { code: 'NOPE', message: 'no' } });
+} catch (error) {
+  threw = error instanceof YskApiError && error.code === 'NOPE';
+}
+if (!threw) process.exit(1);
+EOF
+  pnpm exec tsc --pretty false --declaration --outDir "$DEST/ts/dist" --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 \
+    "$DEST/ts/src/client.ts"
+  if ! command -v php >/dev/null 2>&1; then
+    sudo apt-get update -y
+    sudo apt-get install -y php-cli
+  fi
+  php -l "$DEST/php/src/YskClient.php"
+  exit 0
+fi
+
+cd "$DEST"
+pnpm install
+cp .env.example .env
+if [[ -f apps/api/prisma/schema.prisma ]]; then
+  pnpm db:generate
+fi
+pnpm typecheck
+pnpm test
+pnpm build

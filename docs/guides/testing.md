@@ -63,9 +63,10 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 |---|---|
 | `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
 | `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk-kit check agent` / typecheck / test / OpenAPI |
+| `flavor-smoke` | Matrix of every flavor × `thin` and `full`. sqlite. install, typecheck, test, build. pnpm store and Electron download are cached |
 | `example-smoke` | Apply each worked example onto a sqlite dest |
 | `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
-| `Release` | Runs only when the GitHub owner is `ysk` |
+| `Release` | Provenance via `NPM_CONFIG_PROVENANCE=true` and `id-token: write`. `NPM_TOKEN` remains the publish credential until Trusted Publishing is enabled on npmjs |
 
 After a feature, the local bar is:
 

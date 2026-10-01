@@ -165,6 +165,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 | `ysk-kit generate openapi` | 寫出 `docs/openapi.yaml` |
 | `ysk-kit upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
 | `ysk-kit check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
+| `ysk-kit doctor` | engines、必要環境變數、不安全預設、資料庫遷移、護欄差異，以及 `check agent` |
 
 `--preset thin`（預設）複製後剝走 llm、billing、organizations 與 devices。`--preset full` 保留完整示範。`php-bridge` 與 `static-web3` 忽略 preset。產品以 `ysk-kit upgrade` 更新 kit 護欄；日常路徑不會從 registry 安裝 `@ysk-kit/*`。手冊：[CLI](cli/index.zh.md)、[flavors](guides/flavors.zh.md)、[能力](guides/capabilities.zh.md)、[升級](guides/upgrade.zh.md)。
 
@@ -174,7 +175,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 - 預設 HTTP 是 Express；Fastify 是第二個 adapter。Hono、Nest、Next 不是預設。
 - 預設 ORM 是 Prisma。未附帶 Drizzle。
-- 公開 API 是 ts-rest + OpenAPI。tRPC 與 GraphQL 不是預設。
+- 公開 API 是 ts-rest + OpenAPI。釘選與 v2 退出路徑記在 [ADR 0001](adr/0001-ts-rest.zh.md)。tRPC 與 GraphQL 不是預設。
 - 行業 domain 寫在產品倉。
 - CI 使用記憶體 port。不啟動 Redis、Stripe、Twilio、FCM、Jaeger、Grafana 或 OTLP collector。
 - Kit 的資料表沒有 `ysk_` 前綴。

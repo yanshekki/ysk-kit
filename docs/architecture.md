@@ -165,6 +165,7 @@ Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `Fi
 | `ysk-kit generate openapi` | Write `docs/openapi.yaml` |
 | `ysk-kit upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
 | `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
+| `ysk-kit doctor` | Engines, required env, insecure defaults, database migrations, guardrail drift, and `check agent` |
 
 `--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk-kit upgrade`; they do not install `@ysk-kit/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
 
@@ -174,7 +175,7 @@ These are product decisions, not unfinished homework:
 
 - Default HTTP is Express; Fastify is the second adapter. Hono, Nest, and Next are not defaults.
 - Default ORM is Prisma. Drizzle is not shipped.
-- Public API is ts-rest + OpenAPI. tRPC and GraphQL are not defaults.
+- Public API is ts-rest + OpenAPI. The pin and the v2 exit are recorded in [ADR 0001](adr/0001-ts-rest.md). tRPC and GraphQL are not defaults.
 - Industry domains live in product repositories.
 - CI uses in-memory ports. It does not start Redis, Stripe, Twilio, FCM, Jaeger, Grafana, or an OTLP collector.
 - Kit tables have no `ysk_` prefix.

@@ -6,7 +6,7 @@ YSK Kit 附帶兩套產生器與一組工作區 script。
 
 | 工具 | 用途 | 手冊 |
 |---|---|---|
-| `ysk-kit`（`yskk`） | 加模組、加能力、產生 OpenAPI、更新護欄、掃描 agent 補丁 | [ysk-kit.zh.md](ysk-kit.zh.md) |
+| `ysk-kit`（`yskk`） | 加模組、加能力、產生 OpenAPI、更新護欄、掃描 agent 補丁、診斷產品 | [ysk-kit.zh.md](ysk-kit.zh.md) |
 | `create-ysk-app` | 從本 kit 產生一個產品 | [create-ysk-app.zh.md](create-ysk-app.zh.md) |
 | `@ysk-kit/examples` | 把已完成的產品 overlay 套用到新目的地 | [examples.zh.md](examples.zh.md) |
 | 根 `package.json` scripts | 開發、測試、遷移、種子、lint | [workspace-scripts.zh.md](workspace-scripts.zh.md) |

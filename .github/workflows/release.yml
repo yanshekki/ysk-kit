@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
 
+# Default deny. The release job raises only what Changesets and npm provenance need.
 permissions:
   contents: read
 
@@ -42,4 +43,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # npm treats this as `npm publish --provenance`. @changesets/cli 3.0.3
+          # has no --provenance flag; passing one would fail the release.
+          # NODE_AUTH_TOKEN keeps the NPM_TOKEN publish path. id-token: write
+          # signs the attestation and is what Trusted Publishing uses after the
+          # token is removed. See docs/cli/workspace-scripts.md.
           NPM_CONFIG_PROVENANCE: "true"

@@ -15,6 +15,7 @@ describe('ysk help', () => {
     expect(HELP).toContain('upgrade');
     expect(HELP).toContain('--dry-run');
     expect(HELP).toContain('check agent');
+    expect(HELP).toContain('doctor [--json]');
     expect(HELP).toContain('--prisma');
     expect(HELP).toContain('--no-web');
     expect(HELP).toContain('docs/cli/ysk-kit.md');

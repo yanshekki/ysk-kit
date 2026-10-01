@@ -10,6 +10,7 @@ pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
+pnpm ysk-kit doctor [--json]
 ```
 
 環境變數：`YSK_ROOT` — 要修補的產品根目錄。未設定時預設為本 kit。
@@ -131,3 +132,27 @@ pnpm ysk-kit check agent
 允許的 raw `fetch`：`apps/admin/src/features/queues/queues-page.tsx`（Bull Board HTML 探測）。`@ysk-kit/sdk` 的 HTTP 在 `packages/sdk`，不是 client app。
 
 測試：[測試指南](../guides/testing.zh.md)。
+
+## `ysk-kit doctor`
+
+檢查一個已產生的產品，並為每個問題印出修法。`YSK_ROOT` 選擇產品（未設定時為本倉）。護欄與含有此 CLI 的 kit 工作副本比較，來源與 `upgrade` 相同。
+
+```text
+pnpm ysk-kit doctor
+pnpm ysk-kit doctor --json
+```
+
+每個檢查都是 `ok` 或 `warn` 時退出 0。任一檢查為 `error` 時退出 1。`--json` 印出 `{ ok, errors, warnings, checks }`，報告不含密鑰內容。
+
+| 檢查 | 錯誤 | 警告 | 修法 |
+|---|---|---|---|
+| `engines` | Node 或 pnpm 不符合 `package.json` 的 `engines`，或 `PATH` 沒有 `pnpm` | `packageManager` 釘選與 `pnpm --version` 不同，或沒有 `engines` | 安裝 Node 24，執行 `corepack enable && corepack prepare pnpm@12.8.1 --activate` |
+| `env` | API 產品缺少 `DATABASE_URL` 或 `JWT_SECRET` | `static-web3` 缺少 `API_PUBLIC_URL` 或 `WEB_PUBLIC_URL`；`php-bridge` 缺少 `API_PUBLIC_URL` | `cp .env.example .env` 並設定這些鍵。公開 URL 與 PHP bridge 有 localhost 預設，因此只是警告 |
+| `secrets` | `NODE_ENV=production` 仍用佔位 `JWT_SECRET`、密鑰短於 8 字元、生產環境仍用範例種子密碼，或 `CRYPTO_MASTER_KEY` 不是 64 個十六進位字元 | 開發環境使用範例 `JWT_SECRET`、密鑰短於 32 字元，或生產環境 `CRYPTO_MASTER_KEY` 為空 | `JWT_SECRET` 用 `openssl rand -base64 32`。`CRYPTO_MASTER_KEY` 用 `openssl rand -hex 32` |
+| `database` | 伺服器連不上、SQLite 檔案不存在，或 Prisma 遷移未套用 | — | 開發用 `pnpm db:migrate`，生產用 `pnpm --filter @ysk-kit/api prisma:migrate:deploy`。沒有 `apps/api/prisma/schema.prisma` 時略過（`static-web3`、`php-bridge`） |
+| `rules` | 允許清單上的護欄檔與本 kit 不同 | 檔案相符，但 `.ysk-kit.json` 缺失或其 `version` 落後本 kit | `pnpm ysk-kit upgrade` |
+| `agent` | `check agent` 有發現 | — | 規則與 [`ysk-kit check agent`](#ysk-kit-check-agent) 相同 |
+
+SQLite 用 Node 的 `node:sqlite` 開啟（`_prisma_migrations` 中 `finished_at` 有值且 `rolled_back_at` 為 null）。MySQL 與 PostgreSQL 在 `apps/api` 執行 `prisma migrate status`。報告會遮蓋連線字串。
+
+`rules` 使用與 `upgrade` 相同的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`。工作區產品亦比較 `.cursor/rules/ysk-kit.mdc` 與 Cursor／Grok skill 包裝。非工作區產品（`php-bridge`）略過此檢查。

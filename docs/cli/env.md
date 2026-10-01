@@ -39,4 +39,6 @@ Aligned with `.env.example`. Copy to `.env` for local runs. Never commit secrets
 | `SEED_USER_EMAIL`, `SEED_USER_PASSWORD` | Seed user (defaults `user@ysk.hk` / `ysk-user-dev`). |
 | `ALLOW_SEED` | Production seed gate. Set `1` to allow. |
 
-`YSK_ROOT` is a process env for the `ysk` CLI, not an application secret.
+`YSK_ROOT` is a process env for the `ysk-kit` CLI, not an application secret.
+
+`pnpm ysk-kit doctor` reads `.env` (process env overrides the file). It errors when an API product is missing `DATABASE_URL` or `JWT_SECRET`, and when production still uses an example secret. A development `JWT_SECRET` that matches the example, or is shorter than 32 characters, is a warning. See [ysk-kit doctor](ysk-kit.md#ysk-kit-doctor).

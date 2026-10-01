@@ -8,6 +8,7 @@ Usage:
   pnpm ysk-kit generate openapi
   pnpm ysk-kit upgrade [--dry-run]
   pnpm ysk-kit check agent
+  pnpm ysk-kit doctor [--json]
 
 Commands:
   add module <name>
@@ -42,6 +43,14 @@ Commands:
       Scan the product root for typical broken patches: TypeScript enum,
       Prisma imports in web/admin/mobile/desktop, and raw fetch in those
       apps. Prints rule id + file:line. Exit 1 when anything matches.
+
+  doctor [--json]
+      Check a generated product: Node and pnpm versus engines, required
+      env vars, insecure defaults (JWT_SECRET placeholder or shorter than
+      32 characters), database reachability and applied Prisma migrations,
+      guardrail files versus \`ysk-kit upgrade\`, and \`check agent\`.
+      Warnings stay on exit 0. Exit 1 when any check is an error.
+      --json   Print { ok, errors, warnings, checks } and no secret values.
 
 Environment:
   YSK_ROOT    Product root to patch (default: this repository)

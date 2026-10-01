@@ -39,4 +39,6 @@ Language: [English](env.md) · 中文
 | `SEED_USER_EMAIL`、`SEED_USER_PASSWORD` | 種子 user（預設 `user@ysk.hk` / `ysk-user-dev`）。 |
 | `ALLOW_SEED` | 生產環境種子閘。設為 `1` 才允許。 |
 
-`YSK_ROOT` 是 `ysk` CLI 的行程環境變數，不是應用密鑰。
+`YSK_ROOT` 是 `ysk-kit` CLI 的行程環境變數，不是應用密鑰。
+
+`pnpm ysk-kit doctor` 讀取 `.env`（行程環境變數覆蓋檔案）。API 產品缺少 `DATABASE_URL` 或 `JWT_SECRET`，或生產環境仍使用範例密鑰時，它以錯誤退出。開發環境的 `JWT_SECRET` 若等於範例，或短於 32 字元，則是警告。見 [ysk-kit doctor](ysk-kit.zh.md#ysk-kit-doctor)。

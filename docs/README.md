@@ -15,6 +15,7 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | See what shipped when | [Changelog](history.md) |
 | Report a vulnerability | [Security](../SECURITY.md) |
 | See what is planned | [Product direction](product-plan.md) |
+| Read an architecture decision | [ADR 0001: ts-rest](adr/0001-ts-rest.md) |
 | Contribute documentation | [Contributing](contributing.md) |
 
 Generated OpenAPI lives at [`openapi.yaml`](openapi.yaml) (`GET /openapi.json` on a running API). It is produced by `pnpm gen:openapi` and is not translated.

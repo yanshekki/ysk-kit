@@ -15,6 +15,7 @@ YSK Kit 的公開手冊。從未見過本倉的讀者，應能從這裏開始：
 | 查看何時加入了甚麼 | [變更紀錄](history.zh.md) |
 | 報告漏洞 | [安全](../SECURITY.zh.md) |
 | 查看下一步方向 | [產品方向](product-plan.zh.md) |
+| 閱讀架構決定 | [ADR 0001：ts-rest](adr/0001-ts-rest.zh.md) |
 | 投稿文件 | [貢獻指引](contributing.zh.md) |
 
 產生出來的 OpenAPI 在 [`openapi.yaml`](openapi.yaml)（運行中的 API 提供 `GET /openapi.json`）。由 `pnpm gen:openapi` 寫出，不另譯語言。

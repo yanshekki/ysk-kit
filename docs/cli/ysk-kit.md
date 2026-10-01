@@ -10,6 +10,7 @@ pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
+pnpm ysk-kit doctor [--json]
 ```
 
 Environment: `YSK_ROOT` — product root to patch. Defaults to this kit when unset.
@@ -131,3 +132,27 @@ Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `gen
 Allowlisted raw `fetch`: `apps/admin/src/features/queues/queues-page.tsx` (Bull Board HTML probe). `@ysk-kit/sdk` HTTP lives under `packages/sdk` and is not a client app.
 
 Testing: [testing guide](../guides/testing.md).
+
+## `ysk-kit doctor`
+
+Checks a generated product and prints a fix for each problem. `YSK_ROOT` selects the product (default: this repository). Guardrails are compared with the kit checkout that contains this CLI, the same source `upgrade` copies from.
+
+```text
+pnpm ysk-kit doctor
+pnpm ysk-kit doctor --json
+```
+
+Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--json` prints `{ ok, errors, warnings, checks }` and does not include secret values.
+
+| Check | Error | Warning | What to do |
+|---|---|---|---|
+| `engines` | Node or pnpm misses `package.json` `engines`, or `pnpm` is not on `PATH` | `packageManager` pin differs from `pnpm --version`, or `engines` is absent | Install Node 24 and run `corepack enable && corepack prepare pnpm@12.8.1 --activate` |
+| `env` | An API product is missing `DATABASE_URL` or `JWT_SECRET` | `static-web3` is missing `API_PUBLIC_URL` or `WEB_PUBLIC_URL`; `php-bridge` is missing `API_PUBLIC_URL` | `cp .env.example .env` and set the keys. Public URLs and the PHP bridge have localhost defaults, so those are warnings |
+| `secrets` | `NODE_ENV=production` with a placeholder `JWT_SECRET`, a secret shorter than 8 characters, example seed passwords in production, or `CRYPTO_MASTER_KEY` that is not 64 hex characters | Example `JWT_SECRET` in development, a secret shorter than 32 characters, or an empty `CRYPTO_MASTER_KEY` in production | `openssl rand -base64 32` for `JWT_SECRET`. `openssl rand -hex 32` for `CRYPTO_MASTER_KEY` |
+| `database` | The server is unreachable, the SQLite file is missing, or Prisma migrations are not applied | — | `pnpm db:migrate` in development, or `pnpm --filter @ysk-kit/api prisma:migrate:deploy` in production. Skipped when `apps/api/prisma/schema.prisma` is absent (`static-web3`, `php-bridge`) |
+| `rules` | Allowlisted guardrail files differ from this kit | Files match and `.ysk-kit.json` is missing or its `version` is behind this kit | `pnpm ysk-kit upgrade` |
+| `agent` | `check agent` reported a finding | — | Same rules as [`ysk-kit check agent`](#ysk-kit-check-agent) |
+
+SQLite is opened with Node's `node:sqlite` (`_prisma_migrations` where `finished_at` is set and `rolled_back_at` is null). MySQL and PostgreSQL run `prisma migrate status` in `apps/api`. Connection strings are redacted in the report.
+
+`rules` uses the same paths as `upgrade`: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`. Workspace products also compare `.cursor/rules/ysk-kit.mdc` and the Cursor/Grok skill stubs. A non-workspace product (`php-bridge`) skips this check.

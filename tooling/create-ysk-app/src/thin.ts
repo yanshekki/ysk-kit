@@ -403,6 +403,17 @@ export const applyThinPreset = (dest: string): void => {
     ),
   );
 
+  patchIfExists(join(dest, 'apps/mobile/src/adapters/push.test.ts'), (src) =>
+    src.replace(
+      `expect(register).toHaveBeenCalledWith({
+      token: 'ExponentPushToken[testtoken]',
+      platform: 'ios',
+    });`,
+      `// ysk-kit add push restores client.devices
+    expect(register).not.toHaveBeenCalled();`,
+    ),
+  );
+
   for (const rel of [
     'apps/mobile/src/screens/orgs-screen.tsx',
     'apps/mobile/src/screens/org-detail-screen.tsx',

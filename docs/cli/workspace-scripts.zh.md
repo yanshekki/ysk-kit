@@ -38,7 +38,7 @@ Language: [English](workspace-scripts.md) · 中文
 
 `.github/workflows/ci.yml` 的 CI job：`check`（lint、layers、typecheck、test）、`thin-smoke`（sqlite saas，不含 admin/mobile）、`flavor-smoke`（matrix：每個 flavor × `thin`／`full`，sqlite，然後 install／typecheck／test／build）、`example-smoke`（matrix：把目錄裡每一個 slug 套用到 sqlite）、`e2e`（MySQL 8.4 + Chromium）。`flavor-smoke` 快取 pnpm store 與 Electron 下載。`php-bridge` 與 `static-web3` 忽略 `--preset`；matrix 仍然產生兩種 preset，以確認旗標可被接受。
 
-Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PUBLISH` 為 `true` 時運行。每個 public `name@version` 已在 npmjs 時跳過 `changeset publish`（`.github/unpublished-packages.mjs`）。
+Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PUBLISH` 為 `true` 時運行。每個 public `name@version` 已在 npmjs 時跳過 `changeset publish`（`.github/unpublished-packages.mjs`）。版本指令是 `pnpm changeset version && node .github/sync-kit-version.mjs`。後一步把 `@ysk-kit/create-app` 的版本寫入私有的根 `package.json`，這就是 `create-ysk-app` 在 `vX.Y.Z` tarball 裡核對的版本。`create-github-releases` 設為 `false`，因此 action 不會為每個套件各開一個 GitHub Release。產品發佈維持單一 tag `vX.Y.Z`，與 v1.0.0、v1.0.1 相同。
 
 ### npm provenance 與 Trusted Publishing
 

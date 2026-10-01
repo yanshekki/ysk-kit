@@ -38,7 +38,7 @@ App-level:
 
 CI jobs in `.github/workflows/ci.yml`: `check` (lint, layers, typecheck, test), `thin-smoke` (sqlite saas without admin/mobile), `flavor-smoke` (matrix: each flavor × `thin`/`full`, sqlite, then install / typecheck / test / build), `example-smoke` (matrix: apply each catalogue slug onto sqlite), `e2e` (MySQL 8.4 + Chromium). `flavor-smoke` caches the pnpm store and the Electron download. `php-bridge` and `static-web3` ignore `--preset`; the matrix still generates both so the flag stays accepted.
 
-Release (`.github/workflows/release.yml`) runs on push to `main` when `vars.NPM_PUBLISH` is `true`. It skips `changeset publish` when every public `name@version` is already on npmjs (`.github/unpublished-packages.mjs`).
+Release (`.github/workflows/release.yml`) runs on push to `main` when `vars.NPM_PUBLISH` is `true`. It skips `changeset publish` when every public `name@version` is already on npmjs (`.github/unpublished-packages.mjs`). The version script is `pnpm changeset version && node .github/sync-kit-version.mjs`. That second step copies `@ysk-kit/create-app`'s version into the private root `package.json`, which is the version `create-ysk-app` checks inside the `vX.Y.Z` tarball. `create-github-releases` is `false`, so the action does not open a GitHub Release per package. The product release stays the single tag `vX.Y.Z`, as with v1.0.0 and v1.0.1.
 
 ### npm provenance and Trusted Publishing
 

@@ -381,6 +381,9 @@ describe('create-ysk-app', () => {
       admin: false,
       mobile: true,
     });
+    const pushTest = readFileSync(join(dest, 'apps/mobile/src/adapters/push.test.ts'), 'utf8');
+    expect(pushTest).toContain('ysk-kit add push restores client.devices');
+    expect(pushTest).toContain('expect(register).not.toHaveBeenCalled()');
     expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile/src/screens/org-detail-screen.tsx'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile/src/screens/invite-screen.tsx'))).toBe(false);
@@ -395,6 +398,14 @@ describe('create-ysk-app', () => {
     expect(
       readFileSync(join(dest, 'apps/mobile/src/screens/login-screen.tsx'), 'utf8'),
     ).not.toContain('Accept invite');
+
+    expect(yskAdd('push', dest)).toContain('ysk-kit add push: applied');
+    const restoredPushTest = readFileSync(
+      join(dest, 'apps/mobile/src/adapters/push.test.ts'),
+      'utf8',
+    );
+    expect(restoredPushTest).toContain('expect(register).toHaveBeenCalledWith(');
+    expect(restoredPushTest).not.toContain('expect(register).not.toHaveBeenCalled()');
 
     expect(yskAdd('team', dest)).toContain('ysk-kit add team: applied');
     expect(existsSync(join(dest, 'apps/mobile/src/screens/orgs-screen.tsx'))).toBe(true);

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { appendFileSync, readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const ROOT = join(import.meta.dirname, '..');
 const DIRS = ['packages', 'tooling'];
@@ -37,6 +38,15 @@ const isOnRegistry = async (name, version, token) => {
   throw new Error(`${name}@${version}: registry HTTP ${res.status}`);
 };
 
+export const pendingChangesetFiles = (root = ROOT) =>
+  readdirSync(join(root, '.changeset')).filter(
+    (name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md',
+  );
+
+/** Skip only when nothing is waiting: versions are on npm and no changeset is pending. */
+export const shouldSkipRelease = (unpublishedCount, pendingCount) =>
+  unpublishedCount === 0 && pendingCount === 0;
+
 const main = async () => {
   const env = { ...process.env };
   const token = env.NODE_AUTH_TOKEN ?? env.NPM_TOKEN ?? '';
@@ -46,17 +56,28 @@ const main = async () => {
     const found = await isOnRegistry(pkg.name, pkg.version, token);
     if (!found) unpublished.push(`${pkg.name}@${pkg.version}`);
   }
+  const pending = pendingChangesetFiles();
+  const skip = shouldSkipRelease(unpublished.length, pending.length);
   if (env.GITHUB_OUTPUT) {
-    appendFileSync(env.GITHUB_OUTPUT, `skip=${unpublished.length === 0}\n`);
+    appendFileSync(env.GITHUB_OUTPUT, `skip=${skip}\n`);
+  }
+  if (pending.length > 0) {
+    console.log(`pending changesets:\n${pending.join('\n')}`);
   }
   if (unpublished.length === 0) {
     console.log(`No unpublished packages (${pkgs.length} public already on npm)`);
-    return;
+  } else {
+    console.log(`unpublished:\n${unpublished.join('\n')}`);
   }
-  console.log(`unpublished:\n${unpublished.join('\n')}`);
+  console.log(skip ? 'skip changesets action' : 'run changesets action');
 };
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exit(1);
-});
+const invokedDirectly =
+  process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+
+if (invokedDirectly) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exit(1);
+  });
+}

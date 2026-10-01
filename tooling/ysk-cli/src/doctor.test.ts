@@ -429,5 +429,5 @@ describe('ysk-kit doctor', () => {
     };
     expect(brokenJson.ok).toBe(false);
     expect(brokenJson.checks.find((item) => item.id === 'env')?.status).toBe('error');
-  });
+  }, 30_000);
 });

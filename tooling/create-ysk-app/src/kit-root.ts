@@ -21,6 +21,52 @@ export const findLivingKitRoot = (from: string): string | null => {
 export const kitTarballUrl = (version: string): string =>
   `https://github.com/yanshekki/ysk-kit/archive/refs/tags/v${version}.tar.gz`;
 
+export const kitTagRefUrl = (version: string): string =>
+  `https://api.github.com/repos/yanshekki/ysk-kit/git/ref/tags/v${version}`;
+
+export const kitTagObjectUrl = (tagSha: string): string =>
+  `https://api.github.com/repos/yanshekki/ysk-kit/git/tags/${tagSha}`;
+
+/** Immutable archive for one commit. A moved tag cannot change bytes already fetched for this SHA. */
+export const kitCommitArchiveUrl = (commitSha: string): string =>
+  `https://github.com/yanshekki/ysk-kit/archive/${commitSha}.tar.gz`;
+
+const COMMIT_SHA = /^[0-9a-f]{40}$/i;
+
+const githubJson = async (
+  fetchImpl: typeof fetch,
+  url: string,
+): Promise<{ object?: { type?: string; sha?: string } }> => {
+  const res = await fetchImpl(url, {
+    headers: { accept: 'application/vnd.github+json', 'user-agent': 'ysk-kit-create-app' },
+  });
+  if (!res.ok) throw new Error(`GitHub ${url} failed: HTTP ${res.status}`);
+  return (await res.json()) as { object?: { type?: string; sha?: string } };
+};
+
+/** Resolve `v{version}` to the commit it points at, following an annotated tag. */
+export const resolveKitCommit = async (
+  version: string,
+  fetchImpl: typeof fetch,
+): Promise<string> => {
+  const ref = await githubJson(fetchImpl, kitTagRefUrl(version));
+  const sha = ref.object?.sha;
+  const type = ref.object?.type;
+  if (!sha || !COMMIT_SHA.test(sha)) {
+    throw new Error(`kit v${version} tag did not resolve to a commit`);
+  }
+  if (type === 'commit') return sha;
+  if (type === 'tag') {
+    const annotated = await githubJson(fetchImpl, kitTagObjectUrl(sha));
+    const commit = annotated.object?.sha;
+    if (!commit || annotated.object?.type !== 'commit' || !COMMIT_SHA.test(commit)) {
+      throw new Error(`kit v${version} annotated tag did not resolve to a commit`);
+    }
+    return commit;
+  }
+  throw new Error(`kit v${version} tag object type ${type ?? 'unknown'} is not a commit`);
+};
+
 export const readCreateAppVersion = (from: string): string => {
   let dir = from;
   for (;;) {
@@ -54,15 +100,25 @@ export const materializePublishedKit = async (
 ): Promise<string> => {
   const fetchImpl = opts.fetchImpl ?? fetch;
   const extract = opts.extract ?? defaultExtract;
-  const res = await fetchImpl(kitTarballUrl(version));
+  const commit = await resolveKitCommit(version, fetchImpl);
+  const archiveUrl = kitCommitArchiveUrl(commit);
+  const res = await fetchImpl(archiveUrl);
   if (!res.ok) {
-    throw new Error(`download kit v${version} failed: HTTP ${res.status}`);
+    throw new Error(`download kit v${version} (${commit}) failed: HTTP ${res.status}`);
   }
   const archive = Buffer.from(await res.arrayBuffer());
   const dest = mkdtempSync(join(tmpdir(), 'ysk-kit-'));
   extract(archive, dest);
   if (!isLivingKitRoot(dest)) {
     throw new Error(`downloaded v${version} is not a YSK Kit tree`);
+  }
+  const pkgPath = join(dest, 'package.json');
+  if (!existsSync(pkgPath)) throw new Error(`downloaded v${version} is missing package.json`);
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as { name?: string; version?: string };
+  if (pkg.name !== 'ysk-kit' || pkg.version !== version) {
+    throw new Error(
+      `downloaded v${version} failed integrity check (name=${pkg.name ?? ''}, version=${pkg.version ?? ''})`,
+    );
   }
   return dest;
 };

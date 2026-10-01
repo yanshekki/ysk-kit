@@ -1,2 +1,2 @@
 // Fragment already applied in apps/api/prisma/schema.prisma (Session, OtpChallenge).
-// ysk add auth is idempotent for the saas flavor.
+// ysk-kit add auth is idempotent for the saas flavor.

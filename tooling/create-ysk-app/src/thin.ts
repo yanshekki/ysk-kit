@@ -399,7 +399,7 @@ export const applyThinPreset = (dest: string): void => {
   patchIfExists(join(dest, 'apps/mobile/src/adapters/push.ts'), (src) =>
     src.replace(
       'await opts.api.devices.register({ token, platform: opts.platform });',
-      '// ysk add push restores client.devices',
+      '// ysk-kit add push restores client.devices',
     ),
   );
 

@@ -20,7 +20,7 @@ Language: [English](upgrade.md) · 中文
 ```json
 {
   "kit": "ysk-kit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "flavor": "saas",
   "preset": "thin",
   "db": "mysql"
@@ -83,4 +83,4 @@ pnpm layers && pnpm typecheck && pnpm test
 
 `php-bridge` 與 `static-web3` 跟隨產生出來的 README，而不是 API 驗證鏈。
 
-CLI 參考：[`ysk-kit upgrade`](../cli/ysk.zh.md#ysk-kit-upgrade)。
+CLI 參考：[`ysk-kit upgrade`](../cli/ysk-kit.zh.md#ysk-kit-upgrade)。

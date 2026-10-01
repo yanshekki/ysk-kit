@@ -2,7 +2,7 @@
 
 Language: [English](add-module.md) · 中文
 
-給人與 agent。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。CLI 旗標：[ysk-kit](../cli/ysk.zh.md)。
+給人與 agent。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。CLI 旗標：[ysk-kit](../cli/ysk-kit.zh.md)。
 
 ## 命令
 

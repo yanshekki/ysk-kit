@@ -13,8 +13,12 @@ export {
 export {
   clientIp,
   createMemoryRateLimit,
+  createRateLimit,
+  createRedisRateLimit,
   isRateLimitSkipped,
+  type RateLimiter,
   type RateLimitOpts,
+  type RateLimitRedis,
 } from './rate-limit';
 export { REQUEST_ID_HEADER } from './request-id';
 export { applySecurityHeaders, securityHeaders } from './security-headers';

@@ -1,5 +1,5 @@
 // Fragment already applied in apps/api/prisma/schema.prisma (Device).
-// ysk add push is idempotent for the saas flavor.
+// ysk-kit add push is idempotent for the saas flavor.
 
 model Device {
   id        String   @id @default(uuid())

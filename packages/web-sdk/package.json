@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/web-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -21,15 +21,15 @@
     "react": "^19.0.0"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
-    "@tanstack/react-query": "^5.75.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/react": "^19.1.2",
+    "@types/node": "^24.19.0",
+    "@tanstack/react-query": "^5.104.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.2.18",
     "@vitejs/plugin-react": "^6.1.1",
-    "happy-dom": "^20.0.0",
-    "react": "19.2.3",
+    "happy-dom": "^20.14.5",
+    "react": "19.2.8",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist"
@@ -45,5 +45,13 @@
         "import": "./dist/index.js"
       }
     }
+  },
+  "license": "MIT",
+  "description": "React Query hooks for the YSK Kit SDK.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "packages/web-sdk"
   }
 }

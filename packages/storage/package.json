@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/storage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -13,13 +13,13 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1142.0",
-    "@aws-sdk/s3-request-presigner": "^3.1142.0"
+    "@aws-sdk/client-s3": "^3.1144.0",
+    "@aws-sdk/s3-request-presigner": "^3.1144.0"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.19.0",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist"
@@ -35,5 +35,13 @@
         "import": "./dist/index.js"
       }
     }
+  },
+  "license": "MIT",
+  "description": "Local and S3-compatible file storage for YSK Kit.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "packages/storage"
   }
 }

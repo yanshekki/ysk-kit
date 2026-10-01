@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "bin": {
     "ysk-kit": "./src/index.ts",
@@ -18,10 +18,10 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
-    "tsx": "^4.19.3",
+    "@types/node": "^24.19.0",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist",
@@ -42,5 +42,13 @@
       "ysk-kit": "./dist/index.js",
       "yskk": "./dist/index.js"
     }
+  },
+  "license": "MIT",
+  "description": "ysk-kit CLI for modules, capabilities, OpenAPI, and agent checks.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "tooling/ysk-cli"
   }
 }

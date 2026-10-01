@@ -20,7 +20,7 @@ Daily path: **copy-tree, then `ysk-kit upgrade`**.
 ```json
 {
   "kit": "ysk-kit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "flavor": "saas",
   "preset": "thin",
   "db": "mysql"
@@ -83,4 +83,4 @@ pnpm layers && pnpm typecheck && pnpm test
 
 `php-bridge` and `static-web3` follow the generated README instead of the API verify chain.
 
-CLI reference: [`ysk-kit upgrade`](../cli/ysk.md#ysk-kit-upgrade).
+CLI reference: [`ysk-kit upgrade`](../cli/ysk-kit.md#ysk-kit-upgrade).

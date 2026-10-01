@@ -243,7 +243,7 @@ const mysqlCompose = `services:
       - ysk_kit_mysql:/var/lib/mysql
     command: ["--default-authentication-plugin=mysql_native_password", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
   redis:
-    image: redis:8.10-alpine
+    image: redis:8.10.2-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -265,7 +265,7 @@ const pgCompose = `services:
     volumes:
       - ysk_kit_pg:/var/lib/postgresql/data
   redis:
-    image: redis:8.10-alpine
+    image: redis:8.10.2-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -276,7 +276,7 @@ volumes:
 
 const sqliteCompose = `services:
   redis:
-    image: redis:8.10-alpine
+    image: redis:8.10.2-alpine
     restart: unless-stopped
     ports:
       - "6379:6379"

@@ -9,10 +9,10 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 | 範圍 | 現已提供 |
 |---|---|
 | 開倉 | `pnpm create @ysk-kit/app` 或 `create-ysk-app --preset thin\|full`（預設 thin）與六個 flavor。TTY 會提示未傳的旗標；`--yes` 略過提問 |
-| npmjs | 公開 `@ysk-kit/*` 與 `@ysk-kit/create-app` 1.0.0 在 [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit)。產品 dest 仍然用 copy-tree 加 `ysk-kit upgrade` |
+| npmjs | 公開 `@ysk-kit/*` 與 `@ysk-kit/create-app` 1.0.2 在 [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit)。產品 dest 仍然用 copy-tree 加 `ysk-kit upgrade` |
 | 切片 | `ysk-kit add module` 寫出合約、DTO、repo、Express + Fastify、SDK、web-sdk、頁面、測試 |
 | 能力 | 十六項已編目的 add；`llm`、`team`、`billing`、`push` 在缺失時複製源碼 |
-| 客戶端 | Vite 8 web/admin（AppShell）；Expo 流動應用（組織列表／邀請）；Electron 桌面 |
+| 客戶端 | Vite 8.3 web/admin（AppShell）；Expo 57 流動應用（組織列表／邀請）；Electron 44 桌面（Vite 7） |
 | 資料 | `pnpm db:seed` upsert `admin@ysk.hk` 與 `user@ysk.hk` |
 | 驗證 | `pnpm layers`、typecheck、Vitest（記憶體 port）、Testing Library 登入、一條 Playwright smoke |
 | 文件 | 雙語公開手冊、CLI 參考、agent skills、`AGENTS.md`。十個已完成實例在 `examples/` |

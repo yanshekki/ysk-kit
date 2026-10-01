@@ -36,7 +36,8 @@ export const createApiKeyService = (opts: {
     create: async (claims: AccessClaims, body: CreateApiKeyCommand) => {
       assertSession(claims);
       const owner = await opts.users.findById(claims.sub);
-      if (!owner || owner.status !== 'ACTIVE') throw new AppError('FORBIDDEN');
+      if (!owner) throw new AppError('FORBIDDEN');
+      if (owner.status !== 'ACTIVE') throw new AppError('FORBIDDEN');
       const allowed = new Set(ROLE_PERMISSIONS[owner.role]);
       if (!body.permissions.every((item) => allowed.has(item))) {
         throw new AppError('FORBIDDEN', 'Permissions exceed your role');
@@ -81,7 +82,8 @@ export const createApiKeyService = (opts: {
       if (!row || row.revokedAt) return null;
       if (!hashesMatch(row.tokenHash, hashKey(raw))) return null;
       const owner = await opts.users.findById(row.userId);
-      if (!owner || owner.status !== 'ACTIVE') return null;
+      if (!owner) return null;
+      if (owner.status !== 'ACTIVE') return null;
       await opts.keys.touchLastUsed(row.id, new Date());
       const claims: AccessClaims = {
         sub: owner.id,

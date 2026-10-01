@@ -19,20 +19,20 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 
 | Layer | Default | Alternative |
 |---|---|---|
-| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2 | — |
-| Language | TypeScript 6 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when the compiler API ships (dependency-cruiser needs it) |
-| Web / admin | Vite 8 + React 19 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
-| Desktop | Electron 44 + electron-vite 5 + Vite 7 | — |
+| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2.11 | — |
+| Language | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when dependency-cruiser supports that compiler API |
+| Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
+| Desktop | Electron 44 + electron-vite 5 + Vite 7 | Vite 8 when stable electron-vite peers it (6 is still beta) |
 | Mobile | Expo 57 / React Native 0.86 / React 19.2 | — |
 | HTTP API | Express 5 adapter (default) | Fastify 5 via `HTTP_ADAPTER=fastify` |
 | Contract | ts-rest + Zod 4 | — |
 | Database | Prisma 7.10 (`prisma-client` generator, MariaDB adapter, client at `apps/api/src/generated/prisma`) | PostgreSQL or SQLite adapters via `--db` |
-| Queue / cache | Redis 8 + BullMQ; in-memory queue when `REDIS_URL` is unset | — |
+| Queue / cache | Redis 8.10 + BullMQ; in-memory queue when `REDIS_URL` is unset | — |
 | Auth | JWT + refresh behind `IAuthPort`; email/password and `+852` OTP | Twilio Messages REST when `TWILIO_*` are set |
 | UI | `@ysk-kit/ui` (AppShell, PageHeader, EmptyState, ErrorBanner, FormField, Spinner, Can) | — |
 | Logger | Pino (JSON in production) | — |
-| Lint | Biome | — |
-| Test | Vitest 5, Testing Library, one Playwright Chromium smoke | — |
+| Lint | Biome 2.5 | — |
+| Test | Vitest 5.0, Testing Library, one Playwright Chromium smoke | — |
 | Docs | ts-rest → OpenAPI → Scalar at `GET /docs` | — |
 | Runtime | Node 24 LTS | — |
 | Observability | Prometheus `GET /metrics`; optional OTLP traces/metrics; optional Jaeger / Grafana in Compose | — |
@@ -162,7 +162,7 @@ Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `Fi
 | `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. TTY prompts for omitted flags; `--yes` skips prompts |
 | `ysk-kit add module` | One hexagonal HTTP slice |
 | `ysk-kit add <capability>` | Merge Prisma, env, deps; copy source for llm / team / billing / push when missing |
-| `ysk generate openapi` | Write `docs/openapi.yaml` |
+| `ysk-kit generate openapi` | Write `docs/openapi.yaml` |
 | `ysk-kit upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
 | `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
 

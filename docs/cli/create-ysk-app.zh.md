@@ -9,7 +9,7 @@ pnpm --filter @ysk-kit/create-app start <name> [options]
 pnpm create @ysk-kit/app <name> [options]
 ```
 
-在 kit checkout 入面，CLI 複製呢棵樹。從 npm 安裝時，會下載 `yanshekki/ysk-kit` 的 tag `v{version}`。
+在 kit checkout 入面，CLI 複製呢棵樹。從 npm 安裝時，會把 tag `v{version}` 解成 commit SHA，下載該 commit 的壓縮檔，再核對解壓後的 `package.json` 名稱與版本。
 
 在非 TTY 缺少 `<name>` 會列印 `--help` 並以狀態 1 結束。未知 `--flavor` 丟出 `not in this phase`。
 

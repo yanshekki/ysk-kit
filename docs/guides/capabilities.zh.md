@@ -19,7 +19,7 @@ Language: [English](capabilities.md) · 中文
 
 ## 目錄
 
-見 [ysk-kit CLI](../cli/ysk.zh.md) 的表格。十六個名稱：`auth`、`rbac`、`audit-log`、`storage`、`i18n`、`jobs`、`mail`、`notifications`、`llm`、`websocket`、`push`、`mobile`、`team`、`apikey`、`crypto`、`billing`。別名 `org` → `team`。
+見 [ysk-kit CLI](../cli/ysk-kit.zh.md) 的表格。十六個名稱：`auth`、`rbac`、`audit-log`、`storage`、`i18n`、`jobs`、`mail`、`notifications`、`llm`、`websocket`、`push`、`mobile`、`team`、`apikey`、`crypto`、`billing`。別名 `org` → `team`。
 
 只有 `llm`、`team`、`billing`、`push` 會從 `tooling/ysk-cli/templates/capabilities/<name>/` 複製源碼樹，而且只在 `app.ts` / `composition.ts` 尚未包含略過標記時複製。
 

@@ -43,7 +43,7 @@ const copyCapabilityTree = (root: string, name: Capability, logs: string[]): boo
       const dest = join(root, destRel);
       if (existsSync(dest)) {
         const current = readFileSync(dest, 'utf8');
-        if (!current.includes('ysk add push restores client.devices')) {
+        if (!current.includes('ysk-kit add push restores client.devices')) {
           logs.push(`exists ${destRel}`);
           continue;
         }

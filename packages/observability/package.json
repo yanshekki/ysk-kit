@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/observability",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -26,12 +26,12 @@
     "prom-client": "^15.1.3"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/node": "^24.5.2",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.19.0",
     "@ysk-kit/logger": "workspace:*",
     "express": "^5.2.1",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.0.3"
   },
   "files": [
     "dist"
@@ -47,5 +47,13 @@
         "import": "./dist/index.js"
       }
     }
+  },
+  "license": "MIT",
+  "description": "Prometheus metrics and optional OpenTelemetry for YSK Kit.",
+  "homepage": "https://ysk.hk/products/ysk-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanshekki/ysk-kit.git",
+    "directory": "packages/observability"
   }
 }

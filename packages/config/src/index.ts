@@ -68,8 +68,25 @@ export const ServerEnvSchema = z.object({
 
 export type ServerEnv = z.infer<typeof ServerEnvSchema>;
 
-export const loadServerEnv = (source: EnvMap = envMap()): ServerEnv =>
-  ServerEnvSchema.parse({
+/** Development placeholder shipped in `.env.example`. Production must not boot with it. */
+export const DEV_JWT_SECRETS = ['change-me-in-dev-only'] as const;
+
+export const PRODUCTION_JWT_MIN = 32;
+
+export const assertProductionSecrets = (env: ServerEnv): void => {
+  if (env.NODE_ENV !== 'production') return;
+  const weak =
+    env.JWT_SECRET.length < PRODUCTION_JWT_MIN ||
+    DEV_JWT_SECRETS.some((secret) => secret === env.JWT_SECRET);
+  if (weak) {
+    throw new Error(
+      `production JWT_SECRET must be at least ${PRODUCTION_JWT_MIN} characters and must not be a development default`,
+    );
+  }
+};
+
+export const loadServerEnv = (source: EnvMap = envMap()): ServerEnv => {
+  const env = ServerEnvSchema.parse({
     NODE_ENV: source.NODE_ENV,
     API_PORT: source.API_PORT,
     DATABASE_URL: source.DATABASE_URL,
@@ -110,6 +127,9 @@ export const loadServerEnv = (source: EnvMap = envMap()): ServerEnv =>
     RATE_LIMIT_MAX: source.RATE_LIMIT_MAX,
     RATE_LIMIT_WINDOW_MS: source.RATE_LIMIT_WINDOW_MS,
   });
+  assertProductionSecrets(env);
+  return env;
+};
 
 export const rateLimitFromEnv = (
   env: Pick<ServerEnv, 'RATE_LIMIT_MAX' | 'RATE_LIMIT_WINDOW_MS'>,

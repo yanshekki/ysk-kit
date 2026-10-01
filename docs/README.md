@@ -13,6 +13,7 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | Learn a subsystem | [Hexagonal layers](guides/hexagonal.md), [envelope](guides/envelope.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [testing](guides/testing.md), [deploy](guides/deploy.md), [upgrade](guides/upgrade.md) |
 | Follow an AI procedure | [Skills](skills/index.md) and [AGENTS.md](../AGENTS.md) |
 | See what shipped when | [Changelog](history.md) |
+| Report a vulnerability | [Security](../SECURITY.md) |
 | See what is planned | [Product direction](product-plan.md) |
 | Contribute documentation | [Contributing](contributing.md) |
 

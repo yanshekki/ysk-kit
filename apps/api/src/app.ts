@@ -12,7 +12,8 @@ import {
   applySecurityHeaders,
   buildOpenApiDocument,
   clientIp,
-  createMemoryRateLimit,
+  createRateLimit,
+  type RateLimitRedis,
   scalarDocsHtml,
 } from '@ysk-kit/api-http';
 import { appContract } from '@ysk-kit/contracts';
@@ -69,7 +70,7 @@ export type CreateAppInput = {
   bullmqQueues?: BullmqQueue[];
   stripeWebhookSecret?: string;
   production?: boolean;
-  rateLimit?: { windowMs: number; max: number };
+  rateLimit?: { windowMs: number; max: number; redis?: RateLimitRedis };
 };
 
 export const createApp = (input: CreateAppInput): Express => {
@@ -87,14 +88,17 @@ export const createApp = (input: CreateAppInput): Express => {
     next();
   });
   if (input.rateLimit) {
-    const limiter = createMemoryRateLimit(input.rateLimit);
+    const limiter = createRateLimit(input.rateLimit);
     app.use((req, _res, next) => {
-      try {
-        limiter.check(clientIp(req.headers['x-forwarded-for'], req.socket.remoteAddress), req.path);
-        next();
-      } catch (error) {
-        next(error);
-      }
+      Promise.resolve()
+        .then(() =>
+          limiter.check(
+            clientIp(req.headers['x-forwarded-for'], req.socket.remoteAddress),
+            req.path,
+          ),
+        )
+        .then(() => next())
+        .catch(next);
     });
   }
   app.use(cors({ origin: input.corsOrigins }));

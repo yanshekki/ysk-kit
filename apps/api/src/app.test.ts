@@ -47,6 +47,34 @@ describe('api auth', () => {
     expect(health.status).toBe(200);
   });
 
+  it('rate-limits through Redis when a client is provided', async () => {
+    const counts = new Map<string, number>();
+    const limited = createApp({
+      ...mem.input,
+      rateLimit: {
+        windowMs: 60_000,
+        max: 1,
+        redis: {
+          incr: (key) => {
+            const next = (counts.get(key) ?? 0) + 1;
+            counts.set(key, next);
+            return Promise.resolve(next);
+          },
+          pexpire: () => Promise.resolve(1),
+        },
+      },
+    });
+    const first = await request(limited)
+      .post('/v1/auth/login')
+      .send({ email: 'a@ysk.hk', password: 'password1' });
+    const second = await request(limited)
+      .post('/v1/auth/login')
+      .send({ email: 'a@ysk.hk', password: 'password1' });
+    expect(first.status).not.toBe(429);
+    expect(second.status).toBe(429);
+    expect(second.body.error.code).toBe('RATE_LIMITED');
+  });
+
   it('registers, reads me, and lists users with a token', async () => {
     const registered = await request(app).post('/v1/auth/register').send({
       email: 'dev@ysk.hk',

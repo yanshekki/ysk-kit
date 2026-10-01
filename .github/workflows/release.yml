@@ -37,7 +37,7 @@ jobs:
       - uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         if: steps.unpublished.outputs.skip != 'true'
         with:
-          version-script: pnpm changeset version && node .github/sync-kit-version.mjs
+          version-script: pnpm version:packages
           publish-script: pnpm release:publish
           pr-title: 'chore: version packages'
           create-github-releases: false

@@ -30,7 +30,7 @@
     "pm2:start": "pm2 start ecosystem.config.cjs",
     "changeset": "changeset",
     "build:packages": "pnpm -r --filter \"./packages/**\" --filter \"./tooling/**\" --if-present build",
-    "release:publish": "pnpm build:packages && pnpm changeset publish",
+    "release:publish": "pnpm build:packages && NPM_CONFIG_PROVENANCE=true pnpm changeset publish",
     "test:coverage": "vitest run --config vitest.coverage.config.ts --coverage",
     "check:links": "node .github/check-md-links.mjs"
   },

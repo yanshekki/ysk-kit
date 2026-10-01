@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { addCapability } from './add-capability';
 import { addModule } from './add-module';
 import { checkAgent, formatAgentFindings } from './check-agent';
+import { doctor, formatDoctorReport } from './doctor';
 import { generateOpenApi } from './generate-openapi';
 import { HELP } from './help';
 import { upgrade } from './upgrade';
@@ -42,6 +43,13 @@ try {
     const findings = checkAgent(root);
     console.log(formatAgentFindings(findings));
     process.exit(findings.length === 0 ? 0 : 1);
+  }
+
+  if (args[0] === 'doctor') {
+    const report = doctor({ productRoot: root, kitRoot });
+    if (args.includes('--json')) console.log(JSON.stringify(report, null, 2));
+    else console.log(formatDoctorReport(report));
+    process.exit(report.ok ? 0 : 1);
   }
 
   if (args[0] === 'upgrade') {

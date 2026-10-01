@@ -62,6 +62,7 @@ Language: [English](foo.md) · 中文
 | Agent 程序 | `docs/skills/`（產生出來的 `.grok/skills` 與 `.cursor/skills` 包裝只指向此處） |
 | 變更紀錄 | `docs/history.md` |
 | 路線圖 | `docs/product-plan.md` |
+| 決定 | `docs/adr/` |
 
 先改英文來源，再更新中文對。
 

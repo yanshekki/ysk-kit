@@ -62,6 +62,7 @@ Tool stubs stay English-only: `CLAUDE.md`, and the generated Cursor/Grok wrapper
 | Agent procedures | `docs/skills/` (generated `.grok/skills` and `.cursor/skills` wrappers only point here) |
 | Changelog | `docs/history.md` |
 | Roadmap | `docs/product-plan.md` |
+| Decisions | `docs/adr/` |
 
 Change the English home first, then update the Chinese pair.
 

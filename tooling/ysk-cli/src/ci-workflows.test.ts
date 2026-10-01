@@ -34,5 +34,7 @@ describe('CI workflows', () => {
     expect(publishScript).toContain('NPM_CONFIG_PROVENANCE=true');
     expect(publishScript).toContain('changeset publish');
     expect(publishScript).not.toContain('changeset publish --provenance');
+    expect(release).toContain('create-github-releases: false');
+    expect(release).toContain('node .github/sync-kit-version.mjs');
   });
 });

@@ -2,6 +2,10 @@ import { readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import {
+  pendingChangesetFiles,
+  shouldSkipRelease,
+} from '../../../.github/unpublished-packages.mjs';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const ci = readFileSync(join(kitRoot, '.github/workflows/ci.yml'), 'utf8');
@@ -36,5 +40,12 @@ describe('CI workflows', () => {
     expect(publishScript).not.toContain('changeset publish --provenance');
     expect(release).toContain('create-github-releases: false');
     expect(release).toContain('node .github/sync-kit-version.mjs');
+  });
+
+  it('still versions when the published versions are already on npm', () => {
+    expect(shouldSkipRelease(0, 0)).toBe(true);
+    expect(shouldSkipRelease(0, 1)).toBe(false);
+    expect(shouldSkipRelease(2, 0)).toBe(false);
+    expect(pendingChangesetFiles(kitRoot).length).toBeGreaterThan(0);
   });
 });

@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -53,6 +54,11 @@ describe('CI workflows', () => {
     expect(shouldSkipRelease(0, 0)).toBe(true);
     expect(shouldSkipRelease(0, 1)).toBe(false);
     expect(shouldSkipRelease(2, 0)).toBe(false);
-    expect(pendingChangesetFiles(kitRoot).length).toBeGreaterThan(0);
+    const fixture = mkdtempSync(join(tmpdir(), 'ysk-changesets-'));
+    mkdirSync(join(fixture, '.changeset'));
+    writeFileSync(join(fixture, '.changeset/README.md'), '# readme\n');
+    expect(pendingChangesetFiles(fixture)).toEqual([]);
+    writeFileSync(join(fixture, '.changeset/doctor.md'), '---\n---\n');
+    expect(pendingChangesetFiles(fixture)).toEqual(['doctor.md']);
   });
 });

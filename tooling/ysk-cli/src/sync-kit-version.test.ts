@@ -8,35 +8,44 @@ import { describe, expect, it } from 'vitest';
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const script = join(kitRoot, '.github/sync-kit-version.mjs');
 
-const publicPackages = (): string[] => {
-  const names: string[] = [];
+const publicPackages = (): { name: string; version: string }[] => {
+  const out: { name: string; version: string }[] = [];
   for (const dir of ['packages', 'tooling']) {
     for (const name of readdirSync(join(kitRoot, dir))) {
-      let pkg: { name?: string; private?: boolean };
+      let pkg: { name?: string; version?: string; private?: boolean };
       try {
         pkg = JSON.parse(readFileSync(join(kitRoot, dir, name, 'package.json'), 'utf8')) as {
           name?: string;
+          version?: string;
           private?: boolean;
         };
       } catch {
         continue;
       }
-      if (pkg.private === true || !pkg.name) continue;
-      names.push(pkg.name);
+      if (pkg.private === true || !pkg.name || !pkg.version) continue;
+      out.push({ name: pkg.name, version: pkg.version });
     }
   }
-  return names.sort();
+  return out.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
 };
 
 describe('kit version sync', () => {
-  it('bumps every public package as a minor so the next release is 1.1.0', () => {
-    const text = readFileSync(join(kitRoot, '.changeset/doctor-flavor-provenance.md'), 'utf8');
-    const declared = [...text.matchAll(/"(@ysk-kit\/[^"]+)":\s*minor/g)].flatMap((match) => {
-      const name = match[1];
-      return name ? [name] : [];
-    });
-    expect(declared.sort()).toEqual(publicPackages());
-    expect(text).not.toMatch(/:\s*patch/);
+  it('keeps public packages on one version, via a minor changeset or an applied bump', () => {
+    const changeset = join(kitRoot, '.changeset/doctor-flavor-provenance.md');
+    const pkgs = publicPackages();
+    try {
+      const text = readFileSync(changeset, 'utf8');
+      const declared = [...text.matchAll(/"(@ysk-kit\/[^"]+)":\s*minor/g)].flatMap((match) => {
+        const name = match[1];
+        return name ? [name] : [];
+      });
+      expect(declared.sort()).toEqual(pkgs.map((pkg) => pkg.name));
+      expect(text).not.toMatch(/:\s*patch/);
+    } catch (error) {
+      const missing = error instanceof Error && 'code' in error && error.code === 'ENOENT';
+      if (!missing) throw error;
+      expect(new Set(pkgs.map((pkg) => pkg.version)).size).toBe(1);
+    }
   });
 
   it('copies the create-app version into the root package.json', () => {

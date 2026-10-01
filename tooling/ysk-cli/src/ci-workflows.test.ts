@@ -3,9 +3,11 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { describeAuth, formatAuth, publishPlan } from '../../../.github/publish-packages.mjs';
 import {
   pendingChangesetFiles,
   shouldSkipRelease,
+  versionIsInstallable,
 } from '../../../.github/unpublished-packages.mjs';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -36,11 +38,31 @@ describe('CI workflows', () => {
     expect(release).toContain('secrets.NPM_TOKEN');
     expect(release).toContain('NPM_CONFIG_PROVENANCE: "true"');
     expect(release).not.toContain('packages: write');
-    expect(publishScript).toContain('NPM_CONFIG_PROVENANCE=true');
-    expect(publishScript).toContain('changeset publish');
-    expect(publishScript).not.toContain('changeset publish --provenance');
+    expect(publishScript).toContain('node .github/publish-packages.mjs');
+    expect(publishScript).not.toContain('changeset publish');
+    expect(release).toContain('workflow_dispatch:');
+    expect(release).toContain('publish-packages.mjs --debug');
+    expect(release).toContain('publish-packages.mjs --verify-only');
     expect(release).toContain('create-github-releases: false');
+    expect(release).toContain('push-git-tags: false');
     expect(release).toContain('pnpm version:packages');
+    const publishSource = readFileSync(join(kitRoot, '.github/publish-packages.mjs'), 'utf8');
+    expect(publishSource).toContain("'--provenance'");
+    expect(publishSource).toContain('npm view');
+    expect(publishPlan({ installable: true, accepted: true })).toBe('skip');
+    expect(publishPlan({ installable: false, accepted: true })).toBe('wait');
+    expect(publishPlan({ installable: false, accepted: false })).toBe('publish');
+    expect(formatAuth(describeAuth({}))).toContain('OIDC not available');
+    expect(formatAuth(describeAuth({ NODE_AUTH_TOKEN: 'secret' }))).toContain(
+      'NODE_AUTH_TOKEN is set as fallback',
+    );
+    expect(
+      formatAuth(
+        describeAuth({ GITHUB_ACTIONS: 'true', ACTIONS_ID_TOKEN_REQUEST_URL: 'https://example' }),
+      ),
+    ).toContain('OIDC trusted publishing');
+    expect(versionIsInstallable({ versions: { '1.1.0': {} } }, '1.1.0')).toBe(true);
+    expect(versionIsInstallable({ versions: { '1.0.2': {} } }, '1.1.0')).toBe(false);
     const versionScript = (
       JSON.parse(readFileSync(join(kitRoot, 'package.json'), 'utf8')) as {
         scripts: Record<string, string>;

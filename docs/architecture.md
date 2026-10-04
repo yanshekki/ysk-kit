@@ -4,7 +4,7 @@ Language: [中文](architecture.zh.md) · English
 
 YSK Kit is a contract-first platform so a new product writes business rules instead of rebuilding frontend, backend, database, and mobile skeletons. This repository is the living `saas` flavor: a runnable reference with identity, files, notifications, jobs, mail, API keys, crypto, and realtime already wired. Product domains stay out of the kit.
 
-Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. Changelog: [history.md](history.md).
+Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. Version changelog: [CHANGELOG.md](../CHANGELOG.md). Phase diary: [history.md](history.md).
 
 ## Principles
 

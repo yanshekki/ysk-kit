@@ -12,7 +12,8 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | Use the generators | [CLI](cli/index.md), [add a module](recipes/add-module.md), [add a capability](recipes/add-capability.md), [refresh guardrails](guides/upgrade.md) |
 | Learn a subsystem | [Hexagonal layers](guides/hexagonal.md), [envelope](guides/envelope.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [testing](guides/testing.md), [deploy](guides/deploy.md), [upgrade](guides/upgrade.md) |
 | Follow an AI procedure | [Skills](skills/index.md) and [AGENTS.md](../AGENTS.md) |
-| See what shipped when | [Changelog](history.md) |
+| See what shipped in a version | [Changelog](../CHANGELOG.md) |
+| Read the phase diary | [History](history.md) |
 | Report a vulnerability | [Security](../SECURITY.md) |
 | See what is planned | [Product direction](product-plan.md) |
 | Read an architecture decision | [ADR 0001: ts-rest](adr/0001-ts-rest.md) |

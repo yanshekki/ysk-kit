@@ -41,7 +41,7 @@ Use Traditional characters and written syntax（是／不是／沒有／此／�
 Documentation is public. Write so a third party who has never seen the company or this repository can understand the platform.
 
 - Describe how the system works today and how to use it.
-- Put dated “what shipped when” only in [history.md](history.md).
+- Put the versioned product changelog in [CHANGELOG.md](../CHANGELOG.md). The root README lists only the latest three versions (see below). Put the phase diary in [history.md](history.md).
 - Put upcoming work in [product-plan.md](product-plan.md) using feature names, not internal wave numbers.
 - Do not write development-diary phrases into architecture, guides, README, CLI manuals, or skills.
 - Explain flavors as product shapes. Do not require the reader to know other private repositories.
@@ -60,9 +60,29 @@ Tool stubs stay English-only: `CLAUDE.md`, and the generated Cursor/Grok wrapper
 | Concepts | `docs/guides/` |
 | Step-by-step how-to | `docs/recipes/` |
 | Agent procedures | `docs/skills/` (generated `.grok/skills` and `.cursor/skills` wrappers only point here) |
-| Changelog | `docs/history.md` |
+| Version changelog | `CHANGELOG.md` (latest three versions also in the root README) |
+| Phase diary | `docs/history.md` |
 | Roadmap | `docs/product-plan.md` |
 | Decisions | `docs/adr/` |
+
+### README changelog window
+
+`README.md` and `README.zh.md` show only the latest three versions. Group each version by the categories that apply:
+
+| English | 中文 |
+|---|---|
+| New features | 新功能 |
+| Improvements | 改進 |
+| Fixes | 修正 |
+| Security | 安全 |
+| Dependency upgrades | 依賴升級 |
+| Internal/CI | 內部／CI |
+
+End that section with a link to the full changelog (`CHANGELOG.md`, Chinese `CHANGELOG.zh.md`). The full changelog keeps every version, newest first, in the same categories. Changesets still writes each package `CHANGELOG.md`. Link those files from the full changelog. Do not invent entries. Take them from GitHub releases, tags, the per-package changelogs, and git history.
+
+Each release adds the new version at the top of the README section and moves the oldest of the three into the full changelog. The notes on the GitHub product release `vX.Y.Z` are that new README entry. Before v1.1.3 the README window was v1.1.2, v1.1.1, and v1.1.0; v1.1.3 moved v1.1.0 into the full changelog.
+
+If that release edits a README that npm publishes with a package, add a patch changeset so the npm README updates too.
 
 Change the English home first, then update the Chinese pair.
 

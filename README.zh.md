@@ -6,7 +6,7 @@ Language: [English](README.md) · 中文
 
 | | |
 |---|---|
-| **版本** | 1.1.2 |
+| **版本** | 1.1.3 |
 | **授權** | MIT |
 | **公司** | [YSK Limited](https://ysk.hk/) |
 | **聯絡** | email@ysk.hk |

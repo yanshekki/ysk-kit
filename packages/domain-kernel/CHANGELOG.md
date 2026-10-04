@@ -1,5 +1,13 @@
 # @ysk-kit/domain-kernel
 
+## 1.1.3
+
+### Patch Changes
+
+- cafbf05: The root README and README.zh.md list only the latest three versions, grouped by category, and link to the full changelog. CHANGELOG.md and CHANGELOG.zh.md keep every version. Each release adds the new version at the top of the README section and moves the oldest of the three into the full changelog.
+- Updated dependencies [cafbf05]
+  - @ysk-kit/contracts@1.1.3
+
 ## 1.1.2
 
 ### Patch Changes

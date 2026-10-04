@@ -19,7 +19,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 
 | 層 | 預設 | 備選 |
 |---|---|---|
-| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2.11 | — |
+| Monorepo | pnpm 12.9.0 workspaces + Turborepo 2.11.7 | — |
 | 語言 | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 要等 dependency-cruiser 支援該 compiler API |
 | Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
 | 桌面 | Electron 44 + electron-vite 5 + Vite 7 | 穩定版 electron-vite 支援 Vite 8 之後（6 仍是 beta） |

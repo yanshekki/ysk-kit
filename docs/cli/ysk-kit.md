@@ -146,7 +146,7 @@ Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--
 
 | Check | Error | Warning | What to do |
 |---|---|---|---|
-| `engines` | Node or pnpm misses `package.json` `engines`, or `pnpm` is not on `PATH` | `packageManager` pin differs from `pnpm --version`, or `engines` is absent | Install Node 24 and run `corepack enable && corepack prepare pnpm@12.8.1 --activate` |
+| `engines` | Node or pnpm misses `package.json` `engines`, or `pnpm` is not on `PATH` | `packageManager` pin differs from `pnpm --version`, or `engines` is absent | Install Node 24 and run `corepack enable && corepack prepare pnpm@12.9.0 --activate` |
 | `env` | An API product is missing `DATABASE_URL` or `JWT_SECRET` | `static-web3` is missing `API_PUBLIC_URL` or `WEB_PUBLIC_URL`; `php-bridge` is missing `API_PUBLIC_URL` | `cp .env.example .env` and set the keys. Public URLs and the PHP bridge have localhost defaults, so those are warnings |
 | `secrets` | `NODE_ENV=production` with a placeholder `JWT_SECRET`, a secret shorter than 8 characters, example seed passwords in production, or `CRYPTO_MASTER_KEY` that is not 64 hex characters | Example `JWT_SECRET` in development, a secret shorter than 32 characters, or an empty `CRYPTO_MASTER_KEY` in production | `openssl rand -base64 32` for `JWT_SECRET`. `openssl rand -hex 32` for `CRYPTO_MASTER_KEY` |
 | `database` | The server is unreachable, the SQLite file is missing, or Prisma migrations are not applied | — | `pnpm db:migrate` in development, or `pnpm --filter @ysk-kit/api prisma:migrate:deploy` in production. Skipped when `apps/api/prisma/schema.prisma` is absent (`static-web3`, `php-bridge`) |

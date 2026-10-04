@@ -305,7 +305,9 @@ const enginesCheck = (
       'engines',
       'error',
       message,
-      'Install Node 24 and pnpm 12 (`corepack enable && corepack prepare pnpm@12.8.1 --activate`).',
+      pinned
+        ? `Install Node 24 and run \`corepack enable && corepack prepare pnpm@${pinned} --activate\`.`
+        : 'Install Node 24 and pnpm 12 (`corepack enable && corepack prepare pnpm@12 --activate`).',
     );
   }
   if (warnings.length > 0) {

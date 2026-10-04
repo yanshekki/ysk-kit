@@ -58,11 +58,15 @@ describe('kit version sync', () => {
       join(root, 'tooling/create-ysk-app/package.json'),
       `${JSON.stringify({ name: '@ysk-kit/create-app', version: '1.1.0' })}\n`,
     );
+    writeFileSync(join(root, 'README.md'), '| **Version** | 1.0.2 |\n');
+    writeFileSync(join(root, 'README.zh.md'), '| **版本** | 1.0.2 |\n');
     const first = spawnSync(process.execPath, [script, root], { encoding: 'utf8' });
     expect(first.status).toBe(0);
     const bumped = readFileSync(pkgPath, 'utf8');
     expect(bumped).toContain('"version": "1.1.0"');
     expect(bumped).toContain('"private": true');
+    expect(readFileSync(join(root, 'README.md'), 'utf8')).toContain('| **Version** | 1.1.0 |');
+    expect(readFileSync(join(root, 'README.zh.md'), 'utf8')).toContain('| **版本** | 1.1.0 |');
     const second = spawnSync(process.execPath, [script, root], { encoding: 'utf8' });
     expect(second.status).toBe(0);
     expect(readFileSync(pkgPath, 'utf8')).toBe(bumped);

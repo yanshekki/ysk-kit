@@ -24,12 +24,12 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^24.19.0",
+    "@types/node": "^24.19.1",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"
   },
   "peerDependencies": {
-    "pino": "^10.3.1"
+    "pino": "^10.4.0"
   },
   "files": [
     "dist"

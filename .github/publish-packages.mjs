@@ -3,7 +3,7 @@
  * Publish public @ysk-kit packages with pnpm 12 and fail unless npm can see them.
  *
  * `changeset publish` treats pnpm's exit code as success and discards stdout.
- * pnpm 12.8.1's native publish PUTs, then returns 0. Its default
+ * pnpm 12's native publish PUTs, then returns 0. Its default
  * --publish-wait-timeout is 0, so it does not wait until the tarball is
  * installable. npm's public packument (what `npm view` reads) lags that PUT.
  * A version document can already exist, with Trusted Publishing provenance,

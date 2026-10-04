@@ -2,7 +2,7 @@
 
 Language: [English](workspace-scripts.md) · 中文
 
-根 `package.json` 的 script。需要 Node 24 與 pnpm 12（`packageManager` 為 `pnpm@12.8.1`）。
+根 `package.json` 的 script。需要 Node 24 與 pnpm 12（`packageManager` 為 `pnpm@12.9.0`）。
 
 | Script | 命令 | 用途 |
 |---|---|---|
@@ -42,7 +42,7 @@ Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PU
 
 ### npm provenance 與 Trusted Publishing
 
-`pnpm release:publish` 先編譯，然後執行 `.github/publish-packages.mjs`。pnpm 12 自己發佈（`pnpm publish` 不會呼叫 npm CLI），也不把 `NPM_CONFIG_PROVENANCE` 當成 `--provenance`，所以腳本對每個套件傳入 `--provenance --access public`。`@changesets/cli` 3.0.3 沒有 `--provenance` 旗標；`changeset publish` 還會吃掉 pnpm 的輸出，並把退出碼 0 當成已發佈。pnpm 12.8.1 在 registry 接受 PUT 後就返回 0（`--publish-wait-timeout` 預設是 0）。腳本會記錄 OIDC 是否可用、`NODE_AUTH_TOKEN` 是否已設定、`pnpm config get` 的 registry，以及實際執行的 pnpm 指令。然後在五分鐘內重試 `npm view <name>@<version>`。仍有套件看不到就讓 job 失敗。registry 已經接受的版本不會再發佈一次。
+`pnpm release:publish` 先編譯，然後執行 `.github/publish-packages.mjs`。pnpm 12 自己發佈（`pnpm publish` 不會呼叫 npm CLI），也不把 `NPM_CONFIG_PROVENANCE` 當成 `--provenance`，所以腳本對每個套件傳入 `--provenance --access public`。`@changesets/cli` 3.0.3 沒有 `--provenance` 旗標；`changeset publish` 還會吃掉 pnpm 的輸出，並把退出碼 0 當成已發佈。pnpm 12 在 registry 接受 PUT 後就返回 0（`--publish-wait-timeout` 預設是 0）。腳本會記錄 OIDC 是否可用、`NODE_AUTH_TOKEN` 是否已設定、`pnpm config get` 的 registry，以及實際執行的 pnpm 指令。然後在五分鐘內重試 `npm view <name>@<version>`。仍有套件看不到就讓 job 失敗。registry 已經接受的版本不會再發佈一次。
 
 工作流程仍然把 `secrets.NPM_TOKEN` 傳入 `NODE_AUTH_TOKEN`。在 pnpm 12，這個 token 只是後備：job 有 `id-token: write`，而且 npm 已為本倉與 `release.yml` 設定 Trusted Publisher 時，OIDC 交換會蓋過靜態 token。release job 的權限是 `contents: write`、`pull-requests: write`（Changesets 版本 PR）與 `id-token: write`（GitHub OIDC）。工作流程預設是 `contents: read`。
 

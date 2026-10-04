@@ -23,4 +23,4 @@ IP 速率限制在單一行程內是記憶體。設了 `REDIS_URL` 之後，多�
 
 ## 供應鏈
 
-GitHub Actions 釘在 commit SHA。`.github/workflows/release.yml` 發佈 npm 時要求 provenance。Dependabot 每週為 npm、Actions 與 Docker 開更新 PR。
+GitHub Actions 釘在 commit SHA。`.github/workflows/release.yml` 發佈 npm 時只使用 npm Trusted Publishing（OIDC），並要求 provenance。工作流程不傳入靜態 npm 憑證。Dependabot 每週為 npm、Actions 與 Docker 開更新 PR。

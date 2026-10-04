@@ -33,14 +33,13 @@ export const versionIsInstallable = (packument, version) => packument?.versions?
 const encodedName = (name) =>
   name.startsWith('@') ? `@${encodeURIComponent(name.slice(1))}` : encodeURIComponent(name);
 
-const isOnRegistry = async (name, version, token) => {
+const isOnRegistry = async (name, version) => {
   const url = `${REGISTRY}/${encodedName(name)}`;
   const headers = {
     Accept: 'application/vnd.npm.install-v1+json',
     'User-Agent': 'ysk-kit-release',
     'Cache-Control': 'no-cache',
   };
-  if (token) headers.Authorization = `Bearer ${token}`;
   const res = await fetch(url, { headers });
   if (res.status === 404) return false;
   if (res.status !== 200) throw new Error(`${name}@${version}: registry HTTP ${res.status}`);
@@ -58,11 +57,10 @@ export const shouldSkipRelease = (unpublishedCount, pendingCount) =>
 
 const main = async () => {
   const env = { ...process.env };
-  const token = env.NODE_AUTH_TOKEN ?? env.NPM_TOKEN ?? '';
   const pkgs = publicPackages();
   const unpublished = [];
   for (const pkg of pkgs) {
-    const found = await isOnRegistry(pkg.name, pkg.version, token);
+    const found = await isOnRegistry(pkg.name, pkg.version);
     if (!found) unpublished.push(`${pkg.name}@${pkg.version}`);
   }
   const pending = pendingChangesetFiles();

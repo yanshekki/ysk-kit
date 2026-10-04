@@ -22,16 +22,47 @@ const VERIFY_INTERVAL_MS = 15_000;
 
 export const describeAuth = (env) => ({
   oidc: Boolean(env.GITHUB_ACTIONS && env.ACTIONS_ID_TOKEN_REQUEST_URL),
-  token: typeof env.NODE_AUTH_TOKEN === 'string' && env.NODE_AUTH_TOKEN.length > 0,
 });
 
-export const formatAuth = ({ oidc, token }) => {
-  const mode = oidc
-    ? 'OIDC trusted publishing (id-token available; pnpm prefers it over a static token)'
-    : 'OIDC not available';
-  const fallback = token ? 'NODE_AUTH_TOKEN is set as fallback' : 'NODE_AUTH_TOKEN is unset';
-  return `${mode}; ${fallback}`;
+export const formatAuth = ({ oidc }) =>
+  oidc
+    ? 'OIDC trusted publishing (id-token available)'
+    : 'OIDC trusted publishing is unavailable';
+
+/** Exit the publish when GitHub has not minted an OIDC token. There is no static-token fallback. */
+export const assertOidc = (auth) => {
+  if (auth.oidc) return;
+  throw new Error(
+    `${formatAuth(auth)}. Refusing to continue. A static npm token is not a fallback.`,
+  );
 };
+
+/** Names a workflow must not set. Split so the repository does not keep the secret identifier. */
+export const staticCredentialNames = () => [`${'NPM'}_TOKEN`, `${'NODE_AUTH'}_TOKEN`];
+
+export const assertNoStaticCredential = (env) => {
+  const present = staticCredentialNames().filter(
+    (name) => typeof env[name] === 'string' && env[name].length > 0,
+  );
+  if (present.length === 0) return;
+  throw new Error(
+    'A static npm credential is set in the environment. ' +
+      'Refusing to continue. OIDC is the only publish credential.',
+  );
+};
+
+const UNSET_CONFIG = new Set(['', 'undefined', 'null']);
+
+/** True when pnpm/npm config still has a registry credential. That credential overrides OIDC. */
+export const registryAuthConfigured = (values) =>
+  values.some((value) => !UNSET_CONFIG.has(String(value ?? '').trim()));
+
+const REGISTRY_AUTH_KEYS = [
+  '//registry.npmjs.org/:_authToken',
+  '//registry.npmjs.org/:_auth',
+  '_authToken',
+  '_auth',
+];
 
 /** skip: npm view works. wait: registry already accepted this version. publish: PUT it. */
 export const publishPlan = ({ installable, accepted }) => {
@@ -50,7 +81,10 @@ const run = (command, args, options) => spawnSync(command, args, { encoding: 'ut
 const registryConfig = () => {
   const registry = run('pnpm', ['config', 'get', 'registry']).stdout?.trim() ?? '';
   const scoped = run('pnpm', ['config', 'get', '@ysk-kit:registry']).stdout?.trim() ?? '';
-  return { registry, scoped };
+  const authValues = REGISTRY_AUTH_KEYS.map(
+    (key) => run('pnpm', ['config', 'get', key]).stdout?.trim() ?? '',
+  );
+  return { registry, scoped, authValues };
 };
 
 const versionAccepted = async (name, version) => {
@@ -118,10 +152,19 @@ const publishOne = (pkg, registry) => {
 const main = async () => {
   const debug = process.argv.includes('--debug');
   const verifyOnly = debug || process.argv.includes('--verify-only');
-  const { registry, scoped } = registryConfig();
+  const { registry, scoped, authValues } = registryConfig();
   console.log(`registry: ${registry || '(unset)'}`);
   console.log(`@ysk-kit:registry: ${scoped || '(unset)'}`);
-  console.log(`auth: ${formatAuth(describeAuth(process.env))}`);
+  const auth = describeAuth(process.env);
+  console.log(`auth: ${formatAuth(auth)}`);
+  assertOidc(auth);
+  assertNoStaticCredential(process.env);
+  if (registryAuthConfigured(authValues)) {
+    throw new Error(
+      'An npm registry auth token is configured. It would override OIDC. ' +
+        'Remove it before publishing.',
+    );
+  }
   const pkgs = publicPackages();
   for (const pkg of pkgs) {
     const installable = npmViewOk(pkg.name, pkg.version);

@@ -42,9 +42,9 @@ Release（`.github/workflows/release.yml`）在 push 到 `main` 且 `vars.NPM_PU
 
 ### npm provenance 與 Trusted Publishing
 
-`pnpm release:publish` 先編譯，然後執行 `.github/publish-packages.mjs`。pnpm 12 自己發佈（`pnpm publish` 不會呼叫 npm CLI），也不把 `NPM_CONFIG_PROVENANCE` 當成 `--provenance`，所以腳本對每個套件傳入 `--provenance --access public`。`@changesets/cli` 3.0.3 沒有 `--provenance` 旗標；`changeset publish` 還會吃掉 pnpm 的輸出，並把退出碼 0 當成已發佈。pnpm 12 在 registry 接受 PUT 後就返回 0（`--publish-wait-timeout` 預設是 0）。腳本會記錄 OIDC 是否可用、`NODE_AUTH_TOKEN` 是否已設定、`pnpm config get` 的 registry，以及實際執行的 pnpm 指令。然後在五分鐘內重試 `npm view <name>@<version>`。仍有套件看不到就讓 job 失敗。registry 已經接受的版本不會再發佈一次。
+`pnpm release:publish` 先編譯，然後執行 `.github/publish-packages.mjs`。pnpm 12 自己發佈（`pnpm publish` 不會呼叫 npm CLI），也不把 `NPM_CONFIG_PROVENANCE` 當成 `--provenance`，所以腳本對每個套件傳入 `--provenance --access public`。`@changesets/cli` 3.0.3 沒有 `--provenance` 旗標；`changeset publish` 還會吃掉 pnpm 的輸出，並把退出碼 0 當成已發佈。pnpm 12 在 registry 接受 PUT 後就返回 0（`--publish-wait-timeout` 預設是 0）。腳本會記錄 OIDC 是否可用、`pnpm config get` 的 registry，以及實際執行的 pnpm 指令。GitHub OIDC token 不存在，或 npm 設定仍有 registry 認證 token 時，腳本在發佈前退出。然後在五分鐘內重試 `npm view <name>@<version>`。仍有套件看不到就讓 job 失敗。registry 已經接受的版本不會再發佈一次。
 
-工作流程仍然把 `secrets.NPM_TOKEN` 傳入 `NODE_AUTH_TOKEN`。在 pnpm 12，這個 token 只是後備：job 有 `id-token: write`，而且 npm 已為本倉與 `release.yml` 設定 Trusted Publisher 時，OIDC 交換會蓋過靜態 token。release job 的權限是 `contents: write`、`pull-requests: write`（Changesets 版本 PR）與 `id-token: write`（GitHub OIDC）。工作流程預設是 `contents: read`。
+發佈認證只使用 npm Trusted Publishing。release job 不傳入靜態 npm 憑證。`actions/setup-node` 不設定 `registry-url` 或 `scope`，因為這兩個輸入會把 `_authToken` 寫入 `~/.npmrc`，而該行會蓋過 OIDC 交換。release job 的權限是 `contents: write`、`pull-requests: write`（Changesets 版本 PR）與 `id-token: write`（GitHub OIDC）。工作流程預設是 `contents: read`。
 
 Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明。
 
@@ -56,6 +56,6 @@ Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明�
 4. 使用 GitHub 託管的 runner（此工作流程用 `ubuntu-latest`）。自託管 runner 不能鑄造 npm 的 OIDC token。
 5. 本倉已使用 Node 24，其 npm 可以交換 OIDC token（npm 11.5.1 或更新）。
 
-Trusted Publisher 成功發佈一次之後，從 release job 移除 `NODE_AUTH_TOKEN`／`secrets.NPM_TOKEN`。在那之前，token 保留作 OIDC 交換不適用時的後備。不要設定 `NPM_CONFIG_PROVENANCE=false`。
+不要把靜態 npm 憑證加回 release job。不要設定 `NPM_CONFIG_PROVENANCE=false`。
 
 2026 年 5 月 20 日之後在 npmjs 建立的設定，必須明確允許 `npm publish` 動作。

@@ -103,7 +103,7 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 
 ### Security
 
-- 1.1.0 was published by GitHub Actions OIDC. Each package's npm metadata records `_npmUser.name` `GitHub Actions`, `_npmUser.trustedPublisher.id` `github`, and `dist.attestations.provenance` (SLSA v1). `NODE_AUTH_TOKEN` was still in the workflow as a fallback. pnpm 12 lets a successful OIDC exchange override that static token.
+- 1.1.0 was published by GitHub Actions OIDC. Each package's npm metadata records `_npmUser.name` `GitHub Actions`, `_npmUser.trustedPublisher.id` `github`, and `dist.attestations.provenance` (SLSA v1). A static registry credential was still in the workflow as a fallback. pnpm 12 lets a successful OIDC exchange override that static credential.
 
 ### Internal/CI
 

@@ -103,7 +103,7 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 ### 安全
 
-- 1.1.0 由 GitHub Actions OIDC 發佈。每個套件的 npm 元資料記錄 `_npmUser.name` 為 `GitHub Actions`、`_npmUser.trustedPublisher.id` 為 `github`，以及 `dist.attestations.provenance`（SLSA v1）。`NODE_AUTH_TOKEN` 當時仍留在工作流程作為後備。pnpm 12 在 OIDC 交換成功時會蓋過該靜態 token。
+- 1.1.0 由 GitHub Actions OIDC 發佈。每個套件的 npm 元資料記錄 `_npmUser.name` 為 `GitHub Actions`、`_npmUser.trustedPublisher.id` 為 `github`，以及 `dist.attestations.provenance`（SLSA v1）。當時工作流程仍留有一個靜態 registry 憑證作為後備。pnpm 12 在 OIDC 交換成功時會蓋過該靜態憑證。
 
 ### 內部／CI
 

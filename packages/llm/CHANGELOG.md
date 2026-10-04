@@ -1,5 +1,13 @@
 # @ysk-kit/llm
 
+## 1.1.1
+
+### Patch Changes
+
+- cc7076b: Weekly maintenance for 2026-10-04. pnpm 12.9.0, Turborepo 2.11.7, pino 10.4.0, AWS SDK S3 clients 3.1146.0, TanStack Query 5.104.1, supertest 7.3.1, and @types/node 24.19.1. Doctor quotes the product packageManager pin. Audit accepts unfixed node-forge (Expo CLI) and braces (Metro). Held: TypeScript 7, Node 26 types, Prisma 8 rc, desktop Vite 7, Expo 57 / React Native 0.86 / React 19.2.8.
+- Updated dependencies [cc7076b]
+  - @ysk-kit/contracts@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes

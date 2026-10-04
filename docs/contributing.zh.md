@@ -41,7 +41,7 @@ Language: [English](foo.md) · 中文
 文件是公開的。從未見過本公司或本倉的第三方，讀完應能明白這套平台。
 
 - 寫系統現在如何運作，以及使用者如何操作。
-- 標了日期的「何時加入了甚麼」只寫在 [history.zh.md](history.zh.md)。
+- 版本化的產品變更紀錄寫在 [CHANGELOG.zh.md](../CHANGELOG.zh.md)。根 README 只列出最近三個版本（見下）。階段日記寫在 [history.zh.md](history.zh.md)。
 - 下一步工作寫在 [product-plan.zh.md](product-plan.zh.md)，用功能名稱，不用內部波次編號。
 - 不要把開發日記寫進架構、指南、README、CLI 手冊或 skills。
 - Flavor 用產品形態說明。不要假設讀者認識其他私人倉。
@@ -60,9 +60,29 @@ Language: [English](foo.md) · 中文
 | 概念 | `docs/guides/` |
 | 逐步操作 | `docs/recipes/` |
 | Agent 程序 | `docs/skills/`（產生出來的 `.grok/skills` 與 `.cursor/skills` 包裝只指向此處） |
-| 變更紀錄 | `docs/history.md` |
+| 版本變更紀錄 | `CHANGELOG.md`（最近三個版本同時在根 README） |
+| 階段日記 | `docs/history.md` |
 | 路線圖 | `docs/product-plan.md` |
 | 決定 | `docs/adr/` |
+
+### README 變更紀錄窗口
+
+`README.md` 與 `README.zh.md` 只顯示最近三個版本。每個版本按適用的類別分組：
+
+| English | 中文 |
+|---|---|
+| New features | 新功能 |
+| Improvements | 改進 |
+| Fixes | 修正 |
+| Security | 安全 |
+| Dependency upgrades | 依賴升級 |
+| Internal/CI | 內部／CI |
+
+該節結尾連結到完整變更紀錄（`CHANGELOG.md`，中文 `CHANGELOG.zh.md`）。完整變更紀錄保留每一個版本，由新到舊，並使用同樣的類別。Changesets 仍然撰寫每個套件的 `CHANGELOG.md`。完整變更紀錄連結這些檔案。不要編造條目。條目取自 GitHub release、tag、各套件變更紀錄與 git 歷史。
+
+每次發佈都把新版本加在 README 該節的頂部，並把三個版本中最舊的一個移入完整變更紀錄。GitHub 產品 release `vX.Y.Z` 的說明就是 README 上的新條目。v1.1.3 之前，README 窗口是 v1.1.2、v1.1.1 與 v1.1.0；v1.1.3 把 v1.1.0 移入完整變更紀錄。
+
+若該次發佈改動 npm 會隨套件發佈的 README，加上 patch changeset，讓 npm 上的 README 一併更新。
 
 先改英文來源，再更新中文對。
 

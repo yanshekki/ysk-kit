@@ -4,7 +4,7 @@ Language: [English](architecture.md) · 中文
 
 YSK Kit 是合約先行的平台，讓新產品撰寫業務規則，而不必重建前端、後端、資料庫與流動應用骨架。本倉是可運行的 `saas` flavor：身分、檔案、通知、工作、郵件、API 金鑰、加密、即時通訊已經接上。產品業務 domain 不寫入 kit。
 
-Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南會展開。變更紀錄：[history.zh.md](history.zh.md)。
+Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南會展開。版本變更紀錄：[CHANGELOG.zh.md](../CHANGELOG.zh.md)。階段日記：[history.zh.md](history.zh.md)。
 
 ## 原則
 

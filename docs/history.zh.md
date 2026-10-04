@@ -2,7 +2,7 @@
 
 Language: [English](history.md) · 中文
 
-本檔按日期記錄 kit 已發布的內容。現行行為以 [architecture.zh.md](architecture.zh.md) 與指南為準。Agent 寫功能時不必讀本檔。
+本檔是本 kit 如何建成的階段日記。版本化的產品變更紀錄在 [CHANGELOG.zh.md](../CHANGELOG.zh.md)。根 README 只顯示最近三個版本。現行行為由 [architecture.zh.md](architecture.zh.md) 與指南定義。Agent 寫功能時不需要本檔。
 
 版本以 Phase 1 … Phase 52 標示，其後由 v1.0.0 起用 semver。
 

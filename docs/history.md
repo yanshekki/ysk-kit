@@ -2,7 +2,7 @@
 
 Language: [中文](history.zh.md) · English
 
-Dated record of what this kit shipped. Current behaviour is defined by [architecture.md](architecture.md) and the guides. Agents do not need this file to write a feature.
+Phase diary of how this kit was built. The versioned product changelog is [CHANGELOG.md](../CHANGELOG.md). The root README shows only the latest three versions. Current behaviour is defined by [architecture.md](architecture.md) and the guides. Agents do not need this file to write a feature.
 
 Releases are labelled Phase 1 … Phase 52, then semver from v1.0.0.
 

@@ -2,7 +2,7 @@
 
 Language: [English](AGENTS.md) · 中文
 
-改程式之前先讀本檔。架構：`docs/architecture.zh.md`。操作步驟：`docs/recipes/`。命令：`docs/cli/`。程序：`docs/skills/`。變更紀錄：`docs/history.zh.md`。路線圖：`docs/product-plan.zh.md`。
+改程式之前先讀本檔。架構：`docs/architecture.zh.md`。操作步驟：`docs/recipes/`。命令：`docs/cli/`。程序：`docs/skills/`。變更紀錄：`CHANGELOG.zh.md`（最近三個版本在根 README）。階段日記：`docs/history.zh.md`。路線圖：`docs/product-plan.zh.md`。
 
 ## 本倉是甚麼
 

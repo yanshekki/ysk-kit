@@ -2,7 +2,7 @@
 
 Language: [中文](AGENTS.zh.md) · English
 
-Read this file before changing code. Architecture: `docs/architecture.md`. How-to: `docs/recipes/`. Commands: `docs/cli/`. Procedures: `docs/skills/`. Changelog: `docs/history.md`. Roadmap: `docs/product-plan.md`.
+Read this file before changing code. Architecture: `docs/architecture.md`. How-to: `docs/recipes/`. Commands: `docs/cli/`. Procedures: `docs/skills/`. Changelog: `CHANGELOG.md` (latest three versions in the root README). Phase diary: `docs/history.md`. Roadmap: `docs/product-plan.md`.
 
 ## What this repo is
 

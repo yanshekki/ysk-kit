@@ -25,9 +25,7 @@ export const describeAuth = (env) => ({
 });
 
 export const formatAuth = ({ oidc }) =>
-  oidc
-    ? 'OIDC trusted publishing (id-token available)'
-    : 'OIDC trusted publishing is unavailable';
+  oidc ? 'OIDC trusted publishing (id-token available)' : 'OIDC trusted publishing is unavailable';
 
 /** Exit the publish when GitHub has not minted an OIDC token. There is no static-token fallback. */
 export const assertOidc = (auth) => {

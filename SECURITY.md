@@ -23,4 +23,4 @@ The IP rate limit is in-memory on a single process. Set `REDIS_URL` to share one
 
 ## Supply chain
 
-GitHub Actions are pinned to commit SHAs. npm publish from `.github/workflows/release.yml` requests provenance. Dependabot opens weekly update PRs for npm, Actions, and Docker.
+GitHub Actions are pinned to commit SHAs. npm publish from `.github/workflows/release.yml` uses npm Trusted Publishing (OIDC) only and requests provenance. The workflow does not pass a static npm credential. Dependabot opens weekly update PRs for npm, Actions, and Docker.

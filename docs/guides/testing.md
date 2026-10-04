@@ -66,7 +66,7 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 | `flavor-smoke` | Matrix of every flavor × `thin` and `full`. sqlite. install, typecheck, test, build. pnpm store and Electron download are cached |
 | `example-smoke` | Apply each worked example onto a sqlite dest |
 | `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
-| `Release` | Provenance via `NPM_CONFIG_PROVENANCE=true` and `id-token: write`. `NPM_TOKEN` remains the publish credential until Trusted Publishing is enabled on npmjs |
+| `Release` | Provenance via `pnpm publish --provenance`, `NPM_CONFIG_PROVENANCE=true`, and `id-token: write`. npm Trusted Publishing (OIDC) is the only credential. The job fails if that OIDC token is unavailable |
 
 After a feature, the local bar is:
 

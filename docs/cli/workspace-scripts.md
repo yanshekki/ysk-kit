@@ -42,9 +42,9 @@ Release (`.github/workflows/release.yml`) runs on push to `main` when `vars.NPM_
 
 ### npm provenance and Trusted Publishing
 
-`pnpm release:publish` builds, then runs `.github/publish-packages.mjs`. pnpm 12 publishes natively (`pnpm publish` does not call the npm CLI) and does not treat `NPM_CONFIG_PROVENANCE` as `--provenance`, so the script passes `--provenance --access public` for each package. `@changesets/cli` 3.0.3 has no `--provenance` flag; `changeset publish` also hides pnpm's output and treats exit 0 as published. pnpm 12 returns 0 as soon as the registry accepts the PUT (`--publish-wait-timeout` defaults to 0). The script logs whether OIDC is available and whether `NODE_AUTH_TOKEN` is set, the registry from `pnpm config get`, and the pnpm command. It then retries `npm view <name>@<version>` for five minutes. If any package is still missing, the job fails. A version the registry has already accepted is not published again.
+`pnpm release:publish` builds, then runs `.github/publish-packages.mjs`. pnpm 12 publishes natively (`pnpm publish` does not call the npm CLI) and does not treat `NPM_CONFIG_PROVENANCE` as `--provenance`, so the script passes `--provenance --access public` for each package. `@changesets/cli` 3.0.3 has no `--provenance` flag; `changeset publish` also hides pnpm's output and treats exit 0 as published. pnpm 12 returns 0 as soon as the registry accepts the PUT (`--publish-wait-timeout` defaults to 0). The script logs whether OIDC is available, the registry from `pnpm config get`, and the pnpm command. If the GitHub OIDC token is missing, or if npm config still has a registry auth token, the script exits before any publish. It then retries `npm view <name>@<version>` for five minutes. If any package is still missing, the job fails. A version the registry has already accepted is not published again.
 
-The workflow still passes `NODE_AUTH_TOKEN` from `secrets.NPM_TOKEN`. On pnpm 12 that token is only the fallback: when `id-token: write` is set and npm has a Trusted Publisher for this repo and `release.yml`, the OIDC exchange overrides the static token. The release job's permissions are `contents: write`, `pull-requests: write` (Changesets version PR), and `id-token: write` (GitHub OIDC). The workflow default is `contents: read`.
+Publish authentication is npm Trusted Publishing only. The release job does not pass a static npm credential. `actions/setup-node` is not given `registry-url` or `scope`, because those inputs write an `_authToken` line into `~/.npmrc` and that line overrides the OIDC exchange. The release job's permissions are `contents: write`, `pull-requests: write` (Changesets version PR), and `id-token: write` (GitHub OIDC). The workflow default is `contents: read`.
 
 Provenance needs a public repository and a public package. GitHub signs the attestation with the OIDC token.
 
@@ -56,6 +56,6 @@ What to turn on at npmjs.com, per public `@ysk-kit/*` package (packages under `p
 4. Use a GitHub-hosted runner (this workflow uses `ubuntu-latest`). Self-hosted runners cannot mint the npm OIDC token.
 5. This repository already uses Node 24, which ships an npm that can exchange the OIDC token (npm 11.5.1 or newer).
 
-After a publish succeeds with the trusted publisher, remove `NODE_AUTH_TOKEN` / `secrets.NPM_TOKEN` from the release job. Until then the token stays as the fallback when the OIDC exchange does not apply. Do not set `NPM_CONFIG_PROVENANCE=false`.
+Do not add a static npm credential back into the release job. Do not set `NPM_CONFIG_PROVENANCE=false`.
 
 Configurations created on npmjs after 20 May 2026 must explicitly allow the `npm publish` action.

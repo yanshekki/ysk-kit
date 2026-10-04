@@ -1,5 +1,17 @@
 # @ysk-kit/api-fastify
 
+## 1.1.2
+
+### Patch Changes
+
+- 1e2a6cd: Publish to npm only with Trusted Publishing (OIDC). The release workflow no longer sends a static npm credential, and the publish script fails if the GitHub OIDC token is unavailable.
+- Updated dependencies [1e2a6cd]
+  - @ysk-kit/api-http@1.1.2
+  - @ysk-kit/apikey@1.1.2
+  - @ysk-kit/auth@1.1.2
+  - @ysk-kit/contracts@1.1.2
+  - @ysk-kit/domain-kernel@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes

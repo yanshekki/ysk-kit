@@ -73,7 +73,8 @@ describe('CI workflows', () => {
 
   it('publishes with provenance through OIDC only', () => {
     expect(release).toContain('id-token: write');
-    expect(release).not.toContain('registry-url');
+    expect(release).not.toMatch(/^\s*registry-url:/m);
+    expect(release).not.toMatch(/^\s*scope:/m);
     expect(filesContaining(kitRoot, staticCredentialNames())).toEqual([]);
     expect(release).toContain('NPM_CONFIG_PROVENANCE: "true"');
     expect(release).not.toContain('packages: write');

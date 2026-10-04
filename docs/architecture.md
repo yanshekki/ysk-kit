@@ -19,7 +19,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 
 | Layer | Default | Alternative |
 |---|---|---|
-| Monorepo | pnpm 12.8.1 workspaces + Turborepo 2.11 | — |
+| Monorepo | pnpm 12.9.0 workspaces + Turborepo 2.11.7 | — |
 | Language | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when dependency-cruiser supports that compiler API |
 | Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
 | Desktop | Electron 44 + electron-vite 5 + Vite 7 | Vite 8 when stable electron-vite peers it (6 is still beta) |

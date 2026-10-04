@@ -28,13 +28,19 @@ allowBuilds:
 
 # uuid@7 is pulled by xcode (Expo config plugins) and has no patched 7.x release.
 # GHSA-w5hq-g745-h8pq is fixed from uuid 11.1.1, which is ESM-only and breaks xcode's CJS require.
+# node-forge <=1.4.0 (GHSA-86w9-cpqp-85rv / CVE-2026-85393): npm latest is still 1.4.0.
+# Expo CLI uses it for code-signing certificates. Kit JWT and crypto do not import node-forge.
+# braces <=3.0.3 (GHSA-vfj7-8cjw-p6xm / CVE-2026-93687): no patched release.
+# Metro's file map uses it while bundling the Expo app. The API does not pass request input to braces.
 auditConfig:
   ignoreGhsas:
     - GHSA-w5hq-g745-h8pq
+    - GHSA-86w9-cpqp-85rv
+    - GHSA-vfj7-8cjw-p6xm
 
 minimumReleaseAgeExclude:
-  - "@aws-sdk/client-s3@3.1144.0"
-  - "@aws-sdk/s3-request-presigner@3.1144.0"
+  - "@aws-sdk/client-s3@3.1146.0"
+  - "@aws-sdk/s3-request-presigner@3.1146.0"
   - "@biomejs/biome@2.5.15"
   - "@biomejs/cli-darwin-arm64@2.5.15"
   - "@biomejs/cli-darwin-x64@2.5.15"
@@ -46,17 +52,17 @@ minimumReleaseAgeExclude:
   - "@biomejs/cli-win32-x64@2.5.15"
   - "@tanstack/react-router@1.170.41"
   - "@tanstack/router-core@1.171.34"
-  - "@turbo/darwin-64@2.11.6"
-  - "@turbo/darwin-arm64@2.11.6"
-  - "@turbo/linux-64@2.11.6"
-  - "@turbo/linux-arm64@2.11.6"
-  - "@turbo/windows-64@2.11.6"
-  - "@turbo/windows-arm64@2.11.6"
+  - "@turbo/darwin-64@2.11.7"
+  - "@turbo/darwin-arm64@2.11.7"
+  - "@turbo/linux-64@2.11.7"
+  - "@turbo/linux-arm64@2.11.7"
+  - "@turbo/windows-64@2.11.7"
+  - "@turbo/windows-arm64@2.11.7"
   - bullmq@6.3.11
   - dependency-cruiser@18.5.0
   - pg-cloudflare@1.4.1
   - pg-connection-string@2.14.1
   - pg-protocol@1.16.1
   - pg@8.23.1
-  - turbo@2.11.6
+  - turbo@2.11.7
   - vite@8.3.2

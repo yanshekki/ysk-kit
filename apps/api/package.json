@@ -48,17 +48,17 @@
     "fastify": "^5.12.5",
     "ioredis": "^6.0.0",
     "pg": "^8.23.1",
-    "pino": "^10.3.1",
+    "pino": "^10.4.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/pg": "^8.23.1",
-    "@types/node": "^24.19.0",
+    "@types/node": "^24.19.1",
     "@types/supertest": "^7.2.1",
     "prisma": "7.10.0",
-    "supertest": "^7.3.0",
+    "supertest": "^7.3.1",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"

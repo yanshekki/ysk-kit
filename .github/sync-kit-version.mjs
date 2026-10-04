@@ -2,7 +2,7 @@
 // create-ysk-app downloads tag v{its version} and requires the tarball's root
 // package.json version to match. Changesets does not version the private root,
 // so the version script copies @ysk-kit/create-app's version up after `changeset version`.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = process.argv[2] ?? join(import.meta.dirname, '..');
@@ -24,3 +24,17 @@ if (current[1] === version) {
   writeFileSync(pkgPath, next);
   console.log(`root package.json version ${current[1]} -> ${version}`);
 }
+
+const readmeCell = (filename, label) => {
+  const path = join(root, filename);
+  if (!existsSync(path)) return;
+  const text = readFileSync(path, 'utf8');
+  const pattern = new RegExp(`(\\| \\*\\*${label}\\*\\* \\| )[^|\\n]+`);
+  if (!pattern.test(text)) return;
+  const next = text.replace(pattern, `$1${version} `);
+  if (next === text) return;
+  writeFileSync(path, next);
+  console.log(`${filename} version cell -> ${version}`);
+};
+readmeCell('README.md', 'Version');
+readmeCell('README.zh.md', '版本');

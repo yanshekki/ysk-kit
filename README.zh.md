@@ -125,6 +125,11 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - 每個 skill 包裝改為短步驟摘要（Use when、中文觸發、「不要用於…」）。缺漏的 skill 補上輸出格式、反模式與升級／詢問。
 - `verify-change` 寫明預期輸出、OpenAPI `git diff --exit-code` 與固定驗證報告。`new-product` 跑 `doctor` 並列出手填欄。`add-module` 要求 Express 與 Fastify app 測試。`add-capability` 每個 capability 有上線前一行。`envelope-api` 列出錯誤碼表。`fix-layers` 禁止默默改 cruiser。
 
+#### 內部／CI
+
+- `skill-triggers.test.ts` 靜態檢查包裝 description。thin-smoke、flavor-smoke、create-app 與 upgrade 測試會斷言新的 skill 檔。
+- Release 在成功上傳後最多等 20 分鐘（`NPM_VIEW_WAIT_MS`，backoff）讓 `npm view` 看到套件。packument 落後時會警告並仍然打 tag。若版本已在 npm 但缺少 `vX.Y.Z` 或其 GitHub Release，會在 version commit 補上，不會重新發佈。
+
 #### 安全
 
 - 工作區 override `shell-quote@1.11.0` 修復 [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv)（`quote()` 在 comment token 之後的注入；經 Expo／React Native 間接引入）。

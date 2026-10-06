@@ -18,7 +18,14 @@ import { appendFileSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { changelogSection, inspectAtSha, productTag, tagPlan } from './published-esm.mjs';
+import { versionAccepted } from './publish-packages.mjs';
+import {
+  changelogSection,
+  inspectAtSha,
+  postPublishPlan,
+  productTag,
+  tagPlan,
+} from './published-esm.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const GIT_NAME = 'github-actions[bot]';
@@ -136,21 +143,58 @@ const ensureGithubRelease = (tag, sha, notes) => {
 };
 
 const isDryRun = (argv) => argv.includes('--dry-run');
+const isRecover = (argv) => argv.includes('--recover');
 
-const main = () => {
+/** First commit that set packages/contracts to this lockstep version. */
+export const versionBumpCommit = (version, runFn = run) => {
+  const result = runFn(
+    'git',
+    [
+      'log',
+      '--format=%H',
+      '--reverse',
+      '-S',
+      `"version": "${version}"`,
+      '--',
+      'packages/contracts/package.json',
+    ],
+    { stdio: ['ignore', 'pipe', 'pipe'] },
+  );
+  if (result.status !== 0) return null;
+  const first = (result.stdout ?? '').trim().split('\n').filter(Boolean)[0];
+  return first ?? null;
+};
+
+const resolveLagPlan = async (plan, missing) => {
+  if (plan !== 'not-published' || missing.length === 0) return plan;
+  let accepted = 0;
+  for (const pkg of missing) {
+    if (await versionAccepted(pkg.name, pkg.version)) accepted += 1;
+  }
+  return postPublishPlan({
+    pendingCount: 0,
+    allInstallable: false,
+    allAccepted: accepted === missing.length,
+  });
+};
+
+const main = async () => {
   const env = { ...process.env };
   const dryRun = isDryRun(process.argv);
+  const recover = isRecover(process.argv);
   if (!env.GITHUB_ACTIONS && !dryRun) {
     throw new Error('tag-and-release.mjs is for the Release workflow (GITHUB_ACTIONS).');
   }
   const sha = headSha(env);
   const tree = treeAtSha(sha);
-  const { plan, version, pending, missing } = inspectAtSha({
+  const inspected = inspectAtSha({
     sha,
     tree,
     npmView: npmViewOk,
   });
-  console.log(`post-publish plan: ${plan} (v${version})`);
+  let { plan, version, pending, missing } = inspected;
+  plan = await resolveLagPlan(plan, missing);
+  console.log(`post-publish plan: ${plan} (v${version})${recover ? ' recover' : ''}`);
   if (plan === 'version-pr') {
     writeOutput(env, 'published', 'false');
     console.log(
@@ -161,28 +205,37 @@ const main = () => {
   if (plan === 'not-published') {
     writeOutput(env, 'published', 'false');
     const detail = `packages not installable on npm:\n${missing.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n')}`;
-    if (dryRun) {
+    if (dryRun || recover) {
       console.log(detail);
       return;
     }
     throw new Error(detail);
   }
+  if (plan === 'tag-lag') {
+    console.warn(
+      `npm view still missing ${missing.length} package(s); registry accepted the upload. Tagging anyway.`,
+    );
+  }
+  const tagSha = recover ? versionBumpCommit(version) : sha;
+  if (!tagSha) {
+    throw new Error(`could not find the version commit for v${version}`);
+  }
   writeOutput(env, 'published', 'true');
   const tag = productTag(version);
   const notes = changelogSection(tree.readText('CHANGELOG.md'), version);
   if (dryRun) {
-    console.log(`dry-run tag ${tag} at ${sha}`);
+    console.log(`dry-run tag ${tag} at ${tagSha}`);
     return;
   }
   const existing = existingTagCommit(tag);
-  const action = tagPlan({ headSha: sha, existingTarget: existing });
+  const action = tagPlan({ headSha: tagSha, existingTarget: existing });
   if (action === 'create') {
-    console.log(`create annotated ${tag} at ${sha}`);
-    createAnnotatedTag(tag, sha);
+    console.log(`create annotated ${tag} at ${tagSha}`);
+    createAnnotatedTag(tag, tagSha);
   } else {
-    console.log(`tag ${tag} already points at ${sha}`);
+    console.log(`tag ${tag} already points at ${tagSha}`);
   }
-  ensureGithubRelease(tag, sha, notes);
+  ensureGithubRelease(tag, tagSha, notes);
   console.log(`tag-and-release ok ${tag}`);
 };
 
@@ -190,10 +243,8 @@ const invokedDirectly =
   process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
 
 if (invokedDirectly) {
-  try {
-    main();
-  } catch (error) {
+  main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exit(1);
-  }
+  });
 }

@@ -6,6 +6,7 @@ export type GitRun = (
 
 export function gitShow(sha: string, path: string, runFn?: GitRun): string;
 export function gitLsTree(sha: string, path: string, runFn?: GitRun): string[];
+export function versionBumpCommit(version: string, runFn?: GitRun): string | null;
 export function treeAtSha(
   sha: string,
   runFn?: GitRun,

@@ -54,6 +54,12 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 - `fix-layers` maps each cruiser rule to a typical bad import and forbids editing `.dependency-cruiser.cjs` without approval.
 - Skill index adds “Do not use when” and “Related vendor skill” columns.
 
+### Internal/CI
+
+- `skill-triggers.test.ts` statically checks wrapper descriptions. thin-smoke, flavor-smoke, create-app, and upgrade tests assert the new skill files.
+- Release waits up to 20 minutes (`NPM_VIEW_WAIT_MS`, backoff) for `npm view` after a successful upload. If the registry accepted the version but the install packument still lags, the job warns and continues so tagging can run.
+- When every public `name@version` is already on npm and no changeset is pending, but tag `vX.Y.Z` or its GitHub Release is missing, Release recovers them at the version commit (`tag-and-release.mjs --recover`) on push to `main` and on `workflow_dispatch`. It does not republish.
+
 ### Security
 
 - Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) / CVE-2026-102422 (`quote()` command injection after a `{ comment }` token). The copy is transitive through Expo / React Native `react-devtools-core`.

@@ -105,6 +105,9 @@ describe('published ESM', () => {
     expect(postPublishPlan({ pendingCount: 1, allInstallable: true })).toBe('version-pr');
     expect(postPublishPlan({ pendingCount: 0, allInstallable: false })).toBe('not-published');
     expect(postPublishPlan({ pendingCount: 0, allInstallable: true })).toBe('tag');
+    expect(postPublishPlan({ pendingCount: 0, allInstallable: false, allAccepted: true })).toBe(
+      'tag-lag',
+    );
   });
 
   it('inspectAtSha skips a version-PR tree and tags a published tree', () => {

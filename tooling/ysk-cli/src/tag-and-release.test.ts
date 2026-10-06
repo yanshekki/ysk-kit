@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { inspectAtSha } from '../../../.github/published-esm.mjs';
-import { type GitRun, treeAtSha } from '../../../.github/tag-and-release.mjs';
+import { type GitRun, treeAtSha, versionBumpCommit } from '../../../.github/tag-and-release.mjs';
 
 const runAt =
   (cwd: string): GitRun =>
@@ -110,5 +110,20 @@ describe('tag-and-release at GITHUB_SHA', () => {
       npmView: () => false,
     });
     expect(waiting.plan).toBe('not-published');
+  });
+
+  it('finds the version bump commit when a later commit sits on the same version', () => {
+    const root = initRepo();
+    writePkg(root, 'packages/contracts', '@ysk-kit/contracts', '1.2.1');
+    git(root, ['add', '.']);
+    git(root, ['commit', '-m', '1.2.1']);
+    writePkg(root, 'packages/contracts', '@ysk-kit/contracts', '1.2.2');
+    git(root, ['add', '.']);
+    git(root, ['commit', '-m', 'chore: version packages']);
+    const bump = git(root, ['rev-parse', 'HEAD']);
+    writeFileSync(join(root, 'README.md'), 'later\n');
+    git(root, ['add', '.']);
+    git(root, ['commit', '-m', 'docs']);
+    expect(versionBumpCommit('1.2.2', runAt(root))).toBe(bump);
   });
 });

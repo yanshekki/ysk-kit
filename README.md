@@ -125,6 +125,11 @@ The latest three versions. Older versions are in the full changelog.
 - Every skill wrapper is a short step summary (Use when, Chinese triggers, Do not use for…). Skills gain Output format, Anti-patterns, and Escalate / ask where they were missing.
 - `verify-change` names expected output, OpenAPI `git diff --exit-code`, and a fixed verification report. `new-product` runs `doctor` and lists human-filled fields. `add-module` requires Express and Fastify app tests. `add-capability` has a before-production line per capability. `envelope-api` tables error codes. `fix-layers` forbids silent cruiser edits.
 
+#### Internal/CI
+
+- `skill-triggers.test.ts` statically checks wrapper descriptions. thin-smoke, flavor-smoke, create-app, and upgrade tests assert the new skill files.
+- Release waits up to 20 minutes (`NPM_VIEW_WAIT_MS`, backoff) for `npm view` after a successful upload. If the packument lags, it warns and still tags. If the version is already on npm but `vX.Y.Z` or its GitHub Release is missing, it recovers them at the version commit without republishing.
+
 #### Security
 
 - Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) (`quote()` injection after a comment token; transitive through Expo / React Native).

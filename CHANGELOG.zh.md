@@ -54,6 +54,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 - `fix-layers` 把每條 cruiser 規則對到典型壞 import，未經批准禁止改 `.dependency-cruiser.cjs`。
 - Skill 索引加上「不要用於」與「相關外部 skill」欄。
 
+### 內部／CI
+
+- `skill-triggers.test.ts` 靜態檢查包裝 description。thin-smoke、flavor-smoke、create-app 與 upgrade 測試會斷言新的 skill 檔。
+- Release 在成功上傳後最多等 20 分鐘（`NPM_VIEW_WAIT_MS`，backoff）讓 `npm view` 看到套件。若 registry 已接受該版本但 install packument 仍落後，job 會警告並繼續，讓 tag 可以執行。
+- 當每個公開 `name@version` 已在 npm、沒有待處理 changeset，但缺少 tag `vX.Y.Z` 或其 GitHub Release 時，Release 會在 version commit 補上（`tag-and-release.mjs --recover`），push 到 `main` 與 `workflow_dispatch` 都適用。不會重新發佈套件。
+
 ### 安全
 
 - 工作區 override `shell-quote@1.11.0` 修復 [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv)／CVE-2026-102422（`quote()` 在 `{ comment }` token 之後的命令注入）。該套件經 Expo／React Native `react-devtools-core` 間接引入。

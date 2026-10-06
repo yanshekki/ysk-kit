@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { spawnSync } from 'node:child_process';
 import { appendFileSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -75,6 +76,32 @@ export const pendingChangesetFiles = (root = ROOT) => pendingChangesetFilesFromT
 export const shouldSkipRelease = (unpublishedCount, pendingCount) =>
   unpublishedCount === 0 && pendingCount === 0;
 
+/**
+ * When skip is true, still create vX.Y.Z / GitHub Release if either is missing.
+ * Never republish.
+ */
+export const recoverPlan = ({ pendingCount, unpublishedCount, tagExists, releaseExists }) => {
+  if (pendingCount > 0 || unpublishedCount > 0) return 'none';
+  if (tagExists && releaseExists) return 'none';
+  return 'recover';
+};
+
+const gitRun = (args) =>
+  spawnSync('git', args, { encoding: 'utf8', cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+
+export const productTagExists = (tag, runFn = gitRun) => {
+  const local = runFn(['rev-parse', '--verify', '--quiet', `${tag}^{commit}`]);
+  if (local.status === 0 && (local.stdout ?? '').trim()) return true;
+  const remote = runFn(['ls-remote', '--tags', 'origin', `refs/tags/${tag}`]);
+  return remote.status === 0 && (remote.stdout ?? '').trim().length > 0;
+};
+
+const ghRun = (args) =>
+  spawnSync('gh', args, { encoding: 'utf8', cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+
+export const githubReleaseExists = (tag, runFn = ghRun) =>
+  runFn(['release', 'view', tag]).status === 0;
+
 const main = async () => {
   const env = { ...process.env };
   const pkgs = publicPackages();
@@ -85,8 +112,19 @@ const main = async () => {
   }
   const pending = pendingChangesetFiles();
   const skip = shouldSkipRelease(unpublished.length, pending.length);
+  const version = pkgs[0]?.version;
+  const lockstep = Boolean(version) && pkgs.every((pkg) => pkg.version === version);
+  const tag = lockstep ? `v${version}` : '';
+  const recover =
+    recoverPlan({
+      pendingCount: pending.length,
+      unpublishedCount: unpublished.length,
+      tagExists: skip && tag ? productTagExists(tag) : true,
+      releaseExists: skip && tag ? githubReleaseExists(tag) : true,
+    }) === 'recover';
   if (env.GITHUB_OUTPUT) {
     appendFileSync(env.GITHUB_OUTPUT, `skip=${skip}\n`);
+    appendFileSync(env.GITHUB_OUTPUT, `recover=${recover}\n`);
   }
   if (pending.length > 0) {
     console.log(`pending changesets:\n${pending.join('\n')}`);
@@ -97,6 +135,9 @@ const main = async () => {
     console.log(`unpublished:\n${unpublished.join('\n')}`);
   }
   console.log(skip ? 'skip changesets action' : 'run changesets action');
+  if (recover) {
+    console.log(`recover missing tag or GitHub Release for ${tag}`);
+  }
 };
 
 const invokedDirectly =

@@ -13,14 +13,21 @@ import { describe, expect, it } from 'vitest';
 import {
   assertNoStaticCredential,
   assertOidc,
+  DEFAULT_NPM_VIEW_WAIT_MS,
   describeAuth,
   formatAuth,
+  nextVerifyDelayMs,
+  npmViewWaitConfig,
   publishPlan,
   registryAuthConfigured,
   staticCredentialNames,
+  verifyOutcome,
 } from '../../../.github/publish-packages.mjs';
 import {
+  githubReleaseExists,
   pendingChangesetFiles,
+  productTagExists,
+  recoverPlan,
   shouldSkipRelease,
   versionIsInstallable,
 } from '../../../.github/unpublished-packages.mjs';
@@ -102,11 +109,15 @@ describe('CI workflows', () => {
     expect(release).not.toContain("steps.changesets.outputs.published == 'true'");
     expect(release).toContain('tag-and-release.mjs');
     expect(release).toContain("steps.changesets.outputs.hasChangesets != 'true'");
+    expect(release).toContain("steps.unpublished.outputs.recover == 'true'");
+    expect(release).toContain('--recover');
     expect(release).toContain("steps.tag.outputs.published == 'true'");
     const tagSource = readFileSync(join(kitRoot, '.github/tag-and-release.mjs'), 'utf8');
     expect(tagSource).toContain('git show');
     expect(tagSource).toContain('git ls-tree');
     expect(tagSource).toContain('--dry-run');
+    expect(tagSource).toContain('--recover');
+    expect(tagSource).toContain('versionBumpCommit');
     expect(tagSource).toContain('inspectAtSha');
     expect(tagSource).not.toMatch(/publicPackages\(\)/);
     expect(tagSource).not.toMatch(/pendingChangesetFiles\(\)/);
@@ -118,6 +129,8 @@ describe('CI workflows', () => {
     expect(publishSource).toContain("'--provenance'");
     expect(publishSource).toContain('npm view');
     expect(publishSource).toContain('assertOidc');
+    expect(publishSource).toContain('NPM_VIEW_WAIT_MS');
+    expect(DEFAULT_NPM_VIEW_WAIT_MS).toBe(20 * 60 * 1000);
     expect(publishPlan({ installable: true, accepted: true })).toBe('skip');
     expect(publishPlan({ installable: false, accepted: true })).toBe('wait');
     expect(publishPlan({ installable: false, accepted: false })).toBe('publish');
@@ -151,11 +164,109 @@ describe('CI workflows', () => {
     expect(shouldSkipRelease(0, 0)).toBe(true);
     expect(shouldSkipRelease(0, 1)).toBe(false);
     expect(shouldSkipRelease(2, 0)).toBe(false);
+    expect(
+      recoverPlan({
+        pendingCount: 0,
+        unpublishedCount: 0,
+        tagExists: true,
+        releaseExists: true,
+      }),
+    ).toBe('none');
+    expect(
+      recoverPlan({
+        pendingCount: 0,
+        unpublishedCount: 0,
+        tagExists: false,
+        releaseExists: true,
+      }),
+    ).toBe('recover');
+    expect(
+      recoverPlan({
+        pendingCount: 0,
+        unpublishedCount: 0,
+        tagExists: true,
+        releaseExists: false,
+      }),
+    ).toBe('recover');
+    expect(
+      recoverPlan({
+        pendingCount: 1,
+        unpublishedCount: 0,
+        tagExists: false,
+        releaseExists: false,
+      }),
+    ).toBe('none');
+    expect(
+      recoverPlan({
+        pendingCount: 0,
+        unpublishedCount: 2,
+        tagExists: false,
+        releaseExists: false,
+      }),
+    ).toBe('none');
     const fixture = mkdtempSync(join(tmpdir(), 'ysk-changesets-'));
     mkdirSync(join(fixture, '.changeset'));
     writeFileSync(join(fixture, '.changeset/README.md'), '# readme\n');
     expect(pendingChangesetFiles(fixture)).toEqual([]);
     writeFileSync(join(fixture, '.changeset/doctor.md'), '---\n---\n');
     expect(pendingChangesetFiles(fixture)).toEqual(['doctor.md']);
+  });
+
+  it('waits for npm view with backoff and warns when the upload was accepted', () => {
+    expect(npmViewWaitConfig({}).waitMs).toBe(20 * 60 * 1000);
+    expect(npmViewWaitConfig({ NPM_VIEW_WAIT_MS: '120000' }).waitMs).toBe(120_000);
+    expect(() => npmViewWaitConfig({ NPM_VIEW_WAIT_MS: '-1' })).toThrow(/non-negative/);
+    expect(
+      nextVerifyDelayMs({
+        attempt: 0,
+        intervalMs: 15_000,
+        maxIntervalMs: 60_000,
+        remainingMs: 20 * 60 * 1000,
+      }),
+    ).toBe(15_000);
+    expect(
+      nextVerifyDelayMs({
+        attempt: 1,
+        intervalMs: 15_000,
+        maxIntervalMs: 60_000,
+        remainingMs: 20 * 60 * 1000,
+      }),
+    ).toBe(22_500);
+    expect(
+      nextVerifyDelayMs({
+        attempt: 5,
+        intervalMs: 15_000,
+        maxIntervalMs: 60_000,
+        remainingMs: 20 * 60 * 1000,
+      }),
+    ).toBe(60_000);
+    expect(
+      nextVerifyDelayMs({
+        attempt: 0,
+        intervalMs: 15_000,
+        maxIntervalMs: 60_000,
+        remainingMs: 4_000,
+      }),
+    ).toBe(4_000);
+    expect(verifyOutcome({ missingCount: 0, acceptedCount: 0 })).toBe('ok');
+    expect(verifyOutcome({ missingCount: 3, acceptedCount: 3 })).toBe('warn');
+    expect(verifyOutcome({ missingCount: 3, acceptedCount: 2 })).toBe('fail');
+    expect(
+      productTagExists('v1.2.2', (args) => {
+        if (args[0] === 'rev-parse') return { status: 1, stdout: '' };
+        expect(args).toEqual(['ls-remote', '--tags', 'origin', 'refs/tags/v1.2.2']);
+        return { status: 0, stdout: '' };
+      }),
+    ).toBe(false);
+    expect(
+      productTagExists('v1.2.2', (args) => {
+        if (args[0] === 'rev-parse') return { status: 1, stdout: '' };
+        return { status: 0, stdout: 'abc\trefs/tags/v1.2.2\n' };
+      }),
+    ).toBe(true);
+    expect(githubReleaseExists('v1.2.2', () => ({ status: 0, stdout: 'title: v1.2.2' }))).toBe(
+      true,
+    );
+    expect(githubReleaseExists('v1.2.2', () => ({ status: 1, stdout: '' }))).toBe(false);
   });
 });

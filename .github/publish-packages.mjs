@@ -17,8 +17,46 @@ import { pathToFileURL } from 'node:url';
 import { publicPackages } from './unpublished-packages.mjs';
 
 const REGISTRY = 'https://registry.npmjs.org';
-const VERIFY_MS = 5 * 60 * 1000;
-const VERIFY_INTERVAL_MS = 15_000;
+export const DEFAULT_NPM_VIEW_WAIT_MS = 20 * 60 * 1000;
+export const DEFAULT_NPM_VIEW_INTERVAL_MS = 15_000;
+export const DEFAULT_NPM_VIEW_INTERVAL_MAX_MS = 60_000;
+export const NPM_VIEW_BACKOFF = 1.5;
+
+const envNumber = (env, key, fallback) => {
+  const raw = env[key];
+  if (raw === undefined || raw === '') return fallback;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < 0) {
+    throw new Error(`${key} must be a non-negative number`);
+  }
+  return n;
+};
+
+/** Wait budget and backoff for `npm view` after a successful PUT. */
+export const npmViewWaitConfig = (env = process.env) => ({
+  waitMs: envNumber(env, 'NPM_VIEW_WAIT_MS', DEFAULT_NPM_VIEW_WAIT_MS),
+  intervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MS', DEFAULT_NPM_VIEW_INTERVAL_MS),
+  maxIntervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MAX_MS', DEFAULT_NPM_VIEW_INTERVAL_MAX_MS),
+  backoff: NPM_VIEW_BACKOFF,
+});
+
+export const nextVerifyDelayMs = ({
+  attempt,
+  intervalMs,
+  maxIntervalMs,
+  remainingMs,
+  backoff = NPM_VIEW_BACKOFF,
+}) => {
+  const raw = intervalMs * backoff ** attempt;
+  return Math.max(0, Math.min(Math.floor(raw), maxIntervalMs, remainingMs));
+};
+
+/** ok: every version is installable. warn: uploaded but packument lags. fail: never accepted. */
+export const verifyOutcome = ({ missingCount, acceptedCount }) => {
+  if (missingCount === 0) return 'ok';
+  if (acceptedCount === missingCount) return 'warn';
+  return 'fail';
+};
 
 export const describeAuth = (env) => ({
   oidc: Boolean(env.GITHUB_ACTIONS && env.ACTIONS_ID_TOKEN_REQUEST_URL),
@@ -85,7 +123,7 @@ const registryConfig = () => {
   return { registry, scoped, authValues };
 };
 
-const versionAccepted = async (name, version) => {
+export const versionAccepted = async (name, version) => {
   const url = `${REGISTRY}/${encodedName(name)}/${encodeURIComponent(version)}`;
   const res = await fetch(url, {
     headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
@@ -104,25 +142,45 @@ const npmViewOk = (name, version) => {
   return printed === version;
 };
 
-const verifyAll = async (pkgs) => {
-  const deadline = Date.now() + VERIFY_MS;
-  let missing = pkgs;
+const verifyAll = async (pkgs, env = process.env) => {
+  const { waitMs, intervalMs, maxIntervalMs, backoff } = npmViewWaitConfig(env);
+  const deadline = Date.now() + waitMs;
+  let missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
+  let attempt = 0;
   while (missing.length > 0) {
-    missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
-    if (missing.length === 0) return;
     const remaining = deadline - Date.now();
-    if (remaining <= 0) break;
+    const delay = nextVerifyDelayMs({
+      attempt,
+      intervalMs,
+      maxIntervalMs,
+      remainingMs: remaining,
+      backoff,
+    });
+    if (delay <= 0) break;
     console.log(
-      `npm view still missing ${missing.length} package(s); retrying for ${Math.ceil(remaining / 1000)}s\n${missing
+      `npm view still missing ${missing.length} package(s); retrying in ${Math.ceil(delay / 1000)}s (${Math.ceil(remaining / 1000)}s left)\n${missing
         .map((pkg) => `${pkg.name}@${pkg.version}`)
         .join('\n')}`,
     );
-    await sleep(Math.min(VERIFY_INTERVAL_MS, remaining));
+    await sleep(delay);
+    attempt += 1;
+    missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
   }
-  throw new Error(
-    `npm view did not see ${missing.length} package(s) within ${VERIFY_MS / 1000}s:\n${missing
-      .map((pkg) => `${pkg.name}@${pkg.version}`)
-      .join('\n')}\nThe upload may still be accepted. Do not publish these versions again.`,
+  if (missing.length === 0) return;
+  const accepted = [];
+  const never = [];
+  for (const pkg of missing) {
+    if (await versionAccepted(pkg.name, pkg.version)) accepted.push(pkg);
+    else never.push(pkg);
+  }
+  const list = (rows) => rows.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n');
+  if (verifyOutcome({ missingCount: missing.length, acceptedCount: accepted.length }) === 'fail') {
+    throw new Error(
+      `npm view did not see ${missing.length} package(s) within ${waitMs / 1000}s, and the registry has no version document:\n${list(never)}\nDo not publish accepted versions again.`,
+    );
+  }
+  console.warn(
+    `npm view did not see ${accepted.length} package(s) within ${waitMs / 1000}s, but the registry accepted the upload. Continuing so tagging can run.\n${list(accepted)}\nDo not publish these versions again.`,
   );
 };
 

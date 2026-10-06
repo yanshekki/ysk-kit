@@ -20,7 +20,7 @@ export const createSecretStore = (opts: { tokenDir: () => string; io: SecretStor
     write(name: string, value: string): void {
       memory.set(name, value);
       if (!opts.io.encryptionAvailable()) {
-        opts.warn('safeStorage encryption is unavailable; token kept in memory only');
+        opts.io.warn('safeStorage encryption is unavailable; token kept in memory only');
         return;
       }
       opts.io.mkdir(opts.tokenDir());

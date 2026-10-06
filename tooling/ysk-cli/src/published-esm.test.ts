@@ -45,6 +45,16 @@ describe('published ESM', () => {
     }
   });
 
+  it('pins OpenTelemetry below the broken 2.12 coordinated set', () => {
+    const pkg = JSON.parse(
+      readFileSync(join(kitRoot, 'packages/observability/package.json'), 'utf8'),
+    ) as { dependencies: Record<string, string> };
+    for (const [name, spec] of Object.entries(pkg.dependencies)) {
+      if (!name.startsWith('@opentelemetry/') || name === '@opentelemetry/api') continue;
+      expect(spec, name).not.toMatch(/^[~^]/);
+    }
+  });
+
   it('public packages inherit NodeNext; apps keep bundler', () => {
     expect(publicPackages()).toHaveLength(26);
     expect(lockstepVersion(publicPackages())).toMatch(/^\d+\.\d+\.\d+$/);

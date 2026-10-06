@@ -42,6 +42,12 @@ if [[ "$FLAVOR" != "php-bridge" ]]; then
   done
   grep -q AGENTS.md "$DEST/CLAUDE.md"
   grep -q AGENTS.md "$DEST/.gemini/settings.json"
+  grep -q '## Current state and reuse' "$DEST/docs/plans/_template.md"
+  grep -q '## Assumptions' "$DEST/docs/plans/_template.md"
+  grep -q '## Options considered' "$DEST/docs/plans/_template.md"
+  grep -q '## 現況與重用' "$DEST/docs/plans/_template.zh.md"
+  grep -q '## 假設' "$DEST/docs/plans/_template.zh.md"
+  grep -q '## 考慮過的方案' "$DEST/docs/plans/_template.zh.md"
 fi
 
 if [[ "$FLAVOR" == "php-bridge" ]]; then

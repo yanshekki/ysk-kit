@@ -30,22 +30,23 @@ const publicPackages = (): { name: string; version: string }[] => {
 };
 
 describe('kit version sync', () => {
-  it('keeps public packages on one version, via a minor changeset or an applied bump', () => {
-    const changeset = join(kitRoot, '.changeset/agent-guidance-redesign.md');
+  it('keeps public packages on one version, via a lockstep changeset or an applied bump', () => {
     const pkgs = publicPackages();
-    try {
-      const text = readFileSync(changeset, 'utf8');
-      const declared = [...text.matchAll(/"(@ysk-kit\/[^"]+)":\s*minor/g)].flatMap((match) => {
-        const name = match[1];
-        return name ? [name] : [];
-      });
-      expect(declared.sort()).toEqual(pkgs.map((pkg) => pkg.name));
-      expect(text).not.toMatch(/:\s*patch/);
-    } catch (error) {
-      const missing = error instanceof Error && 'code' in error && error.code === 'ENOENT';
-      if (!missing) throw error;
+    const pending = readdirSync(join(kitRoot, '.changeset')).filter(
+      (name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md',
+    );
+    if (pending.length === 0) {
       expect(new Set(pkgs.map((pkg) => pkg.version)).size).toBe(1);
+      return;
     }
+    const declared = new Set<string>();
+    for (const name of pending) {
+      const text = readFileSync(join(kitRoot, '.changeset', name), 'utf8');
+      for (const match of text.matchAll(/"(@ysk-kit\/[^"]+)":\s*(?:patch|minor|major)/g)) {
+        if (match[1]) declared.add(match[1]);
+      }
+    }
+    expect([...declared].sort()).toEqual(pkgs.map((pkg) => pkg.name));
   });
 
   it('copies the create-app version into the root package.json', () => {

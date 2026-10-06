@@ -79,6 +79,7 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk-kit add <capability>` | Merge a catalogued capability |
 | `pnpm ysk-kit upgrade` | Refresh allowlisted kit guardrails |
 | `pnpm ysk-kit plan <slug>` | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` from the template |
+| `pnpm ysk-kit plan --check <file>` | Fail if a plan is missing headings or still placeholders |
 | `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift |
 | `pnpm create @ysk-kit/app <name>` | Scaffold a product from npm |
 | `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product from this checkout |
@@ -112,6 +113,22 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 ## Changelog
 
 The latest three versions. Older versions are in the full changelog.
+
+### v1.2.1
+
+#### New features
+
+- `pnpm ysk-kit plan --check <file>` verifies a plan has every required template heading and fails when a required section is still placeholder-only.
+
+#### Improvements
+
+- The planning protocol keeps the v1.2.0 kit-specific sections and adds: explore-before-planning (**Current state and reuse** before Contracts), **Assumptions** next to Scope / Non-goals, **Options considered** (two approaches when a real alternative exists), task steps that name files / interface / contract / data / risk / rollback / acceptance, verification commands with expected results and a manual-check list, and an approval / anti-shrinking gate.
+- [docs/plans/README.md](docs/plans/README.md) maps native plan modes (Grok Build, Cursor, Claude Code, Codex, OpenCode, Copilot) to this template, with a copy-paste `/plan` prompt (EN + zh). The approved plan is still `docs/plans/<date>-<slug>.md` via `pnpm ysk-kit plan <slug>`.
+
+#### Internal/CI
+
+- `thin-smoke` and `flavor-smoke` assert the new template headings. Generated products receive the upgraded `_template.md` pair.
+- The lockstep test requires any pending changeset set to list all 26 public `@ysk-kit` packages.
 
 ### v1.2.0
 
@@ -150,19 +167,6 @@ The latest three versions. Older versions are in the full changelog.
 
 - [CHANGELOG.md](CHANGELOG.md) and [CHANGELOG.zh.md](CHANGELOG.zh.md) keep every version, newest first, in those categories. Per-package `CHANGELOG.md` files that Changesets writes stay, and the full changelog links to them.
 - [Contributing](docs/contributing.md) and the release section of [workspace scripts](docs/cli/workspace-scripts.md) require each release to add the new version at the top of the README section and move the oldest of the three into the full changelog.
-
-### v1.1.2
-
-#### Security
-
-- npm publish uses Trusted Publishing only. The release workflow keeps `id-token: write` and provenance, and does not pass a static npm credential.
-- `actions/setup-node` does not receive `registry-url` or `scope`, so it does not write a registry auth line that would override OIDC.
-- `.github/publish-packages.mjs` exits when the GitHub OIDC token is unavailable.
-
-#### Internal/CI
-
-- Post-publish `npm view` verification stays.
-- The product release remains one annotated tag `vX.Y.Z`.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

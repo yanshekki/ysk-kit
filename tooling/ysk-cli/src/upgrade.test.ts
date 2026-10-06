@@ -64,6 +64,9 @@ describe('ysk upgrade', () => {
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
+    expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
+      '## Current state and reuse',
+    );
     expect(existsSync(join(dest, 'GEMINI.md'))).toBe(true);
     expect(logs.some((line) => line === 'wrote agent stubs')).toBe(true);
   });

@@ -80,3 +80,99 @@ This session scratch points at the dated plan. Edit the dated file. Law: \`AGENT
 };
 
 const dateSlug = (date: string, slug: string): string => `docs/plans/${date}-${slug}.md`;
+
+const PLAN_FILE_RE = /(\d{4}-\d{2}-\d{2})-([a-z][a-z0-9-]*)(\.zh)?\.md$/;
+
+const ALLOWED_SHORT = /^(none\.?|n\/a|nil|no\.?|沒有。?|不適用。?)$/i;
+
+export type PlanCheckOptions = {
+  file: string;
+  kitRoot: string;
+};
+
+export type PlanCheckResult = {
+  ok: boolean;
+  errors: string[];
+};
+
+export const parsePlanFileName = (
+  file: string,
+): { date: string; slug: string; zh: boolean } | undefined => {
+  const base = file.split(/[/\\]/).pop() ?? file;
+  const match = PLAN_FILE_RE.exec(base);
+  if (!match) return undefined;
+  const date = match[1];
+  const slug = match[2];
+  if (!date || !slug) return undefined;
+  return { date, slug, zh: match[3] === '.zh' };
+};
+
+export const markdownH2Sections = (text: string): { heading: string; body: string }[] => {
+  const lines = text.split(/\r?\n/);
+  const sections: { heading: string; body: string[] }[] = [];
+  for (const line of lines) {
+    if (/^## [^#]/.test(line)) {
+      sections.push({ heading: line.slice(3).trim(), body: [] });
+      continue;
+    }
+    const current = sections[sections.length - 1];
+    if (current) current.body.push(line);
+  }
+  return sections.map((section) => ({ heading: section.heading, body: section.body.join('\n') }));
+};
+
+const collapse = (text: string): string => text.replace(/\s+/g, ' ').trim();
+
+const extraSubstance = (planBody: string, templateBody: string): string => {
+  const plan = collapse(planBody);
+  const tmpl = collapse(templateBody);
+  if (plan.length === 0) return '';
+  if (plan === tmpl) return '';
+  if (tmpl.length > 0 && plan.startsWith(tmpl)) return collapse(plan.slice(tmpl.length));
+  if (tmpl.length > 0 && plan.includes(tmpl)) return collapse(plan.replace(tmpl, ' '));
+  return plan;
+};
+
+const sectionIsPlaceholder = (planBody: string, templateBody: string): boolean => {
+  const extra = extraSubstance(planBody, templateBody);
+  if (extra.length === 0) return true;
+  if (ALLOWED_SHORT.test(extra)) return false;
+  return extra.length < 8;
+};
+
+export const checkPlan = (opts: PlanCheckOptions): PlanCheckResult => {
+  if (!existsSync(opts.file)) {
+    return { ok: false, errors: [`plan file missing: ${opts.file}`] };
+  }
+
+  const parsed = parsePlanFileName(opts.file);
+  const zh = parsed?.zh ?? opts.file.endsWith('.zh.md');
+  const templatePath = join(
+    opts.kitRoot,
+    zh ? 'docs/plans/_template.zh.md' : 'docs/plans/_template.md',
+  );
+  if (!existsSync(templatePath)) {
+    return { ok: false, errors: ['docs/plans/_template.md pair missing in kit'] };
+  }
+
+  const date = parsed?.date ?? '1970-01-01';
+  const slug = parsed?.slug ?? 'plan';
+  const filled = fill(readFileSync(templatePath, 'utf8'), slug, date, titleFromSlug(slug));
+  const required = markdownH2Sections(filled);
+  const actual = markdownH2Sections(readFileSync(opts.file, 'utf8'));
+  const actualByHeading = new Map(actual.map((section) => [section.heading, section.body]));
+  const errors: string[] = [];
+
+  for (const section of required) {
+    const body = actualByHeading.get(section.heading);
+    if (body === undefined) {
+      errors.push(`missing heading: ${section.heading}`);
+      continue;
+    }
+    if (sectionIsPlaceholder(body, section.body)) {
+      errors.push(`placeholder-only section: ${section.heading}`);
+    }
+  }
+
+  return { ok: errors.length === 0, errors };
+};

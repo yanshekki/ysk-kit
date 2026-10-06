@@ -51,6 +51,9 @@ jobs:
           test -f AGENTS.md
           test -f .agents/skills/plan-feature/SKILL.md
           test -f docs/plans/_template.md
+          grep -q '## Current state and reuse' docs/plans/_template.md
+          grep -q '## Assumptions' docs/plans/_template.md
+          grep -q '## Options considered' docs/plans/_template.md
           test -f .github/copilot-instructions.md
           test -f .gemini/settings.json
           grep -q AGENTS.md CLAUDE.md

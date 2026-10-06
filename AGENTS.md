@@ -114,9 +114,21 @@ Follow this order for any feature that is not a typo, a one-line docs fix, or a 
 
 **Session file:** root `plan.md` is optional scratch for tools that look for that name. `pnpm ysk-kit plan <slug>` writes the dated file (and the Chinese pair) plus a root `plan.md` pointer. Edit the dated file; keep the pointer in sync. Root `plan.md` is gitignored. Dated plans are the record to commit.
 
-Create a plan with `pnpm ysk-kit plan <slug>` or by copying [docs/plans/_template.md](docs/plans/_template.md). Procedure: [plan-feature](docs/skills/plan-feature.md).
+Create a plan with `pnpm ysk-kit plan <slug>` or by copying [docs/plans/_template.md](docs/plans/_template.md). Procedure: [plan-feature](docs/skills/plan-feature.md). Tool mapping and a copy-paste `/plan` prompt: [docs/plans/README.md](docs/plans/README.md).
 
-Template sections (do not drop them): goal and user problem; scope / non-goals; affected flavors / presets / capabilities; contracts first (DTOs, error codes, ts-rest paths); data model / Prisma and migrations; module slices and layers; SDK / web-sdk / client surfaces; jobs / mail / realtime / notifications; security and privacy; test plan (in-memory ports); exact verification commands; docs / changelog / changeset; risks and rollback; ordered task checklist with acceptance criteria; open questions.
+**Explore first.** Search the tree before writing the plan. List existing modules, contracts, SDK resources, hooks, and generators (`ysk-kit add module`) under Current state and reuse, before Contracts. Prefer reuse over new files.
+
+**Assumptions.** Anything unverified belongs in Assumptions or Open questions. Never guess silently.
+
+**Options.** When a real alternative exists, list at least two approaches with tradeoffs (complexity, layers, migration, clients), then the chosen option and why. Trivial work may say `single obvious approach — reason`.
+
+**Approval gate.** Do not edit project files until the plan is approved, unless the user waived it. Do not exit plan mode or hand over a sketch. A plan missing any template section is incomplete. If the user rejects it or says it is too short, expand the missing sections — never shorten. After `/compact` or a long session, re-read the dated plan file before continuing. `pnpm ysk-kit plan --check <file>` fails on missing or placeholder-only headings.
+
+Template sections (do not drop them): goal and user problem; scope / non-goals; assumptions; affected flavors / presets / capabilities; current state and reuse; options considered; contracts first (DTOs, error codes, ts-rest paths); data model / Prisma and migrations; module slices and layers; SDK / web-sdk / client surfaces; jobs / mail / realtime / notifications; security and privacy; test plan (in-memory ports); verification commands with expected results and manual checks; docs / changelog / changeset; risks and rollback; ordered task checklist (files, interface/contract/data, risk, rollback, acceptance); open questions.
+
+### Tool plan modes
+
+Native plan files are scratch. Grok Build writes `~/.grok/sessions/<cwd>/<session-id>/plan.md`; Cursor, Claude Code, Codex, OpenCode, and Copilot each have their own plan surface. Whatever the tool writes, the approved plan must follow this template and be saved with `pnpm ysk-kit plan <slug>` to `docs/plans/<date>-<slug>.md`. Details: [docs/plans/README.md](docs/plans/README.md).
 
 ## Definition of done
 
@@ -154,6 +166,7 @@ If a required fact is missing (which flavor, which database, whether billing may
 | Tool file repeats this guide | Restore a three-line pointer to `AGENTS.md`. |
 | Industry model landed in this repo | Move it to a generated product or `examples/`. |
 | Plan written after the code | Stop. Write the dated plan, then resume from contracts. |
+| Plan is a sketch, missing a heading, or still placeholders | Fill every template section. `pnpm ysk-kit plan --check <file>`. If rejected as too short, expand — do not shrink. |
 | Root + nested `AGENTS.md` over 24 KiB | Shorten local files; put procedure in `docs/skills/`. |
 
 ## Coding tools

@@ -79,6 +79,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit add <capability>` | 合併一項已編目的能力 |
 | `pnpm ysk-kit upgrade` | 更新允許清單上的 kit 護欄 |
 | `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
+| `pnpm ysk-kit plan --check <file>` | 計劃缺標題或仍是佔位內容時失敗 |
 | `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
 | `pnpm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
@@ -112,6 +113,22 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 ## 變更紀錄
 
 最近三個版本。較舊的版本在完整變更紀錄。
+
+### v1.2.1
+
+#### 新功能
+
+- `pnpm ysk-kit plan --check <file>` 檢查計劃是否具備每個必要模板標題，必填章節若仍是佔位內容則失敗。
+
+#### 改進
+
+- 計劃協議保留 v1.2.0 的 kit 專用章節，並新增：先探索再計劃（合約之前的**現況與重用**）、範圍／非目標旁邊的**假設**、**考慮過的方案**（有真正替代時兩個做法）、任務步驟寫明檔案／介面／合約／資料／風險／回滾／驗收、驗證命令附預期結果與人手檢查清單，以及批准／禁止縮水閘。
+- [docs/plans/README.zh.md](docs/plans/README.zh.md) 把各工具原生計劃模式（Grok Build、Cursor、Claude Code、Codex、OpenCode、Copilot）對照到本模板，並附可複製的 `/plan` 提示（中英）。獲准計劃仍是 `docs/plans/<date>-<slug>.md`，用 `pnpm ysk-kit plan <slug>` 建立。
+
+#### 內部／CI
+
+- `thin-smoke` 與 `flavor-smoke` 會斷言新的模板標題。產生出來的產品會收到升級後的 `_template.md` 配對。
+- 鎖步測試要求任何待處理 changeset 都列出全部 26 個公開 `@ysk-kit` 套件。
 
 ### v1.2.0
 
@@ -150,19 +167,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 - [CHANGELOG.md](CHANGELOG.md) 與 [CHANGELOG.zh.md](CHANGELOG.zh.md) 保留每一個版本，由新到舊，並使用同樣的類別。Changesets 產生的各套件 `CHANGELOG.md` 仍然保留，完整變更紀錄連結到這些檔案。
 - [貢獻指引](docs/contributing.zh.md) 與 [工作區指令](docs/cli/workspace-scripts.zh.md) 的發佈一節規定：每次發佈都把新版本加在 README 該節的頂部，並把三個版本中最舊的一個移入完整變更紀錄。
-
-### v1.1.2
-
-#### 安全
-
-- npm 發佈只使用 Trusted Publishing。release 工作流程保留 `id-token: write` 與 provenance，不傳入靜態 npm 憑證。
-- `actions/setup-node` 不接收 `registry-url` 或 `scope`，因此不會寫入會蓋過 OIDC 的 registry 認證行。
-- `.github/publish-packages.mjs` 在 OIDC token 不存在時退出。
-
-#### 內部／CI
-
-- 發佈後的 `npm view` 核對仍然保留。
-- 產品發佈維持單一 annotated tag `vX.Y.Z`。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

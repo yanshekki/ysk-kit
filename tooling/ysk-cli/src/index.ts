@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { addCapability } from './add-capability';
@@ -6,7 +7,7 @@ import { checkAgent, formatAgentFindings } from './check-agent';
 import { doctor, formatDoctorReport } from './doctor';
 import { generateOpenApi } from './generate-openapi';
 import { HELP } from './help';
-import { localIsoDate, writePlan } from './plan';
+import { checkPlan, localIsoDate, writePlan } from './plan';
 import { upgrade } from './upgrade';
 
 const args = process.argv.slice(2);
@@ -51,6 +52,21 @@ try {
     if (args.includes('--json')) console.log(JSON.stringify(report, null, 2));
     else console.log(formatDoctorReport(report));
     process.exit(report.ok ? 0 : 1);
+  }
+
+  if (args[0] === 'plan' && args[1] === '--check') {
+    const fileArg = args[2];
+    if (!fileArg || fileArg.startsWith('-')) {
+      throw new Error('plan --check requires a markdown file');
+    }
+    const resolved = existsSync(resolve(fileArg)) ? resolve(fileArg) : resolve(root, fileArg);
+    const result = checkPlan({ file: resolved, kitRoot });
+    if (result.ok) {
+      console.log('ysk-kit plan --check: ok');
+      process.exit(0);
+    }
+    for (const line of result.errors) console.error(line);
+    process.exit(1);
   }
 
   if (args[0] === 'plan' && args[1] && !args[1].startsWith('-')) {

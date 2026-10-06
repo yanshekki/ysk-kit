@@ -10,6 +10,7 @@ Usage:
   pnpm ysk-kit check agent
   pnpm ysk-kit doctor [--json]
   pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
+  pnpm ysk-kit plan --check <file>
 
 Commands:
   add module <name>
@@ -51,6 +52,10 @@ Commands:
       Write docs/plans/<date>-<slug>.md and the Chinese pair from the
       bilingual template, plus a gitignored root plan.md pointer.
       Slug must be kebab-case. --date defaults to today. --force overwrites.
+
+  plan --check <file>
+      Verify a plan file has every required template heading and no
+      required section is still placeholder-only. Exit 1 on failure.
 
   doctor [--json]
       Check a generated product: Node and pnpm versus engines, required

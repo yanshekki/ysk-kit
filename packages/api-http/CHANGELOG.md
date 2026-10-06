@@ -1,5 +1,18 @@
 # @ysk-kit/api-http
 
+## 1.2.0
+
+### Minor Changes
+
+- bb32f12: Redesign agent guidance: professional AGENTS.md, planning protocol (`docs/plans/` + `ysk-kit plan`), multi-tool pointers, and check-agent guardrails for pointer drift, skill copies, and AGENTS.md size. Pin `source-map-js@1.2.2` (GHSA-68fv-2mgg-jv7q) via a workspace override.
+
+### Patch Changes
+
+- Updated dependencies [bb32f12]
+  - @ysk-kit/auth@1.2.0
+  - @ysk-kit/contracts@1.2.0
+  - @ysk-kit/domain-kernel@1.2.0
+
 ## 1.1.3
 
 ### Patch Changes

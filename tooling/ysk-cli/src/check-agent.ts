@@ -24,6 +24,7 @@ const SKIP_DIRS = new Set([
   '.git',
   '.turbo',
   '.expo',
+  '.runs',
 ]);
 
 const SCAN_ROOTS = ['apps', 'packages', 'modules'] as const;

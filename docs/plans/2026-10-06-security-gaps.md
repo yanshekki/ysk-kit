@@ -123,7 +123,7 @@ Optional: `pnpm lint`. CI: `check`, `thin-smoke`, `e2e`, `flavor-smoke`, `exampl
 
 - [ ] Do **not** edit `docs/skills/`
 - [ ] `docs/cli/env.md` + `.zh.md`, architecture desktop sentence, `.env.example`
-- [ ] `CHANGELOG.md` / `CHANGELOG.zh.md` and README latest-three window (`v1.2.1` Security; move `v1.1.2` out of README)
+- [ ] `CHANGELOG.md` / `CHANGELOG.zh.md` and README latest-three window (`v1.2.2` Security; keep shipped `v1.2.1` and `v1.2.0`)
 - [ ] Patch changeset listing all 26 public `@ysk-kit` packages
 
 ## Risks and rollback

@@ -20,6 +20,7 @@ const SKIP_DIRS = new Set([
   '.git',
   '.turbo',
   '.expo',
+  '.runs',
 ]);
 
 const POINTER_FILES = [

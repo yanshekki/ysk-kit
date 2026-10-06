@@ -123,7 +123,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit c
 
 - [ ] **不要**改 `docs/skills/`
 - [ ] `docs/cli/env.md` 與 `.zh.md`、架構的 desktop 句、`.env.example`
-- [ ] `CHANGELOG.md`／`CHANGELOG.zh.md` 與 README 最近三版窗口（`v1.2.1` 安全；把 `v1.1.2` 移出 README）
+- [ ] `CHANGELOG.md`／`CHANGELOG.zh.md` 與 README 最近三版窗口（`v1.2.2` 安全；保留已發佈的 `v1.2.1` 與 `v1.2.0`）
 - [ ] 列出全部 26 個公開 `@ysk-kit` 套件的 patch changeset
 
 ## 風險與回滾

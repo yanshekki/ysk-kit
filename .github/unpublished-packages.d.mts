@@ -1,4 +1,16 @@
-export function publicPackages(): { name: string; version: string; dir: string }[];
+export type PublicPackage = { name: string; version: string; dir: string };
+export type PackageJsonLike = { name?: string; version?: string; private?: boolean };
+export type PackageTree = {
+  listDir: (rel: string) => string[];
+  readJson: (rel: string) => PackageJsonLike;
+  resolveDir?: (dir: string, name: string) => string;
+};
+
+export function publicPackagesFromTree(tree: PackageTree): PublicPackage[];
+export function pendingChangesetFilesFromTree(tree: {
+  listDir: (rel: string) => string[];
+}): string[];
+export function publicPackages(root?: string): PublicPackage[];
 export function versionIsInstallable(
   packument: { versions?: Record<string, unknown> } | null | undefined,
   version: string,

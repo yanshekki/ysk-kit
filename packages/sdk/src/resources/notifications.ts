@@ -1,5 +1,5 @@
 import type { NotificationDto, PaginatedNotifications } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 export const notificationsResource = (http: HttpClient) => ({
   list: () => http.request<PaginatedNotifications>('/v1/notifications'),

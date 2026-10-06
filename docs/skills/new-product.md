@@ -14,7 +14,7 @@ Scaffold a product from YSK Kit. Law: [AGENTS.md](../../AGENTS.md). Manual: [cre
 ## Trigger
 
 - The user wants a new product repository, not a module inside this kit.
-- The user says `create-ysk-app`, `pnpm create @ysk-kit/app`, or “new SaaS”.
+- The user says `create-ysk-app`, `pnpm create @ysk-kit/app`, `npm create @ysk-kit/app`, or “new SaaS”.
 
 Do not invent a parallel monorepo layout. Do not copy this kit by hand. Do not put the industry domain back into this kit.
 
@@ -37,9 +37,10 @@ Agents pass flags. Do not wait for TTY prompts.
 
 ```bash
 pnpm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
+# or: npm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
 ```
 
-From a kit checkout: `pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`.
+There is no unscoped `create-ysk-app` package on npm. From a kit checkout: `pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`.
 
 3. In the new directory: `pnpm install`, copy `.env.example` to `.env`, start Compose if the database is MySQL or PostgreSQL.
 4. `pnpm db:generate && pnpm db:migrate && pnpm db:seed`.

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createYskClient } from './index';
-import { memoryTokenStore } from './token-store';
+import { createYskClient } from './index.js';
+import { memoryTokenStore } from './token-store.js';
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify({ ok: true, data }), {

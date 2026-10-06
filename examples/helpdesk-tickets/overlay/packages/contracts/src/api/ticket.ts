@@ -6,8 +6,8 @@ import {
   TicketDtoSchema,
   TicketListQuerySchema,
   UpdateTicketStatusCommandSchema,
-} from '../dto/ticket';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/ticket.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { MailTemplateSchema } from './mail-template';
-import { NotificationTypeSchema } from './notification-type';
+import { MailTemplateSchema } from './mail-template.js';
+import { NotificationTypeSchema } from './notification-type.js';
 
 export const JobName = {
   EMAIL_SEND: 'email.send',

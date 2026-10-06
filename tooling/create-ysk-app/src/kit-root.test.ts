@@ -11,7 +11,7 @@ import {
   materializePublishedKit,
   readCreateAppVersion,
   resolveKitRoot,
-} from './kit-root';
+} from './kit-root.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 

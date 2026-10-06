@@ -2,9 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "noEmit": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler"
+    "noEmit": true
   },
   "include": ["src"]
 }

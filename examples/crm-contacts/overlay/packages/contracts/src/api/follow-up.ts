@@ -3,9 +3,9 @@ import {
   CreateFollowUpCommandSchema,
   FollowUpDtoSchema,
   PaginatedFollowUpSchema,
-} from '../dto/follow-up';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/follow-up.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

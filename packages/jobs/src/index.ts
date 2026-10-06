@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import {
   JOB_NAME_VALUES,
   type JobName,
@@ -41,7 +42,11 @@ export const createBullmqQueue = async (opts: {
   prefix?: string;
 }): Promise<IJobQueue> => {
   const { Queue, Worker } = await import('bullmq');
-  const { default: IORedis } = await import('ioredis');
+  const require = createRequire(import.meta.url);
+  const IORedis = require('ioredis') as new (
+    url: string,
+    options?: { maxRetriesPerRequest: null },
+  ) => { quit: () => Promise<unknown> };
   const connection = new IORedis(opts.redisUrl, { maxRetriesPerRequest: null });
   const prefix = opts.prefix ?? 'ysk';
   const makeQueue = (name: string) => new Queue(name, { connection, prefix });

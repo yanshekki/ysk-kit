@@ -1,8 +1,8 @@
-import { createFcmPush, hasFcmEnv } from './fcm';
-import type { IPushPort } from './port';
+import { createFcmPush, hasFcmEnv } from './fcm.js';
+import type { IPushPort } from './port.js';
 
-export { createFcmPush, hasFcmEnv } from './fcm';
-export type { IPushPort, PushMessage, PushResult } from './port';
+export { createFcmPush, hasFcmEnv } from './fcm.js';
+export type { IPushPort, PushMessage, PushResult } from './port.js';
 export const isExpoPushToken = (token: string): boolean => token.startsWith('ExponentPushToken[');
 
 export const createLogPush = (

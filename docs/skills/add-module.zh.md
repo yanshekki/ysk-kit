@@ -33,8 +33,9 @@ Language: [English](add-module.md) · 中文
 3. 在 `@ysk-kit/contracts` 與 Prisma model 擴充 DTO、command 與欄位。保留 `OkSchema`／`ErrSchema`。
 4. 規則放在 `application/<name>-service.ts`。
 5. Prisma 留在 `infra/`。客戶端只用 `@ysk-kit/sdk`／`@ysk-kit/web-sdk`。
-6. schema 或路徑有變就執行 `pnpm db:migrate && pnpm gen:openapi`。
-7. [驗證改動](verify-change.zh.md)。
+6. schema 有變就跟隨 [db-migration](db-migration.zh.md)（審查 SQL；未經同意不要 `migrate reset`）。然後 `pnpm gen:openapi`。
+7. 若資源以 org 為範圍，在 `application/` 查 membership（範本：`requireBiller`），並加跨租戶 memory-port 案例。見 [security-review](security-review.zh.md)。
+8. [驗證改動](verify-change.zh.md)。
 
 ## 驗證
 

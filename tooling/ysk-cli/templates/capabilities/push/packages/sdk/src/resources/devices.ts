@@ -1,5 +1,5 @@
 import type { DeviceDto, RegisterDeviceCommand } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 export const devicesResource = (http: HttpClient) => ({
   list: () => http.request<DeviceDto[]>('/v1/me/devices'),

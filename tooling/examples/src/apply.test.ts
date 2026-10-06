@@ -68,6 +68,7 @@ describe('examples apply', () => {
     const dto = readFileSync(join(dest, 'packages/contracts/src/dto/appointment.ts'), 'utf8');
     expect(dto).toContain('patientName');
     expect(dto).toContain('HkPhoneSchema');
+    expect(dto).toContain("from './user.js'");
     const service = readFileSync(
       join(dest, 'apps/api/src/modules/appointment/application/appointment-service.ts'),
       'utf8',

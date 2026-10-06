@@ -5,14 +5,14 @@ export {
   optionalAuth,
   requireAuth,
   requirePermission,
-} from './auth-guard';
-export { errorHandler } from './error-handler';
+} from './auth-guard.js';
+export { errorHandler } from './error-handler.js';
 export {
   type ContractRouter,
   flattenContract,
   type MountedHandler,
   mountContract,
   type RouteResult,
-} from './mount-contract';
-export { httpLogger } from './pino-http';
-export { REQUEST_ID_HEADER, readRequestId, requestId } from './request-id';
+} from './mount-contract.js';
+export { httpLogger } from './pino-http.js';
+export { REQUEST_ID_HEADER, readRequestId, requestId } from './request-id.js';

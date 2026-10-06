@@ -1,4 +1,4 @@
-import type { Capability } from './add-capability';
+import type { Capability } from './add-capability.js';
 import {
   patchBillingApp,
   patchBillingComposition,
@@ -38,8 +38,8 @@ import {
   patchTeamSdk,
   patchTeamWeb,
   patchTeamWebSdk,
-} from './capability-patches';
-import { ensureMarkerBlock, insertAfterLastImport } from './patch-text';
+} from './capability-patches.js';
+import { ensureMarkerBlock, insertAfterLastImport } from './patch-text.js';
 
 export type CapabilityRecipe = {
   prisma?: string;

@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
-import { AGENT_SKILL_TREES, agentTemplatesDir } from './agent-stubs';
+import { AGENT_SKILL_TREES, agentTemplatesDir } from './agent-stubs.js';
 
 export const AGENTS_MD_BUDGET_BYTES = 24 * 1024;
 

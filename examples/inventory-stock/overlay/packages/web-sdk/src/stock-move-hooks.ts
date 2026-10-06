@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { CreateStockMoveCommand } from '@ysk-kit/contracts';
 import type { YskClient } from '@ysk-kit/sdk';
-import { skuQueryKey } from './sku-hooks';
+import { skuQueryKey } from './sku-hooks.js';
 
 export const stockMoveQueryKey = ['stock-move'] as const;
 

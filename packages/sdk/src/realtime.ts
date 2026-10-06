@@ -1,6 +1,6 @@
 import type { Platform } from '@ysk-kit/contracts';
 import { io, type Socket } from 'socket.io-client';
-import type { TokenStore } from './token-store';
+import type { TokenStore } from './token-store.js';
 
 export const connectRealtime = async (opts: {
   baseUrl: string;

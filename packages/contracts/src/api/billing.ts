@@ -9,8 +9,8 @@ import {
   OrganizationIdQuerySchema,
   PortalCommandSchema,
   SubscriptionDtoSchema,
-} from '../dto/billing';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/billing.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

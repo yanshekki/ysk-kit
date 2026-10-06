@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { NotificationTypeSchema } from '../enums/notification-type';
-import { PaginatedSchema } from './user';
+import { NotificationTypeSchema } from '../enums/notification-type.js';
+import { PaginatedSchema } from './user.js';
 
 export const NotificationDtoSchema = z.object({
   id: z.string().uuid(),

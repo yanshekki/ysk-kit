@@ -1,6 +1,6 @@
 import { Emitter } from '@socket.io/redis-emitter';
-import Redis from 'ioredis';
-import { type IRealtimePort, SOCKET_IO_REDIS_KEY } from './port';
+import { type IRealtimePort, SOCKET_IO_REDIS_KEY } from './port.js';
+import { Redis } from './redis-ctor.js';
 
 export type RedisPublishClient = {
   publish(channel: string, message: string | Buffer): unknown;

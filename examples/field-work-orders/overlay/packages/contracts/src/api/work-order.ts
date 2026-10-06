@@ -1,12 +1,12 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { PageQuerySchema } from '../dto/user';
+import { PageQuerySchema } from '../dto/user.js';
 import {
   CreateWorkOrderCommandSchema,
   PaginatedWorkOrderSchema,
   WorkOrderDtoSchema,
-} from '../dto/work-order';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/work-order.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

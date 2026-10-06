@@ -22,6 +22,7 @@ YSK Kit 是合約先行的 SaaS 平台（pnpm 12 + Turborepo + Node 24）。本 
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# 或：npm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
 # 本倉：
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 ```
@@ -204,6 +205,10 @@ ysk-kit/
 | 寫測試 | [write-tests](docs/skills/write-tests.zh.md)、[測試指南](docs/guides/testing.zh.md) |
 | 新增或改動畫面 | [ui-design](docs/skills/ui-design.zh.md) |
 | 完成 UI | [ui-review](docs/skills/ui-review.zh.md) |
+| 安全審查 | [security-review](docs/skills/security-review.zh.md) |
+| Prisma 遷移 | [db-migration](docs/skills/db-migration.zh.md) |
+| 入站 webhook | [webhook-handling](docs/skills/webhook-handling.zh.md) |
+| Electron 桌面 | [desktop-electron](docs/skills/desktop-electron.zh.md) |
 | 更新產品 | [upgrade](docs/guides/upgrade.zh.md) |
 | CLI 旗標 | [ysk-kit](docs/cli/ysk-kit.zh.md) |
 

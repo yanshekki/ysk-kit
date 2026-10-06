@@ -1,9 +1,9 @@
 import { SpanStatusCode } from '@opentelemetry/api';
 import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
 import { describe, expect, it } from 'vitest';
-import { withJobSpan } from './job-span';
-import { pinoOtelMixin } from './pino-otel-mixin';
-import { startOtelFromEnv } from './tracing';
+import { withJobSpan } from './job-span.js';
+import { pinoOtelMixin } from './pino-otel-mixin.js';
+import { startOtelFromEnv } from './tracing.js';
 
 describe('withJobSpan', () => {
   it('records a span named after the job', async () => {

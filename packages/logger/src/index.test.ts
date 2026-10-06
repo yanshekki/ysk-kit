@@ -1,6 +1,6 @@
 import { Writable } from 'node:stream';
 import { describe, expect, it } from 'vitest';
-import { createLogger } from './index';
+import { createLogger } from './index.js';
 
 const lastJson = (chunks: Buffer[]): Record<string, unknown> => {
   const line = Buffer.concat(chunks).toString().trim().split('\n').at(-1) ?? '';

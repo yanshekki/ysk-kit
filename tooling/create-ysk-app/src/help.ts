@@ -3,6 +3,10 @@ export const HELP = `create-ysk-app — scaffold a product from YSK Kit
 Usage:
   pnpm --filter @ysk-kit/create-app start <name> [options]
   pnpm create @ysk-kit/app <name> [options]
+  npm create @ysk-kit/app <name> [options]
+
+  There is no unscoped create-ysk-app package on npm. The published
+  package is @ysk-kit/create-app; its bin name is create-ysk-app.
 
 Options:
   --preset thin|full

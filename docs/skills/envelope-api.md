@@ -30,8 +30,9 @@ New HTTP behaviour must keep the envelope unless it is one of the four exception
 2. Use existing error codes. Do not invent a parallel error JSON.
 3. If the transport is JSON, it is an envelope route — including single resources.
 4. If the transport cannot be JSON, it must be one of: LLM SSE, invoice PDF 302, `GET /docs`, `GET /openapi.json`. Document any new exception next to those four, keep it off ts-rest, and **ask the user** before adding it.
-5. Clients call `@ysk-kit/sdk`. Discover paths from `GET /openapi.json`; do not `fetch`.
-6. [verify-change](verify-change.md).
+5. Inbound webhooks stay on the envelope (`{ ok: true, data: { received: true } }`) but mount on the raw body before JSON parsers. Follow [webhook-handling](webhook-handling.md).
+6. Clients call `@ysk-kit/sdk`. Discover paths from `GET /openapi.json`; do not `fetch`.
+7. [verify-change](verify-change.md).
 
 ## Verification
 

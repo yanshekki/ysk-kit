@@ -17,6 +17,10 @@ const SKILLS = [
   'write-tests',
   'ui-design',
   'ui-review',
+  'security-review',
+  'db-migration',
+  'webhook-handling',
+  'desktop-electron',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

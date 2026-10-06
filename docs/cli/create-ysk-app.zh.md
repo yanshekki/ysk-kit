@@ -7,7 +7,10 @@ Language: [English](create-ysk-app.md) · 中文
 ```text
 pnpm --filter @ysk-kit/create-app start <name> [options]
 pnpm create @ysk-kit/app <name> [options]
+npm create @ysk-kit/app <name> [options]
 ```
+
+npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-kit/create-app`；bin 名稱是 `create-ysk-app`。
 
 在 kit checkout 入面，CLI 複製呢棵樹。從 npm 安裝時，會把 tag `v{version}` 解成 commit SHA，下載該 commit 的壓縮檔，再核對解壓後的 `package.json` 名稱與版本。
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { parseTtlSeconds, signAccessToken, verifyAccessToken } from './jwt';
-import { newOtpCode } from './otp';
-import { hashPassword, verifyPassword } from './password';
-import { hashRefresh, newRefreshToken } from './refresh';
+import { parseTtlSeconds, signAccessToken, verifyAccessToken } from './jwt.js';
+import { newOtpCode } from './otp.js';
+import { hashPassword, verifyPassword } from './password.js';
+import { hashRefresh, newRefreshToken } from './refresh.js';
 
 describe('auth crypto', () => {
   it('hashes and verifies passwords', async () => {

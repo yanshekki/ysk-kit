@@ -1,6 +1,6 @@
-export { createRealtimeFromEnv } from './from-env';
-export { createMemoryRealtime, type MemoryRealtime } from './memory';
-export type { IRealtimePort } from './port';
-export { SOCKET_IO_REDIS_KEY } from './port';
-export { createRedisRealtimeEmitter, type RedisPublishClient } from './redis-emitter';
-export { type AttachSocketIoOpts, attachSocketIoRealtime } from './socket-io';
+export { createRealtimeFromEnv } from './from-env.js';
+export { createMemoryRealtime, type MemoryRealtime } from './memory.js';
+export type { IRealtimePort } from './port.js';
+export { SOCKET_IO_REDIS_KEY } from './port.js';
+export { createRedisRealtimeEmitter, type RedisPublishClient } from './redis-emitter.js';
+export { type AttachSocketIoOpts, attachSocketIoRealtime } from './socket-io.js';

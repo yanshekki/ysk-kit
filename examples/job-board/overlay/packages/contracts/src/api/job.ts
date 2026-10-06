@@ -1,8 +1,8 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { CreateJobCommandSchema, JobDtoSchema, PaginatedJobSchema } from '../dto/job';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { CreateJobCommandSchema, JobDtoSchema, PaginatedJobSchema } from '../dto/job.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

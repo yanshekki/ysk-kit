@@ -17,7 +17,7 @@ Language: [English](README.md) · 中文
 
 ## 十五分鐘開一個產品
 
-從 npm：
+從 npm（`npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`；npm 上沒有無 scope 的 `create-ysk-app` 套件）：
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
@@ -81,7 +81,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
 | `pnpm ysk-kit plan --check <file>` | 計劃缺標題或仍是佔位內容時失敗 |
 | `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
-| `pnpm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
+| `pnpm create @ysk-kit/app <name>`／`npm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | 驗證一次改動 |
 
@@ -116,6 +116,21 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 ### v1.2.2
 
+#### 新功能
+
+- Agent skills `security-review`、`db-migration`、`webhook-handling` 與 `desktop-electron`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、範圍限定的 Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+#### 改進
+
+- `add-module`、`add-capability`、`verify-change` 與 `envelope-api` 指向新程序。計劃模板的資料模型與安全段標明 Prisma expand/contract、安全審查、webhook 與 Electron。
+
+#### 修正
+
+- 已發佈的 `@ysk-kit/*` 程式庫輸出有效的 Node ESM：`dist/` 的相對路徑帶 `.js` 副檔名，`node` 可以載入 tarball。公開套件從 `tsconfig.base.json` 繼承 `module`／`moduleResolution` `NodeNext`。
+- `@ysk-kit/create-app` 與 `@ysk-kit/cli` 的 bin 以 `#!/usr/bin/env node` 開頭而且可執行，因此安裝後 `create-ysk-app`／`ysk-kit`／`yskk` 可以運行。
+- 從 npm 開倉使用 `npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`。npm 上沒有無 scope 的 `create-ysk-app` 套件；發佈的套件是 `@ysk-kit/create-app`。
+- `@ysk-kit/observability` 把 OpenTelemetry SDK 與 exporter 釘在 npm 上存在的版本。Caret 範圍會浮到 `sdk-metrics@2.12.0`，而該版本依賴尚未發佈的 `resources@2.12.0`。
+
 #### 安全
 
 - Electron 在 `safeStorage` 不可用時不再把 access／refresh 權杖以明文寫入磁碟。權杖只留在該次工作階段的記憶體，主行程會記錄不含密鑰的警告。
@@ -123,6 +138,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - `@ysk-kit/logger` 會遮蔽 authorization、cookie、token、password、API key 等欄位（pino `redact`）。
 - `/v1/llm/complete` 與 `/v1/llm/stream` 只接受 `user` 與 `assistant` 訊息。system prompt 來自 `LLM_SYSTEM_PROMPT`（伺服器持有）。每用戶配額是 `LLM_QUOTA_MAX`／`LLM_QUOTA_WINDOW_MS`，回 envelope `RATE_LIMITED`（429）。
 - `POST /v1/billing/webhook` 仍在 raw body 上驗證 `Stripe-Signature`，把 Stripe `event.id` 寫入 `ProcessedWebhookEvent`，重送直接確認，並忽略同一組織較舊的事件。
+
+#### 內部／CI
+
+- CI job `pack-and-run` 把 26 個公開套件 pack，在乾淨目錄安裝 tarball，import 每一個，執行 CLI bin，並用倉內 CLI 非互動建立 php-bridge dest。
+- 當 Changesets 打開或更新版本 PR 時，Release 跳過 tag 步驟。成功發佈後會在 `GITHUB_SHA` 建立 annotated `vX.Y.Z` tag，用該版本變更紀錄開 GitHub Release，再安裝已發佈的 tarball 並執行 CLI bin 做驗證。發佈仍然只使用 OIDC Trusted Publishing。
+- `thin-smoke`、`flavor-smoke`、create-app 與 upgrade 測試會斷言新的 skill 檔與 Cursor 規則。
 
 ### v1.2.1
 

@@ -2,9 +2,9 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
-import { AGENT_SKILL_TREES, agentTemplatesDir, listAgentRuleFiles } from './agent-stubs';
-import { checkAgent, formatAgentFindings } from './check-agent';
-import { readKitVersion, UPGRADE_PATHS } from './upgrade';
+import { AGENT_SKILL_TREES, agentTemplatesDir, listAgentRuleFiles } from './agent-stubs.js';
+import { checkAgent, formatAgentFindings } from './check-agent.js';
+import { readKitVersion, UPGRADE_PATHS } from './upgrade.js';
 
 type SqliteDatabase = {
   prepare(sql: string): { all(): unknown[] };

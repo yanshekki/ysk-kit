@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { t } from './index';
+import { t } from './index.js';
 
 describe('i18n', () => {
   it('picks locale from a bilingual dictionary', () => {

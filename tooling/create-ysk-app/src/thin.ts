@@ -327,10 +327,10 @@ export const applyThinPreset = (dest: string): void => {
       'billingContract',
       'devicesContract',
       'organizationsContract',
-      "from './llm'",
-      "from './billing'",
-      "from './devices'",
-      "from './organizations'",
+      "from './llm.js'",
+      "from './billing.js'",
+      "from './devices.js'",
+      "from './organizations.js'",
     ]);
     return next;
   });

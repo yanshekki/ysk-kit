@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { unwrapEnvelope } from './envelope';
+import { unwrapEnvelope } from './envelope.js';
 
 describe('unwrapEnvelope', () => {
   it('returns data when ok', () => {

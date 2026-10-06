@@ -2,10 +2,10 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { HELP } from './help';
-import { createYskApp, parseArgs, shouldSkipCopyEntry } from './scaffold';
+import { HELP } from './help.js';
+import { createYskApp, parseArgs, shouldSkipCopyEntry } from './scaffold.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const kitVersion = (
@@ -37,6 +37,28 @@ describe('create-ysk-app', () => {
     expect(HELP).toContain('--yes');
     expect(HELP).toContain('TTY');
     expect(HELP).toContain('docs/cli/create-ysk-app.md');
+    expect(HELP).toContain('npm create @ysk-kit/app');
+    expect(HELP).toContain('pnpm create @ysk-kit/app');
+    expect(HELP).toContain('no unscoped create-ysk-app package');
+  });
+
+  it('does not run the CLI when imported as a module', () => {
+    const tsx = join(kitRoot, 'tooling/create-ysk-app/node_modules/tsx/dist/cli.mjs');
+    const cli = join(kitRoot, 'tooling/create-ysk-app/src/index.ts');
+    const out = execFileSync(
+      process.execPath,
+      [tsx, '-e', `import(${JSON.stringify(pathToFileURL(cli).href)})`],
+      { encoding: 'utf8' },
+    );
+    expect(out.trim()).toBe('');
+  });
+
+  it('prints help and exits 0 for --help', () => {
+    const tsx = join(kitRoot, 'tooling/create-ysk-app/node_modules/tsx/dist/cli.mjs');
+    const cli = join(kitRoot, 'tooling/create-ysk-app/src/index.ts');
+    const out = execFileSync(process.execPath, [tsx, cli, '--help'], { encoding: 'utf8' });
+    expect(out).toContain('npm create @ysk-kit/app');
+    expect(out).toContain('--preset');
   });
 
   it('prints help when invoked without a name', () => {
@@ -134,6 +156,12 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/tests.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/ui.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/db-migration/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/webhook-handling/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/desktop-electron/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/security.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/desktop.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.zh.md'))).toBe(true);
@@ -309,6 +337,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/test-plan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
       '## Current state and reuse',

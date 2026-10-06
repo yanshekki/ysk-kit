@@ -1,5 +1,5 @@
 import type { ApiKeyDto, CreateApiKeyCommand, CreatedApiKeyDto } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 export const apiKeysResource = (http: HttpClient) => ({
   list: () => http.request<ApiKeyDto[]>('/v1/me/api-keys'),

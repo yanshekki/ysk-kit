@@ -1,4 +1,4 @@
-import type { IRealtimePort } from './port';
+import type { IRealtimePort } from './port.js';
 
 export type MemoryRealtime = IRealtimePort & {
   events: Array<{ userId: string; event: string; payload: unknown }>;

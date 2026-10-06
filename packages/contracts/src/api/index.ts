@@ -1,15 +1,15 @@
 import { initContract } from '@ts-rest/core';
-import { apiKeysContract } from './api-keys';
-import { auditContract } from './audit';
-import { authContract } from './auth';
-import { billingContract } from './billing';
-import { devicesContract } from './devices';
-import { filesContract } from './files';
-import { healthContract } from './health';
-import { llmContract } from './llm';
-import { notificationsContract } from './notifications';
-import { organizationsContract } from './organizations';
-import { usersContract } from './users';
+import { apiKeysContract } from './api-keys.js';
+import { auditContract } from './audit.js';
+import { authContract } from './auth.js';
+import { billingContract } from './billing.js';
+import { devicesContract } from './devices.js';
+import { filesContract } from './files.js';
+import { healthContract } from './health.js';
+import { llmContract } from './llm.js';
+import { notificationsContract } from './notifications.js';
+import { organizationsContract } from './organizations.js';
+import { usersContract } from './users.js';
 
 const c = initContract();
 
@@ -29,14 +29,14 @@ export const appContract = c.router({
 
 export type AppContract = typeof appContract;
 
-export * from './api-keys';
-export * from './audit';
-export * from './auth';
-export * from './billing';
-export * from './devices';
-export * from './files';
-export * from './health';
-export * from './llm';
-export * from './notifications';
-export * from './organizations';
-export * from './users';
+export * from './api-keys.js';
+export * from './audit.js';
+export * from './auth.js';
+export * from './billing.js';
+export * from './devices.js';
+export * from './files.js';
+export * from './health.js';
+export * from './llm.js';
+export * from './notifications.js';
+export * from './organizations.js';
+export * from './users.js';

@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { AGENT_SKILL_TREES, writeAgentStubs } from './agent-stubs';
+import { AGENT_SKILL_TREES, writeAgentStubs } from './agent-stubs.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
@@ -33,6 +33,12 @@ describe('writeAgentStubs', () => {
     expect(existsSync(join(dest, '.agents/skills/write-tests/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-design/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/db-migration/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/webhook-handling/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/desktop-electron/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/security.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/desktop.mdc'))).toBe(true);
     expect(AGENT_SKILL_TREES).toContain('.agents/skills');
   });
 

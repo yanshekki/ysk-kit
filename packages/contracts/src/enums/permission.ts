@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { UserRole } from './user-role';
+import type { UserRole } from './user-role.js';
 
 export const Permission = {
   USER_CREATE: 'user.create',

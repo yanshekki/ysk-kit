@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
-import { LlmCompleteCommandSchema, LlmCompleteDtoSchema, LlmModelsDtoSchema } from '../dto/llm';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { LlmCompleteCommandSchema, LlmCompleteDtoSchema, LlmModelsDtoSchema } from '../dto/llm.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

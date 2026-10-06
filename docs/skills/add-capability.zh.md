@@ -31,9 +31,10 @@ Language: [English](add-capability.md) · 中文
 1. 確認名稱在目錄內。
 2. 若名稱是 `billing`，先執行 `pnpm ysk-kit add team`。
 3. `pnpm ysk-kit add <name>`。
-4. Prisma 有變就執行 `pnpm db:migrate`。
+4. Prisma 有變就跟隨 [db-migration](db-migration.zh.md)，然後 `pnpm db:migrate`。
 5. 從 `.env.example` 填環境變數（不要提交密鑰）。
-6. [驗證改動](verify-change.zh.md)。
+6. billing 上線前跟隨 [webhook-handling](webhook-handling.zh.md)（webhook secret、驗簽、event id 冪等）。Org-scoped billing 必須維持 `requireBiller`（[security-review](security-review.zh.md)）。
+7. [驗證改動](verify-change.zh.md)。
 
 `app.ts` 或 `composition.ts` 已有 skip token 時，第二次加 `llm`／`team`／`billing`／`push` 是 no-op。
 

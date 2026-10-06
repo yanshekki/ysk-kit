@@ -7,7 +7,10 @@ Scaffold a product from this kit. Package: `@ysk-kit/create-app`.
 ```text
 pnpm --filter @ysk-kit/create-app start <name> [options]
 pnpm create @ysk-kit/app <name> [options]
+npm create @ysk-kit/app <name> [options]
 ```
+
+There is no unscoped `create-ysk-app` package on npm. The published package is `@ysk-kit/create-app`; its bin name is `create-ysk-app`.
 
 From a kit checkout the CLI copies this tree. From npm it resolves tag `v{version}` to a commit SHA, downloads that commit's archive, and checks the extracted `package.json` name and version.
 

@@ -74,6 +74,10 @@ jobs:
           test -f .agents/skills/db-migration/SKILL.md
           test -f .agents/skills/webhook-handling/SKILL.md
           test -f .agents/skills/desktop-electron/SKILL.md
+          test -f .agents/skills/contract-change/SKILL.md
+          test -f .agents/skills/debug-issue/SKILL.md
+          test -f .agents/skills/review-change/SKILL.md
+          test -f .agents/skills/llm-feature/SKILL.md
           test -f .cursor/rules/security.mdc
           test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md

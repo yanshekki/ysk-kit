@@ -35,7 +35,7 @@ Language: [English](webhook-handling.md) · 中文
 1. **Raw body。** Express：webhook 路由用 `express.raw({ type: '*/*' })`，而且要在 `app.use(express.json())` **之前**（`apps/api/src/app.ts`）。Fastify：scoped `addContentTypeParser(..., { parseAs: 'buffer' })`（`app-fastify.ts`）。兩個 adapter 都要做。
 2. **在該 buffer 上驗簽。** Kit helper：`apps/api/src/modules/billing/infra/stripe-billing.ts` 的 `verifyStripeSignature`（HMAC、時間戳容忍 5 分鐘、`timingSafeEqual`）。簽名錯 → `UNAUTHENTICATED`（經 `AppError` 變成 HTTP 401），永遠不要 200。
 3. **盡快確認。** 驗簽 + 持久化 event id 之後，回 `200` `{ ok: true, data: { received: true } }`。不要在請求上 await 慢的履約。改入 `@ysk-kit/jobs` 隊列（測試用 `createMemoryQueue`）。起步程式目前在請求內 await `billingService.activate` — 視為熱點；新工作應該入隊。
-4. **冪等。** `(provider, eventId)` 唯一（Stripe `event.id`）。先 insert：重複 insert → 回 200 並略過工作。有些 handler 也用 `data.object.id + event.type`。起步程式尚未持久化 event id — 實作時加該表／port；不要只靠本 skill「順便修」。
+4. **冪等。** `ProcessedWebhookEvent` 上 `(provider, eventId)` 唯一（Stripe `event.id`）。先 insert：重複 insert → 回 200 並略過工作。有些 handler 也用 `data.object.id + event.type`。
 5. **次序。** Stripe **不保證**次序，而且會重試（live mode 最多 3 日）。不要把事件當成全序套用。狀態依賴次序時，經 billing port 向供應商 API 取最新物件（不要在 application 裡直接用 `sk_`）。
 6. **重試／重放。** Handler 必須跑兩次也安全。測試要重放同一份已簽名 payload。
 7. **密鑰。** `STRIPE_WEBHOOK_SECRET` 只從 env 讀。應用端 API 優先用 Stripe restricted key `rk_` 而不是 `sk_`。永遠不要 log secret 或完整 payload。

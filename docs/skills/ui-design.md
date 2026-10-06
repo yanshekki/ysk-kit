@@ -4,6 +4,8 @@ description: >
   Design and implement YSK Kit UI with existing tokens, @ysk-kit/ui, WCAG 2.2 AA,
   forms mapped from the API envelope, and no generic AI-slop chrome.
   Use when adding or changing web, admin, mobile, or desktop screens.
+  中文：畫面、zinc、表單、可及性。
+  Do not use for API-only changes or to invent a second component library.
 ---
 
 # Skill: UI design
@@ -130,6 +132,16 @@ Every list/detail screen implements:
 
 Spend boldness nowhere in kit product screens: the memorable thing is the data, not the chrome.
 
+## Output format
+
+```md
+## UI — <route> (<web|admin|mobile|desktop>)
+Tokens: zinc / rounded-md / h-9
+States: loading / empty / error / disabled
+Forms: FormField + contracts Zod
+Next: ui-review
+```
+
 ## Done criteria
 
 - [ ] Screen uses `@ysk-kit/ui` (or RN primitives on mobile) and the zinc tokens above
@@ -137,6 +149,10 @@ Spend boldness nowhere in kit product screens: the memorable thing is the data, 
 - [ ] Forms have labels, Zod from contracts, envelope errors inline
 - [ ] Contrast, focus, target size, and `zh-HK` length hold
 - [ ] [ui-review](ui-review.md) checklist is green
+
+## Escalate / ask
+
+Ask before a new color token, dark mode, component library, or `user-scalable=no`.
 
 ## References
 

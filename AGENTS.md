@@ -199,6 +199,10 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Add a resource | [add-module](docs/skills/add-module.md), [recipe](docs/recipes/add-module.md) |
 | Restore llm / team / billing / push | [add-capability](docs/skills/add-capability.md) |
 | Envelope / SSE / PDF | [envelope-api](docs/skills/envelope-api.md), [envelope guide](docs/guides/envelope.md) |
+| DTO / path / OpenAPI | [contract-change](docs/skills/contract-change.md) |
+| Red test or user report | [debug-issue](docs/skills/debug-issue.md) |
+| Review a PR / branch | [review-change](docs/skills/review-change.md) |
+| Product LLM prompt | [llm-feature](docs/skills/llm-feature.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |
 | After any feature | [verify-change](docs/skills/verify-change.md) |
 | Plan how to test | [test-plan](docs/skills/test-plan.md) |

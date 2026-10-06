@@ -37,6 +37,23 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.2.3
+
+### New features
+
+- Agent skills `contract-change`, `debug-issue`, `review-change`, and `llm-feature` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, Cursor / Copilot pointers, and create-app / upgrade templates.
+
+### Improvements
+
+- Every skill wrapper is a short step summary (Use when, Chinese triggers, Do not use for…) instead of a one-line pointer. Skills that lacked them now have Output format, Anti-patterns, and Escalate / ask.
+- `verify-change` names expected output per command, a failure-to-fix table, `git diff --exit-code docs/openapi.yaml`, and a fixed verification report.
+- `new-product` verifies with `pnpm ysk-kit doctor`, lists human-filled fields (`eas` `projectId`), and hints at flavor choice.
+- `add-module` requires Express **and** Fastify app tests; org-scoped resources check membership in `application/`.
+- `add-capability` has a one-line before-production item per capability (billing → webhook-handling, llm → llm-feature, push credentials, apikey scope/rotation) plus doctor.
+- `envelope-api` has an error-code → HTTP table, `AppError` / `ERROR_MESSAGE` zh-HK+en, and webhook-style off ts-rest JSON.
+- `fix-layers` maps each cruiser rule to a typical bad import and forbids editing `.dependency-cruiser.cjs` without approval.
+- Skill index adds “Do not use when” and “Related vendor skill” columns.
+
 ## v1.2.2
 
 ### New features

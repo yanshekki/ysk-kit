@@ -3,6 +3,8 @@ name: plan-feature
 description: >
   Write a YSK Kit feature plan to docs/plans/<yyyy-mm-dd>-<slug>.md before contracts and code.
   Use when the user wants a plan, plan.md, design, or a multi-surface change.
+  中文：計劃、plan.md、合約之前。
+  Do not use for typo-only or one-file mechanical renames.
 ---
 
 # Skill: plan a feature
@@ -57,6 +59,29 @@ Skip (unless asked) for typo-only, comment-only, or one-file mechanical renames.
 - [ ] Root `plan.md` (if present) names the dated file
 - [ ] No implementation started before the plan existed (unless the user explicitly waived it)
 
+## Output format
+
+The dated plan file **is** the output. Do not substitute a chat sketch. After `--check`:
+
+```md
+## Plan — docs/plans/<date>-<slug>.md
+Check: ok
+Gate: waiting for user | approved | waived
+Next: contracts | add-module | add-capability
+```
+
 ## Done criteria
 
 The plan is ready to execute when every template section is filled, options and reuse are explicit, verification commands name expected results, and another agent could implement without guessing.
+
+## Anti-patterns
+
+| Symptom | Do this instead |
+|---|---|
+| Implement then backfill a plan | Stop; write the dated file first |
+| Drop a template heading | Fill it; `plan --check` |
+| Shrink after “too short” | Expand the missing section |
+
+## Escalate / ask
+
+Ask once if flavor/db/capability is missing and it changes the slice. Do not start contracts before the gate unless waived.

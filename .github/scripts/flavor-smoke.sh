@@ -29,6 +29,10 @@ if [[ "$FLAVOR" != "php-bridge" ]]; then
     .agents/skills/db-migration/SKILL.md \
     .agents/skills/webhook-handling/SKILL.md \
     .agents/skills/desktop-electron/SKILL.md \
+    .agents/skills/contract-change/SKILL.md \
+    .agents/skills/debug-issue/SKILL.md \
+    .agents/skills/review-change/SKILL.md \
+    .agents/skills/llm-feature/SKILL.md \
     .cursor/rules/security.mdc \
     .cursor/rules/desktop.mdc \
     docs/plans/_template.md \

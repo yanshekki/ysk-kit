@@ -3,6 +3,8 @@ name: add-module
 description: >
   用 ysk-kit add module 加入 hexagonal HTTP 模組（合約、DTO、Express+Fastify、SDK、網頁）。
   使用者要新資源、新 API 路由、ysk-kit add module 或 /add-module 時使用。
+  中文：加模組、HTTP 切片、org 範圍、Express 與 Fastify 測試。
+  不要用於人手 mkdir apps/api/src/modules，或還原 llm／team／billing／push（add-capability）。
 ---
 
 # Skill：加模組
@@ -40,13 +42,41 @@ Language: [English](add-module.md) · 中文
 ## 驗證
 
 ```bash
+pnpm --filter @ysk-kit/api exec vitest run src/modules/<name>
 pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 - [ ] 切片檔來自產生器（沒有平行目錄樹）
 - [ ] 沒有 TypeScript `enum`
 - [ ] 客戶端沒有 Prisma，也沒有 raw `fetch`
+- [ ] schema 變更跟隨 [db-migration](db-migration.zh.md)
+- [ ] org 範圍：`application/` 查 membership + 其他 org 負面測試
+- [ ] **Express 與 Fastify** 都有 HTTP 測試（兩個 adapter 的 `*.app.test.ts`）
+
+## 輸出格式
+
+```md
+## Add module — <kebab>
+Generator: ysk-kit add module --prisma --web
+Org-scoped: yes (requireBiller/requireMember + negative test) | no
+Prisma: additive | expand/contract | none
+HTTP tests: Express + Fastify
+OpenAPI: path listed
+```
 
 ## 完成條件
 
-list + create（或所要求的動詞）走 envelope，memory-repo 測試覆蓋新規則，OpenAPI 看得到路徑，上述五條命令全綠。
+list + create（或所要求的動詞）走 envelope，memory-repo 測試覆蓋新規則，**兩個** HTTP adapter 都有 app 測試，OpenAPI 看得到路徑，上述五條命令全綠。
+
+## 反模式
+
+| 症狀 | 改為 |
+|---|---|
+| 人手做 `modules/<name>` | 刪掉；跑產生器 |
+| 在 register 函式做授權 | `application/` 的 `requireBiller` |
+| 只有 Express SuperTest | Fastify `createFastifyApp` 案例 |
+| 更新了 Prisma repo 卻沒更新記憶體 repo | 兩邊都更新 |
+
+## 升級／詢問
+
+org 範圍資源無法用 `requireMember`／`requireBiller` 之前，或略過 Fastify 測試之前，先問。

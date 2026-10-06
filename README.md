@@ -114,6 +114,17 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.2.3
+
+#### New features
+
+- Agent skills `contract-change`, `debug-issue`, `review-change`, and `llm-feature` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, Cursor / Copilot pointers, and create-app / upgrade templates.
+
+#### Improvements
+
+- Every skill wrapper is a short step summary (Use when, Chinese triggers, Do not use for…). Skills gain Output format, Anti-patterns, and Escalate / ask where they were missing.
+- `verify-change` names expected output, OpenAPI `git diff --exit-code`, and a fixed verification report. `new-product` runs `doctor` and lists human-filled fields. `add-module` requires Express and Fastify app tests. `add-capability` has a before-production line per capability. `envelope-api` tables error codes. `fix-layers` forbids silent cruiser edits.
+
 ### v1.2.2
 
 #### New features
@@ -163,33 +174,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - `thin-smoke` and `flavor-smoke` assert the new template headings plus the testing/UI skill files and Cursor rules. Generated products receive the upgraded `_template.md` pair. create-app and upgrade tests assert the same skill files.
-
-### v1.2.0
-
-#### New features
-
-- `pnpm ysk-kit plan <slug>` writes a bilingual feature plan to `docs/plans/<yyyy-mm-dd>-<slug>.md` (and the `.zh.md` pair) from the shared template, plus a gitignored root `plan.md` pointer.
-- Thin and full workspace products receive the same agent pointer set: `.agents/skills/`, `.claude/skills/`, scoped `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`, `.gemini/settings.json`, `GEMINI.md`, and the plan template.
-
-#### Improvements
-
-- `AGENTS.md` / `AGENTS.zh.md` are a professional agent guide: orientation, repo map, the ten hard rules with reasons, a mandatory understand → plan → contracts → scaffold → implement → verify → docs workflow, definition of done, ask-vs-decide, pitfalls, and a coding-tool table. Procedures stay in `docs/skills/`.
-- `pnpm ysk-kit check agent` also fails when a pointer file drops `AGENTS.md`, skill copies drift, or root + nested `AGENTS.md` exceed 24 KiB.
-- Skills (`docs/skills/` and `.agents/skills/`) now include `plan-feature` and use trigger / inputs / steps / verification / done criteria.
-
-#### Security
-
-- pnpm override `source-map-js@1.2.2` closes [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q) / CVE-2026-93749 (indexed source-map offset event-loop DoS). The copy is transitive through PostCSS / Expo Metro.
-
-#### Dependency upgrades
-
-| Package | From | To |
-|---|---|---|
-| source-map-js (workspace override) | 1.2.1 | 1.2.2 |
-
-#### Internal/CI
-
-- `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

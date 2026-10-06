@@ -8,3 +8,4 @@ Local notes for `@ysk-kit/contracts`. Root law: [AGENTS.md](../../AGENTS.md).
 - Do not import apps, Prisma, Express, Fastify, React, or BullMQ.
 - After path changes run `pnpm gen:openapi`. Still call paths through `@ysk-kit/sdk`.
 - Contract tests live in this package. Follow `docs/skills/write-tests.md`.
+- DTO / path / error-code diffs: `docs/skills/contract-change.md`.

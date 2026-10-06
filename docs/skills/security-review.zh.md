@@ -50,7 +50,7 @@ Language: [English](security-review.md) · 中文
 5. 輸入：`@ysk-kit/contracts` 的 Zod 要有長度／數量上限（檔案已在 `packages/contracts/src/dto/file.ts` 把 `byteSize` 上限設為 20 MiB）。不要把客戶端自稱的 MIME 當成授權。
 6. 速率限制：`RATE_LIMIT_MAX`／`RATE_LIMIT_WINDOW_MS` 經 `@ysk-kit/api-http` 的 `createRateLimit`。Auth OTP 已回 `RATE_LIMITED`。不要為了測試通過而關掉限制器（`RATE_LIMIT_MAX=0` 是測試／CI 逃生口，不是生產設定）。
 7. CORS：`packages/config` 的 `corsOrigins` 是 web + admin 公開 URL。不要用 `*` 配 credentials。是否加 helmet／CSP header 要寫進計劃（API 目前沒有）。
-8. LLM：產品功能在 `application/` 持有 prompt。把使用者內容當不可信。產品 use case 不要讓 client 設 `role: 'system'`（`LlmRoleSchema` 目前在通用 `/v1/llm/*` proxy 包含 `system` — 該路徑維持給 admin／試驗）。
+8. LLM：產品功能在 `application/` 持有 prompt（`LLM_SYSTEM_PROMPT`）。客戶端只送 `user`／`assistant`（`LlmClientRoleSchema`）。把使用者內容當不可信。跟隨 [llm-feature](llm-feature.zh.md)。
 9. 供應鏈：新的 runtime 依賴屬於 **先問**（AGENTS.md）。
 10. 若模式是 `threat-model`，在寫 findings **之前**跑 [威脅模型子模式](#威脅模型子模式)。先與使用者確認假設。
 11. 輸出 [輸出格式](#輸出格式)。若改了程式，接著 [驗證改動](verify-change.zh.md)。
@@ -59,13 +59,14 @@ Language: [English](security-review.md) · 中文
 
 這些是審查位置，不是已確認的漏洞。描述正確模式；不要在只改文件的變更裡「順便修」。
 
-| 範圍 | 現況 | 要求的模式 |
+| 範圍 | 現況（v1.2.2） | 繼續這樣做 |
 |---|---|---|
-| Logger | `packages/logger` 建 pino 時沒有 `redact` | 設定 redact paths；不要 log OTP、JWT、`sk_`、`whsec_`、`STRIPE_WEBHOOK_SECRET` |
-| Billing webhook | 有驗簽；同步 `activate`；沒有 `event.id` 紀錄 | [webhook-handling](webhook-handling.zh.md) |
-| Web token | web／admin 用 `createWebStorageTokenStore`（localStorage） | XSS 可偷 token；產品若接受 cookie 方案則改 httpOnly cookie；並文件化 XSS 面 |
-| Electron token | `safeStorage` 失敗時 UTF-8 後備 | [desktop-electron](desktop-electron.zh.md) — 不要明文落盤 |
-| 租戶 | `requireBiller`／`requireMember` 是範本 | 每個 org-scoped use case 都抄此模式 |
+| Logger | `packages/logger` pino `redact` paths | 不要 log OTP、JWT、`sk_`、`whsec_` |
+| Billing webhook | 驗簽 + `ProcessedWebhookEvent` | [webhook-handling](webhook-handling.zh.md)；履約仍應入隊 |
+| Web token | `createWebStorageTokenStore`（localStorage） | XSS 可偷 token；文件化此面 |
+| Electron token | 只用 `safeStorage`；不可用時只留記憶體 | [desktop-electron](desktop-electron.zh.md) |
+| 租戶 | `requireBiller`／`requireMember` | 每個 org-scoped use case 都抄此模式 |
+| LLM | 伺服器 `LLM_SYSTEM_PROMPT`；客戶端沒有 `system` role；配額 `RATE_LIMITED` | [llm-feature](llm-feature.zh.md) |
 
 ## 威脅模型子模式
 

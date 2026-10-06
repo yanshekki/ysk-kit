@@ -3,6 +3,8 @@ name: plan-feature
 description: >
   在合約與程式之前，把 YSK Kit 功能計劃寫入 docs/plans/<yyyy-mm-dd>-<slug>.md。
   使用者要求計劃、plan.md、設計，或跨表面改動時使用。
+  中文：計劃、plan.md、合約之前。
+  不要用於只改錯字，或單一檔案的機械式重新命名。
 ---
 
 # Skill：計劃功能
@@ -57,6 +59,29 @@ Language: [English](plan-feature.md) · 中文
 - [ ] 根目錄 `plan.md`（若存在）寫明日期檔
 - [ ] 計劃存在之前沒有開始實作（除非使用者明確豁免）
 
+## 輸出格式
+
+日期計劃檔**就是**輸出。不要用聊天草稿代替。`--check` 之後：
+
+```md
+## Plan — docs/plans/<date>-<slug>.md
+Check: ok
+Gate: waiting for user | approved | waived
+Next: contracts | add-module | add-capability
+```
+
 ## 完成條件
 
 每個模板章節都已填、方案與重用已寫明、驗證命令有預期結果，而且另一個 agent 不用猜也能實作，計劃才算可執行。
+
+## 反模式
+
+| 症狀 | 改為 |
+|---|---|
+| 先實作再補計劃 | 停下來；先寫日期檔 |
+| 刪掉模板標題 | 填滿它；`plan --check` |
+| 被說「太短」之後縮短 | 補上缺的章節 |
+
+## 升級／詢問
+
+flavor／db／capability 缺失且會改變切片時，問一次。未經批准（或豁免）不要開始合約。

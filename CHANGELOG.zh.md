@@ -37,6 +37,23 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.2.3
+
+### 新功能
+
+- Agent skills `contract-change`、`debug-issue`、`review-change` 與 `llm-feature`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+### 改進
+
+- 每個 skill 包裝改為短步驟摘要（Use when、中文觸發、「不要用於…」），不再只是一行指針。缺漏的 skill 補上輸出格式、反模式與升級／詢問。
+- `verify-change` 寫明每條命令的預期輸出、失敗→修復表、`git diff --exit-code docs/openapi.yaml`，以及固定驗證報告。
+- `new-product` 用 `pnpm ysk-kit doctor` 驗證，列出人手必填欄（`eas` `projectId`），並提示 flavor 選擇。
+- `add-module` 要求 Express **與** Fastify 的 app 測試；org 範圍資源在 `application/` 查 membership。
+- `add-capability` 每個 capability 有一行上線前事項（billing → webhook-handling、llm → llm-feature、push 憑證、apikey 範圍／輪替）再加上 doctor。
+- `envelope-api` 有錯誤碼 → HTTP 表、`AppError`／`ERROR_MESSAGE` zh-HK+en，以及 webhook 式、不走 ts-rest 的 JSON。
+- `fix-layers` 把每條 cruiser 規則對到典型壞 import，未經批准禁止改 `.dependency-cruiser.cjs`。
+- Skill 索引加上「不要用於」與「相關外部 skill」欄。
+
 ## v1.2.2
 
 ### 新功能

@@ -3,6 +3,8 @@ name: add-module
 description: >
   Add a hexagonal HTTP module with ysk-kit add module (contract, DTO, Express+Fastify, SDK, web page).
   Use when the user wants a new resource, new API route, ysk-kit add module, or /add-module.
+  中文：加模組、HTTP 切片、org 範圍、Express 與 Fastify 測試。
+  Do not use to mkdir apps/api/src/modules by hand or to restore llm/team/billing/push (add-capability).
 ---
 
 # Skill: add module
@@ -40,13 +42,41 @@ Do not mkdir `apps/api/src/modules/<name>` by hand.
 ## Verification
 
 ```bash
+pnpm --filter @ysk-kit/api exec vitest run src/modules/<name>
 pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
 ```
 
 - [ ] Slice files came from the generator (no parallel tree)
 - [ ] No TypeScript `enum`
 - [ ] Clients have no Prisma and no raw `fetch`
+- [ ] Schema change followed [db-migration](db-migration.md)
+- [ ] Org-scoped: membership in `application/` + other-org negative test
+- [ ] HTTP tests exist for **Express and Fastify** (`*.app.test.ts` on both adapters)
+
+## Output format
+
+```md
+## Add module — <kebab>
+Generator: ysk-kit add module --prisma --web
+Org-scoped: yes (requireBiller/requireMember + negative test) | no
+Prisma: additive | expand/contract | none
+HTTP tests: Express + Fastify
+OpenAPI: path listed
+```
 
 ## Done criteria
 
-List + create (or the requested verbs) run through the envelope, the memory-repo test covers the new rules, OpenAPI shows the path, and the five commands above are green.
+List + create (or the requested verbs) run through the envelope, the memory-repo test covers the new rules, **both** HTTP adapters have app tests, OpenAPI shows the path, and the five commands above are green.
+
+## Anti-patterns
+
+| Symptom | Do this instead |
+|---|---|
+| Hand-made `modules/<name>` | Delete; run the generator |
+| Authz in the register function | `requireBiller` in `application/` |
+| Only Express SuperTest | Fastify `createFastifyApp` case |
+| Prisma repo updated, memory repo not | Update both |
+
+## Escalate / ask
+
+Ask before an org-scoped resource that cannot use `requireMember` / `requireBiller`, or before skipping Fastify tests.

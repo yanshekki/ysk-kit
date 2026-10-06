@@ -4,6 +4,8 @@ description: >
   為 YSK Kit 改動寫出按風險排序的測試計劃（given/when/then、夾具、明確不涵蓋），
   並對應合約、記憶體 port、API、SDK、客戶端與 Playwright 各層。
   使用者問如何測試、要覆蓋哪些案例，或在寫測試／發佈前要 QA 清單時使用。
+  中文：測試計劃、風險、given/when/then。
+  不要用於只改註解，或直接寫測試本身（write-tests）。
 ---
 
 # Skill：計劃測試
@@ -105,6 +107,18 @@ Language: [English](test-plan.md) · 中文
 - [ ] 夾具是記憶體（或注入的假物件）
 - [ ] 不涵蓋範圍已寫明
 - [ ] 案例實作接 [write-tests](write-tests.zh.md)
+
+## 反模式
+
+| 症狀 | 改為 |
+|---|---|
+| 只有快樂路徑 | 把授權／租戶／envelope 失敗排進去 |
+| 「全部用 Playwright」 | Trophy：先 memory-port |
+| 為了計劃測試而啟動 Stripe | 記憶體夾具 |
+
+## 升級／詢問
+
+缺少驗收條件時問一次。計劃未寫好之前不要寫測試，除非使用者豁免。
 
 ## 參考
 

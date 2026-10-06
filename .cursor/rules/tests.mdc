@@ -6,4 +6,4 @@ alwaysApply: false
 
 Local reminder. Law: `AGENTS.md`.
 
-Plan with `docs/skills/test-plan.md`, then write with `docs/skills/write-tests.md`. In-memory ports only. Assert `{ ok, data }` / `{ ok, error }`. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.
+Plan with `docs/skills/test-plan.md`, then write with `docs/skills/write-tests.md`. Red CI or a user report: `docs/skills/debug-issue.md`. In-memory ports only. Assert `{ ok, data }` / `{ ok, error }`. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.

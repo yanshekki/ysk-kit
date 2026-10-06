@@ -1,5 +1,15 @@
 # @ysk-kit/application
 
+## 1.2.1
+
+### Patch Changes
+
+- 93a1f47: Strengthen the v1.2.0 planning protocol: explore-before-planning, assumptions, options and decision, detailed task steps, verification expected results, approval/anti-shrinking rules, and a mapping from native tool plan modes to `docs/plans/`. `ysk-kit plan --check` rejects missing or placeholder-only headings.
+- 9eba381: Add bilingual agent skills for testing (`test-plan`, `write-tests`) and UI (`ui-design`, `ui-review`), wire them into AGENTS.md, nested guides, Cursor rules, Copilot instructions, create-app, upgrade, and smoke tests.
+- Updated dependencies [93a1f47]
+- Updated dependencies [9eba381]
+  - @ysk-kit/contracts@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes

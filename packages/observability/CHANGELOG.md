@@ -1,5 +1,13 @@
 # @ysk-kit/observability
 
+## 1.2.2
+
+### Patch Changes
+
+- 459779c: Published packages emit valid Node ESM (`dist/` relative imports use `.js`; CLI bins have `#!/usr/bin/env node`). Scaffold from npm is `npm create @ysk-kit/app` / `pnpm create @ysk-kit/app`.
+- ef27283: Add bilingual agent skills for security review, Prisma 7.10 migrations, inbound webhooks, and Electron desktop hardening. Wrappers, Cursor rules, Copilot instructions, create-app, and upgrade templates ship with generated products.
+- 01556ff: Security: fail-safe Electron token storage (no plaintext disk fallback), renderer CSP / sandbox / navigation / IPC sender checks, pino redaction of secrets, server-owned LLM system prompts with a per-user quota (`RATE_LIMITED`), and Stripe webhook idempotency on `event.id`.
+
 ## 1.2.1
 
 ### Patch Changes

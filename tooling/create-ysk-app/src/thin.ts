@@ -197,6 +197,7 @@ const apiLineNeedles = [
   'IPushPort',
   'IDeviceRepository',
   'createLlmFromEnv',
+  'llmQuotaFromEnv',
   'createLlmService',
   'createPrismaLlmUsageRepository',
   'createPushFromEnv',

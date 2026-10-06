@@ -336,6 +336,10 @@ describe('create-ysk-app', () => {
     const app = readFileSync(join(dest, 'apps/api/src/app.ts'), 'utf8');
     expect(app).not.toContain('llmService:');
     expect(app).toContain('apiKeyService:');
+    const composition = readFileSync(join(dest, 'apps/api/src/composition.ts'), 'utf8');
+    expect(composition).not.toContain('llmQuotaFromEnv');
+    expect(composition).not.toContain('DEFAULT_LLM_SYSTEM_PROMPT');
+    expect(composition).not.toContain('createLlmService');
 
     expect(yskAdd('llm', dest)).toContain('ysk-kit add llm: applied');
     expect(existsSync(join(dest, 'apps/api/src/modules/llm/application/llm-service.ts'))).toBe(

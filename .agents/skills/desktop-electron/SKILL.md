@@ -12,7 +12,9 @@ description: >
 
 Read `docs/skills/desktop-electron.md`. Law: `AGENTS.md`.
 
-1. Keep contextIsolation, nodeIntegration false, sandbox, webSecurity. Add CSP.
-2. Deny navigation / new windows by default; allowlist `https:` for openExternal.
-3. Validate IPC `senderFrame`. `safeStorage` only — no plaintext token fallback.
+1. Keep contextIsolation, nodeIntegration false, sandbox, webSecurity, session CSP.
+2. Deny unexpected navigation / window.open. Validate IPC `senderFrame`.
+3. `safeStorage` only; memory if unavailable. No plaintext token file.
+Gotcha: do not `openExternal` a renderer string without an allowlist.
+Verify: `pnpm --filter @ysk-kit/desktop test`
 Full steps: `docs/skills/desktop-electron.md`.

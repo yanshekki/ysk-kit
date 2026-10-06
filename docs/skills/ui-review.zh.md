@@ -4,6 +4,8 @@ description: >
   在把 YSK Kit UI 標為完成之前的 QA 清單：視覺、可及性、響應式、狀態、文案、效能，
   以及 Playwright、鍵盤與 axe 的核對方法。
   完成畫面，或使用者要求審查 UI／UX／可及性時使用。
+  中文：UI 審查、鍵盤、375 視埠。
+  不要用於設計畫面（ui-design），或把一張截圖當成證明。
 ---
 
 # Skill：審查 UI
@@ -108,6 +110,16 @@ await expect(page.getByLabel('Email')).toBeVisible();
 
 **通過**：你改過的表面所有箱子都勾了；若改了 web 登入／shell，`pnpm e2e` 為綠色（連接埠 3001／5173 空閒，資料庫已種子）。
 
+## 輸出格式
+
+```md
+## UI review — <routes>
+Visual / a11y / states / fetch: PASS | FAIL
+Keyboard: pass | fail
+375: checked
+e2e: green | skipped (<why>)
+```
+
 ## 完成條件
 
 - [ ] 每個改過的路由都完成清單
@@ -115,6 +127,17 @@ await expect(page.getByLabel('Email')).toBeVisible();
 - [ ] 已核對 375 視埠（程式或瀏覽器）
 - [ ] Envelope 錯誤經 `ErrorBanner`／`FormField` 顯示
 - [ ] 仍須跑 [verify-change](verify-change.zh.md)
+
+## 反模式
+
+| 症狀 | 改為 |
+|---|---|
+| 一張截圖當證明 | 點、輸入、提交、失敗、再試 |
+| 可及性箱子未勾 | 審查失敗 |
+
+## 升級／詢問
+
+把 axe 或截圖 diff 加進 CI 之前，先問。
 
 ## 參考
 

@@ -114,6 +114,21 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.2.3
+
+#### 新功能
+
+- Agent skills `contract-change`、`debug-issue`、`review-change` 與 `llm-feature`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+#### 改進
+
+- 每個 skill 包裝改為短步驟摘要（Use when、中文觸發、「不要用於…」）。缺漏的 skill 補上輸出格式、反模式與升級／詢問。
+- `verify-change` 寫明預期輸出、OpenAPI `git diff --exit-code` 與固定驗證報告。`new-product` 跑 `doctor` 並列出手填欄。`add-module` 要求 Express 與 Fastify app 測試。`add-capability` 每個 capability 有上線前一行。`envelope-api` 列出錯誤碼表。`fix-layers` 禁止默默改 cruiser。
+
+#### 安全
+
+- 工作區 override `shell-quote@1.11.0` 修復 [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv)（`quote()` 在 comment token 之後的注入；經 Expo／React Native 間接引入）。
+
 ### v1.2.2
 
 #### 新功能
@@ -163,33 +178,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - `thin-smoke` 與 `flavor-smoke` 會斷言新的模板標題，以及測試／UI skill 檔與 Cursor 規則。產生出來的產品會收到升級後的 `_template.md` 配對。create-app 與 upgrade 測試會斷言同一批 skill 檔。
-
-### v1.2.0
-
-#### 新功能
-
-- `pnpm ysk-kit plan <slug>` 按共用模板把雙語功能計劃寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md`（及 `.zh.md` 配對），並寫入已 gitignore 的根目錄 `plan.md` 指針。
-- thin 與 full 工作區產品都會收到同一套 agent 指針：`.agents/skills/`、`.claude/skills/`、範圍限定的 `.cursor/rules/*.mdc`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`GEMINI.md`，以及計劃模板。
-
-#### 改進
-
-- `AGENTS.md`／`AGENTS.zh.md` 改為專業 agent 指引：定位、倉目錄地圖、十條硬規則連同原因、強制的理解 → 計劃 → 合約 → 骨架 → 實作 → 驗證 → 文件流程、完成定義、何時詢問、陷阱，以及程式工具表。程序仍在 `docs/skills/`。
-- `pnpm ysk-kit check agent` 也會在指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB 時失敗。
-- Skills（`docs/skills/` 與 `.agents/skills/`）新增 `plan-feature`，並採用觸發／輸入／步驟／驗證／完成條件。
-
-#### 安全
-
-- pnpm override `source-map-js@1.2.2` 修復 [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)／CVE-2026-93749（indexed source map 位移導致 event-loop DoS）。該套件經 PostCSS／Expo Metro 間接引入。
-
-#### 依賴升級
-
-| 套件 | 由 | 至 |
-|---|---|---|
-| source-map-js（工作區 override） | 1.2.1 | 1.2.2 |
-
-#### 內部／CI
-
-- `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

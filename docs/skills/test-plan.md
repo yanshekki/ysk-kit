@@ -5,6 +5,8 @@ description: >
   mapped to contract, memory-port, API, SDK, client, and Playwright layers.
   Use when the user asks how to test a feature, what cases to cover, or for a QA
   checklist before writing tests or shipping.
+  中文：測試計劃、風險、given/when/then。
+  Do not use for comment-only edits or to write the tests themselves (write-tests).
 ---
 
 # Skill: plan tests
@@ -106,6 +108,18 @@ Change: “Users can create a note.” Risk 1: another author must not see it (t
 - [ ] Fixtures are in-memory (or injected fakes)
 - [ ] Out of scope is explicit
 - [ ] Implementation of cases continues in [write-tests](write-tests.md)
+
+## Anti-patterns
+
+| Symptom | Do this instead |
+|---|---|
+| Only a happy path | Rank authz / tenancy / envelope failures |
+| “Add Playwright for everything” | Trophy: memory-port first |
+| Start Stripe to plan tests | Memory fixtures |
+
+## Escalate / ask
+
+Ask once if acceptance criteria are missing. Do not write tests until this plan exists unless the user waived it.
 
 ## References
 

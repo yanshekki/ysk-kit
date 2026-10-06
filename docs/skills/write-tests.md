@@ -4,6 +4,8 @@ description: >
   Write professional YSK Kit tests: trophy per layer, in-memory ports, given/when/then,
   deterministic fixtures, envelope and authz cases, exact Vitest/Playwright commands.
   Use when adding tests, fixing a bug, or after test-plan.
+  中文：寫測試、Vitest、Playwright、回歸。
+  Do not use to plan cases (test-plan) or to start Redis/Stripe in CI.
 ---
 
 # Skill: write tests
@@ -163,6 +165,28 @@ Accessibility of UI: follow [ui-review](ui-review.md). Prefer Testing Library qu
 - [ ] Deterministic (fake clock, no sleep, no live network)
 - [ ] Regression test first when this is a bug fix
 - [ ] `pnpm test` green; `pnpm e2e` when login/shell changed and ports are free
+
+## Output format
+
+```md
+## Tests — <scope>
+Layer: <file>
+HTTP adapters: Express + Fastify | n/a
+Regression-first: yes | n/a
+Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
+```
+
+## Anti-patterns
+
+| Symptom | Do this instead |
+|---|---|
+| Mock Prisma from a client | SDK + SuperTest |
+| Sleep to wait for the UI | Testing Library finder / fake timers |
+| Snapshot the whole envelope | `toMatchObject` on `ok` / `error.code` |
+
+## Escalate / ask
+
+Ask before adding `@axe-core/playwright`, visual-regression CI, or `fast-check`.
 
 ## References
 

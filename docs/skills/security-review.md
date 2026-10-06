@@ -54,7 +54,7 @@ Do not flag: server-controlled values as attacker input; documented envelope exc
 5. Input: Zod in `@ysk-kit/contracts` needs length/count caps (files already cap `byteSize` at 20 MiB in `packages/contracts/src/dto/file.ts`). Do not trust MIME from the client as authorization.
 6. Rate limits: `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS` via `createRateLimit` in `@ysk-kit/api-http`. Auth OTP already returns `RATE_LIMITED`. Do not disable the limiter to make a test pass (`RATE_LIMIT_MAX=0` is a test/CI escape hatch, not production).
 7. CORS: `corsOrigins` in `packages/config` is the web + admin public URLs. Do not use `*` with credentials. Adding helmet / CSP headers is a plan decision (the API does not ship them today).
-8. LLM: product features own the prompt in `application/`. Treat user content as untrusted. Do not let clients set `role: 'system'` for a product use case (`LlmRoleSchema` currently includes `system` on the generic `/v1/llm/*` proxy — keep that path admin/experimental).
+8. LLM: product features own the prompt in `application/` (`LLM_SYSTEM_PROMPT`). Clients send only `user` / `assistant` (`LlmClientRoleSchema`). Treat user content as untrusted. Follow [llm-feature](llm-feature.md).
 9. Supply chain: a new runtime dependency is an **ask first** (AGENTS.md).
 10. If mode is `threat-model`, run [Threat-model sub-mode](#threat-model-sub-mode) **before** writing findings. Confirm assumptions with the user.
 11. Emit the [output format](#output-format). Then [verify-change](verify-change.md) if you changed code.
@@ -63,13 +63,14 @@ Do not flag: server-controlled values as attacker input; documented envelope exc
 
 These are review locations, not confirmed exploits. Describe the right pattern; do not “fix” them in a docs-only change.
 
-| Area | Today | Required pattern |
+| Area | Today (v1.2.2) | Keep doing |
 |---|---|---|
-| Logger | `packages/logger` builds pino with no `redact` | Configure redact paths; never log OTP, JWT, `sk_`, `whsec_`, `STRIPE_WEBHOOK_SECRET` |
-| Billing webhook | Signature verified; sync `activate`; no `event.id` store | [webhook-handling](webhook-handling.md) |
-| Web tokens | `createWebStorageTokenStore` (localStorage) in web/admin | XSS steals tokens; prefer httpOnly cookie if the product accepts that trade-off; document XSS surface |
-| Electron tokens | `safeStorage` with UTF-8 fallback | [desktop-electron](desktop-electron.md) — no plaintext persist |
-| Tenancy | `requireBiller` / `requireMember` are the template | Every org-scoped use case copies that pattern |
+| Logger | `packages/logger` pino `redact` paths | Never log OTP, JWT, `sk_`, `whsec_` |
+| Billing webhook | Signature + `ProcessedWebhookEvent` | [webhook-handling](webhook-handling.md); still queue fulfilment |
+| Web tokens | `createWebStorageTokenStore` (localStorage) | XSS steals tokens; document the surface |
+| Electron tokens | `safeStorage` only; memory if unavailable | [desktop-electron](desktop-electron.md) |
+| Tenancy | `requireBiller` / `requireMember` | Every org-scoped use case copies that pattern |
+| LLM | Server `LLM_SYSTEM_PROMPT`; client has no `system` role; quota `RATE_LIMITED` | [llm-feature](llm-feature.md) |
 
 ## Threat-model sub-mode
 

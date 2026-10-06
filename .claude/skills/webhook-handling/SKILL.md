@@ -12,7 +12,9 @@ description: >
 
 Read `docs/skills/webhook-handling.md`. Law: `AGENTS.md`.
 
-1. Mount raw body before JSON parsers (Express + Fastify). Verify signature.
-2. Persist event id, return `{ ok: true, data: { received: true } }`, fulfil via jobs.
-3. Do not trust event order. Replay tests in memory; never call Stripe in CI.
+1. Mount raw body before JSON parsers on Express and Fastify.
+2. Verify HMAC; persist Stripe `event.id`; 200 envelope; skip duplicates.
+3. Replay tests in-memory. Do not call Stripe in CI.
+Gotcha: 401 on bad signature. Fulfilment should queue, not block the ack.
+Verify: `pnpm --filter @ysk-kit/api test`
 Full steps: `docs/skills/webhook-handling.md`.

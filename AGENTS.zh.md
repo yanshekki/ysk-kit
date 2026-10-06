@@ -199,6 +199,10 @@ ysk-kit/
 | 加資源 | [add-module](docs/skills/add-module.zh.md)、[操作手冊](docs/recipes/add-module.zh.md) |
 | 還原 llm／team／billing／push | [add-capability](docs/skills/add-capability.zh.md) |
 | Envelope／SSE／PDF | [envelope-api](docs/skills/envelope-api.zh.md)、[envelope 指南](docs/guides/envelope.zh.md) |
+| DTO／路徑／OpenAPI | [contract-change](docs/skills/contract-change.zh.md) |
+| 紅燈測試或使用者回報 | [debug-issue](docs/skills/debug-issue.zh.md) |
+| 審查 PR／分支 | [review-change](docs/skills/review-change.zh.md) |
+| 產品 LLM prompt | [llm-feature](docs/skills/llm-feature.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |
 | 任何功能之後 | [verify-change](docs/skills/verify-change.zh.md) |
 | 計劃如何測試 | [test-plan](docs/skills/test-plan.zh.md) |

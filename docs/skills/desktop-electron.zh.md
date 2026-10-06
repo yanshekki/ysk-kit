@@ -35,7 +35,7 @@ Electron 的威脅模型與瀏覽器不同：renderer XSS 可以升級成偷 tok
 |---|---|
 | `sandbox: true` | 在 `webPreferences` 明確寫出 |
 | `webSecurity` | 不要設 `false` |
-| CSP | `apps/desktop/src/renderer/index.html` 的 `<meta>` **或** `session.webRequest.onHeadersReceived` — 起步程式兩者都沒有 |
+| CSP | `apps/desktop/src/main/security.ts` 的 session `Content-Security-Policy` |
 | 導航 | `will-navigate` + `setWindowOpenHandler` |
 | IPC | 驗證 `event.senderFrame` |
 | Token | `safeStorage`，不要明文後備 |
@@ -47,23 +47,21 @@ Electron 的威脅模型與瀏覽器不同：renderer XSS 可以升級成偷 tok
 3. **導航。** `win.webContents.on('will-navigate', ...)`：用 `new URL()` 解析，比較 **origin**（不要 `startsWith`）。其他一律拒絕。`setWindowOpenHandler`：預設 `{ action: 'deny' }`。允許清單內的 `https:` URL 可在檢查 protocol + host 之後 `shell.openExternal`。永遠不要對未解析的 `openExternal(userString)` 放行。
 4. **IPC。** Channel 名稱 `ysk:<area>:<verb>`（現有：`ysk:token:*`）。在 `ipcMain.handle` 裡把 `event.senderFrame?.url` 對上 dev renderer URL 或 custom protocol。參數用 Zod 驗。Preload 只暴露**窄**物件；不要把 `IpcRendererEvent` 傳給 renderer；不要 `exposeInMainWorld('api', { on: ipcRenderer.on })`。
 5. **載入 URL。** 生產優先用 custom protocol（`protocol.handle`），代替 `file://` + `loadFile`。起步程式對打包應用用 `loadFile` — 視為熱點；新視窗不要擴大 `file://` 存取。
-6. **Token。** `safeStorage.encryptString`／`decryptString`。若 `safeStorage.isEncryptionAvailable()` 為 false：token 只留記憶體，或拒絕持久化並顯示明確警告。**不要 UTF-8 檔案後備**（起步程式目前會寫明文）。Linux `basic_text` backend 較弱 — 寫進文件；若使用者選擇啟用，仍比裸 UTF-8 好。
+6. **Token。** `safeStorage.encryptString`／`decryptString`。若 `safeStorage.isEncryptionAvailable()` 為 false：token 只留記憶體，並 log 一則不含密鑰的警告。**不要 UTF-8 檔案後備。** Linux `basic_text` backend 較弱 — 寫進文件。
 7. **Fuses／自動更新。** 打包時關閉 `runAsNode` 與 `nodeCliInspect`（`@electron/fuses`）。自動更新產物必須簽名；不要下載並執行未簽名 zip。本 kit 尚未內建 updater — 要加就先寫計劃，不要默默 import `autoUpdater`。
 8. 硬規則：renderer 不要 import Prisma、observability、Express，也不要 raw `fetch` kit 路徑。
 9. [驗證改動](verify-change.zh.md)。
 
-## Kit 起步熱點
+## Kit 起步（v1.2.2）
 
-描述正確模式；實作可能由另一個變更完成。
-
-| Checklist（Electron security tutorial） | 起步程式 |
+| Checklist（Electron security tutorial） | 現況 |
 |---|---|
-| 7 CSP | 沒有 |
-| 13／14 導航與開新視窗 | 沒有 |
-| 17 IPC sender | `ipcMain.handle` 忽略 `event` |
-| 18 避免 `file://` | `loadFile` |
-| 19 fuses | 未套用 |
-| `safeStorage` 失敗 | 明文寫入 |
+| 7 CSP | `security.ts` 的 session CSP |
+| 13／14 導航與開新視窗 | 預設拒絕 |
+| 17 IPC sender | `senderFrame` 必須是已載入的 renderer |
+| 18 避免 `file://` | 打包後的 `loadFile` 對新視窗仍是熱點 |
+| 19 fuses | 未套用 — 打包前先寫計劃 |
+| `safeStorage` 失敗 | 只留記憶體 + 警告；沒有明文 |
 
 ## 驗證
 

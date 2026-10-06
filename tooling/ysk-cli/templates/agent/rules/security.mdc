@@ -6,4 +6,4 @@ alwaysApply: false
 
 Local reminder. Law: `AGENTS.md`.
 
-Procedure: `docs/skills/security-review.md`. Org-scoped use cases check membership in `application/` (template: `requireBiller`). Never log OTP, JWT, Stripe `sk_`, or webhook secrets. Inbound webhooks: `docs/skills/webhook-handling.md`.
+Procedure: `docs/skills/security-review.md`. Org-scoped use cases check membership in `application/` (template: `requireBiller`). Never log OTP, JWT, Stripe `sk_`, or webhook secrets. Inbound webhooks: `docs/skills/webhook-handling.md`. LLM product prompts: `docs/skills/llm-feature.md`.

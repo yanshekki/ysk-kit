@@ -4,6 +4,8 @@ description: >
   用既有 token、@ysk-kit/ui、WCAG 2.2 AA，以及從 API envelope 對應的表單，
   設計並實作 YSK Kit UI，不要泛用 AI 風格裝飾。
   新增或改動 web、admin、mobile 或 desktop 畫面時使用。
+  中文：畫面、zinc、表單、可及性。
+  不要用於只改 API，或另發明第二套元件庫。
 ---
 
 # Skill：UI 設計
@@ -130,6 +132,16 @@ Web、admin 與 desktop 已共用 Tailwind 4 + `@ysk-kit/ui`。Mobile 用 React 
 
 Kit 產品畫面不要把膽識花在裝飾：值得記住的是資料，不是 chrome。
 
+## 輸出格式
+
+```md
+## UI — <route> (<web|admin|mobile|desktop>)
+Tokens: zinc / rounded-md / h-9
+States: loading / empty / error / disabled
+Forms: FormField + contracts Zod
+Next: ui-review
+```
+
 ## 完成條件
 
 - [ ] 畫面用 `@ysk-kit/ui`（mobile 則用 RN 原語）以及上表 zinc token
@@ -137,6 +149,10 @@ Kit 產品畫面不要把膽識花在裝飾：值得記住的是資料，不是 
 - [ ] 表單有標籤、contracts 的 Zod、envelope 錯誤在欄位旁
 - [ ] 對比、焦點、目標尺寸、`zh-HK` 長度都成立
 - [ ] [ui-review](ui-review.zh.md) 清單為綠色
+
+## 升級／詢問
+
+新顏色 token、深色模式、元件庫，或 `user-scalable=no` 之前，先問。
 
 ## 參考
 

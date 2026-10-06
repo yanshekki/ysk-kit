@@ -8,3 +8,4 @@ Local notes for `apps/api`. Root law: [AGENTS.md](../../AGENTS.md).
 - Envelope exceptions stay listed in the root guide. Do not add one silently.
 - Tests use in-memory ports. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.
 - Plan cases with `docs/skills/test-plan.md`. Write them with `docs/skills/write-tests.md`.
+- LLM product features: `docs/skills/llm-feature.md`. Red tests: `docs/skills/debug-issue.md`.

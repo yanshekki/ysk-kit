@@ -6,4 +6,4 @@ alwaysApply: false
 
 Local reminder. Law: `AGENTS.md` (also `packages/contracts/AGENTS.md`).
 
-Add DTO + `OkSchema` / `ErrSchema` before handlers or clients. No TypeScript `enum`. This package does not import apps, Prisma, Express, Fastify, React, or BullMQ.
+Add DTO + `OkSchema` / `ErrSchema` before handlers or clients. No TypeScript `enum`. This package does not import apps, Prisma, Express, Fastify, React, or BullMQ. Contract diffs: `docs/skills/contract-change.md`.

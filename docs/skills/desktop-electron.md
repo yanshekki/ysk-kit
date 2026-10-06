@@ -38,7 +38,7 @@ Do not use for renderer-only screens (layout, copy, zinc tokens) or for web/admi
 |---|---|
 | `sandbox: true` | Set explicitly on `webPreferences` |
 | `webSecurity` | Do not set `false` |
-| CSP | `<meta>` in `apps/desktop/src/renderer/index.html` **or** `session.webRequest.onHeadersReceived` — the starter has neither |
+| CSP | Session `Content-Security-Policy` in `apps/desktop/src/main/security.ts` |
 | Navigation | `will-navigate` + `setWindowOpenHandler` |
 | IPC | Validate `event.senderFrame` |
 | Tokens | `safeStorage` without plaintext fallback |
@@ -50,23 +50,21 @@ Do not use for renderer-only screens (layout, copy, zinc tokens) or for web/admi
 3. **Navigation.** `win.webContents.on('will-navigate', ...)`: parse with `new URL()`, compare **origin** (not `startsWith`). Deny everything else. `setWindowOpenHandler`: default `{ action: 'deny' }`. Allowlisted `https:` URLs may `shell.openExternal` after checking protocol + host. Never `openExternal(userString)` without a parsed allowlist.
 4. **IPC.** Channel names `ysk:<area>:<verb>` (existing: `ysk:token:*`). In `ipcMain.handle`, check `event.senderFrame?.url` against the dev renderer URL or the custom protocol. Validate payloads with Zod. Preload exposes a **narrow** object; do not pass `IpcRendererEvent` to the renderer; do not `exposeInMainWorld('api', { on: ipcRenderer.on })`.
 5. **Load URL.** Prefer a custom protocol (`protocol.handle`) in production instead of `file://` + `loadFile`. The starter uses `loadFile` for the packaged app — treat that as a hotspot; new windows should not widen `file://` access.
-6. **Tokens.** `safeStorage.encryptString` / `decryptString`. If `safeStorage.isEncryptionAvailable()` is false: keep tokens in memory or refuse persist with a visible warning. **No UTF-8 file fallback** (the starter currently writes plaintext). Linux `basic_text` backend is weaker — document it; still better than raw UTF-8 if the user opts in.
+6. **Tokens.** `safeStorage.encryptString` / `decryptString`. If `safeStorage.isEncryptionAvailable()` is false: keep tokens in memory and log a warning that does not include the secret. **No UTF-8 file fallback.** Linux `basic_text` backend is weaker — document it.
 7. **Fuses / auto-update.** At package time disable `runAsNode` and `nodeCliInspect` (`@electron/fuses`). Auto-update artifacts must be signed; do not download and execute an unsigned zip. This kit does not ship an updater yet — adding one is a plan-first capability, not a silent `autoUpdater` import.
 8. Hard rules: renderer imports neither Prisma, observability, Express, nor raw `fetch` to kit paths.
 9. [verify-change](verify-change.md).
 
-## Kit starter hotspots
+## Kit starter (v1.2.2)
 
-Describe the pattern; a separate change may implement it.
-
-| Checklist (Electron security tutorial) | Starter |
+| Checklist (Electron security tutorial) | Today |
 |---|---|
-| 7 CSP | Missing |
-| 13/14 navigation and window open | Missing |
-| 17 IPC sender | `ipcMain.handle` ignores `event` |
-| 18 avoid `file://` | `loadFile` |
-| 19 fuses | Not applied |
-| `safeStorage` failure | Plaintext write |
+| 7 CSP | Session CSP in `security.ts` |
+| 13/14 navigation and window open | Deny-by-default |
+| 17 IPC sender | `senderFrame` must be the loaded renderer |
+| 18 avoid `file://` | Packaged `loadFile` remains a hotspot for new windows |
+| 19 fuses | Not applied — plan before packaging |
+| `safeStorage` failure | Memory-only + warning; no plaintext |
 
 ## Verification
 

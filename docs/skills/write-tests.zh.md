@@ -4,6 +4,8 @@ description: >
   在 YSK Kit 寫專業測試：按層用 trophy、記憶體 port、given/when/then、
   可重現夾具、envelope 與授權案例、精確的 Vitest／Playwright 命令。
   加測試、修 bug，或完成 test-plan 之後使用。
+  中文：寫測試、Vitest、Playwright、回歸。
+  不要用於計劃案例（test-plan），或在 CI 啟動 Redis／Stripe。
 ---
 
 # Skill：寫測試
@@ -163,6 +165,28 @@ UI 可及性跟 [ui-review](ui-review.zh.md)。Testing Library 查詢在缺少 l
 - [ ] 可重現（假時鐘、無 sleep、無真實網絡）
 - [ ] 修 bug 時先寫回歸測試
 - [ ] `pnpm test` 綠色；改了登入／shell 且連接埠空閒時 `pnpm e2e` 通過
+
+## 輸出格式
+
+```md
+## Tests — <scope>
+Layer: <file>
+HTTP adapters: Express + Fastify | n/a
+Regression-first: yes | n/a
+Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
+```
+
+## 反模式
+
+| 症狀 | 改為 |
+|---|---|
+| 從客戶端 mock Prisma | SDK + SuperTest |
+| 用 sleep 等 UI | Testing Library finder／假時鐘 |
+| snapshot 整份 envelope | 對 `ok`／`error.code` 用 `toMatchObject` |
+
+## 升級／詢問
+
+加入 `@axe-core/playwright`、視覺回歸 CI 或 `fast-check` 之前，先問。
 
 ## 參考
 

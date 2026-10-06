@@ -21,6 +21,10 @@ const SKILLS = [
   'db-migration',
   'webhook-handling',
   'desktop-electron',
+  'contract-change',
+  'debug-issue',
+  'review-change',
+  'llm-feature',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

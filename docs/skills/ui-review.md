@@ -4,6 +4,8 @@ description: >
   QA checklist before declaring YSK Kit UI work done: visual, a11y, responsive,
   states, copy, performance — with Playwright, keyboard, and axe verification.
   Use when finishing a screen or when the user asks to review UI / UX / a11y.
+  中文：UI 審查、鍵盤、375 視埠。
+  Do not use to design the screen (ui-design) or to treat one screenshot as proof.
 ---
 
 # Skill: review UI
@@ -108,6 +110,16 @@ Do not add screenshot diffs to CI in this change unless the user asked.
 
 **Pass** only when the boxes for the surfaces you touched are checked and, for web login/shell changes, `pnpm e2e` is green (ports 3001 / 5173 free, DB seeded).
 
+## Output format
+
+```md
+## UI review — <routes>
+Visual / a11y / states / fetch: PASS | FAIL
+Keyboard: pass | fail
+375: checked
+e2e: green | skipped (<why>)
+```
+
 ## Done criteria
 
 - [ ] Checklist completed for every touched route
@@ -115,6 +127,17 @@ Do not add screenshot diffs to CI in this change unless the user asked.
 - [ ] 375 viewport checked (code or browser)
 - [ ] Envelope errors render through `ErrorBanner` / `FormField`
 - [ ] [verify-change](verify-change.md) still required
+
+## Anti-patterns
+
+| Symptom | Do this instead |
+|---|---|
+| One screenshot as proof | Click, type, submit, fail, retry |
+| Unchecked a11y box | Fail the review |
+
+## Escalate / ask
+
+Ask before adding axe or screenshot diffs to CI.
 
 ## References
 

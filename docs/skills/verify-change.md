@@ -43,6 +43,8 @@ Optional:
 
 Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana to make unit tests pass.
 
+Related when in scope: [security-review](security-review.md), [db-migration](db-migration.md), [webhook-handling](webhook-handling.md), [desktop-electron](desktop-electron.md).
+
 ## Verification
 
 - [ ] The five commands printed success

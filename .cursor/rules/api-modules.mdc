@@ -6,4 +6,4 @@ alwaysApply: false
 
 Local reminder. Law: `AGENTS.md` (also `apps/api/AGENTS.md`).
 
-Prisma stays in `src/modules/*/infra` and shared `src/infra`. Domain and application do not import Express, Fastify, Prisma, React, or BullMQ. JSON uses `{ ok: true, data }` / `{ ok: false, error }`. Tests use in-memory ports.
+Prisma stays in `src/modules/*/infra` and shared `src/infra`. Domain and application do not import Express, Fastify, Prisma, React, or BullMQ. JSON uses `{ ok: true, data }` / `{ ok: false, error }`. Tests use in-memory ports. Schema changes: `docs/skills/db-migration.md`.

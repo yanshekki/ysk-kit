@@ -17,7 +17,11 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [verify-change](verify-change.md) | After any feature |
 | [fix-layers](fix-layers.md) | `pnpm layers` failed |
 | [envelope-api](envelope-api.md) | New route, SSE, PDF, or error shape |
+| [security-review](security-review.md) | Authz, tenancy, secrets, tokens, webhooks, LLM input |
+| [db-migration](db-migration.md) | Prisma 7.10 SQL review, expand/contract, no silent reset |
+| [webhook-handling](webhook-handling.md) | Inbound webhooks (Stripe first): signature, ack, idempotency |
+| [desktop-electron](desktop-electron.md) | Electron isolation, CSP, IPC, safeStorage |
 
-Shared wrappers live in `.agents/skills/<name>/SKILL.md` (YAML `name` + `description`, then a pointer here). `create-ysk-app` and `ysk-kit upgrade` also write identical copies to `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/` from `tooling/ysk-cli/templates/agent/`. `pnpm ysk-kit check agent` fails if those copies drift or drop `AGENTS.md`.
+Shared wrappers live in `.agents/skills/<name>/SKILL.md` (YAML `name` + `description`, a short step summary, then a pointer here). `create-ysk-app` and `ysk-kit upgrade` also write identical copies to `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/` from `tooling/ysk-cli/templates/agent/`. `pnpm ysk-kit check agent` fails if those copies drift or drop `AGENTS.md`.
 
 Other agents read `AGENTS.md`, then this index.

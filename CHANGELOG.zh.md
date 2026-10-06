@@ -37,6 +37,20 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.2.2
+
+### 新功能
+
+- Agent skills `security-review`、`db-migration`、`webhook-handling` 與 `desktop-electron`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、範圍限定的 Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+### 改進
+
+- `add-module`、`add-capability`、`verify-change` 與 `envelope-api` 指向新程序。計劃模板的資料模型與安全段標明 Prisma expand/contract、安全審查、webhook 與 Electron。
+
+### 內部／CI
+
+- `thin-smoke`、`flavor-smoke`、create-app 與 upgrade 測試會斷言新的 skill 檔與 Cursor 規則。
+
 ## v1.2.1
 
 ### 新功能

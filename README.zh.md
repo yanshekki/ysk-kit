@@ -114,6 +114,20 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.2.2
+
+#### 新功能
+
+- Agent skills `security-review`、`db-migration`、`webhook-handling` 與 `desktop-electron`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、範圍限定的 Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+#### 改進
+
+- `add-module`、`add-capability`、`verify-change` 與 `envelope-api` 指向新程序。計劃模板的資料模型與安全段標明 Prisma expand/contract、安全審查、webhook 與 Electron。
+
+#### 內部／CI
+
+- `thin-smoke`、`flavor-smoke`、create-app 與 upgrade 測試會斷言新的 skill 檔與 Cursor 規則。
+
 ### v1.2.1
 
 #### 新功能
@@ -159,17 +173,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
-
-### v1.1.3
-
-#### 改進
-
-- 根目錄 `README.md` 與 `README.zh.md` 只列出最近三個版本。每個版本按適用的類別分組：新功能、改進、修正、安全、依賴升級、內部／CI。該節結尾連結到完整變更紀錄。
-
-#### 內部／CI
-
-- [CHANGELOG.md](CHANGELOG.md) 與 [CHANGELOG.zh.md](CHANGELOG.zh.md) 保留每一個版本，由新到舊，並使用同樣的類別。Changesets 產生的各套件 `CHANGELOG.md` 仍然保留，完整變更紀錄連結到這些檔案。
-- [貢獻指引](docs/contributing.zh.md) 與 [工作區指令](docs/cli/workspace-scripts.zh.md) 的發佈一節規定：每次發佈都把新版本加在 README 該節的頂部，並把三個版本中最舊的一個移入完整變更紀錄。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

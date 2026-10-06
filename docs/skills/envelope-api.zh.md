@@ -30,8 +30,9 @@ Language: [English](envelope-api.md) · 中文
 2. 使用既有 error code。不要另發明一套錯誤 JSON。
 3. 若傳輸是 JSON，它就是 envelope 路由——包括單一資源。
 4. 若傳輸不能是 JSON，必須屬於：LLM SSE、發票 PDF 302、`GET /docs`、`GET /openapi.json`。任何新例外都寫在這四項旁邊，留在 ts-rest 之外，而且**先問使用者**。
-5. 客戶端呼叫 `@ysk-kit/sdk`。從 `GET /openapi.json` 發現路徑；不要 `fetch`。
-6. [驗證改動](verify-change.zh.md)。
+5. 入站 webhook 仍走 envelope（`{ ok: true, data: { received: true } }`），但要在 JSON parser 之前掛 raw body。跟隨 [webhook-handling](webhook-handling.zh.md)。
+6. 客戶端呼叫 `@ysk-kit/sdk`。從 `GET /openapi.json` 發現路徑；不要 `fetch`。
+7. [驗證改動](verify-change.zh.md)。
 
 ## 驗證
 

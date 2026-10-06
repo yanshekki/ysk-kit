@@ -114,6 +114,20 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.2.2
+
+#### New features
+
+- Agent skills `security-review`, `db-migration`, `webhook-handling`, and `desktop-electron` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, scoped Cursor / Copilot pointers, and create-app / upgrade templates.
+
+#### Improvements
+
+- `add-module`, `add-capability`, `verify-change`, and `envelope-api` point at the new procedures. The plan template's data-model and security sections name Prisma expand/contract, security review, webhooks, and Electron.
+
+#### Internal/CI
+
+- `thin-smoke`, `flavor-smoke`, create-app, and upgrade tests assert the new skill files and Cursor rules.
+
 ### v1.2.1
 
 #### New features
@@ -159,17 +173,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.
-
-### v1.1.3
-
-#### Improvements
-
-- The root `README.md` and `README.zh.md` list only the latest three versions. Each version is grouped into the categories that apply: New features, Improvements, Fixes, Security, Dependency upgrades, and Internal/CI. The section ends with a link to the full changelog.
-
-#### Internal/CI
-
-- [CHANGELOG.md](CHANGELOG.md) and [CHANGELOG.zh.md](CHANGELOG.zh.md) keep every version, newest first, in those categories. Per-package `CHANGELOG.md` files that Changesets writes stay, and the full changelog links to them.
-- [Contributing](docs/contributing.md) and the release section of [workspace scripts](docs/cli/workspace-scripts.md) require each release to add the new version at the top of the README section and move the oldest of the three into the full changelog.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

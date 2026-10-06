@@ -37,6 +37,20 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.2.2
+
+### New features
+
+- Agent skills `security-review`, `db-migration`, `webhook-handling`, and `desktop-electron` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, scoped Cursor / Copilot pointers, and create-app / upgrade templates.
+
+### Improvements
+
+- `add-module`, `add-capability`, `verify-change`, and `envelope-api` point at the new procedures. The plan template's data-model and security sections name Prisma expand/contract, security review, webhooks, and Electron.
+
+### Internal/CI
+
+- `thin-smoke`, `flavor-smoke`, create-app, and upgrade tests assert the new skill files and Cursor rules.
+
 ## v1.2.1
 
 ### New features

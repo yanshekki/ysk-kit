@@ -54,6 +54,12 @@ jobs:
           test -f .agents/skills/write-tests/SKILL.md
           test -f .agents/skills/ui-design/SKILL.md
           test -f .agents/skills/ui-review/SKILL.md
+          test -f .agents/skills/security-review/SKILL.md
+          test -f .agents/skills/db-migration/SKILL.md
+          test -f .agents/skills/webhook-handling/SKILL.md
+          test -f .agents/skills/desktop-electron/SKILL.md
+          test -f .cursor/rules/security.mdc
+          test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md
           grep -q '## Current state and reuse' docs/plans/_template.md
           grep -q '## Assumptions' docs/plans/_template.md

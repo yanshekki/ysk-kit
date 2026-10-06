@@ -33,8 +33,9 @@ Do not mkdir `apps/api/src/modules/<name>` by hand.
 3. Extend DTO, command, and Prisma fields in `@ysk-kit/contracts` and the Prisma model. Keep `OkSchema` / `ErrSchema`.
 4. Put rules in `application/<name>-service.ts`.
 5. Keep Prisma in `infra/`. Clients use `@ysk-kit/sdk` / `@ysk-kit/web-sdk` only.
-6. `pnpm db:migrate && pnpm gen:openapi` when the schema or paths changed.
-7. [verify-change](verify-change.md).
+6. When the schema changed, follow [db-migration](db-migration.md) (review SQL; do not `migrate reset` without consent). Then `pnpm gen:openapi`.
+7. If the resource is org-scoped, check membership in `application/` (template: `requireBiller`) and add a cross-tenant memory-port case. See [security-review](security-review.md).
+8. [verify-change](verify-change.md).
 
 ## Verification
 

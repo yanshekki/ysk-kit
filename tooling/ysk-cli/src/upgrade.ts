@@ -14,10 +14,16 @@ export const UPGRADE_PATHS = [
   'AGENTS.md',
   'AGENTS.zh.md',
   'CLAUDE.md',
+  'GEMINI.md',
   '.dependency-cruiser.cjs',
   'packages/typescript-config',
   'packages/biome-config',
   'docs/skills',
+  'docs/plans',
+  '.agents',
+  '.gemini',
+  '.github/copilot-instructions.md',
+  '.github/instructions',
 ] as const;
 
 const SKIP_ENTRIES = new Set(['node_modules', 'dist']);

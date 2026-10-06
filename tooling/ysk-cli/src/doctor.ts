@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
+import { AGENT_SKILL_TREES, agentTemplatesDir, listAgentRuleFiles } from './agent-stubs';
 import { checkAgent, formatAgentFindings } from './check-agent';
 import { readKitVersion, UPGRADE_PATHS } from './upgrade';
 
@@ -194,21 +195,19 @@ const compareTree = (kitAbs: string, productAbs: string, rel: string, drift: Dri
 };
 
 const agentStubDrift = (productRoot: string, kitRoot: string): Drift[] => {
-  const templates = join(kitRoot, 'tooling/ysk-cli/templates/agent');
-  const rule = join(templates, 'ysk-kit.mdc');
+  const templates = agentTemplatesDir(kitRoot);
   const skillsDir = join(templates, 'skills');
-  if (!existsSync(rule) || !existsSync(skillsDir)) return [];
+  if (!existsSync(templates) || !existsSync(skillsDir)) return [];
   const drift: Drift[] = [];
-  compareTree(
-    rule,
-    join(productRoot, '.cursor/rules/ysk-kit.mdc'),
-    '.cursor/rules/ysk-kit.mdc',
-    drift,
-  );
+  for (const name of listAgentRuleFiles(templates)) {
+    const from = name === 'ysk-kit.mdc' ? join(templates, name) : join(templates, 'rules', name);
+    compareTree(from, join(productRoot, '.cursor/rules', name), `.cursor/rules/${name}`, drift);
+  }
   for (const name of readdirSync(skillsDir)) {
     const src = join(skillsDir, name, 'SKILL.md');
     if (!existsSync(src) || !statSync(join(skillsDir, name)).isDirectory()) continue;
-    for (const tree of ['.cursor/skills', '.grok/skills'] as const) {
+    for (const tree of AGENT_SKILL_TREES) {
+      if (tree !== '.agents/skills' && !existsSync(join(productRoot, tree))) continue;
       const rel = `${tree}/${name}/SKILL.md`;
       compareTree(src, join(productRoot, rel), rel, drift);
     }
@@ -726,7 +725,7 @@ const agentCheck = (productRoot: string): DoctorCheck => {
     'agent',
     'error',
     `${formatAgentFindings(shown)}${extra}`,
-    'Remove TypeScript enums, Prisma imports, and raw fetch from client apps. See docs/cli/ysk-kit.md.',
+    'Remove TypeScript enums, Prisma imports, and raw fetch from client apps. Keep pointer files naming AGENTS.md and skill copies in sync. See docs/cli/ysk-kit.md.',
   );
 };
 

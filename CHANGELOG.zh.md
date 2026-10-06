@@ -37,6 +37,33 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.2.0
+
+### 新功能
+
+- `pnpm ysk-kit plan <slug>` 按共用模板把雙語功能計劃寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md`（及 `.zh.md` 配對），並寫入已 gitignore 的根目錄 `plan.md` 指針。
+- thin 與 full 工作區產品都會收到同一套 agent 指針：`.agents/skills/`、`.claude/skills/`、範圍限定的 `.cursor/rules/*.mdc`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`GEMINI.md`，以及計劃模板。
+
+### 改進
+
+- `AGENTS.md`／`AGENTS.zh.md` 改為專業 agent 指引：定位、倉目錄地圖、十條硬規則連同原因、強制的理解 → 計劃 → 合約 → 骨架 → 實作 → 驗證 → 文件流程、完成定義、何時詢問、陷阱，以及程式工具表。程序仍在 `docs/skills/`。
+- `pnpm ysk-kit check agent` 也會在指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB 時失敗。
+- Skills（`docs/skills/` 與 `.agents/skills/`）新增 `plan-feature`，並採用觸發／輸入／步驟／驗證／完成條件。
+
+### 安全
+
+- pnpm override `source-map-js@1.2.2` 修復 [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)／CVE-2026-93749（indexed source map 位移導致 event-loop DoS）。該套件經 PostCSS／Expo Metro 間接引入。
+
+### 依賴升級
+
+| 套件 | 由 | 至 |
+|---|---|---|
+| source-map-js（工作區 override） | 1.2.1 | 1.2.2 |
+
+### 內部／CI
+
+- `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
+
 ## v1.1.3
 
 ### 改進

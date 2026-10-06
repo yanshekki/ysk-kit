@@ -32,7 +32,7 @@ pnpm create @ysk-kit/app <name> [options]
 | `--no-mobile` | 旗標 | 包含 mobile | 略過 `apps/mobile`。flavor 本身已不含 mobile 時忽略。 |
 | `--yes` / `-y` | 旗標 | 關閉 | 不提問。使用預設值與其他已傳旗標。 |
 
-複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄、`.env.example` 以外的任何 `.env*` 檔，以及 `tooling/` 底下的 kit 編寫測試（`*.test.ts` / `*.test.tsx`）。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 Cursor／Grok skill 包裝。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.grok/`、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告與 `.runs/`。
+複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄、`.env.example` 以外的任何 `.env*` 檔，以及 `tooling/` 底下的 kit 編寫測試（`*.test.ts` / `*.test.tsx`）。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 agent skill 包裝到 `.agents/skills/`、`.claude/skills/`、`.cursor/skills/`、`.grok/skills/`，以及範圍限定的 `.cursor/rules/*.mdc`，並在那些 app 存在時寫入巢狀 `AGENTS.md`。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.claude/`、`.grok/` 底下的編輯器快取（已提交的規則／skill 樹會取消忽略）、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告、`.runs/`，以及根目錄 `plan.md`。
 
 ## Flavor
 

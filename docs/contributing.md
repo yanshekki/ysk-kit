@@ -9,7 +9,8 @@ This document is for people who change YSK Kit itself: code, tests, or documenta
 1. Read [AGENTS.md](../AGENTS.md) before writing code.
 2. New HTTP resources start with `pnpm ysk-kit add module <kebab> --prisma --web`.
 3. Put business rules in `application/`. Keep Prisma in `infra/`.
-4. Before you finish: `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi`.
+4. When the [planning protocol](../AGENTS.md#planning-protocol) requires a plan, write `docs/plans/<yyyy-mm-dd>-<slug>.md` first (`pnpm ysk-kit plan <slug>`).
+5. Before you finish: `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent`.
 
 Do not add an industry domain (salon, trading venue, map product) to this kit. Build those in a product repository created by `create-ysk-app`.
 
@@ -48,7 +49,7 @@ Documentation is public. Write so a third party who has never seen the company o
 
 Do not translate `LICENSE`, `docs/openapi.yaml`, source comments, or Prisma schema.
 
-Tool stubs stay English-only: `CLAUDE.md`, and the generated Cursor/Grok wrappers from `tooling/ysk-cli/templates/agent/`. They point at `AGENTS.md` and `docs/skills/`. `.cursor/` and `.grok/` are gitignored.
+Tool stubs stay English-only and thin: `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.cursor/rules/*.mdc`, and skill wrappers from `tooling/ysk-cli/templates/agent/`. They point at `AGENTS.md` and `docs/skills/`. Shared skills live in `.agents/skills/` (`.claude/skills/` is an identical copy). Editor caches under `.cursor/`, `.claude/`, and `.grok/` stay gitignored except those committed guidance trees. Root `plan.md` is session scratch and is gitignored.
 
 ### One home per fact
 
@@ -59,7 +60,8 @@ Tool stubs stay English-only: `CLAUDE.md`, and the generated Cursor/Grok wrapper
 | Commands and flags | `docs/cli/` |
 | Concepts | `docs/guides/` |
 | Step-by-step how-to | `docs/recipes/` |
-| Agent procedures | `docs/skills/` (generated `.grok/skills` and `.cursor/skills` wrappers only point here) |
+| Agent procedures | `docs/skills/` (`.agents/skills` wrappers only point here) |
+| Feature plans | `docs/plans/<yyyy-mm-dd>-<slug>.md` |
 | Version changelog | `CHANGELOG.md` (latest three versions also in the root README) |
 | Phase diary | `docs/history.md` |
 | Roadmap | `docs/product-plan.md` |

@@ -78,7 +78,8 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit add module <name> --prisma --web` | hexagonal HTTP 切片 |
 | `pnpm ysk-kit add <capability>` | 合併一項已編目的能力 |
 | `pnpm ysk-kit upgrade` | 更新允許清單上的 kit 護欄 |
-| `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch |
+| `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
+| `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
 | `pnpm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | 驗證一次改動 |
@@ -112,6 +113,33 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.2.0
+
+#### 新功能
+
+- `pnpm ysk-kit plan <slug>` 按共用模板把雙語功能計劃寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md`（及 `.zh.md` 配對），並寫入已 gitignore 的根目錄 `plan.md` 指針。
+- thin 與 full 工作區產品都會收到同一套 agent 指針：`.agents/skills/`、`.claude/skills/`、範圍限定的 `.cursor/rules/*.mdc`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`GEMINI.md`，以及計劃模板。
+
+#### 改進
+
+- `AGENTS.md`／`AGENTS.zh.md` 改為專業 agent 指引：定位、倉目錄地圖、十條硬規則連同原因、強制的理解 → 計劃 → 合約 → 骨架 → 實作 → 驗證 → 文件流程、完成定義、何時詢問、陷阱，以及程式工具表。程序仍在 `docs/skills/`。
+- `pnpm ysk-kit check agent` 也會在指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB 時失敗。
+- Skills（`docs/skills/` 與 `.agents/skills/`）新增 `plan-feature`，並採用觸發／輸入／步驟／驗證／完成條件。
+
+#### 安全
+
+- pnpm override `source-map-js@1.2.2` 修復 [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)／CVE-2026-93749（indexed source map 位移導致 event-loop DoS）。該套件經 PostCSS／Expo Metro 間接引入。
+
+#### 依賴升級
+
+| 套件 | 由 | 至 |
+|---|---|---|
+| source-map-js（工作區 override） | 1.2.1 | 1.2.2 |
+
+#### 內部／CI
+
+- `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
+
 ### v1.1.3
 
 #### 改進
@@ -135,28 +163,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 - 發佈後的 `npm view` 核對仍然保留。
 - 產品發佈維持單一 annotated tag `vX.Y.Z`。
-
-### v1.1.1
-
-#### 改進
-
-- `ysk-kit doctor` 的 engines 修復提示改為引用產品自己的 `packageManager` 釘選。
-- `pnpm version:packages` 把 `@ysk-kit/create-app` 的版本寫入根 `package.json`，以及 `README.md` 與 `README.zh.md` 的版本格。
-
-#### 安全
-
-- overrides 維持 `deepmerge-ts` 8.0.2、`mariadb` 3.4.7（Prisma adapter 宣告 3.4.5）與 `mysql2` 3.24.5。
-- 接受、而且沒有已修補的 npm 版本：uuid 7（經 Expo `xcode`，GHSA-w5hq-g745-h8pq）、node-forge 1.4.0（Expo CLI 程式碼簽署，GHSA-86w9-cpqp-85rv）、braces 3.0.3（Metro 檔案對應，GHSA-vfj7-8cjw-p6xm）。
-
-#### 依賴升級
-
-- pnpm 12.9.0（12.9.0 的 `pnpm login` 在重新導向時不再轉送憑證；12.9.1 當時仍在 24 小時發佈年齡窗內）、Turborepo 2.11.7、pino 10.4.0、`@aws-sdk/client-s3` 與 `@aws-sdk/s3-request-presigner` 3.1146.0、`@tanstack/react-query` 5.104.1、supertest 7.3.1、`@types/node` 24.19.1。
-- 暫緩：TypeScript 7.0.2、`@types/node` 26（engines 是 Node 24）、Prisma 8.0.0-rc.19、桌面 Vite 7.3.6 配 `@vitejs/plugin-react` 5（electron-vite 5 的 peer 是 Vite 5–7）、Expo 57.0.26／React Native 0.86.3／React 19.2.8（Expo SDK 58 對準的 React Native 0.88 仍是 release candidate）、`@ts-rest/core` 3.53.0-rc.1。
-- `prom-client` 15.1.3 已標為棄用，改用 `@prometheus-io/client` 之前先維持 `/metrics` 的 registry。Compose 映像維持 MySQL 8.4、Redis 8.10.2、Jaeger 2.21.0、Prometheus v3.15.0、Grafana 13.2.3。Actions 維持當時的 commit SHA。
-
-#### 內部／CI
-
-- release job 在 `npm view` 看不到每個已發佈版本時失敗。`pnpm release:publish` 自行執行 `pnpm publish --provenance`（commit `817e0f0`，在 v1.1.0 tag 之後、v1.1.1 之前）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

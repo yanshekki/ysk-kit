@@ -111,24 +111,48 @@ const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<strin
   }
 };
 
+const SKILL_TREES = ['.agents/skills', '.claude/skills', '.cursor/skills', '.grok/skills'] as const;
+
+const NESTED_AGENTS = [
+  { destDir: 'packages/contracts', template: 'nested/contracts.md' },
+  { destDir: 'apps/api', template: 'nested/api.md' },
+  { destDir: 'apps/web', template: 'nested/clients.md' },
+  { destDir: 'apps/admin', template: 'nested/clients.md' },
+  { destDir: 'apps/mobile', template: 'nested/clients.md' },
+  { destDir: 'apps/desktop', template: 'nested/clients.md' },
+] as const;
+
 const writeAgentStubs = (dest: string, kitRoot: string): void => {
   const templates = join(kitRoot, 'tooling/ysk-cli/templates/agent');
-  const rule = join(templates, 'ysk-kit.mdc');
   const skillsDir = join(templates, 'skills');
-  if (!existsSync(rule) || !existsSync(skillsDir)) {
+  if (!existsSync(templates) || !existsSync(skillsDir)) {
     throw new Error('agent templates missing');
   }
   mkdirSync(join(dest, '.cursor/rules'), { recursive: true });
-  cpSync(rule, join(dest, '.cursor/rules/ysk-kit.mdc'));
+  const rootRule = join(templates, 'ysk-kit.mdc');
+  if (existsSync(rootRule)) cpSync(rootRule, join(dest, '.cursor/rules/ysk-kit.mdc'));
+  const rulesDir = join(templates, 'rules');
+  if (existsSync(rulesDir)) {
+    for (const name of readdirSync(rulesDir)) {
+      if (!name.endsWith('.mdc')) continue;
+      cpSync(join(rulesDir, name), join(dest, '.cursor/rules', name));
+    }
+  }
   for (const name of readdirSync(skillsDir)) {
     const skillDir = join(skillsDir, name);
     const src = join(skillDir, 'SKILL.md');
     if (!statSync(skillDir).isDirectory() || !existsSync(src)) continue;
-    for (const tree of ['.grok/skills', '.cursor/skills'] as const) {
+    for (const tree of SKILL_TREES) {
       const dir = join(dest, tree, name);
       mkdirSync(dir, { recursive: true });
       cpSync(src, join(dir, 'SKILL.md'));
     }
+  }
+  for (const item of NESTED_AGENTS) {
+    if (!existsSync(join(dest, item.destDir))) continue;
+    const from = join(templates, item.template);
+    if (!existsSync(from)) continue;
+    cpSync(from, join(dest, item.destDir, 'AGENTS.md'));
   }
 };
 

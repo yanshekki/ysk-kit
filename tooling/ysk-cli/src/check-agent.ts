@@ -1,8 +1,17 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import { checkAgentGuidance } from './check-agent-guidance';
+
+export type AgentRule =
+  | 'no-ts-enum'
+  | 'clients-no-prisma'
+  | 'clients-no-raw-fetch'
+  | 'pointer-agents-md'
+  | 'skill-drift'
+  | 'agents-md-budget';
 
 export type AgentFinding = {
-  rule: 'no-ts-enum' | 'clients-no-prisma' | 'clients-no-raw-fetch';
+  rule: AgentRule;
   file: string;
   line: number;
 };
@@ -89,6 +98,7 @@ export const checkAgent = (productRoot: string): AgentFinding[] => {
     }
   }
 
+  findings.push(...checkAgentGuidance(productRoot));
   findings.sort(
     (a, b) => a.file.localeCompare(b.file) || a.line - b.line || a.rule.localeCompare(b.rule),
   );

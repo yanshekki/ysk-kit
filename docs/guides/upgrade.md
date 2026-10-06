@@ -49,13 +49,15 @@ If `.ysk-kit.json` is missing, the command still runs when `pnpm-workspace.yaml`
 | Path | Role |
 |---|---|
 | `AGENTS.md` · `AGENTS.zh.md` | Agent law |
-| `CLAUDE.md` | Agent entry |
+| `CLAUDE.md` · `GEMINI.md` | Thin tool pointers |
+| `.agents/` · `.gemini/` · `.github/copilot-instructions.md` · `.github/instructions/` | Shared skills and tool pointers |
+| `docs/plans/` | Plan template and README |
 | `.dependency-cruiser.cjs` | `pnpm layers` |
 | `packages/typescript-config/` | Compiler config (no business types) |
 | `packages/biome-config/` | Lint config |
 | `docs/skills/` | Agent procedures |
 
-Workspace products also receive Cursor/Grok skill wrappers generated from `tooling/ysk-cli/templates/agent/` into `.cursor/` and `.grok/` (gitignored). `php-bridge` does not receive those stubs.
+Workspace products also receive skill wrappers generated from `tooling/ysk-cli/templates/agent/` into `.agents/skills/`, `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/`, plus scoped `.cursor/rules/*.mdc`. `php-bridge` does not receive those stubs.
 
 Directory copies skip `node_modules` and `dist`. A path that does not exist in the kit is skipped (typical for `php-bridge`, which has no TypeScript workspace packages). Missing parent directories on the product side are created.
 

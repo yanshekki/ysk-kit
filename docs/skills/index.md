@@ -2,10 +2,11 @@
 
 Language: [中文](index.zh.md) · English
 
-Procedures for people and AI agents. Each skill is a short sequence that points at law, CLI, and recipes. It does not duplicate [AGENTS.md](../../AGENTS.md).
+Procedures for people and AI agents. Each skill has trigger, inputs, steps, verification, and done criteria. It points at law, CLI, and recipes. It does not duplicate [AGENTS.md](../../AGENTS.md).
 
 | Skill | When |
 |---|---|
+| [plan-feature](plan-feature.md) | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` before contracts and code |
 | [new-product](new-product.md) | Scaffold a product with `create-ysk-app` |
 | [add-module](add-module.md) | New HTTP resource |
 | [add-capability](add-capability.md) | Restore llm / team / billing / push (or other catalogue names) |
@@ -13,4 +14,6 @@ Procedures for people and AI agents. Each skill is a short sequence that points 
 | [fix-layers](fix-layers.md) | `pnpm layers` failed |
 | [envelope-api](envelope-api.md) | New route, SSE, PDF, or error shape |
 
-Grok loads `.grok/skills/<name>/SKILL.md`. Cursor loads `.cursor/skills/<name>/SKILL.md`. Those files are English wrappers generated from `tooling/ysk-cli/templates/agent/` (`create-ysk-app` and `ysk-kit upgrade`): YAML `description` plus a pointer here. They are gitignored. Other agents read `AGENTS.md`, then this index.
+Shared wrappers live in `.agents/skills/<name>/SKILL.md` (YAML `name` + `description`, then a pointer here). `create-ysk-app` and `ysk-kit upgrade` also write identical copies to `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/` from `tooling/ysk-cli/templates/agent/`. `pnpm ysk-kit check agent` fails if those copies drift or drop `AGENTS.md`.
+
+Other agents read `AGENTS.md`, then this index.

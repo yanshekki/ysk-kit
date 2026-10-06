@@ -31,13 +31,13 @@ const writeTree = (root: string, files: Record<string, string>): void => {
 const guardrails = {
   'AGENTS.md': '# agents\n',
   'AGENTS.zh.md': '# agents zh\n',
-  'CLAUDE.md': '# claude\n',
+  'CLAUDE.md': 'Follow AGENTS.md\n',
   '.dependency-cruiser.cjs': 'module.exports = {};\n',
   'packages/typescript-config/package.json': '{}\n',
   'packages/biome-config/biome.json': '{}\n',
   'docs/skills/index.md': '# skills\n',
-  'tooling/ysk-cli/templates/agent/ysk-kit.mdc': '# rule\n',
-  'tooling/ysk-cli/templates/agent/skills/add-module/SKILL.md': '# skill\n',
+  'tooling/ysk-cli/templates/agent/ysk-kit.mdc': 'Follow AGENTS.md\n',
+  'tooling/ysk-cli/templates/agent/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
   'package.json': '{ "version": "1.2.3" }\n',
 };
 
@@ -60,9 +60,11 @@ const productBase = {
     'NODE_ENV=development\nDATABASE_URL=file:/tmp/unused.db\nJWT_SECRET=abcdefghijklmnopqrstuvwxyz012345\n',
   'apps/api/prisma/schema.prisma': 'datasource db {\n  provider = "sqlite"\n}\n',
   'apps/api/prisma/migrations/20260101000000_init/migration.sql': '-- init\n',
-  '.cursor/rules/ysk-kit.mdc': '# rule\n',
-  '.cursor/skills/add-module/SKILL.md': '# skill\n',
-  '.grok/skills/add-module/SKILL.md': '# skill\n',
+  '.cursor/rules/ysk-kit.mdc': 'Follow AGENTS.md\n',
+  '.agents/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
+  '.claude/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
+  '.cursor/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
+  '.grok/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
 };
 
 const healthy = (envFile: string): DoctorOptionsShape => {

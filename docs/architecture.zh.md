@@ -44,6 +44,8 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 ```
 ysk-kit/
 ├── AGENTS.md
+├── .agents/skills/   共用 agent skill 包裝
+├── docs/plans/       可保存的功能計劃
 ├── apps/
 │   ├── api/          Express 5 預設；HTTP_ADAPTER=fastify
 │   ├── web/          Vite 8

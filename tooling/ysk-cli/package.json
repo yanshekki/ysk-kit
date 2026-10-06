@@ -44,7 +44,7 @@
     }
   },
   "license": "MIT",
-  "description": "ysk-kit CLI for modules, capabilities, OpenAPI, and agent checks.",
+  "description": "ysk-kit CLI for modules, capabilities, OpenAPI, plans, and agent checks.",
   "homepage": "https://ysk.hk/products/ysk-kit",
   "repository": {
     "type": "git",

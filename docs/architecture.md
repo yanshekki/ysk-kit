@@ -44,6 +44,8 @@ Prisma is the default ORM because of migrations, Studio, nested writes, and hiri
 ```
 ysk-kit/
 ├── AGENTS.md
+├── .agents/skills/   shared agent skill wrappers
+├── docs/plans/       durable feature plans
 ├── apps/
 │   ├── api/          Express 5 default; HTTP_ADAPTER=fastify
 │   ├── web/          Vite 8

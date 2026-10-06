@@ -9,7 +9,8 @@ Language: [English](contributing.md) · 中文
 1. 寫程式之前先讀 [AGENTS.zh.md](../AGENTS.zh.md)。
 2. 新的 HTTP 資源由 `pnpm ysk-kit add module <kebab> --prisma --web` 開始。
 3. 業務規則放在 `application/`。Prisma 留在 `infra/`。
-4. 完成前執行：`pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi`。
+4. [計劃協議](../AGENTS.zh.md#計劃協議)要求計劃時，先寫 `docs/plans/<yyyy-mm-dd>-<slug>.md`（`pnpm ysk-kit plan <slug>`）。
+5. 完成前執行：`pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent`。
 
 不要把行業 domain（沙龍、交易所、地圖產品）加進本 kit。那些業務寫在 `create-ysk-app` 產生的產品倉。
 
@@ -48,7 +49,7 @@ Language: [English](foo.md) · 中文
 
 不翻譯 `LICENSE`、`docs/openapi.yaml`、程式碼註解或 Prisma schema。
 
-工具入口維持英文：`CLAUDE.md`，以及由 `tooling/ysk-cli/templates/agent/` 產生的 Cursor／Grok 包裝。它們指向 `AGENTS.md` 與 `docs/skills/`。`.cursor/` 與 `.grok/` 已 gitignore。
+工具入口維持英文而且精簡：`CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.cursor/rules/*.mdc`，以及來自 `tooling/ysk-cli/templates/agent/` 的 skill 包裝。它們指向 `AGENTS.md` 與 `docs/skills/`。共用 skills 在 `.agents/skills/`（`.claude/skills/` 是相同副本）。`.cursor/`、`.claude/`、`.grok/` 底下的編輯器快取仍 gitignore，已提交的指引樹除外。根目錄 `plan.md` 是工作階段草稿，已 gitignore。
 
 ### 單一事實來源
 
@@ -59,7 +60,8 @@ Language: [English](foo.md) · 中文
 | 命令與旗標 | `docs/cli/` |
 | 概念 | `docs/guides/` |
 | 逐步操作 | `docs/recipes/` |
-| Agent 程序 | `docs/skills/`（產生出來的 `.grok/skills` 與 `.cursor/skills` 包裝只指向此處） |
+| Agent 程序 | `docs/skills/`（`.agents/skills` 包裝只指向此處） |
+| 功能計劃 | `docs/plans/<yyyy-mm-dd>-<slug>.md` |
 | 版本變更紀錄 | `CHANGELOG.md`（最近三個版本同時在根 README） |
 | 階段日記 | `docs/history.md` |
 | 路線圖 | `docs/product-plan.md` |

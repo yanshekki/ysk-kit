@@ -5,6 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { checkAgent, formatAgentFindings } from './check-agent';
+import { AGENTS_MD_BUDGET_BYTES } from './check-agent-guidance';
 import { HELP } from './help';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -88,6 +89,35 @@ describe('ysk-kit check agent', () => {
     });
     const rules = checkAgent(dest).map((item) => item.rule);
     expect(rules).toEqual(['clients-no-raw-fetch', 'clients-no-prisma', 'no-ts-enum']);
+  });
+
+  it('flags a pointer file that dropped AGENTS.md', () => {
+    const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-pointer-'));
+    writeTree(dest, {
+      'CLAUDE.md': '# claude only\n',
+    });
+    expect(checkAgent(dest)).toEqual([{ rule: 'pointer-agents-md', file: 'CLAUDE.md', line: 1 }]);
+  });
+
+  it('flags drifted skill copies', () => {
+    const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-drift-'));
+    writeTree(dest, {
+      '.agents/skills/add-module/SKILL.md': 'Read docs. Law: AGENTS.md\n',
+      '.claude/skills/add-module/SKILL.md': 'stale copy without the law name\n',
+    });
+    const rules = checkAgent(dest).map((item) => item.rule);
+    expect(rules).toContain('skill-drift');
+    expect(rules).toContain('pointer-agents-md');
+  });
+
+  it('flags root plus nested AGENTS.md over the byte budget', () => {
+    const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-budget-'));
+    const chunk = 'x'.repeat(AGENTS_MD_BUDGET_BYTES - 10);
+    writeTree(dest, {
+      'AGENTS.md': chunk,
+      'apps/api/AGENTS.md': 'yyyyyyyyyyyy\n',
+    });
+    expect(checkAgent(dest)).toEqual([{ rule: 'agents-md-budget', file: 'AGENTS.md', line: 1 }]);
   });
 
   it('allows the admin queues Bull Board probe fetch', () => {

@@ -1,0 +1,9 @@
+---
+description: Contracts package — DTOs and ts-rest only
+globs: packages/contracts/**/*
+alwaysApply: false
+---
+
+Local reminder. Law: `AGENTS.md` (also `packages/contracts/AGENTS.md`).
+
+Add DTO + `OkSchema` / `ErrSchema` before handlers or clients. No TypeScript `enum`. This package does not import apps, Prisma, Express, Fastify, React, or BullMQ.

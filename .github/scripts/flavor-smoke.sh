@@ -20,6 +20,30 @@ pnpm --filter @ysk-kit/create-app start "$DEST" \
   --db sqlite \
   --yes
 
+if [[ "$FLAVOR" != "php-bridge" ]]; then
+  for rel in \
+    AGENTS.md \
+    CLAUDE.md \
+    GEMINI.md \
+    docs/plans/_template.md \
+    docs/plans/_template.zh.md \
+    .agents/skills/add-module/SKILL.md \
+    .agents/skills/plan-feature/SKILL.md \
+    .claude/skills/add-module/SKILL.md \
+    .github/copilot-instructions.md \
+    .gemini/settings.json \
+    .cursor/rules/ysk-kit.mdc \
+    .cursor/rules/contracts.mdc
+  do
+    if [[ ! -f "$DEST/$rel" ]]; then
+      echo "missing agent guidance file: $rel"
+      exit 1
+    fi
+  done
+  grep -q AGENTS.md "$DEST/CLAUDE.md"
+  grep -q AGENTS.md "$DEST/.gemini/settings.json"
+fi
+
 if [[ "$FLAVOR" == "php-bridge" ]]; then
   pnpm install --dir "$DEST/ts"
   pnpm exec tsc --pretty false --noEmit --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 \

@@ -48,6 +48,12 @@ jobs:
       - name: verify thin dest
         working-directory: /tmp/ysk-thin-smoke
         run: |
+          test -f AGENTS.md
+          test -f .agents/skills/plan-feature/SKILL.md
+          test -f docs/plans/_template.md
+          test -f .github/copilot-instructions.md
+          test -f .gemini/settings.json
+          grep -q AGENTS.md CLAUDE.md
           pnpm install
           cp .env.example .env
           pnpm db:generate

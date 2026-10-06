@@ -50,6 +50,16 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 - `pnpm ysk-kit check agent` also fails when a pointer file drops `AGENTS.md`, skill copies drift, or root + nested `AGENTS.md` exceed 24 KiB.
 - Skills (`docs/skills/` and `.agents/skills/`) now include `plan-feature` and use trigger / inputs / steps / verification / done criteria.
 
+### Security
+
+- pnpm override `source-map-js@1.2.2` closes [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q) / CVE-2026-93749 (indexed source-map offset event-loop DoS). The copy is transitive through PostCSS / Expo Metro.
+
+### Dependency upgrades
+
+| Package | From | To |
+|---|---|---|
+| source-map-js (workspace override) | 1.2.1 | 1.2.2 |
+
 ### Internal/CI
 
 - `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.

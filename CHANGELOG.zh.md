@@ -50,6 +50,16 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 - `pnpm ysk-kit check agent` 也會在指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB 時失敗。
 - Skills（`docs/skills/` 與 `.agents/skills/`）新增 `plan-feature`，並採用觸發／輸入／步驟／驗證／完成條件。
 
+### 安全
+
+- pnpm override `source-map-js@1.2.2` 修復 [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q)／CVE-2026-93749（indexed source map 位移導致 event-loop DoS）。該套件經 PostCSS／Expo Metro 間接引入。
+
+### 依賴升級
+
+| 套件 | 由 | 至 |
+|---|---|---|
+| source-map-js（工作區 override） | 1.2.1 | 1.2.2 |
+
 ### 內部／CI
 
 - `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。

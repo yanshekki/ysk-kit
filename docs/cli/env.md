@@ -23,6 +23,9 @@ Aligned with `.env.example`. Copy to `.env` for local runs. Never commit secrets
 | `LLM_BASE_URL` | OpenAI-compatible base (default `https://api.x.ai/v1`). |
 | `LLM_API_KEY` / `XAI_API_KEY` | LLM secret. Missing outside production → fake `pong` model. Missing in production → 503. |
 | `LLM_MODEL` | Default `grok-4.7`. |
+| `LLM_SYSTEM_PROMPT` | Server-owned system prompt prepended to `/v1/llm/complete` and `/v1/llm/stream`. Empty → kit default. Clients cannot send `role=system`. |
+| `LLM_QUOTA_MAX` | Completed LLM requests per user per window. `0` disables. Default 60. |
+| `LLM_QUOTA_WINDOW_MS` | LLM quota window (default 3600000). |
 | `HTTP_ADAPTER` | `express` (default) or `fastify`. |
 | `CRYPTO_MASTER_KEY` | 64 hex chars for AES-256-GCM. |
 | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM` | SMS OTP. All three required in production. |

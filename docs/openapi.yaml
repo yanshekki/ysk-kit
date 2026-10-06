@@ -422,8 +422,7 @@ paths:
                     properties:
                       role:
                         type: "string"
-                        enum:                           - "system"
-                          - "user"
+                        enum:                           - "user"
                           - "assistant"
                       content:
                         type: "string"

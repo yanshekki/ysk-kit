@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadServerEnv, PublicConfigSchema } from './index';
+import { llmQuotaFromEnv, loadServerEnv, PublicConfigSchema } from './index';
 
 describe('config', () => {
   it('loads server env', () => {
@@ -11,6 +11,18 @@ describe('config', () => {
     expect(env.NODE_ENV).toBe('development');
     expect(env.RATE_LIMIT_MAX).toBe(300);
     expect(env.RATE_LIMIT_WINDOW_MS).toBe(60_000);
+    expect(env.LLM_QUOTA_MAX).toBe(60);
+    expect(env.LLM_QUOTA_WINDOW_MS).toBe(3_600_000);
+    expect(env.LLM_SYSTEM_PROMPT.length).toBeGreaterThan(0);
+  });
+
+  it('disables the LLM quota when LLM_QUOTA_MAX is 0', () => {
+    const env = loadServerEnv({
+      DATABASE_URL: 'mysql://ysk:ysk@localhost:3306/ysk_kit',
+      JWT_SECRET: 'change-me-in-dev-only',
+      LLM_QUOTA_MAX: '0',
+    });
+    expect(llmQuotaFromEnv(env)).toBeUndefined();
   });
 
   it('rejects invalid public urls', () => {

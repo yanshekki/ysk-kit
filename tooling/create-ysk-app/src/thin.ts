@@ -208,6 +208,9 @@ const apiLineNeedles = [
   'createBillingFromEnv',
   'createLogBilling',
   'createPrismaSubscriptionRepository',
+  'createPrismaWebhookEventRepository',
+  'createMemoryWebhookEventRepository',
+  'applyVerifiedStripeWebhook',
   'createFakeLlm',
   'createLogPush',
   'createMemoryLlmUsageRepository',
@@ -259,6 +262,7 @@ export const applyThinPreset = (dest: string): void => {
       'Organization',
       'Membership',
       'Subscription',
+      'ProcessedWebhookEvent',
       'OrgInvite',
     ]) {
       next = dropPrismaBlock(next, 'model', name);
@@ -283,6 +287,8 @@ export const applyThinPreset = (dest: string): void => {
       'requirePermission',
       'claimsHasPermission',
       'LlmCompleteCommandSchema',
+      'DEFAULT_LLM_SYSTEM_PROMPT',
+      'llmQuotaFromEnv',
     ]);
     next = next.replace(/^\s*stripeWebhookSecret\?: string;\n/m, '');
     next = next.replace(

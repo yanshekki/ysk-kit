@@ -31,7 +31,7 @@ import type { IAuditLogger } from './modules/audit-log/domain/audit-logger';
 import { registerAuditRoutes } from './modules/audit-log/infra/audit-router';
 import type { BillingService } from './modules/billing/application/billing-service';
 import { registerBillingRoutes } from './modules/billing/infra/billing-router';
-import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';
+import { applyVerifiedStripeWebhook } from './modules/billing/infra/stripe-billing';
 import type { DeviceService } from './modules/devices/application/device-service';
 import { registerDeviceRoutes } from './modules/devices/infra/device-router';
 import type { FileService } from './modules/files/application/file-service';
@@ -112,26 +112,12 @@ export const createApp = (input: CreateAppInput): Express => {
     const webhookSecret = input.stripeWebhookSecret;
     app.post('/v1/billing/webhook', express.raw({ type: '*/*' }), async (req, res, next) => {
       try {
-        const event = verifyStripeSignature(
+        await applyVerifiedStripeWebhook(
           Buffer.isBuffer(req.body) ? req.body : Buffer.from(String(req.body ?? '')),
           String(req.headers['stripe-signature'] ?? ''),
           webhookSecret,
+          input.billingService,
         );
-        if (event.type === 'checkout.session.completed') {
-          const organizationId = event.data.object.metadata?.organizationId;
-          const planCode = event.data.object.metadata?.planCode;
-          const seatRaw = Number(event.data.object.metadata?.seatCount ?? '1');
-          const seatCount = Number.isFinite(seatRaw) && seatRaw >= 1 ? Math.floor(seatRaw) : 1;
-          if (organizationId && (planCode === 'pro' || planCode === 'free')) {
-            const customer = event.data.object.customer;
-            await input.billingService.activate(
-              organizationId,
-              planCode,
-              typeof customer === 'string' ? customer : undefined,
-              seatCount,
-            );
-          }
-        }
         res.status(200).json({ ok: true, data: { received: true } });
       } catch (error) {
         next(error);

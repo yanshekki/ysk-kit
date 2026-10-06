@@ -114,6 +114,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.2.2
+
+#### Security
+
+- Electron no longer writes access or refresh tokens to disk in plaintext when `safeStorage` is unavailable. Tokens stay in memory for the session and the main process logs a warning that does not include the secret.
+- Desktop sets a Content-Security-Policy, `sandbox: true`, and `webSecurity: true`, denies unexpected navigation and `window.open`, and rejects IPC whose sender frame is not the loaded renderer.
+- `@ysk-kit/logger` redacts authorization headers, cookies, tokens, passwords, API keys, and similar fields (pino `redact`).
+- `/v1/llm/complete` and `/v1/llm/stream` accept only `user` and `assistant` messages. The system prompt comes from `LLM_SYSTEM_PROMPT` (server-owned). Per-user quota is `LLM_QUOTA_MAX` / `LLM_QUOTA_WINDOW_MS` and returns envelope `RATE_LIMITED` (429).
+- `POST /v1/billing/webhook` still verifies `Stripe-Signature` on the raw body, persists Stripe `event.id` on `ProcessedWebhookEvent`, acks duplicates, and ignores older events for the same organization.
+
 ### v1.2.1
 
 #### New features
@@ -159,17 +169,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.
-
-### v1.1.3
-
-#### Improvements
-
-- The root `README.md` and `README.zh.md` list only the latest three versions. Each version is grouped into the categories that apply: New features, Improvements, Fixes, Security, Dependency upgrades, and Internal/CI. The section ends with a link to the full changelog.
-
-#### Internal/CI
-
-- [CHANGELOG.md](CHANGELOG.md) and [CHANGELOG.zh.md](CHANGELOG.zh.md) keep every version, newest first, in those categories. Per-package `CHANGELOG.md` files that Changesets writes stay, and the full changelog links to them.
-- [Contributing](docs/contributing.md) and the release section of [workspace scripts](docs/cli/workspace-scripts.md) require each release to add the new version at the top of the README section and move the oldest of the three into the full changelog.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

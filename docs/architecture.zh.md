@@ -155,7 +155,7 @@ Handler 是 `@ysk-kit/api-http` 裏與框架無關的 map。預設 Express 5。�
 
 Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的 Zod schema。權限用 contracts 的 `Permission` 加 `@ysk-kit/ui` 的 `<Can>`。AppShell 的合約是 `{ brand, nav, trailing?, children }`。
 
-流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在可用時使用 Electron `safeStorage`。Prisma 永不在 Electron 內運行。
+流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在加密可用時用 Electron `safeStorage` 持久化，否則只留在該次工作階段的記憶體。主行程會設 Content-Security-Policy、`sandbox: true`，並拒絕未預期的導航、新視窗與未信任的 IPC。Prisma 永不在 Electron 內運行。
 
 ## 產生器
 

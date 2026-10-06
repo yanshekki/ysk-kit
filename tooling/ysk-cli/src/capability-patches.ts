@@ -423,8 +423,12 @@ export const patchLlmApp = (src: string): string => {
 };
 
 export const patchLlmComposition = (src: string): string => {
-  let next = insertAfterLastImport(
-    src,
+  let next = ensureNamedImport(src, '@ysk-kit/config', [
+    'DEFAULT_LLM_SYSTEM_PROMPT',
+    'llmQuotaFromEnv',
+  ]);
+  next = insertAfterLastImport(
+    next,
     "import { createLlmFromEnv, type ILlmPort } from '@ysk-kit/llm';",
   );
   next = insertAfterLastImport(
@@ -444,11 +448,14 @@ export const patchLlmComposition = (src: string): string => {
     next,
     'llm',
     `  const llm = opts?.llm ?? createLlmFromEnv(env);
+  const llmQuota = llmQuotaFromEnv(env);
   const llmService = createLlmService({
     llm,
     usage: createPrismaLlmUsageRepository(prisma),
     configured: Boolean(env.LLM_API_KEY || env.XAI_API_KEY),
     production: env.NODE_ENV === 'production',
+    systemPrompt: env.LLM_SYSTEM_PROMPT || DEFAULT_LLM_SYSTEM_PROMPT,
+    ...(llmQuota ? { quota: llmQuota } : {}),
   });`,
     '  return {',
   );
@@ -765,7 +772,7 @@ export const patchBillingApp = (src: string): string => {
   );
   next = insertAfterLastImport(
     next,
-    "import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';",
+    "import { applyVerifiedStripeWebhook } from './modules/billing/infra/stripe-billing';",
   );
   next = ensureNamedImport(next, '@ysk-kit/api-express', ['requireAuth', 'requirePermission']);
   next = ensureTypeField(next, 'apiKeyService: ApiKeyService;', 'billingService: BillingService;');
@@ -779,26 +786,12 @@ export const patchBillingApp = (src: string): string => {
     const webhookSecret = input.stripeWebhookSecret;
     app.post('/v1/billing/webhook', express.raw({ type: '*/*' }), async (req, res, next) => {
       try {
-        const event = verifyStripeSignature(
+        await applyVerifiedStripeWebhook(
           Buffer.isBuffer(req.body) ? req.body : Buffer.from(String(req.body ?? '')),
           String(req.headers['stripe-signature'] ?? ''),
           webhookSecret,
+          input.billingService,
         );
-        if (event.type === 'checkout.session.completed') {
-          const organizationId = event.data.object.metadata?.organizationId;
-          const planCode = event.data.object.metadata?.planCode;
-          const seatRaw = Number(event.data.object.metadata?.seatCount ?? '1');
-          const seatCount = Number.isFinite(seatRaw) && seatRaw >= 1 ? Math.floor(seatRaw) : 1;
-          if (organizationId && (planCode === 'pro' || planCode === 'free')) {
-            const customer = event.data.object.customer;
-            await input.billingService.activate(
-              organizationId,
-              planCode,
-              typeof customer === 'string' ? customer : undefined,
-              seatCount,
-            );
-          }
-        }
         res.status(200).json({ ok: true, data: { received: true } });
       } catch (error) {
         next(error);
@@ -853,6 +846,10 @@ export const patchBillingComposition = (src: string): string => {
   );
   next = insertAfterLastImport(
     next,
+    "import { createPrismaWebhookEventRepository } from './modules/billing/infra/prisma-webhook-event-repository';",
+  );
+  next = insertAfterLastImport(
+    next,
     "import { createBillingFromEnv } from './modules/billing/infra/stripe-billing';",
   );
   next = ensureTypeField(next, 'apiKeyService: ApiKeyService;', 'billingService: BillingService;');
@@ -863,6 +860,7 @@ export const patchBillingComposition = (src: string): string => {
     subscriptions: createPrismaSubscriptionRepository(prisma),
     billing: createBillingFromEnv(env, createLogBilling()),
     orgs,
+    webhookEvents: createPrismaWebhookEventRepository(prisma),
   });`,
     '  return {',
   );
@@ -876,7 +874,7 @@ export const patchBillingFastify = (src: string): string => {
   );
   next = insertAfterLastImport(
     next,
-    "import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';",
+    "import { applyVerifiedStripeWebhook } from './modules/billing/infra/stripe-billing';",
   );
   next = ensureNamedImport(next, '@ysk-kit/contracts', ['appContract', 'claimsHasPermission']);
   next = ensureMarkerBlock(
@@ -889,26 +887,12 @@ export const patchBillingFastify = (src: string): string => {
         done(null, body);
       });
       scope.post('/v1/billing/webhook', async (req, reply) => {
-        const event = verifyStripeSignature(
+        await applyVerifiedStripeWebhook(
           Buffer.isBuffer(req.body) ? req.body : Buffer.from(String(req.body ?? '')),
           String(req.headers['stripe-signature'] ?? ''),
           webhookSecret,
+          input.billingService,
         );
-        if (event.type === 'checkout.session.completed') {
-          const organizationId = event.data.object.metadata?.organizationId;
-          const planCode = event.data.object.metadata?.planCode;
-          const seatRaw = Number(event.data.object.metadata?.seatCount ?? '1');
-          const seatCount = Number.isFinite(seatRaw) && seatRaw >= 1 ? Math.floor(seatRaw) : 1;
-          if (organizationId && (planCode === 'pro' || planCode === 'free')) {
-            const customer = event.data.object.customer;
-            await input.billingService.activate(
-              organizationId,
-              planCode,
-              typeof customer === 'string' ? customer : undefined,
-              seatCount,
-            );
-          }
-        }
         return reply.status(200).send({ ok: true, data: { received: true } });
       });
     });
@@ -972,6 +956,10 @@ export const patchBillingMemory = (src: string): string => {
     next,
     "import { createMemorySubscriptionRepository } from './modules/billing/infra/memory-subscription-repository';",
   );
+  next = insertAfterLastImport(
+    next,
+    "import { createMemoryWebhookEventRepository } from './modules/billing/infra/memory-webhook-event-repository';",
+  );
   return ensureInputKey(
     next,
     'apiKeyService,',
@@ -979,6 +967,7 @@ export const patchBillingMemory = (src: string): string => {
       subscriptions: createMemorySubscriptionRepository(),
       billing: createLogBilling(),
       orgs,
+      webhookEvents: createMemoryWebhookEventRepository(),
     }),`,
   );
 };

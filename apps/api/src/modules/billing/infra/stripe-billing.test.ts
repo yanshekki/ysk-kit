@@ -110,7 +110,9 @@ describe('stripe billing', () => {
     const secret = 'whsec_test';
     const payload = Buffer.from(
       JSON.stringify({
+        id: 'evt_1',
         type: 'checkout.session.completed',
+        created: 1_700_000_000,
         data: { object: { metadata: { organizationId: 'o1', planCode: 'pro', seatCount: '2' } } },
       }),
     );
@@ -120,6 +122,7 @@ describe('stripe billing', () => {
       .digest('hex');
     const event = verifyStripeSignature(payload, `t=${t},v1=${v1}`, secret, 1_700_000_000_000);
     expect(event.type).toBe('checkout.session.completed');
+    expect(event.id).toBe('evt_1');
     expect(() =>
       verifyStripeSignature(payload, `t=${t},v1=dead`, secret, 1_700_000_000_000),
     ).toThrow();

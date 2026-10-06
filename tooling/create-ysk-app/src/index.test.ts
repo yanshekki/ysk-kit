@@ -327,6 +327,7 @@ describe('create-ysk-app', () => {
     const schema = readFileSync(join(dest, 'apps/api/prisma/schema.prisma'), 'utf8');
     expect(schema).not.toContain('model LlmUsage');
     expect(schema).not.toContain('model Organization');
+    expect(schema).not.toContain('model ProcessedWebhookEvent');
     expect(schema).not.toContain('@db.');
     expect(schema).toContain('provider = "sqlite"');
     const router = readFileSync(join(dest, 'apps/web/src/router.tsx'), 'utf8');

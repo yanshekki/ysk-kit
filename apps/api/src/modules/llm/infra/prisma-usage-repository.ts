@@ -14,4 +14,9 @@ export const createPrismaLlmUsageRepository = (prisma: PrismaClient): ILlmUsageR
       },
     });
   },
+  async countSince(userId, since) {
+    return prisma.llmUsage.count({
+      where: { userId, createdAt: { gte: since } },
+    });
+  },
 });

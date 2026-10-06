@@ -114,6 +114,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.2.2
+
+#### 安全
+
+- Electron 在 `safeStorage` 不可用時不再把 access／refresh 權杖以明文寫入磁碟。權杖只留在該次工作階段的記憶體，主行程會記錄不含密鑰的警告。
+- 桌面設定 Content-Security-Policy、`sandbox: true` 與 `webSecurity: true`，拒絕未預期的導航與 `window.open`，並拒絕 sender frame 不是已載入 renderer 的 IPC。
+- `@ysk-kit/logger` 會遮蔽 authorization、cookie、token、password、API key 等欄位（pino `redact`）。
+- `/v1/llm/complete` 與 `/v1/llm/stream` 只接受 `user` 與 `assistant` 訊息。system prompt 來自 `LLM_SYSTEM_PROMPT`（伺服器持有）。每用戶配額是 `LLM_QUOTA_MAX`／`LLM_QUOTA_WINDOW_MS`，回 envelope `RATE_LIMITED`（429）。
+- `POST /v1/billing/webhook` 仍在 raw body 上驗證 `Stripe-Signature`，把 Stripe `event.id` 寫入 `ProcessedWebhookEvent`，重送直接確認，並忽略同一組織較舊的事件。
+
 ### v1.2.1
 
 #### 新功能
@@ -159,17 +169,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
-
-### v1.1.3
-
-#### 改進
-
-- 根目錄 `README.md` 與 `README.zh.md` 只列出最近三個版本。每個版本按適用的類別分組：新功能、改進、修正、安全、依賴升級、內部／CI。該節結尾連結到完整變更紀錄。
-
-#### 內部／CI
-
-- [CHANGELOG.md](CHANGELOG.md) 與 [CHANGELOG.zh.md](CHANGELOG.zh.md) 保留每一個版本，由新到舊，並使用同樣的類別。Changesets 產生的各套件 `CHANGELOG.md` 仍然保留，完整變更紀錄連結到這些檔案。
-- [貢獻指引](docs/contributing.zh.md) 與 [工作區指令](docs/cli/workspace-scripts.zh.md) 的發佈一節規定：每次發佈都把新版本加在 README 該節的頂部，並把三個版本中最舊的一個移入完整變更紀錄。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

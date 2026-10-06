@@ -35,7 +35,15 @@ const publishScript = (
 ).scripts['release:publish'];
 
 const FLAVORS = ['saas', 'desktop', 'gateway', 'php-bridge', 'trading', 'static-web3'] as const;
-const SKIP_SCAN_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage', '.turbo', 'generated']);
+const SKIP_SCAN_DIRS = new Set([
+  'node_modules',
+  'dist',
+  '.git',
+  'coverage',
+  '.turbo',
+  'generated',
+  '.runs',
+]);
 
 const filesContaining = (root: string, needles: string[]) => {
   const hits: string[] = [];

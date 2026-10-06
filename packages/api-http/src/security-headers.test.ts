@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { securityHeaders } from './security-headers';
+import { securityHeaders } from './security-headers.js';
 
 describe('securityHeaders', () => {
   it('sets nosniff and deny framing on JSON routes', () => {

@@ -1,6 +1,6 @@
 import { appContract } from '@ysk-kit/contracts';
 import { describe, expect, it } from 'vitest';
-import { buildOpenApiDocument, scalarDocsHtml } from './openapi';
+import { buildOpenApiDocument, scalarDocsHtml } from './openapi.js';
 
 describe('buildOpenApiDocument', () => {
   it('emits OpenAPI 3.1 paths from the app contract', () => {

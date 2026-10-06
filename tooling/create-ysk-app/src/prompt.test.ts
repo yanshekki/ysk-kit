@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { resolveCreateOptions } from './prompt';
-import { parseArgs } from './scaffold';
+import { resolveCreateOptions } from './prompt.js';
+import { parseArgs } from './scaffold.js';
 
 const scriptedAsk = (answers: string[]) => {
   const calls: string[] = [];

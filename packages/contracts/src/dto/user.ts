@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { HK } from '../constants/hk';
-import { UserRoleSchema } from '../enums/user-role';
-import { UserStatusSchema } from '../enums/user-status';
+import { HK } from '../constants/hk.js';
+import { UserRoleSchema } from '../enums/user-role.js';
+import { UserStatusSchema } from '../enums/user-status.js';
 
 export const PageQuerySchema = z.object({
   cursor: z.string().optional(),

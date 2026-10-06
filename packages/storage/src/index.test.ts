@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createLocalStorage, createStorageFromEnv } from './index';
+import { createLocalStorage, createStorageFromEnv } from './index.js';
 
 describe('storage', () => {
   it('uses local adapter when S3 env is empty', () => {

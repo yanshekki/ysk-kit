@@ -1,9 +1,9 @@
 import type { Server as HttpServer } from 'node:http';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { verifyAccessToken } from '@ysk-kit/auth';
-import Redis from 'ioredis';
 import { Server } from 'socket.io';
-import { type IRealtimePort, SOCKET_IO_REDIS_KEY } from './port';
+import { type IRealtimePort, SOCKET_IO_REDIS_KEY } from './port.js';
+import { Redis, type RedisClient } from './redis-ctor.js';
 
 export type AttachSocketIoOpts = {
   jwtSecret: string;
@@ -18,8 +18,8 @@ export const attachSocketIoRealtime = (
   const io = new Server(httpServer, {
     cors: { origin: opts.corsOrigins, credentials: true },
   });
-  let pub: Redis | undefined;
-  let sub: Redis | undefined;
+  let pub: RedisClient | undefined;
+  let sub: RedisClient | undefined;
   if (opts.redisUrl) {
     pub = new Redis(opts.redisUrl, { maxRetriesPerRequest: null });
     sub = pub.duplicate();

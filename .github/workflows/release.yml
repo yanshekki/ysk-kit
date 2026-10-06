@@ -55,10 +55,20 @@ jobs:
       - name: Log publish auth and registry
         if: github.event_name == 'workflow_dispatch'
         run: node .github/publish-packages.mjs --debug
-      # `changeset publish` exits 0 when pnpm's PUT is accepted, before
-      # `npm view` can see the version. Fail the job if that stays true.
-      # Skip when Changesets only opened or updated the version PR
-      # (`published` is false). Waiting then looks for unpublished versions.
-      - name: Verify packages are installable
-        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.published == 'true'
-        run: node .github/publish-packages.mjs --verify-only
+      # Do not key off changesets/action `published`. Custom
+      # `pnpm release:publish` stdout is not Changesets' tag format, so that
+      # output stays false after a real publish. Tag when this commit has no
+      # pending changeset files and every public name@version is installable.
+      # Pending changesets are the version-PR path (skip tag). Skip this step
+      # when unpublished-packages already decided there is nothing to publish
+      # (avoids backfilling a missing historical tag).
+      - id: tag
+        name: Tag vX.Y.Z and GitHub Release
+        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true'
+        run: node .github/tag-and-release.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify published packages are installable
+        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.tag.outputs.published == 'true'
+        run: node .github/pack-and-run.mjs --registry

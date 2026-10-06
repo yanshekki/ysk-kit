@@ -4,9 +4,9 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { checkAgent, formatAgentFindings } from './check-agent';
-import { AGENTS_MD_BUDGET_BYTES } from './check-agent-guidance';
-import { HELP } from './help';
+import { checkAgent, formatAgentFindings } from './check-agent.js';
+import { AGENTS_MD_BUDGET_BYTES } from './check-agent-guidance.js';
+import { HELP } from './help.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const fixtures = join(kitRoot, 'tooling/ysk-cli/fixtures/agent');
@@ -30,6 +30,15 @@ describe('ysk-kit check agent', () => {
   it('reports zero findings on this kit', () => {
     expect(checkAgent(kitRoot)).toEqual([]);
     expect(formatAgentFindings([])).toBe('ysk-kit check agent: ok');
+  });
+
+  it('does not count gitignored .runs dest trees toward the AGENTS.md budget', () => {
+    const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-runs-'));
+    writeTree(dest, {
+      'AGENTS.md': 'ok\n',
+      '.runs/clinic/AGENTS.md': `${'x'.repeat(AGENTS_MD_BUDGET_BYTES + 1)}\n`,
+    });
+    expect(checkAgent(dest).filter((finding) => finding.rule === 'agents-md-budget')).toEqual([]);
   });
 
   it('cli exits 0 on this kit', () => {

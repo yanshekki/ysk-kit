@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { HELP } from './help';
-import { readKitVersion, upgrade } from './upgrade';
+import { HELP } from './help.js';
+import { readKitVersion, upgrade } from './upgrade.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const kitVersion = readKitVersion(kitRoot);

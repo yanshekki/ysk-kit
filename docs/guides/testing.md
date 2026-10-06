@@ -64,11 +64,12 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 | Job | What it runs |
 |---|---|
 | `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `pack-and-run` | `pnpm build:packages` then `.github/pack-and-run.mjs`: pack all 26 public packages, install tarballs in a clean dir, `import('@ysk-kit/<pkg>')`, CLI `--help`, in-tree php-bridge create |
 | `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk-kit check agent` / typecheck / test / OpenAPI |
 | `flavor-smoke` | Matrix of every flavor × `thin` and `full`. sqlite. install, typecheck, test, build. pnpm store and Electron download are cached |
 | `example-smoke` | Apply each worked example onto a sqlite dest |
 | `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
-| `Release` | Provenance via `pnpm publish --provenance`, `NPM_CONFIG_PROVENANCE=true`, and `id-token: write`. npm Trusted Publishing (OIDC) is the only credential. The job fails if that OIDC token is unavailable |
+| `Release` | Provenance via `pnpm publish --provenance`, `NPM_CONFIG_PROVENANCE=true`, and `id-token: write`. npm Trusted Publishing (OIDC) is the only credential. The job fails if that OIDC token is unavailable. After a successful publish it creates annotated `vX.Y.Z` and a GitHub Release, then verifies the published tarballs and CLI bins |
 
 After a feature, the local bar is:
 

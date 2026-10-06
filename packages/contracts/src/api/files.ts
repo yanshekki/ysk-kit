@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
-import { PresignDtoSchema, PresignUploadCommandSchema } from '../dto/file';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { PresignDtoSchema, PresignUploadCommandSchema } from '../dto/file.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

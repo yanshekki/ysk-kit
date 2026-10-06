@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { createWebStorageTokenStore, memoryTokenStore } from './token-store';
+import { createWebStorageTokenStore, memoryTokenStore } from './token-store.js';
 
 const memory = new Map<string, string>();
 

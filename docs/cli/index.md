@@ -12,6 +12,6 @@ YSK Kit ships two generators and a set of workspace scripts.
 | Root `package.json` scripts | Dev, test, migrate, seed, lint | [workspace-scripts.md](workspace-scripts.md) |
 | `.env` / `.env.example` | Runtime configuration | [env.md](env.md) |
 
-From npm: `pnpm create @ysk-kit/app`. From this checkout: `pnpm --filter @ysk-kit/create-app start`. Run `pnpm ysk-kit` or `create-ysk-app` without arguments to print English `--help`. The Chinese manuals are the full reference.
+From npm: `npm create @ysk-kit/app` or `pnpm create @ysk-kit/app` (there is no unscoped `create-ysk-app` package). From this checkout: `pnpm --filter @ysk-kit/create-app start`. Run `pnpm ysk-kit` or `create-ysk-app` without arguments to print English `--help`. The Chinese manuals are the full reference.
 
 `YSK_ROOT` selects which tree `ysk` patches. The binary defaults to this repository; tests and generated products set `YSK_ROOT` to the product root.

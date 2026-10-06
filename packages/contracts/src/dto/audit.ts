@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { AuditActionSchema } from '../enums/audit-action';
-import { PaginatedSchema } from './user';
+import { AuditActionSchema } from '../enums/audit-action.js';
+import { PaginatedSchema } from './user.js';
 
 export const AuditLogDtoSchema = z.object({
   id: z.string().uuid(),

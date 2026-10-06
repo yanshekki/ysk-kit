@@ -1,7 +1,7 @@
 import { AppError } from '@ysk-kit/domain-kernel';
 import { describe, expect, it } from 'vitest';
-import { HttpClient } from './http';
-import { memoryTokenStore } from './token-store';
+import { HttpClient } from './http.js';
+import { memoryTokenStore } from './token-store.js';
 
 describe('HttpClient', () => {
   it('unwraps ok envelopes', async () => {

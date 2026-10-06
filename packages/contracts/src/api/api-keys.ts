@@ -1,7 +1,11 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { ApiKeyDtoSchema, CreateApiKeyCommandSchema, CreatedApiKeyDtoSchema } from '../dto/api-key';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import {
+  ApiKeyDtoSchema,
+  CreateApiKeyCommandSchema,
+  CreatedApiKeyDtoSchema,
+} from '../dto/api-key.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

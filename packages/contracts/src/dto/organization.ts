@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { InviteOrgRoleSchema, OrgRoleSchema } from '../enums/org-role';
+import { InviteOrgRoleSchema, OrgRoleSchema } from '../enums/org-role.js';
 
 export const OrganizationDtoSchema = z.object({
   id: z.string().uuid(),

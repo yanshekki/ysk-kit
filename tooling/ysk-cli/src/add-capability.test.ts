@@ -3,12 +3,12 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { addCapability } from './add-capability';
+import { addCapability } from './add-capability.js';
 import {
   patchTeamMobileApp,
   patchTeamMobileHome,
   patchTeamMobileLogin,
-} from './capability-patches';
+} from './capability-patches.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const hasTeam = existsSync(join(kitRoot, 'apps/api/src/modules/organizations'));

@@ -1,6 +1,6 @@
 import { ErrSchema, type Platform } from '@ysk-kit/contracts';
 import { AppError } from '@ysk-kit/domain-kernel';
-import type { TokenStore } from './token-store';
+import type { TokenStore } from './token-store.js';
 
 export class HttpClient {
   private refreshing: Promise<boolean> | null = null;

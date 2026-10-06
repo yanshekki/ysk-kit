@@ -1,13 +1,13 @@
-export { AppShell } from './app-shell';
-export { Button } from './button';
-export { Can } from './can';
-export { cn } from './cn';
-export { EmptyState } from './empty-state';
-export { ErrorBanner } from './error-banner';
-export { FormField } from './form-field';
-export { Input } from './input';
-export { PageHeader } from './page-header';
-export { Spinner } from './spinner';
+export { AppShell } from './app-shell.js';
+export { Button } from './button.js';
+export { Can } from './can.js';
+export { cn } from './cn.js';
+export { EmptyState } from './empty-state.js';
+export { ErrorBanner } from './error-banner.js';
+export { FormField } from './form-field.js';
+export { Input } from './input.js';
+export { PageHeader } from './page-header.js';
+export { Spinner } from './spinner.js';
 export {
   Table,
   TableBody,
@@ -15,4 +15,4 @@ export {
   TableHead,
   TableHeader,
   TableRow,
-} from './table';
+} from './table.js';

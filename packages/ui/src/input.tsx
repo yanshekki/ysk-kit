@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
-import { cn } from './cn';
+import { cn } from './cn.js';
 
 export function Input({ className, id, ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return (

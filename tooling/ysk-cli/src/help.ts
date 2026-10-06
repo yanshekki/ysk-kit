@@ -1,4 +1,4 @@
-import { CAPABILITIES } from './add-capability';
+import { CAPABILITIES } from './add-capability.js';
 
 export const HELP = `ysk-kit — generator for YSK Kit products (alias: yskk)
 

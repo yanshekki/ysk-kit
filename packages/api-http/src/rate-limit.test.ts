@@ -1,6 +1,6 @@
 import { AppError } from '@ysk-kit/domain-kernel';
 import { describe, expect, it } from 'vitest';
-import { clientIp, createMemoryRateLimit, createRedisRateLimit } from './rate-limit';
+import { clientIp, createMemoryRateLimit, createRedisRateLimit } from './rate-limit.js';
 
 describe('createMemoryRateLimit', () => {
   it('throws RATE_LIMITED after max hits in the window', () => {

@@ -1,13 +1,13 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { mergePrisma } from './merge-prisma';
+import { mergePrisma } from './merge-prisma.js';
 import {
   ensureMarkerBlock,
   expressRouteInsertBefore,
   insertAfterLastImport,
   insertBeforeMatch,
-} from './patch-text';
+} from './patch-text.js';
 
 const templateDir = join(dirname(fileURLToPath(import.meta.url)), '../templates/module');
 
@@ -147,7 +147,7 @@ export const addModule = (
   patchFile(
     join(root, 'packages/contracts/src/dto/index.ts'),
     (src) => {
-      const line = `export * from './${name}';`;
+      const line = `export * from './${name}.js';`;
       if (src.includes(line)) return src;
       return `${src.trimEnd()}\n${line}\n`;
     },
@@ -158,13 +158,13 @@ export const addModule = (
   const barrel = join(root, 'packages/contracts/src/api/index.ts');
   if (existsSync(barrel)) {
     let barrelSrc = readFileSync(barrel, 'utf8');
-    const exportLine = `export * from './${name}';`;
+    const exportLine = `export * from './${name}.js';`;
     if (!barrelSrc.includes(exportLine)) {
       barrelSrc = `${barrelSrc.trimEnd()}\n${exportLine}\n`;
       logs.push('updated packages/contracts/src/api/index.ts export');
     }
     if (barrelSrc.includes('export const appContract = c.router({')) {
-      const importLine = `import { ${camel}Contract } from './${name}';`;
+      const importLine = `import { ${camel}Contract } from './${name}.js';`;
       if (!barrelSrc.includes(importLine)) {
         barrelSrc = insertAfterLastImport(barrelSrc, importLine);
       }
@@ -338,7 +338,7 @@ export const addModule = (
     (src) => {
       let next = insertAfterLastImport(
         src,
-        `import { ${camel}Resource } from './resources/${name}';`,
+        `import { ${camel}Resource } from './resources/${name}.js';`,
       );
       if (!next.includes(`${camel}: ${camel}Resource(http)`)) {
         if (next.includes('users: usersResource(http),')) {
@@ -363,7 +363,7 @@ export const addModule = (
   patchFile(
     join(root, 'packages/web-sdk/src/index.ts'),
     (src) => {
-      const line = `export { create${pascal}Hooks } from './${name}-hooks';`;
+      const line = `export { create${pascal}Hooks } from './${name}-hooks.js';`;
       if (src.includes(line)) return src;
       return `${src.trimEnd()}\n${line}\n`;
     },

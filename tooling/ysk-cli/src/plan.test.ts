@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { HELP } from './help';
-import { checkPlan, localIsoDate, markdownH2Sections, writePlan } from './plan';
+import { HELP } from './help.js';
+import { checkPlan, localIsoDate, markdownH2Sections, writePlan } from './plan.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const tsxCli = join(kitRoot, 'tooling/ysk-cli/node_modules/tsx/dist/cli.mjs');

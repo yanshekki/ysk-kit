@@ -17,7 +17,7 @@ This repository is the living `saas` flavor. Identity, files, notifications, job
 
 ## Fifteen minutes to a product
 
-From npm:
+From npm (`npm create @ysk-kit/app` or `pnpm create @ysk-kit/app`; there is no unscoped `create-ysk-app` package):
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
@@ -81,7 +81,7 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk-kit plan <slug>` | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` from the template |
 | `pnpm ysk-kit plan --check <file>` | Fail if a plan is missing headings or still placeholders |
 | `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift |
-| `pnpm create @ysk-kit/app <name>` | Scaffold a product from npm |
+| `pnpm create @ysk-kit/app <name>` / `npm create @ysk-kit/app <name>` | Scaffold a product from npm |
 | `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product from this checkout |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | Verify a change |
 
@@ -113,6 +113,19 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 ## Changelog
 
 The latest three versions. Older versions are in the full changelog.
+
+### v1.2.2
+
+#### Fixes
+
+- Published `@ysk-kit/*` libraries emit valid Node ESM: relative imports in `dist/` include `.js` extensions, so `node` can load the tarball. Public packages inherit `module` / `moduleResolution` `NodeNext` from `tsconfig.base.json`.
+- `@ysk-kit/create-app` and `@ysk-kit/cli` bins start with `#!/usr/bin/env node` and are executable, so `create-ysk-app` / `ysk-kit` / `yskk` run after install.
+- Scaffold from npm is `npm create @ysk-kit/app` or `pnpm create @ysk-kit/app`. There is no unscoped `create-ysk-app` package on npm; the published package is `@ysk-kit/create-app`.
+
+#### Internal/CI
+
+- CI job `pack-and-run` packs all 26 public packages, installs the tarballs in a clean directory, imports each, runs the CLI bins, and scaffolds a non-interactive php-bridge dest from the in-tree CLI.
+- Release no longer keys off Changesets `published`. After a successful publish it creates the annotated `vX.Y.Z` tag at that commit, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Publish stays OIDC Trusted Publishing only.
 
 ### v1.2.1
 
@@ -159,17 +172,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.
-
-### v1.1.3
-
-#### Improvements
-
-- The root `README.md` and `README.zh.md` list only the latest three versions. Each version is grouped into the categories that apply: New features, Improvements, Fixes, Security, Dependency upgrades, and Internal/CI. The section ends with a link to the full changelog.
-
-#### Internal/CI
-
-- [CHANGELOG.md](CHANGELOG.md) and [CHANGELOG.zh.md](CHANGELOG.zh.md) keep every version, newest first, in those categories. Per-package `CHANGELOG.md` files that Changesets writes stay, and the full changelog links to them.
-- [Contributing](docs/contributing.md) and the release section of [workspace scripts](docs/cli/workspace-scripts.md) require each release to add the new version at the top of the README section and move the oldest of the three into the full changelog.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

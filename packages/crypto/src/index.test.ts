@@ -5,7 +5,7 @@ import {
   DEV_CRYPTO_KEY_HEX,
   decryptUtf8,
   encryptUtf8,
-} from './index';
+} from './index.js';
 
 describe('crypto', () => {
   it('roundtrips utf8', async () => {

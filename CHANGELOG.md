@@ -54,6 +54,10 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 - `fix-layers` maps each cruiser rule to a typical bad import and forbids editing `.dependency-cruiser.cjs` without approval.
 - Skill index adds “Do not use when” and “Related vendor skill” columns.
 
+### Security
+
+- Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) / CVE-2026-102422 (`quote()` command injection after a `{ comment }` token). The copy is transitive through Expo / React Native `react-devtools-core`.
+
 ## v1.2.2
 
 ### New features

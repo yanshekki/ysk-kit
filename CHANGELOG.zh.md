@@ -54,6 +54,10 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 - `fix-layers` 把每條 cruiser 規則對到典型壞 import，未經批准禁止改 `.dependency-cruiser.cjs`。
 - Skill 索引加上「不要用於」與「相關外部 skill」欄。
 
+### 安全
+
+- 工作區 override `shell-quote@1.11.0` 修復 [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv)／CVE-2026-102422（`quote()` 在 `{ comment }` token 之後的命令注入）。該套件經 Expo／React Native `react-devtools-core` 間接引入。
+
 ## v1.2.2
 
 ### 新功能

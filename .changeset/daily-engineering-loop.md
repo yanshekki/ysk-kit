@@ -27,4 +27,4 @@
 "@ysk-kit/web-sdk": patch
 ---
 
-Add daily-loop agent skills (contract-change, debug-issue, review-change, llm-feature) and thicken existing skill wrappers with steps, Chinese triggers, and Do-not lines.
+Add daily-loop agent skills (contract-change, debug-issue, review-change, llm-feature) and thicken existing skill wrappers with steps, Chinese triggers, and Do-not lines. Pin shell-quote@1.11.0 (GHSA-pqg4-j6r4-53mv).

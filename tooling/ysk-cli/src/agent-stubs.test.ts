@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { AGENT_SKILL_TREES, writeAgentStubs } from './agent-stubs';
+import { AGENT_SKILL_TREES, writeAgentStubs } from './agent-stubs.js';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 

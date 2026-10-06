@@ -31,10 +31,11 @@ Fastify：在 `.env` 設 `HTTP_ADAPTER=fastify` 並重啟 API。
 
 在 TTY 可省略旗標；命令會提示 flavor、preset 與資料庫。旗標與 `--yes` 會略過提問。
 
-從 npm（`@ysk-kit/create-app` 1.0.2）：
+從 npm（`@ysk-kit/create-app`）。npm 上沒有無 scope 的 `create-ysk-app` 套件：
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# 或：npm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
 ```
 
 從本倉：

@@ -35,7 +35,15 @@ const publishScript = (
 ).scripts['release:publish'];
 
 const FLAVORS = ['saas', 'desktop', 'gateway', 'php-bridge', 'trading', 'static-web3'] as const;
-const SKIP_SCAN_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage', '.turbo', 'generated']);
+const SKIP_SCAN_DIRS = new Set([
+  'node_modules',
+  'dist',
+  '.git',
+  'coverage',
+  '.turbo',
+  'generated',
+  '.runs',
+]);
 
 const filesContaining = (root: string, needles: string[]) => {
   const hits: string[] = [];
@@ -71,6 +79,14 @@ describe('CI workflows', () => {
     expect(ci).toContain('cache: pnpm');
   });
 
+  it('pack-and-run smokes published tarballs as a required-check candidate', () => {
+    expect(ci).toContain('pack-and-run:');
+    expect(ci).toContain('timeout-minutes: 20');
+    expect(ci).toContain('pnpm build:packages');
+    expect(ci).toContain('node .github/pack-and-run.mjs');
+    expect(ci).not.toContain('pack-and-run.mjs --registry');
+  });
+
   it('publishes with provenance through OIDC only', () => {
     expect(release).toContain('id-token: write');
     expect(release).not.toMatch(/^\s*registry-url:/m);
@@ -82,8 +98,11 @@ describe('CI workflows', () => {
     expect(publishScript).not.toContain('changeset publish');
     expect(release).toContain('workflow_dispatch:');
     expect(release).toContain('publish-packages.mjs --debug');
-    expect(release).toContain('publish-packages.mjs --verify-only');
-    expect(release).toContain("steps.changesets.outputs.published == 'true'");
+    expect(release).not.toContain('publish-packages.mjs --verify-only');
+    expect(release).not.toContain("steps.changesets.outputs.published == 'true'");
+    expect(release).toContain('tag-and-release.mjs');
+    expect(release).toContain("steps.tag.outputs.published == 'true'");
+    expect(release).toContain('pack-and-run.mjs --registry');
     expect(release).toContain('create-github-releases: false');
     expect(release).toContain('push-git-tags: false');
     expect(release).toContain('pnpm version:packages');

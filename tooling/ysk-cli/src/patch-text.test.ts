@@ -6,7 +6,7 @@ import {
   ensureNamedImport,
   expressRouteInsertBefore,
   insertAfterLastImport,
-} from './patch-text';
+} from './patch-text.js';
 
 describe('patch-text', () => {
   it('appends an env key once', () => {

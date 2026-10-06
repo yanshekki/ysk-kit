@@ -9,10 +9,10 @@ import {
 } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { Capability } from './add-capability';
-import { CATALOG } from './capability-catalog';
-import { mergePrisma } from './merge-prisma';
-import { ensureEnvKey, ensureJsonDep } from './patch-text';
+import type { Capability } from './add-capability.js';
+import { CATALOG } from './capability-catalog.js';
+import { mergePrisma } from './merge-prisma.js';
+import { ensureEnvKey, ensureJsonDep } from './patch-text.js';
 
 const readIf = (path: string): string | null =>
   existsSync(path) ? readFileSync(path, 'utf8') : null;

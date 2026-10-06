@@ -37,6 +37,19 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.2.2
+
+### Fixes
+
+- Published `@ysk-kit/*` libraries emit valid Node ESM: relative imports in `dist/` include `.js` extensions, so `node` can load the tarball (`import('@ysk-kit/<pkg>')`). Public packages inherit `module` / `moduleResolution` `NodeNext` from `tsconfig.base.json`.
+- `@ysk-kit/create-app` and `@ysk-kit/cli` bins start with `#!/usr/bin/env node` and are executable, so `create-ysk-app` / `ysk-kit` / `yskk` run after install (they previously failed with `import: not found` and `ERR_MODULE_NOT_FOUND`).
+- Scaffold from npm is `npm create @ysk-kit/app` or `pnpm create @ysk-kit/app`. There is no unscoped `create-ysk-app` package on npm; the published package is `@ysk-kit/create-app`.
+
+### Internal/CI
+
+- CI job `pack-and-run` builds, `pnpm pack`s all 26 public packages, installs the tarballs in a clean directory, imports each package, runs the CLI `--help` bins, and scaffolds a non-interactive `php-bridge` dest from the in-tree CLI.
+- Release no longer keys off Changesets `published` (custom `pnpm release:publish` stdout is not Changesets' tag format). After a successful publish it creates the annotated `vX.Y.Z` tag at that commit, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Pending changeset files skip the tag (version PR path). Publish stays OIDC Trusted Publishing only.
+
 ## v1.2.1
 
 ### New features

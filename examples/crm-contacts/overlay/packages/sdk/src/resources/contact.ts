@@ -4,7 +4,7 @@ import type {
   PaginatedContact,
   UpdateContactStatusCommand,
 } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 const toQuery = (query?: { cursor?: string; limit?: number }): string => {
   const params = new URLSearchParams();

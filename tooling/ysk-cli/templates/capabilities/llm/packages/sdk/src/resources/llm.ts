@@ -5,8 +5,8 @@ import type {
   LlmUsage,
   Platform,
 } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
-import type { TokenStore } from '../token-store';
+import type { HttpClient } from '../http.js';
+import type { TokenStore } from '../token-store.js';
 
 export const llmResource = (
   http: HttpClient,

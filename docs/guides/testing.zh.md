@@ -64,11 +64,12 @@ pnpm ysk-kit check agent
 | Job | 運行甚麼 |
 |---|---|
 | `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `pack-and-run` | `pnpm build:packages` 然後 `.github/pack-and-run.mjs`：把 26 個公開套件 pack、在乾淨目錄安裝 tarball、`import('@ysk-kit/<pkg>')`、CLI `--help`、倉內 php-bridge create |
 | `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk-kit check agent`／typecheck／test／OpenAPI |
 | `flavor-smoke` | 每個 flavor × `thin` 與 `full` 的 matrix。sqlite。install、typecheck、test、build。快取 pnpm store 與 Electron 下載 |
 | `example-smoke` | 把每個已完成實例套用到 sqlite dest |
 | `e2e` | MySQL 8.4 服務、migrate deploy、種子、Chromium Playwright。API 用 `tsx`。沒有 Redis、Stripe、Twilio、FCM、Jaeger、Grafana |
-| `Release` | 以 `pnpm publish --provenance`、`NPM_CONFIG_PROVENANCE=true` 與 `id-token: write` 產生 provenance。npm Trusted Publishing（OIDC）是唯一憑證。OIDC token 不存在時 job 失敗 |
+| `Release` | 以 `pnpm publish --provenance`、`NPM_CONFIG_PROVENANCE=true` 與 `id-token: write` 產生 provenance。npm Trusted Publishing（OIDC）是唯一憑證。OIDC token 不存在時 job 失敗。成功發佈後建立 annotated `vX.Y.Z` 與 GitHub Release，再驗證已發佈的 tarball 與 CLI bin |
 
 功能完成後，本機門檻是：
 

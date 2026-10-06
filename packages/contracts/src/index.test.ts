@@ -8,7 +8,7 @@ import {
   USER_STATUS_LABELS,
   USER_STATUS_VALUES,
   UserStatus,
-} from './index';
+} from './index.js';
 
 describe('contracts', () => {
   it('keeps user status literals stable', () => {

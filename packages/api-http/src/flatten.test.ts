@@ -1,6 +1,6 @@
 import { appContract } from '@ysk-kit/contracts';
 import { describe, expect, it } from 'vitest';
-import { flattenContract } from './flatten';
+import { flattenContract } from './flatten.js';
 
 describe('flattenContract', () => {
   it('flattens nested ts-rest routers', () => {

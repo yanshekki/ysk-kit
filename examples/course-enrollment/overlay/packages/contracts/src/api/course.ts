@@ -1,7 +1,11 @@
 import { initContract } from '@ts-rest/core';
-import { CourseDtoSchema, CreateCourseCommandSchema, PaginatedCourseSchema } from '../dto/course';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import {
+  CourseDtoSchema,
+  CreateCourseCommandSchema,
+  PaginatedCourseSchema,
+} from '../dto/course.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

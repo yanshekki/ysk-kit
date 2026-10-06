@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ERROR_CODE_VALUES } from './codes';
+import { ERROR_CODE_VALUES } from './codes.js';
 
 export const ApiErrorBodySchema = z.object({
   code: z.enum(ERROR_CODE_VALUES),

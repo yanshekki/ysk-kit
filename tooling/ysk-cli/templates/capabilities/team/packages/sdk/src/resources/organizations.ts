@@ -7,7 +7,7 @@ import type {
   OrgInviteDto,
   UpdateOrganizationCommand,
 } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 export const organizationsResource = (http: HttpClient) => ({
   create: (body: CreateOrganizationCommand) =>

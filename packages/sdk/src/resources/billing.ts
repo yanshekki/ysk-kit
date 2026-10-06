@@ -7,7 +7,7 @@ import type {
   PortalCommand,
   SubscriptionDto,
 } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
+import type { HttpClient } from '../http.js';
 
 const withOrg = (path: string, organizationId: string): string =>
   `${path}?organizationId=${encodeURIComponent(organizationId)}`;

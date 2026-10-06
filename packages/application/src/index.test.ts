@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parsePageQuery, slicePage } from './index';
+import { parsePageQuery, slicePage } from './index.js';
 
 describe('application pagination', () => {
   it('defaults limit to 20', () => {

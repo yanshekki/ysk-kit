@@ -1,16 +1,16 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { AppShell } from './app-shell';
-import { Button } from './button';
-import { Can } from './can';
-import { cn } from './cn';
-import { EmptyState } from './empty-state';
-import { ErrorBanner } from './error-banner';
-import { FormField } from './form-field';
-import { Input } from './input';
-import { PageHeader } from './page-header';
-import { Spinner } from './spinner';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { AppShell } from './app-shell.js';
+import { Button } from './button.js';
+import { Can } from './can.js';
+import { cn } from './cn.js';
+import { EmptyState } from './empty-state.js';
+import { ErrorBanner } from './error-banner.js';
+import { FormField } from './form-field.js';
+import { Input } from './input.js';
+import { PageHeader } from './page-header.js';
+import { Spinner } from './spinner.js';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table.js';
 
 afterEach(() => {
   cleanup();

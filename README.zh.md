@@ -17,7 +17,7 @@ Language: [English](README.md) · 中文
 
 ## 十五分鐘開一個產品
 
-從 npm：
+從 npm（`npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`；npm 上沒有無 scope 的 `create-ysk-app` 套件）：
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
@@ -81,7 +81,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
 | `pnpm ysk-kit plan --check <file>` | 計劃缺標題或仍是佔位內容時失敗 |
 | `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
-| `pnpm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
+| `pnpm create @ysk-kit/app <name>`／`npm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | 驗證一次改動 |
 
@@ -113,6 +113,19 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 ## 變更紀錄
 
 最近三個版本。較舊的版本在完整變更紀錄。
+
+### v1.2.2
+
+#### 修正
+
+- 已發佈的 `@ysk-kit/*` 程式庫輸出有效的 Node ESM：`dist/` 的相對路徑帶 `.js` 副檔名，`node` 可以載入 tarball。公開套件從 `tsconfig.base.json` 繼承 `module`／`moduleResolution` `NodeNext`。
+- `@ysk-kit/create-app` 與 `@ysk-kit/cli` 的 bin 以 `#!/usr/bin/env node` 開頭而且可執行，因此安裝後 `create-ysk-app`／`ysk-kit`／`yskk` 可以運行。
+- 從 npm 開倉使用 `npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`。npm 上沒有無 scope 的 `create-ysk-app` 套件；發佈的套件是 `@ysk-kit/create-app`。
+
+#### 內部／CI
+
+- CI job `pack-and-run` 把 26 個公開套件 pack，在乾淨目錄安裝 tarball，import 每一個，執行 CLI bin，並用倉內 CLI 非互動建立 php-bridge dest。
+- Release 不再以 Changesets 的 `published` 為準。成功發佈後會在該 commit 建立 annotated `vX.Y.Z` tag，用該版本變更紀錄開 GitHub Release，再安裝已發佈的 tarball 並執行 CLI bin 做驗證。發佈仍然只使用 OIDC Trusted Publishing。
 
 ### v1.2.1
 
@@ -159,17 +172,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - `thin-smoke` 與 `flavor-smoke` 會斷言產生出來的指針套件。`php-bridge` 仍然略過工作區 agent 包裝。
-
-### v1.1.3
-
-#### 改進
-
-- 根目錄 `README.md` 與 `README.zh.md` 只列出最近三個版本。每個版本按適用的類別分組：新功能、改進、修正、安全、依賴升級、內部／CI。該節結尾連結到完整變更紀錄。
-
-#### 內部／CI
-
-- [CHANGELOG.md](CHANGELOG.md) 與 [CHANGELOG.zh.md](CHANGELOG.zh.md) 保留每一個版本，由新到舊，並使用同樣的類別。Changesets 產生的各套件 `CHANGELOG.md` 仍然保留，完整變更紀錄連結到這些檔案。
-- [貢獻指引](docs/contributing.zh.md) 與 [工作區指令](docs/cli/workspace-scripts.zh.md) 的發佈一節規定：每次發佈都把新版本加在 README 該節的頂部，並把三個版本中最舊的一個移入完整變更紀錄。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

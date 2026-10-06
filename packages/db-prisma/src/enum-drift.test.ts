@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { assertPrismaEnumsMatchContracts, parsePrismaEnum } from './enum-drift';
+import { assertPrismaEnumsMatchContracts, parsePrismaEnum } from './enum-drift.js';
 
 const packageDir = dirname(fileURLToPath(import.meta.url));
 const schemaPath = join(packageDir, '../../../apps/api/prisma/schema.prisma');

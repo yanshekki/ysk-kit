@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createLogMailer, renderMail } from './index';
+import { createLogMailer, renderMail } from './index.js';
 
 describe('mail', () => {
   it('renders templates without leaking extra vars', () => {

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { createRealtimeFromEnv } from './from-env';
-import { createMemoryRealtime } from './memory';
-import { SOCKET_IO_REDIS_KEY } from './port';
-import { createRedisRealtimeEmitter } from './redis-emitter';
+import { createRealtimeFromEnv } from './from-env.js';
+import { createMemoryRealtime } from './memory.js';
+import { SOCKET_IO_REDIS_KEY } from './port.js';
+import { createRedisRealtimeEmitter } from './redis-emitter.js';
 
 describe('memory realtime', () => {
   it('records emitToUser', async () => {

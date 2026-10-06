@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { canAct, formatHkd, orgRoleCan } from './index';
+import { canAct, formatHkd, orgRoleCan } from './index.js';
 
 describe('ui-logic', () => {
   it('formats HKD as integer dollars', () => {

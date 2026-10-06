@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { SOURCE_CAPABILITIES } from './capability-patches';
+import { SOURCE_CAPABILITIES } from './capability-patches.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const kitRoot = resolve(here, '../../..');

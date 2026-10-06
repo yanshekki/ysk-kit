@@ -12,9 +12,9 @@ import {
   parseEnvFile,
   resolveSqliteFile,
   satisfiesRange,
-} from './doctor';
-import { HELP } from './help';
-import { upgrade } from './upgrade';
+} from './doctor.js';
+import { HELP } from './help.js';
+import { upgrade } from './upgrade.js';
 
 const require = createRequire(import.meta.url);
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');

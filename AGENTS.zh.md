@@ -22,6 +22,7 @@ YSK Kit 是合約先行的 SaaS 平台（pnpm 12 + Turborepo + Node 24）。本 
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# 或：npm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
 # 本倉：
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 ```

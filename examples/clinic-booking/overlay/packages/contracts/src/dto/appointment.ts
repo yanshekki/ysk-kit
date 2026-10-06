@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { HkPhoneSchema, PaginatedSchema } from './user';
+import { HkPhoneSchema, PaginatedSchema } from './user.js';
 
 export const AppointmentStatus = {
   SCHEDULED: 'SCHEDULED',

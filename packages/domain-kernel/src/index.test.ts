@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AppError, DomainError, err, ok } from './index';
+import { AppError, DomainError, err, ok } from './index.js';
 
 describe('domain-kernel', () => {
   it('wraps success and failure', () => {

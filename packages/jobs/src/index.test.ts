@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createMemoryQueue } from './index';
+import { createMemoryQueue } from './index.js';
 
 describe('memory queue', () => {
   it('validates and runs handlers on enqueue', async () => {

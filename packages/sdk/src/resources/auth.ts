@@ -9,8 +9,8 @@ import type {
   VerifyAdminOtpCommand,
   VerifyOtpCommand,
 } from '@ysk-kit/contracts';
-import type { HttpClient } from '../http';
-import type { TokenStore } from '../token-store';
+import type { HttpClient } from '../http.js';
+import type { TokenStore } from '../token-store.js';
 
 const persist = async (store: TokenStore, pair: TokenPairDto) => {
   if (store.setPair) await store.setPair(pair.accessToken, pair.refreshToken);

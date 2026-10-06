@@ -1,5 +1,5 @@
 import type { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from 'react';
-import { cn } from './cn';
+import { cn } from './cn.js';
 
 export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
   return <table className={cn('w-full caption-bottom text-sm', className)} {...props} />;

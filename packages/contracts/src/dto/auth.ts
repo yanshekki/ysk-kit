@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { HkPhoneSchema, UserDtoSchema } from './user';
+import { HkPhoneSchema, UserDtoSchema } from './user.js';
 
 export const RegisterCommandSchema = z.object({
   email: z.string().email(),

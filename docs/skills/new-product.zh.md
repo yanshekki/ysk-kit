@@ -14,7 +14,7 @@ Language: [English](new-product.md) · 中文
 ## 觸發
 
 - 使用者要的是新產品倉，不是在本 kit 加模組。
-- 使用者說 `create-ysk-app`、`pnpm create @ysk-kit/app` 或「新 SaaS」。
+- 使用者說 `create-ysk-app`、`pnpm create @ysk-kit/app`、`npm create @ysk-kit/app` 或「新 SaaS」。
 
 不要另起一套 monorepo 佈局。不要人手複製本 kit。不要把行業 domain 寫回本 kit。
 
@@ -37,9 +37,10 @@ Agent 請傳旗標，不要等 TTY 提問。
 
 ```bash
 pnpm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
+# 或：npm create @ysk-kit/app <name> --preset thin --db mysql --flavor saas
 ```
 
-從 kit checkout：`pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`。
+npm 上沒有無 scope 的 `create-ysk-app` 套件。從 kit checkout：`pnpm --filter @ysk-kit/create-app start <name> --preset thin --db mysql --flavor saas`。
 
 3. 在新目錄：`pnpm install`，把 `.env.example` 複製為 `.env`，若資料庫是 MySQL 或 PostgreSQL 就啟動 Compose。
 4. `pnpm db:generate && pnpm db:migrate && pnpm db:seed`。

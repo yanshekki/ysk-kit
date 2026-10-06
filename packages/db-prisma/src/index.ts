@@ -1,1 +1,1 @@
-export { assertPrismaEnumsMatchContracts, parsePrismaEnum } from './enum-drift';
+export { assertPrismaEnumsMatchContracts, parsePrismaEnum } from './enum-drift.js';

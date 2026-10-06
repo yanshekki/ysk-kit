@@ -125,6 +125,15 @@ The latest three versions. Older versions are in the full changelog.
 - Every skill wrapper is a short step summary (Use when, Chinese triggers, Do not use for…). Skills gain Output format, Anti-patterns, and Escalate / ask where they were missing.
 - `verify-change` names expected output, OpenAPI `git diff --exit-code`, and a fixed verification report. `new-product` runs `doctor` and lists human-filled fields. `add-module` requires Express and Fastify app tests. `add-capability` has a before-production line per capability. `envelope-api` tables error codes. `fix-layers` forbids silent cruiser edits.
 
+#### Fixes
+
+- `create-ysk-app` authenticates GitHub with `GITHUB_TOKEN` when set, falls back to `git ls-remote` + codeload on 403/429, and deletes leftover `kit.tgz`.
+
+#### Internal/CI
+
+- `skill-triggers.test.ts` statically checks wrapper descriptions. thin-smoke, flavor-smoke, create-app, and upgrade tests assert the new skill files.
+- Release waits up to 20 minutes for `npm view` (backoff; 429/5xx retry). Missing `vX.Y.Z` recovery uses npm provenance `gitCommit`, notes from that commit's CHANGELOG, and runs only on `main`.
+
 #### Security
 
 - Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) (`quote()` injection after a comment token; transitive through Expo / React Native).

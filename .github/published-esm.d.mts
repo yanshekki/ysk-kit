@@ -18,11 +18,12 @@ export function changelogSection(markdown: string, version: string): string;
 export function tagPlan(input: {
   headSha: string;
   existingTarget: string | null;
-}): 'create' | 'exists';
+}): 'create' | 'exists' | 'keep';
 export function postPublishPlan(input: {
   pendingCount: number;
   allInstallable: boolean;
-}): 'version-pr' | 'not-published' | 'tag';
+  allAccepted?: boolean;
+}): 'version-pr' | 'not-published' | 'tag' | 'tag-lag';
 export function inspectAtSha(input: {
   sha: string;
   tree: {
@@ -32,7 +33,7 @@ export function inspectAtSha(input: {
   };
   npmView: (name: string, version: string) => boolean;
 }): {
-  plan: 'version-pr' | 'not-published' | 'tag';
+  plan: 'version-pr' | 'not-published' | 'tag' | 'tag-lag';
   version: string;
   pending: string[];
   missing: { name: string; version: string; dir: string }[];

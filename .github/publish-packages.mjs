@@ -17,8 +17,48 @@ import { pathToFileURL } from 'node:url';
 import { publicPackages } from './unpublished-packages.mjs';
 
 const REGISTRY = 'https://registry.npmjs.org';
-const VERIFY_MS = 5 * 60 * 1000;
-const VERIFY_INTERVAL_MS = 15_000;
+export const DEFAULT_NPM_VIEW_WAIT_MS = 20 * 60 * 1000;
+export const DEFAULT_NPM_VIEW_INTERVAL_MS = 15_000;
+export const DEFAULT_NPM_VIEW_INTERVAL_MAX_MS = 60_000;
+export const NPM_VIEW_BACKOFF = 1.5;
+
+const envNumber = (env, key, fallback, { min = 0 } = {}) => {
+  const raw = env[key];
+  if (raw === undefined || raw === '') return fallback;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < min) {
+    throw new Error(`${key} must be a number >= ${min}`);
+  }
+  return n;
+};
+
+/** Wait budget and backoff for `npm view` after a successful PUT. */
+export const npmViewWaitConfig = (env = process.env) => ({
+  waitMs: envNumber(env, 'NPM_VIEW_WAIT_MS', DEFAULT_NPM_VIEW_WAIT_MS),
+  intervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MS', DEFAULT_NPM_VIEW_INTERVAL_MS, { min: 1 }),
+  maxIntervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MAX_MS', DEFAULT_NPM_VIEW_INTERVAL_MAX_MS, {
+    min: 1,
+  }),
+  backoff: NPM_VIEW_BACKOFF,
+});
+
+export const nextVerifyDelayMs = ({
+  attempt,
+  intervalMs,
+  maxIntervalMs,
+  remainingMs,
+  backoff = NPM_VIEW_BACKOFF,
+}) => {
+  const raw = intervalMs * backoff ** attempt;
+  return Math.max(0, Math.min(Math.floor(raw), maxIntervalMs, remainingMs));
+};
+
+/** ok: every version is installable. warn: uploaded but packument lags. fail: never accepted. */
+export const verifyOutcome = ({ missingCount, acceptedCount }) => {
+  if (missingCount === 0) return 'ok';
+  if (acceptedCount === missingCount) return 'warn';
+  return 'fail';
+};
 
 export const describeAuth = (env) => ({
   oidc: Boolean(env.GITHUB_ACTIONS && env.ACTIONS_ID_TOKEN_REQUEST_URL),
@@ -62,10 +102,10 @@ const REGISTRY_AUTH_KEYS = [
   '_auth',
 ];
 
-/** skip: npm view works. wait: registry already accepted this version. publish: PUT it. */
-export const publishPlan = ({ installable, accepted }) => {
+/** skip: npm view works. wait: accepted or 429/5xx. publish: PUT it. */
+export const publishPlan = ({ installable, accepted, unknown = false }) => {
   if (installable) return 'skip';
-  if (accepted) return 'wait';
+  if (accepted || unknown) return 'wait';
   return 'publish';
 };
 
@@ -85,13 +125,26 @@ const registryConfig = () => {
   return { registry, scoped, authValues };
 };
 
-const versionAccepted = async (name, version) => {
+/** accepted / missing / retry (429 or 5xx) / error. */
+export const versionDocumentStatus = (status) => {
+  if (status === 200) return 'accepted';
+  if (status === 404) return 'missing';
+  if (status === 429 || status >= 500) return 'retry';
+  return 'error';
+};
+
+/**
+ * True: version document exists. False: 404. Null: 429/5xx (unknown, retry).
+ */
+export const versionAccepted = async (name, version, fetchImpl = fetch) => {
   const url = `${REGISTRY}/${encodedName(name)}/${encodeURIComponent(version)}`;
-  const res = await fetch(url, {
+  const res = await fetchImpl(url, {
     headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
   });
-  if (res.status === 200) return true;
-  if (res.status === 404) return false;
+  const kind = versionDocumentStatus(res.status);
+  if (kind === 'accepted') return true;
+  if (kind === 'missing') return false;
+  if (kind === 'retry') return null;
   throw new Error(`${name}@${version}: version document HTTP ${res.status}`);
 };
 
@@ -104,25 +157,46 @@ const npmViewOk = (name, version) => {
   return printed === version;
 };
 
-const verifyAll = async (pkgs) => {
-  const deadline = Date.now() + VERIFY_MS;
-  let missing = pkgs;
+const verifyAll = async (pkgs, env = process.env) => {
+  const { waitMs, intervalMs, maxIntervalMs, backoff } = npmViewWaitConfig(env);
+  const deadline = Date.now() + waitMs;
+  let missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
+  let attempt = 0;
   while (missing.length > 0) {
-    missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
-    if (missing.length === 0) return;
     const remaining = deadline - Date.now();
-    if (remaining <= 0) break;
+    const delay = nextVerifyDelayMs({
+      attempt,
+      intervalMs,
+      maxIntervalMs,
+      remainingMs: remaining,
+      backoff,
+    });
+    if (delay <= 0) break;
     console.log(
-      `npm view still missing ${missing.length} package(s); retrying for ${Math.ceil(remaining / 1000)}s\n${missing
+      `npm view still missing ${missing.length} package(s); retrying in ${Math.ceil(delay / 1000)}s (${Math.ceil(remaining / 1000)}s left)\n${missing
         .map((pkg) => `${pkg.name}@${pkg.version}`)
         .join('\n')}`,
     );
-    await sleep(Math.min(VERIFY_INTERVAL_MS, remaining));
+    await sleep(delay);
+    attempt += 1;
+    missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
   }
-  throw new Error(
-    `npm view did not see ${missing.length} package(s) within ${VERIFY_MS / 1000}s:\n${missing
-      .map((pkg) => `${pkg.name}@${pkg.version}`)
-      .join('\n')}\nThe upload may still be accepted. Do not publish these versions again.`,
+  if (missing.length === 0) return;
+  const accepted = [];
+  const never = [];
+  for (const pkg of missing) {
+    const seen = await versionAccepted(pkg.name, pkg.version);
+    if (seen === false) never.push(pkg);
+    else accepted.push(pkg);
+  }
+  const list = (rows) => rows.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n');
+  if (verifyOutcome({ missingCount: missing.length, acceptedCount: accepted.length }) === 'fail') {
+    throw new Error(
+      `npm view did not see ${missing.length} package(s) within ${waitMs / 1000}s, and the registry has no version document:\n${list(never)}\nDo not publish accepted versions again.`,
+    );
+  }
+  console.warn(
+    `npm view did not see ${accepted.length} package(s) within ${waitMs / 1000}s, but the registry accepted the upload. Continuing so tagging can run.\n${list(accepted)}\nDo not publish these versions again.`,
   );
 };
 
@@ -167,7 +241,11 @@ const main = async () => {
   for (const pkg of pkgs) {
     const installable = npmViewOk(pkg.name, pkg.version);
     const accepted = installable ? true : await versionAccepted(pkg.name, pkg.version);
-    const plan = publishPlan({ installable, accepted });
+    const plan = publishPlan({
+      installable,
+      accepted: accepted === true,
+      unknown: accepted === null,
+    });
     console.log(`${pkg.name}@${pkg.version}: ${plan}`);
     if (verifyOnly || plan !== 'publish') continue;
     publishOne(pkg, registry || REGISTRY);

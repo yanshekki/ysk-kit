@@ -54,6 +54,16 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 - `fix-layers` maps each cruiser rule to a typical bad import and forbids editing `.dependency-cruiser.cjs` without approval.
 - Skill index adds “Do not use when” and “Related vendor skill” columns.
 
+### Fixes
+
+- `create-ysk-app` sends `Authorization: Bearer` when `GITHUB_TOKEN` / `GH_TOKEN` is set, falls back to `git ls-remote` + codeload on GitHub HTTP 403/429, tells the user to set `GITHUB_TOKEN` if that fails, and deletes leftover `kit.tgz` from the dest.
+
+### Internal/CI
+
+- `skill-triggers.test.ts` statically checks wrapper descriptions. thin-smoke, flavor-smoke, create-app, and upgrade tests assert the new skill files.
+- Release waits up to 20 minutes (`NPM_VIEW_WAIT_MS`, backoff) for `npm view` after a successful upload. Registry 429/5xx are retried. `NPM_VIEW_INTERVAL_MS=0` is rejected. If the packument lags, tagging still runs and `pack-and-run --registry` waits until the tarballs are visible.
+- Recovering a missing `vX.Y.Z` tag uses the npm provenance `gitCommit` (SLSA `resolvedDependencies`) when it is an ancestor of `origin/main`. Release notes come from `CHANGELOG.md` at the tagged commit. An existing tag at a different SHA is left in place; a missing GitHub Release is still created. Recovery runs only on `refs/heads/main`.
+
 ### Security
 
 - Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) / CVE-2026-102422 (`quote()` command injection after a `{ comment }` token). The copy is transitive through Expo / React Native `react-devtools-core`.

@@ -159,9 +159,7 @@ export const tagPlan = ({ headSha, existingTarget }) => {
   if (!headSha) throw new Error('missing commit SHA for the product tag');
   if (!existingTarget) return 'create';
   if (existingTarget === headSha) return 'exists';
-  throw new Error(
-    `tag already points at ${existingTarget}, working commit is ${headSha}. Refusing to move the tag.`,
-  );
+  return 'keep';
 };
 
 /**
@@ -169,10 +167,11 @@ export const tagPlan = ({ headSha, existingTarget }) => {
  * not-published: versions are not on npm yet.
  * tag: create annotated vX.Y.Z and a GitHub Release, then verify tarballs.
  */
-export const postPublishPlan = ({ pendingCount, allInstallable }) => {
+export const postPublishPlan = ({ pendingCount, allInstallable, allAccepted = allInstallable }) => {
   if (pendingCount > 0) return 'version-pr';
-  if (!allInstallable) return 'not-published';
-  return 'tag';
+  if (allInstallable) return 'tag';
+  if (allAccepted) return 'tag-lag';
+  return 'not-published';
 };
 
 /**

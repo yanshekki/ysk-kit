@@ -18,7 +18,14 @@ import { appendFileSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { changelogSection, inspectAtSha, productTag, tagPlan } from './published-esm.mjs';
+import { versionAccepted } from './publish-packages.mjs';
+import {
+  changelogSection,
+  inspectAtSha,
+  postPublishPlan,
+  productTag,
+  tagPlan,
+} from './published-esm.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const GIT_NAME = 'github-actions[bot]';
@@ -136,21 +143,121 @@ const ensureGithubRelease = (tag, sha, notes) => {
 };
 
 const isDryRun = (argv) => argv.includes('--dry-run');
+const isRecover = (argv) => argv.includes('--recover');
 
-const main = () => {
+/** First commit that set packages/contracts to this lockstep version. Fallback only. */
+export const versionBumpCommit = (version, runFn = run) => {
+  const result = runFn(
+    'git',
+    [
+      'log',
+      '--format=%H',
+      '--reverse',
+      '-S',
+      `"version": "${version}"`,
+      '--',
+      'packages/contracts/package.json',
+    ],
+    { stdio: ['ignore', 'pipe', 'pipe'] },
+  );
+  if (result.status !== 0) return null;
+  const first = (result.stdout ?? '').trim().split('\n').filter(Boolean)[0];
+  return first ?? null;
+};
+
+const COMMIT_SHA = /^[0-9a-f]{40}$/i;
+
+/** SLSA v1 gitCommit from an npm attestations bundle. */
+export const provenanceGitCommit = (bundle) => {
+  const atts = bundle?.attestations;
+  if (!Array.isArray(atts)) return null;
+  for (const att of atts) {
+    const payload = att?.bundle?.dsseEnvelope?.payload;
+    if (typeof payload !== 'string') continue;
+    let stmt;
+    try {
+      stmt = JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
+    } catch {
+      continue;
+    }
+    if (stmt?.predicateType !== 'https://slsa.dev/provenance/v1') continue;
+    const sha = stmt?.predicate?.buildDefinition?.resolvedDependencies?.[0]?.digest?.gitCommit;
+    if (typeof sha === 'string' && COMMIT_SHA.test(sha)) return sha.toLowerCase();
+  }
+  return null;
+};
+
+export const isAncestorOfMain = (sha, runFn = run) => {
+  const result = runFn('git', ['merge-base', '--is-ancestor', sha, 'origin/main'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  return result.status === 0;
+};
+
+const npmAttestationsUrl = (name, version, runFn = run) => {
+  const result = runFn('npm', ['view', `${name}@${version}`, 'dist.attestations.url', '--json'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (result.status !== 0) return null;
+  const printed = (result.stdout ?? '').trim().replaceAll('"', '');
+  return printed.startsWith('https://') ? printed : null;
+};
+
+export const resolvePublishSha = async ({
+  version,
+  runFn = run,
+  fetchImpl = fetch,
+  contractsName = '@ysk-kit/contracts',
+}) => {
+  const url = npmAttestationsUrl(contractsName, version, runFn);
+  if (url) {
+    try {
+      const res = await fetchImpl(url, {
+        headers: { Accept: 'application/json', 'User-Agent': 'ysk-kit-release' },
+      });
+      if (res.ok) {
+        const sha = provenanceGitCommit(await res.json());
+        if (sha && isAncestorOfMain(sha, runFn)) return { sha, source: 'provenance' };
+      }
+    } catch {
+      // fall through to the contracts package.json heuristic
+    }
+  }
+  const fallback = versionBumpCommit(version, runFn);
+  if (fallback && isAncestorOfMain(fallback, runFn)) return { sha: fallback, source: 'heuristic' };
+  return { sha: null, source: 'none' };
+};
+
+const resolveLagPlan = async (plan, missing) => {
+  if (plan !== 'not-published' || missing.length === 0) return plan;
+  let accepted = 0;
+  for (const pkg of missing) {
+    if (await versionAccepted(pkg.name, pkg.version)) accepted += 1;
+  }
+  return postPublishPlan({
+    pendingCount: 0,
+    allInstallable: false,
+    allAccepted: accepted === missing.length,
+  });
+};
+
+const main = async () => {
   const env = { ...process.env };
   const dryRun = isDryRun(process.argv);
+  const recover = isRecover(process.argv);
   if (!env.GITHUB_ACTIONS && !dryRun) {
     throw new Error('tag-and-release.mjs is for the Release workflow (GITHUB_ACTIONS).');
   }
   const sha = headSha(env);
   const tree = treeAtSha(sha);
-  const { plan, version, pending, missing } = inspectAtSha({
+  const inspected = inspectAtSha({
     sha,
     tree,
     npmView: npmViewOk,
   });
-  console.log(`post-publish plan: ${plan} (v${version})`);
+  let { plan, version, pending, missing } = inspected;
+  plan = await resolveLagPlan(plan, missing);
+  console.log(`post-publish plan: ${plan} (v${version})${recover ? ' recover' : ''}`);
   if (plan === 'version-pr') {
     writeOutput(env, 'published', 'false');
     console.log(
@@ -161,28 +268,45 @@ const main = () => {
   if (plan === 'not-published') {
     writeOutput(env, 'published', 'false');
     const detail = `packages not installable on npm:\n${missing.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n')}`;
-    if (dryRun) {
+    if (dryRun || recover) {
       console.log(detail);
       return;
     }
     throw new Error(detail);
   }
-  writeOutput(env, 'published', 'true');
+  if (plan === 'tag-lag') {
+    console.warn(
+      `npm view still missing ${missing.length} package(s); registry accepted the upload. Tagging anyway.`,
+    );
+  }
+  let tagSha = sha;
+  if (recover) {
+    const resolved = await resolvePublishSha({ version, runFn: run });
+    tagSha = resolved.sha;
+    console.log(`publish SHA for v${version}: ${tagSha ?? 'none'} (${resolved.source})`);
+  }
+  if (!tagSha) {
+    throw new Error(`could not find the version commit for v${version}`);
+  }
   const tag = productTag(version);
-  const notes = changelogSection(tree.readText('CHANGELOG.md'), version);
+  const existing = existingTagCommit(tag);
+  const action = tagPlan({ headSha: tagSha, existingTarget: existing });
+  const notesSha = action === 'keep' ? existing : tagSha;
+  const notes = changelogSection(gitShow(notesSha, 'CHANGELOG.md'), version);
+  writeOutput(env, 'published', 'true');
   if (dryRun) {
-    console.log(`dry-run tag ${tag} at ${sha}`);
+    console.log(`dry-run tag ${tag} at ${notesSha} (${action})`);
     return;
   }
-  const existing = existingTagCommit(tag);
-  const action = tagPlan({ headSha: sha, existingTarget: existing });
   if (action === 'create') {
-    console.log(`create annotated ${tag} at ${sha}`);
-    createAnnotatedTag(tag, sha);
+    console.log(`create annotated ${tag} at ${tagSha}`);
+    createAnnotatedTag(tag, tagSha);
+  } else if (action === 'exists') {
+    console.log(`tag ${tag} already points at ${tagSha}`);
   } else {
-    console.log(`tag ${tag} already points at ${sha}`);
+    console.log(`tag ${tag} already points at ${existing}; not moving`);
   }
-  ensureGithubRelease(tag, sha, notes);
+  ensureGithubRelease(tag, notesSha, notes);
   console.log(`tag-and-release ok ${tag}`);
 };
 
@@ -190,10 +314,8 @@ const invokedDirectly =
   process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
 
 if (invokedDirectly) {
-  try {
-    main();
-  } catch (error) {
+  main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exit(1);
-  }
+  });
 }

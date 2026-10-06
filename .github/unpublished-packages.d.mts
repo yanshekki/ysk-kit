@@ -17,3 +17,17 @@ export function versionIsInstallable(
 ): boolean;
 export function pendingChangesetFiles(root?: string): string[];
 export function shouldSkipRelease(unpublishedCount: number, pendingCount: number): boolean;
+export function recoverPlan(input: {
+  pendingCount: number;
+  unpublishedCount: number;
+  tagExists: boolean;
+  releaseExists: boolean;
+}): 'none' | 'recover';
+export function productTagExists(
+  tag: string,
+  runFn?: (args: readonly string[]) => { status: number | null; stdout: string },
+): boolean;
+export function githubReleaseExists(
+  tag: string,
+  runFn?: (args: readonly string[]) => { status: number | null; stdout: string },
+): boolean;

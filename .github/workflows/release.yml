@@ -57,6 +57,8 @@ jobs:
         run: node .github/publish-packages.mjs --debug
       # `changeset publish` exits 0 when pnpm's PUT is accepted, before
       # `npm view` can see the version. Fail the job if that stays true.
+      # Skip when Changesets only opened or updated the version PR
+      # (`published` is false). Waiting then looks for unpublished versions.
       - name: Verify packages are installable
-        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outcome == 'success'
+        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.published == 'true'
         run: node .github/publish-packages.mjs --verify-only

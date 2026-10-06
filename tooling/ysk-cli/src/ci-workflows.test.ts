@@ -83,6 +83,7 @@ describe('CI workflows', () => {
     expect(release).toContain('workflow_dispatch:');
     expect(release).toContain('publish-packages.mjs --debug');
     expect(release).toContain('publish-packages.mjs --verify-only');
+    expect(release).toContain("steps.changesets.outputs.published == 'true'");
     expect(release).toContain('create-github-releases: false');
     expect(release).toContain('push-git-tags: false');
     expect(release).toContain('pnpm version:packages');

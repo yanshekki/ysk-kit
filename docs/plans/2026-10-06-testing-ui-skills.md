@@ -6,7 +6,7 @@ Language: Chinese pair `2026-10-06-testing-ui-skills.zh.md` · English `2026-10-
 |---|---|
 | **Slug** | `testing-ui-skills` |
 | **Date** | 2026-10-06 |
-| **Status** | draft |
+| **Status** | done |
 | **Canonical file** | `docs/plans/2026-10-06-testing-ui-skills.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
 
@@ -67,8 +67,8 @@ Filled with [test-plan](../skills/test-plan.md). In-memory ports only.
 - [x] thin-smoke / flavor-smoke list the new paths
 - [x] Plan template contains `test-plan`
 - [x] Pending changeset lists all 26 public packages at `patch`
-- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent` green
-- [ ] Root + nested `AGENTS.md` stay under 24 KiB
+- [x] `pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent` green
+- [x] Root + nested `AGENTS.md` stay under 24 KiB
 
 ## Verification commands
 

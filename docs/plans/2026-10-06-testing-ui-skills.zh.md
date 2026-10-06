@@ -6,7 +6,7 @@ Language: 英文配對 `2026-10-06-testing-ui-skills.md` · 中文 `2026-10-06-t
 |---|---|
 | **Slug** | `testing-ui-skills` |
 | **日期** | 2026-10-06 |
-| **狀態** | draft |
+| **狀態** | done |
 | **正規檔** | `docs/plans/2026-10-06-testing-ui-skills.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
 
@@ -67,8 +67,8 @@ Skills 要求 agent 測試 webhook HMAC、永不把 OTP／Stripe `sk_`／webhook
 - [x] thin-smoke／flavor-smoke 列出新路徑
 - [x] 計劃模板含 `test-plan`
 - [x] 待處理 changeset 以 `patch` 列出全部 26 個公開套件
-- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent` 綠色
-- [ ] 根目錄加巢狀 `AGENTS.md` 仍低於 24 KiB
+- [x] `pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent` 綠色
+- [x] 根目錄加巢狀 `AGENTS.md` 仍低於 24 KiB
 
 ## 驗證命令
 

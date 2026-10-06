@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { addModule } from './add-module';
+import { addModule } from './add-module.js';
 
 const writeTree = (root: string, files: Record<string, string>): void => {
   for (const [rel, content] of Object.entries(files)) {
@@ -99,7 +99,7 @@ export const router = createRouter({ routeTree });
       'booking: bookingContract',
     );
     expect(readFileSync(join(root, 'packages/contracts/src/dto/index.ts'), 'utf8')).toContain(
-      "export * from './booking'",
+      "export * from './booking.js'",
     );
     expect(readFileSync(join(root, 'apps/api/prisma/schema.prisma'), 'utf8')).toContain(
       'model Booking',

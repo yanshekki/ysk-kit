@@ -1,16 +1,36 @@
+#!/usr/bin/env node
+import { realpathSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { HELP } from './help';
-import { resolveKitRoot } from './kit-root';
-import { resolveCreateOptions, withReadlineAsk } from './prompt';
-import { createYskApp, parseArgs } from './scaffold';
+import { HELP } from './help.js';
+import { resolveKitRoot } from './kit-root.js';
+import { resolveCreateOptions, withReadlineAsk } from './prompt.js';
+import { createYskApp, parseArgs } from './scaffold.js';
+
+const isCliEntry = (): boolean => {
+  const self = fileURLToPath(import.meta.url);
+  for (const arg of process.argv.slice(1)) {
+    if (arg.startsWith('-')) continue;
+    try {
+      if (realpathSync(arg) === self) return true;
+    } catch {
+      if (resolve(arg) === self) return true;
+    }
+  }
+  return false;
+};
 
 const help = (): void => {
   console.log(HELP);
 };
 
 const main = async (): Promise<void> => {
-  const parsed = parseArgs(process.argv.slice(2));
+  const argv = process.argv.slice(2);
+  if (argv.includes('--help') || argv.includes('-h')) {
+    help();
+    process.exit(0);
+  }
+  const parsed = parseArgs(argv);
   const tty = Boolean(process.stdin.isTTY && process.stdout.isTTY);
   const resolved =
     !tty || parsed.yes
@@ -55,7 +75,9 @@ const main = async (): Promise<void> => {
   }
 };
 
-main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exit(1);
-});
+if (isCliEntry()) {
+  main().catch((error: unknown) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exit(1);
+  });
+}

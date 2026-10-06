@@ -55,10 +55,26 @@ jobs:
       - name: Log publish auth and registry
         if: github.event_name == 'workflow_dispatch'
         run: node .github/publish-packages.mjs --debug
-      # `changeset publish` exits 0 when pnpm's PUT is accepted, before
-      # `npm view` can see the version. Fail the job if that stays true.
-      # Skip when Changesets only opened or updated the version PR
-      # (`published` is false). Waiting then looks for unpublished versions.
-      - name: Verify packages are installable
-        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.published == 'true'
-        run: node .github/publish-packages.mjs --verify-only
+      # Do not key off changesets/action `published`. Custom
+      # `pnpm release:publish` stdout is not Changesets' tag format, so that
+      # output stays false after a real publish.
+      # Skip when unpublished-packages already decided there is nothing to
+      # publish (avoids backfilling a missing historical tag). Skip when
+      # changesets/action opened or updated a version PR (`hasChangesets`).
+      # After that action the workspace sits on `changeset-release/main`
+      # with bumped versions and deleted changesets; tag-and-release.mjs
+      # still reads versions and pending files at GITHUB_SHA.
+      # Real publish path: version PR merged, packages published, no pending
+      # changesets at GITHUB_SHA, every name@version installable → annotated
+      # vX.Y.Z at GITHUB_SHA plus a GitHub Release from that version's
+      # CHANGELOG.md, then pack-and-run --registry.
+      - id: tag
+        name: Tag vX.Y.Z and GitHub Release
+        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.hasChangesets != 'true'
+        run: node .github/tag-and-release.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify published packages are installable
+        if: github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.tag.outputs.published == 'true'
+        run: node .github/pack-and-run.mjs --registry

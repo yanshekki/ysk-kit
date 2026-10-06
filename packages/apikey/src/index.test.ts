@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hashesMatch, hashKey, isApiKeyToken, last4Of, newApiKey, prefixOf } from './index';
+import { hashesMatch, hashKey, isApiKeyToken, last4Of, newApiKey, prefixOf } from './index.js';
 
 describe('apikey', () => {
   it('mints a live token and stable prefix/hash', () => {

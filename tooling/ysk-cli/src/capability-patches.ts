@@ -4,7 +4,7 @@ import {
   expressRouteInsertBefore,
   insertAfterLastImport,
   insertBeforeMatch,
-} from './patch-text';
+} from './patch-text.js';
 
 const ensureTypeField = (src: string, afterNeedle: string, fieldLine: string): string => {
   if (src.includes(fieldLine.trim())) return src;
@@ -25,11 +25,11 @@ const ensureInputKey = (src: string, after: string, field: string): string => {
 };
 
 const ensureContract = (src: string, file: string, contractName: string, key: string): string => {
-  let next = insertAfterLastImport(src, `import { ${contractName} } from './${file}';`);
+  let next = insertAfterLastImport(src, `import { ${contractName} } from './${file}.js';`);
   if (!next.includes(`${key}: ${contractName}`)) {
     next = insertBeforeMatch(next, '\n});', `\n  ${key}: ${contractName},`);
   }
-  const exportLine = `export * from './${file}';`;
+  const exportLine = `export * from './${file}.js';`;
   if (!next.includes(exportLine)) {
     next = `${next.trimEnd()}\n${exportLine}\n`;
   }
@@ -157,7 +157,7 @@ export const patchTeamMemory = (src: string): string => {
 export const patchTeamSdk = (src: string): string => {
   let next = insertAfterLastImport(
     src,
-    "import { organizationsResource } from './resources/organizations';",
+    "import { organizationsResource } from './resources/organizations.js';",
   );
   if (!next.includes('organizations: organizationsResource(http)')) {
     if (next.includes('users: usersResource(http),')) {
@@ -181,8 +181,8 @@ export const patchTeamWebSdk = (src: string): string => {
   createOrganizationHooks,
   organizationQueryKey,
   organizationsQueryKey,
-} from './organizations-hooks';`;
-  if (src.includes("from './organizations-hooks'")) return src;
+} from './organizations-hooks.js';`;
+  if (src.includes("from './organizations-hooks.js'")) return src;
   return `${src.trimEnd()}\n${line}\n`;
 };
 
@@ -543,7 +543,7 @@ export const patchLlmMemory = (src: string): string => {
 };
 
 export const patchLlmSdk = (src: string): string => {
-  let next = insertAfterLastImport(src, "import { llmResource } from './resources/llm';");
+  let next = insertAfterLastImport(src, "import { llmResource } from './resources/llm.js';");
   if (!next.includes('llm: llmResource(http')) {
     const block = `    llm: llmResource(http, {
       baseUrl,
@@ -561,7 +561,7 @@ export const patchLlmSdk = (src: string): string => {
 };
 
 export const patchLlmWebSdk = (src: string): string => {
-  const line = "export { createLlmHooks } from './llm-hooks';";
+  const line = "export { createLlmHooks } from './llm-hooks.js';";
   if (src.includes(line)) return src;
   return `${src.trimEnd()}\n${line}\n`;
 };
@@ -733,7 +733,10 @@ export const patchPushMemory = (src: string): string => {
 };
 
 export const patchPushSdk = (src: string): string => {
-  let next = insertAfterLastImport(src, "import { devicesResource } from './resources/devices';");
+  let next = insertAfterLastImport(
+    src,
+    "import { devicesResource } from './resources/devices.js';",
+  );
   if (!next.includes('devices: devicesResource(http)')) {
     if (next.includes('users: usersResource(http),')) {
       next = next.replace(
@@ -984,7 +987,10 @@ export const patchBillingMemory = (src: string): string => {
 };
 
 export const patchBillingSdk = (src: string): string => {
-  let next = insertAfterLastImport(src, "import { billingResource } from './resources/billing';");
+  let next = insertAfterLastImport(
+    src,
+    "import { billingResource } from './resources/billing.js';",
+  );
   if (!next.includes('billing: billingResource(http)')) {
     if (next.includes('users: usersResource(http),')) {
       next = next.replace(
@@ -1003,7 +1009,7 @@ export const patchBillingSdk = (src: string): string => {
 };
 
 export const patchBillingWebSdk = (src: string): string => {
-  const line = "export { createBillingHooks, billingQueryKey } from './billing-hooks';";
+  const line = "export { createBillingHooks, billingQueryKey } from './billing-hooks.js';";
   if (src.includes(line)) return src;
   return `${src.trimEnd()}\n${line}\n`;
 };

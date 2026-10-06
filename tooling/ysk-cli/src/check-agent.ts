@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
-import { checkAgentGuidance } from './check-agent-guidance';
+import { checkAgentGuidance } from './check-agent-guidance.js';
 
 export type AgentRule =
   | 'no-ts-enum'

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type ContractRouter, flattenContract } from './flatten';
+import { type ContractRouter, flattenContract } from './flatten.js';
 
 const toJsonSchema = (schema: z.ZodType): Record<string, unknown> => {
   try {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { extractEnums, extractModels, mergePrisma } from './merge-prisma';
+import { extractEnums, extractModels, mergePrisma } from './merge-prisma.js';
 
 const fragment = `
 enum OrgRole {

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PermissionSchema } from '../enums/permission';
+import { PermissionSchema } from '../enums/permission.js';
 
 export const CreateApiKeyCommandSchema = z.object({
   name: z.string().min(1).max(80),

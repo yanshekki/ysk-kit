@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadServerEnv, PublicConfigSchema } from './index';
+import { loadServerEnv, PublicConfigSchema } from './index.js';
 
 describe('config', () => {
   it('loads server env', () => {

@@ -1,16 +1,16 @@
 import type { Platform } from '@ysk-kit/contracts';
-import { HttpClient } from './http';
-import { connectRealtime } from './realtime';
-import { apiKeysResource } from './resources/api-keys';
-import { auditResource } from './resources/audit';
-import { authResource } from './resources/auth';
-import { billingResource } from './resources/billing';
-import { devicesResource } from './resources/devices';
-import { llmResource } from './resources/llm';
-import { notificationsResource } from './resources/notifications';
-import { organizationsResource } from './resources/organizations';
-import { usersResource } from './resources/users';
-import { createWebStorageTokenStore, memoryTokenStore, type TokenStore } from './token-store';
+import { HttpClient } from './http.js';
+import { connectRealtime } from './realtime.js';
+import { apiKeysResource } from './resources/api-keys.js';
+import { auditResource } from './resources/audit.js';
+import { authResource } from './resources/auth.js';
+import { billingResource } from './resources/billing.js';
+import { devicesResource } from './resources/devices.js';
+import { llmResource } from './resources/llm.js';
+import { notificationsResource } from './resources/notifications.js';
+import { organizationsResource } from './resources/organizations.js';
+import { usersResource } from './resources/users.js';
+import { createWebStorageTokenStore, memoryTokenStore, type TokenStore } from './token-store.js';
 
 export function createYskClient(opts: {
   baseUrl: string;
@@ -46,7 +46,7 @@ export function createYskClient(opts: {
 }
 
 export type YskClient = ReturnType<typeof createYskClient>;
-export type { DevicePort } from './ports/device';
-export type { FilePickerPort } from './ports/file-picker';
-export type { TokenStore } from './token-store';
+export type { DevicePort } from './ports/device.js';
+export type { FilePickerPort } from './ports/file-picker.js';
+export type { TokenStore } from './token-store.js';
 export { connectRealtime, createWebStorageTokenStore, memoryTokenStore };

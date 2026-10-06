@@ -9,7 +9,7 @@ import {
 } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyThinPreset } from './thin';
+import { applyThinPreset } from './thin.js';
 
 export const DBS = ['mysql', 'postgresql', 'sqlite'] as const;
 export type Db = (typeof DBS)[number];

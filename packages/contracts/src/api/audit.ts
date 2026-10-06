@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
-import { PaginatedAuditLogsSchema } from '../dto/audit';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { PaginatedAuditLogsSchema } from '../dto/audit.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

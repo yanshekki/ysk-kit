@@ -1,5 +1,5 @@
 import { createSign } from 'node:crypto';
-import type { IPushPort, PushResult } from './port';
+import type { IPushPort, PushResult } from './port.js';
 
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';

@@ -9,8 +9,8 @@ import {
   OrganizationDtoSchema,
   OrgInviteDtoSchema,
   UpdateOrganizationCommandSchema,
-} from '../dto/organization';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/organization.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 const orgIdParams = z.object({ organizationId: z.string().uuid() });

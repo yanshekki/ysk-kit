@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { DeviceDtoSchema, RegisterDeviceCommandSchema } from '../dto/device';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { DeviceDtoSchema, RegisterDeviceCommandSchema } from '../dto/device.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

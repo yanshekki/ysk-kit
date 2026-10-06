@@ -79,6 +79,14 @@ describe('CI workflows', () => {
     expect(ci).toContain('cache: pnpm');
   });
 
+  it('pack-and-run smokes published tarballs as a required-check candidate', () => {
+    expect(ci).toContain('pack-and-run:');
+    expect(ci).toContain('timeout-minutes: 20');
+    expect(ci).toContain('pnpm build:packages');
+    expect(ci).toContain('node .github/pack-and-run.mjs');
+    expect(ci).not.toContain('pack-and-run.mjs --registry');
+  });
+
   it('publishes with provenance through OIDC only', () => {
     expect(release).toContain('id-token: write');
     expect(release).not.toMatch(/^\s*registry-url:/m);
@@ -90,8 +98,19 @@ describe('CI workflows', () => {
     expect(publishScript).not.toContain('changeset publish');
     expect(release).toContain('workflow_dispatch:');
     expect(release).toContain('publish-packages.mjs --debug');
-    expect(release).toContain('publish-packages.mjs --verify-only');
-    expect(release).toContain("steps.changesets.outputs.published == 'true'");
+    expect(release).not.toContain('publish-packages.mjs --verify-only');
+    expect(release).not.toContain("steps.changesets.outputs.published == 'true'");
+    expect(release).toContain('tag-and-release.mjs');
+    expect(release).toContain("steps.changesets.outputs.hasChangesets != 'true'");
+    expect(release).toContain("steps.tag.outputs.published == 'true'");
+    const tagSource = readFileSync(join(kitRoot, '.github/tag-and-release.mjs'), 'utf8');
+    expect(tagSource).toContain('git show');
+    expect(tagSource).toContain('git ls-tree');
+    expect(tagSource).toContain('--dry-run');
+    expect(tagSource).toContain('inspectAtSha');
+    expect(tagSource).not.toMatch(/publicPackages\(\)/);
+    expect(tagSource).not.toMatch(/pendingChangesetFiles\(\)/);
+    expect(release).toContain('pack-and-run.mjs --registry');
     expect(release).toContain('create-github-releases: false');
     expect(release).toContain('push-git-tags: false');
     expect(release).toContain('pnpm version:packages');

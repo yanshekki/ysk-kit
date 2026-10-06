@@ -1,8 +1,8 @@
 import Fastify from 'fastify';
 import { describe, expect, it } from 'vitest';
-import { registerOptionalJwt } from './auth';
-import { registerErrorHandler } from './errors';
-import { mountFastify } from './mount';
+import { registerOptionalJwt } from './auth.js';
+import { registerErrorHandler } from './errors.js';
+import { mountFastify } from './mount.js';
 
 describe('api-fastify', () => {
   it('maps thrown errors into the envelope', async () => {

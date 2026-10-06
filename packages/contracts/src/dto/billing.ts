@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BillingPlanCodeSchema, SubscriptionStatusSchema } from '../enums/billing-plan';
+import { BillingPlanCodeSchema, SubscriptionStatusSchema } from '../enums/billing-plan.js';
 
 export const BillingPlanDtoSchema = z.object({
   code: BillingPlanCodeSchema,

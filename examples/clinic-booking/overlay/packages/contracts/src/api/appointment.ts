@@ -4,9 +4,9 @@ import {
   AppointmentDtoSchema,
   CreateAppointmentCommandSchema,
   PaginatedAppointmentSchema,
-} from '../dto/appointment';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/appointment.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

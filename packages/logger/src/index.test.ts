@@ -1,6 +1,6 @@
 import { Writable } from 'node:stream';
 import { describe, expect, it } from 'vitest';
-import { createLogger } from './index';
+import { createLogger } from './index.js';
 
 describe('createLogger', () => {
   it('applies mixin fields onto production JSON logs', () => {

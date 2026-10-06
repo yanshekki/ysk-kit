@@ -1,4 +1,4 @@
-import { applyCapability } from './apply-capability';
+import { applyCapability } from './apply-capability.js';
 
 export const CAPABILITIES = [
   'auth',

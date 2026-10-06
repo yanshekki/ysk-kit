@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createFakeLlm, createOpenAiCompatibleLlm } from './index';
+import { createFakeLlm, createOpenAiCompatibleLlm } from './index.js';
 
 describe('llm', () => {
   it('fake complete returns canned text', async () => {

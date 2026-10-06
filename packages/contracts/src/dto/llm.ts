@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LlmRoleSchema } from '../enums/llm-role';
+import { LlmRoleSchema } from '../enums/llm-role.js';
 
 export const LlmMessageSchema = z.object({
   role: LlmRoleSchema,

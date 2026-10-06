@@ -22,6 +22,7 @@ Default product scaffold (agents pass flags; do not wait for TTY):
 
 ```bash
 pnpm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
+# or: npm create @ysk-kit/app my-product --preset thin --db mysql --flavor saas
 # from this checkout:
 pnpm --filter @ysk-kit/create-app start my-product --preset thin --db mysql --flavor saas
 ```

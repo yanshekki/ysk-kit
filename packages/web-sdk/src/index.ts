@@ -162,10 +162,10 @@ export function createUserHooks(client: YskClient) {
 
 export type UserHooks = ReturnType<typeof createUserHooks>;
 
-export { billingQueryKey, createBillingHooks } from './billing-hooks';
-export { createLlmHooks } from './llm-hooks';
+export { billingQueryKey, createBillingHooks } from './billing-hooks.js';
+export { createLlmHooks } from './llm-hooks.js';
 export {
   createOrganizationHooks,
   organizationQueryKey,
   organizationsQueryKey,
-} from './organizations-hooks';
+} from './organizations-hooks.js';

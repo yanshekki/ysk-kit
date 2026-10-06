@@ -1,8 +1,8 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { CreateQuoteCommandSchema, PaginatedQuoteSchema, QuoteDtoSchema } from '../dto/quote';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { CreateQuoteCommandSchema, PaginatedQuoteSchema, QuoteDtoSchema } from '../dto/quote.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

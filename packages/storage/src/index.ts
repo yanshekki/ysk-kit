@@ -8,7 +8,7 @@ export interface IStoragePort {
   getLocal?(key: string): Promise<{ body: Buffer; mime: string } | null>;
 }
 
-import { createS3Storage } from './s3';
+import { createS3Storage } from './s3.js';
 
 export { createS3Storage };
 

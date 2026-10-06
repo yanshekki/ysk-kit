@@ -1,6 +1,6 @@
-export { withJobSpan } from './job-span';
-export { pinoOtelMixin } from './pino-otel-mixin';
-export { getTracer, type OtelEnv, type OtelHandle, startOtelFromEnv } from './tracing';
+export { withJobSpan } from './job-span.js';
+export { pinoOtelMixin } from './pino-otel-mixin.js';
+export { getTracer, type OtelEnv, type OtelHandle, startOtelFromEnv } from './tracing.js';
 
 import type { Express } from 'express';
 import { collectDefaultMetrics, Registry } from 'prom-client';

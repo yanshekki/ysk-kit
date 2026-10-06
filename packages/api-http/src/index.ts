@@ -1,15 +1,15 @@
-export { type EnvelopeErrorJson, envelopeError } from './envelope-error';
+export { type EnvelopeErrorJson, envelopeError } from './envelope-error.js';
 export {
   type ContractRoute,
   type ContractRouter,
   flattenContract,
   type HttpMethod,
-} from './flatten';
+} from './flatten.js';
 export {
   buildOpenApiDocument,
   type OpenApiDocument,
   scalarDocsHtml,
-} from './openapi';
+} from './openapi.js';
 export {
   clientIp,
   createMemoryRateLimit,
@@ -19,7 +19,7 @@ export {
   type RateLimiter,
   type RateLimitOpts,
   type RateLimitRedis,
-} from './rate-limit';
-export { REQUEST_ID_HEADER } from './request-id';
-export { applySecurityHeaders, securityHeaders } from './security-headers';
-export { type HttpCtx, type HttpHandler, type HttpResult, headerValue } from './types';
+} from './rate-limit.js';
+export { REQUEST_ID_HEADER } from './request-id.js';
+export { applySecurityHeaders, securityHeaders } from './security-headers.js';
+export { type HttpCtx, type HttpHandler, type HttpResult, headerValue } from './types.js';

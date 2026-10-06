@@ -8,7 +8,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { writeAgentStubs } from './agent-stubs';
+import { writeAgentStubs } from './agent-stubs.js';
 
 export const UPGRADE_PATHS = [
   'AGENTS.md',

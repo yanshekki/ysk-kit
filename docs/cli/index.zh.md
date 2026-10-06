@@ -12,6 +12,6 @@ YSK Kit 附帶兩套產生器與一組工作區 script。
 | 根 `package.json` scripts | 開發、測試、遷移、種子、lint | [workspace-scripts.zh.md](workspace-scripts.zh.md) |
 | `.env` / `.env.example` | 運行時設定 | [env.zh.md](env.zh.md) |
 
-從 npm：`pnpm create @ysk-kit/app`。從本倉：`pnpm --filter @ysk-kit/create-app start`。無參數執行 `pnpm ysk-kit` 或 `create-ysk-app` 會列印英文 `--help`。中文手冊是完整參考。
+從 npm：`npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`（npm 上沒有無 scope 的 `create-ysk-app` 套件）。從本倉：`pnpm --filter @ysk-kit/create-app start`。無參數執行 `pnpm ysk-kit` 或 `create-ysk-app` 會列印英文 `--help`。中文手冊是完整參考。
 
 `YSK_ROOT` 決定 `ysk` 修補哪一棵樹。二進制預設是本倉；測試與產生出來的產品把 `YSK_ROOT` 設成產品根目錄。

@@ -1,7 +1,7 @@
 import { generateKeyPairSync } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import { createFcmPush } from './fcm';
-import { createExpoPush, createLogPush, createPushFromEnv, isExpoPushToken } from './index';
+import { createFcmPush } from './fcm.js';
+import { createExpoPush, createLogPush, createPushFromEnv, isExpoPushToken } from './index.js';
 
 const rsa = generateKeyPairSync('rsa', { modulusLength: 2048 });
 const privateKey = rsa.privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();

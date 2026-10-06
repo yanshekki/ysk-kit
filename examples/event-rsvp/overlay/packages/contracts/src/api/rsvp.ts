@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
-import { CreateRsvpCommandSchema, PaginatedRsvpSchema, RsvpDtoSchema } from '../dto/rsvp';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { CreateRsvpCommandSchema, PaginatedRsvpSchema, RsvpDtoSchema } from '../dto/rsvp.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

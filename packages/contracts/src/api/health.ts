@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

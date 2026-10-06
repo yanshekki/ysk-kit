@@ -1,4 +1,4 @@
-import type { ErrorCode } from './codes';
+import type { ErrorCode } from './codes.js';
 
 export const ERROR_MESSAGE: Record<ErrorCode, { 'zh-HK': string; en: string }> = {
   VALIDATION_FAILED: { 'zh-HK': '資料格式不正確', en: 'Validation failed' },

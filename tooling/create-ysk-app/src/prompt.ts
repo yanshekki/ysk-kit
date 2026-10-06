@@ -1,6 +1,6 @@
 import { stdin as input, stdout as output } from 'node:process';
 import { createInterface } from 'node:readline/promises';
-import { DBS, type Db, FLAVORS, type ParsedArgs, PRESETS, type Preset } from './scaffold';
+import { DBS, type Db, FLAVORS, type ParsedArgs, PRESETS, type Preset } from './scaffold.js';
 
 export type AskFn = (question: string) => Promise<string>;
 

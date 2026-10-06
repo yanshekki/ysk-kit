@@ -31,7 +31,7 @@ const publicPackages = (): { name: string; version: string }[] => {
 
 describe('kit version sync', () => {
   it('keeps public packages on one version, via a minor changeset or an applied bump', () => {
-    const changeset = join(kitRoot, '.changeset/doctor-flavor-provenance.md');
+    const changeset = join(kitRoot, '.changeset/agent-guidance-redesign.md');
     const pkgs = publicPackages();
     try {
       const text = readFileSync(changeset, 'utf8');

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PageQuerySchema, PaginatedSchema } from './user';
+import { PageQuerySchema, PaginatedSchema } from './user.js';
 
 export const TicketStatus = {
   OPEN: 'OPEN',

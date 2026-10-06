@@ -3,9 +3,9 @@ import {
   CreateEnrollmentCommandSchema,
   EnrollmentDtoSchema,
   PaginatedEnrollmentSchema,
-} from '../dto/enrollment';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/enrollment.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

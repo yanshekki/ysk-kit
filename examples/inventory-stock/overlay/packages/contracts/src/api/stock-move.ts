@@ -3,9 +3,9 @@ import {
   CreateStockMoveCommandSchema,
   PaginatedStockMoveSchema,
   StockMoveDtoSchema,
-} from '../dto/stock-move';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/stock-move.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

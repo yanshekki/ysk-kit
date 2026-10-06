@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PaginatedSchema } from './user';
+import { PaginatedSchema } from './user.js';
 
 export const JobDtoSchema = z.object({
   id: z.string().uuid(),

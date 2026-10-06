@@ -12,6 +12,8 @@ export function relativeSpecifiersInSource(source: string): string[];
 export function hasNodeShebang(source: string): boolean;
 export function publicPackageSrcFiles(root: string): string[];
 export function extensionlessRelativeImports(root: string): string[];
+export function exampleOverlayPackageSrcFiles(root: string): string[];
+export function extensionlessExampleOverlayImports(root: string): string[];
 export function changelogSection(markdown: string, version: string): string;
 export function tagPlan(input: {
   headSha: string;

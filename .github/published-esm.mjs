@@ -114,6 +114,30 @@ export const extensionlessRelativeImports = (root) => {
   return hits;
 };
 
+export const exampleOverlayPackageSrcFiles = (root) => {
+  const files = [];
+  const examples = join(root, 'examples');
+  if (!existsSync(examples)) return files;
+  for (const name of readdirSync(examples)) {
+    walkTs(join(examples, name, 'overlay', 'packages'), files);
+  }
+  return files;
+};
+
+/** Overlay files import dest kit modules that are not in the overlay tree. */
+export const extensionlessExampleOverlayImports = (root) => {
+  const hits = [];
+  for (const file of exampleOverlayPackageSrcFiles(root)) {
+    const source = readFileSync(file, 'utf8');
+    for (const spec of relativeSpecifiersInSource(source)) {
+      if (relativeSpecifierNeedsJs(spec)) {
+        hits.push(`${file.slice(root.length + 1)}: ${spec}`);
+      }
+    }
+  }
+  return hits;
+};
+
 export const changelogSection = (markdown, version) => {
   const heading = `## v${version}`;
   const start = markdown.indexOf(`\n${heading}\n`);

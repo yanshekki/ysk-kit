@@ -6,6 +6,7 @@ import { isRegistryMode } from '../../../.github/pack-and-run.mjs';
 import {
   changelogSection,
   cliBinPackages,
+  extensionlessExampleOverlayImports,
   extensionlessRelativeImports,
   extraPeerNames,
   hasNodeShebang,
@@ -24,6 +25,7 @@ const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 describe('published ESM', () => {
   it('public package sources use explicit .js relative specifiers', () => {
     expect(extensionlessRelativeImports(kitRoot)).toEqual([]);
+    expect(extensionlessExampleOverlayImports(kitRoot)).toEqual([]);
   });
 
   it('CLI sources start with the Node shebang', () => {

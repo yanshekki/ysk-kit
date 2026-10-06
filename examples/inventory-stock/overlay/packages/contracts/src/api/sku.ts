@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
-import { CreateSkuCommandSchema, PaginatedSkuSchema, SkuDtoSchema } from '../dto/sku';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { CreateSkuCommandSchema, PaginatedSkuSchema, SkuDtoSchema } from '../dto/sku.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

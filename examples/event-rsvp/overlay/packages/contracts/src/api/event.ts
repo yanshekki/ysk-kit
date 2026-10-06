@@ -1,7 +1,7 @@
 import { initContract } from '@ts-rest/core';
-import { CreateEventCommandSchema, EventDtoSchema, PaginatedEventSchema } from '../dto/event';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+import { CreateEventCommandSchema, EventDtoSchema, PaginatedEventSchema } from '../dto/event.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

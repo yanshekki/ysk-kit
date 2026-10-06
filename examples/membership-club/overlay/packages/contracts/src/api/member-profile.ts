@@ -3,9 +3,9 @@ import {
   CreateMemberProfileCommandSchema,
   MemberProfileDtoSchema,
   PaginatedMemberProfileSchema,
-} from '../dto/member-profile';
-import { PageQuerySchema } from '../dto/user';
-import { ErrSchema, OkSchema } from '../errors/envelope';
+} from '../dto/member-profile.js';
+import { PageQuerySchema } from '../dto/user.js';
+import { ErrSchema, OkSchema } from '../errors/envelope.js';
 
 const c = initContract();
 

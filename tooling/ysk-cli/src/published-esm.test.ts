@@ -10,6 +10,7 @@ import {
   extensionlessRelativeImports,
   extraPeerNames,
   hasNodeShebang,
+  inspectAtSha,
   lockstepVersion,
   NODE_SHEBANG,
   npmPackFileName,
@@ -94,5 +95,59 @@ describe('published ESM', () => {
     expect(postPublishPlan({ pendingCount: 1, allInstallable: true })).toBe('version-pr');
     expect(postPublishPlan({ pendingCount: 0, allInstallable: false })).toBe('not-published');
     expect(postPublishPlan({ pendingCount: 0, allInstallable: true })).toBe('tag');
+  });
+
+  it('inspectAtSha skips a version-PR tree and tags a published tree', () => {
+    const tree = ({ version, pending }: { version: string; pending: boolean }) => ({
+      listDir: (rel: string) => {
+        if (rel === 'packages') return ['contracts'];
+        if (rel === 'tooling') return ['cli', 'biome'];
+        if (rel === '.changeset') {
+          return pending ? ['README.md', 'pending.md'] : ['README.md', 'config.json'];
+        }
+        throw new Error(`unexpected listDir ${rel}`);
+      },
+      readJson: (rel: string) => {
+        if (rel === 'packages/contracts/package.json') {
+          return { name: '@ysk-kit/contracts', version };
+        }
+        if (rel === 'tooling/cli/package.json') {
+          return { name: '@ysk-kit/cli', version };
+        }
+        if (rel === 'tooling/biome/package.json') {
+          return { name: '@ysk-kit/biome', version: '0.0.1', private: true };
+        }
+        throw new Error(`unexpected readJson ${rel}`);
+      },
+    });
+
+    const versionPr = inspectAtSha({
+      sha: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      tree: tree({ version: '1.2.1', pending: true }),
+      npmView: () => true,
+    });
+    expect(versionPr.plan).toBe('version-pr');
+    expect(versionPr.version).toBe('1.2.1');
+    expect(versionPr.pending).toEqual(['pending.md']);
+
+    const published = inspectAtSha({
+      sha: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+      tree: tree({ version: '1.2.2', pending: false }),
+      npmView: () => true,
+    });
+    expect(published.plan).toBe('tag');
+    expect(published.version).toBe('1.2.2');
+    expect(published.pending).toEqual([]);
+
+    const waiting = inspectAtSha({
+      sha: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+      tree: tree({ version: '1.2.2', pending: false }),
+      npmView: () => false,
+    });
+    expect(waiting.plan).toBe('not-published');
+    expect(waiting.missing.map((pkg) => pkg.name).sort()).toEqual([
+      '@ysk-kit/cli',
+      '@ysk-kit/contracts',
+    ]);
   });
 });

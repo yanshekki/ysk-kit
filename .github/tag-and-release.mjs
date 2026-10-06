@@ -3,23 +3,22 @@
  * After a successful publish: annotated vX.Y.Z at GITHUB_SHA and a GitHub
  * Release whose notes are that version's CHANGELOG.md section.
  *
- * Skip when pending changeset files remain (Changesets version PR path).
+ * Reads public package versions, pending changesets, and CHANGELOG at
+ * GITHUB_SHA. changesets/action may leave the workspace on
+ * changeset-release/main (bumped versions, deleted changesets); that
+ * working tree must not decide the plan.
+ *
+ * Skip when pending changeset files remain on that SHA (version PR path).
  * Fail when versions are not installable. Do not move an existing tag.
- * Refuses to run outside GitHub Actions so a local checkout cannot tag.
+ * Refuses to run outside GitHub Actions so a local checkout cannot tag,
+ * except `--dry-run` (plan only).
  */
 import { spawnSync } from 'node:child_process';
-import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import {
-  changelogSection,
-  lockstepVersion,
-  postPublishPlan,
-  productTag,
-  tagPlan,
-} from './published-esm.mjs';
-import { pendingChangesetFiles, publicPackages } from './unpublished-packages.mjs';
+import { changelogSection, inspectAtSha, productTag, tagPlan } from './published-esm.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const GIT_NAME = 'github-actions[bot]';
@@ -67,6 +66,36 @@ const headSha = (env) => {
   return sha;
 };
 
+export const gitShow = (sha, path, runFn = run) => {
+  const result = runFn('git', ['show', `${sha}:${path}`], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (result.status !== 0) {
+    throw new Error(`git show ${sha}:${path} failed: ${(result.stderr ?? '').trim()}`);
+  }
+  return result.stdout ?? '';
+};
+
+/** Directory listing at a commit. Ignores the working tree. */
+export const gitLsTree = (sha, path, runFn = run) => {
+  const result = runFn('git', ['ls-tree', '--name-only', `${sha}:${path}`], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (result.status !== 0) {
+    throw new Error(`git ls-tree ${sha}:${path} failed: ${(result.stderr ?? '').trim()}`);
+  }
+  return (result.stdout ?? '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+};
+
+export const treeAtSha = (sha, runFn = run) => ({
+  listDir: (rel) => gitLsTree(sha, rel, runFn),
+  readJson: (rel) => JSON.parse(gitShow(sha, rel, runFn)),
+  readText: (rel) => gitShow(sha, rel, runFn),
+});
+
 const createAnnotatedTag = (tag, sha) => {
   const tagged = run(
     'git',
@@ -106,34 +135,45 @@ const ensureGithubRelease = (tag, sha, notes) => {
   if (created.status !== 0) throw new Error(`gh release create ${tag} failed`);
 };
 
+const isDryRun = (argv) => argv.includes('--dry-run');
+
 const main = () => {
   const env = { ...process.env };
-  if (!env.GITHUB_ACTIONS) {
+  const dryRun = isDryRun(process.argv);
+  if (!env.GITHUB_ACTIONS && !dryRun) {
     throw new Error('tag-and-release.mjs is for the Release workflow (GITHUB_ACTIONS).');
   }
-  const pkgs = publicPackages();
-  const version = lockstepVersion(pkgs);
-  const pending = pendingChangesetFiles();
-  const missing = pkgs.filter((pkg) => !npmViewOk(pkg.name, pkg.version));
-  const plan = postPublishPlan({
-    pendingCount: pending.length,
-    allInstallable: missing.length === 0,
+  const sha = headSha(env);
+  const tree = treeAtSha(sha);
+  const { plan, version, pending, missing } = inspectAtSha({
+    sha,
+    tree,
+    npmView: npmViewOk,
   });
   console.log(`post-publish plan: ${plan} (v${version})`);
   if (plan === 'version-pr') {
     writeOutput(env, 'published', 'false');
-    console.log('pending changesets; skipping tag (version PR path)');
+    console.log(
+      `pending changesets at ${sha}; skipping tag (version PR path):\n${pending.join('\n')}`,
+    );
     return;
   }
   if (plan === 'not-published') {
     writeOutput(env, 'published', 'false');
-    throw new Error(
-      `packages not installable on npm:\n${missing.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n')}`,
-    );
+    const detail = `packages not installable on npm:\n${missing.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n')}`;
+    if (dryRun) {
+      console.log(detail);
+      return;
+    }
+    throw new Error(detail);
   }
   writeOutput(env, 'published', 'true');
-  const sha = headSha(env);
   const tag = productTag(version);
+  const notes = changelogSection(tree.readText('CHANGELOG.md'), version);
+  if (dryRun) {
+    console.log(`dry-run tag ${tag} at ${sha}`);
+    return;
+  }
   const existing = existingTagCommit(tag);
   const action = tagPlan({ headSha: sha, existingTarget: existing });
   if (action === 'create') {
@@ -142,7 +182,6 @@ const main = () => {
   } else {
     console.log(`tag ${tag} already points at ${sha}`);
   }
-  const notes = changelogSection(readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8'), version);
   ensureGithubRelease(tag, sha, notes);
   console.log(`tag-and-release ok ${tag}`);
 };

@@ -1,0 +1,9 @@
+---
+description: Electron desktop — isolation, CSP, IPC, safeStorage
+globs: apps/desktop/**/*
+alwaysApply: false
+---
+
+Local reminder. Law: `AGENTS.md`.
+
+Procedure: `docs/skills/desktop-electron.md`. Keep `contextIsolation` and `nodeIntegration: false`. Add sandbox, CSP, navigation guards, IPC `senderFrame` checks. `safeStorage` with no plaintext fallback. Renderer still uses `@ysk-kit/sdk` only.

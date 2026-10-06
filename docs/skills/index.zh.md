@@ -17,7 +17,11 @@ Language: [English](index.md) · 中文
 | [verify-change](verify-change.zh.md) | 任何功能之後 |
 | [fix-layers](fix-layers.zh.md) | `pnpm layers` 失敗 |
 | [envelope-api](envelope-api.zh.md) | 新路由、SSE、PDF 或錯誤形狀 |
+| [security-review](security-review.zh.md) | 授權、租戶、密鑰、token、webhook、LLM 輸入 |
+| [db-migration](db-migration.zh.md) | Prisma 7.10 SQL 審查、expand/contract、禁止默默 reset |
+| [webhook-handling](webhook-handling.zh.md) | 入站 webhook（先 Stripe）：驗簽、確認、冪等 |
+| [desktop-electron](desktop-electron.zh.md) | Electron isolation、CSP、IPC、safeStorage |
 
-共用包裝在 `.agents/skills/<name>/SKILL.md`（YAML `name` + `description`，然後指向此處）。`create-ysk-app` 與 `ysk-kit upgrade` 會從 `tooling/ysk-cli/templates/agent/` 把相同副本寫到 `.claude/skills/`、`.cursor/skills/` 與 `.grok/skills/`。若副本漂移或不提 `AGENTS.md`，`pnpm ysk-kit check agent` 會失敗。
+共用包裝在 `.agents/skills/<name>/SKILL.md`（YAML `name` + `description`、短步驟摘要，然後指向此處）。`create-ysk-app` 與 `ysk-kit upgrade` 會從 `tooling/ysk-cli/templates/agent/` 把相同副本寫到 `.claude/skills/`、`.cursor/skills/` 與 `.grok/skills/`。若副本漂移或不提 `AGENTS.md`，`pnpm ysk-kit check agent` 會失敗。
 
 其他 agent 先讀 `AGENTS.md`，再跟本目錄。

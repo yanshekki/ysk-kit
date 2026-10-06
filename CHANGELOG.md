@@ -39,16 +39,26 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 
 ## v1.2.2
 
+### New features
+
+- Agent skills `security-review`, `db-migration`, `webhook-handling`, and `desktop-electron` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, scoped Cursor / Copilot pointers, and create-app / upgrade templates.
+
+### Improvements
+
+- `add-module`, `add-capability`, `verify-change`, and `envelope-api` point at the new procedures. The plan template's data-model and security sections name Prisma expand/contract, security review, webhooks, and Electron.
+
 ### Fixes
 
 - Published `@ysk-kit/*` libraries emit valid Node ESM: relative imports in `dist/` include `.js` extensions, so `node` can load the tarball (`import('@ysk-kit/<pkg>')`). Public packages inherit `module` / `moduleResolution` `NodeNext` from `tsconfig.base.json`.
 - `@ysk-kit/create-app` and `@ysk-kit/cli` bins start with `#!/usr/bin/env node` and are executable, so `create-ysk-app` / `ysk-kit` / `yskk` run after install (they previously failed with `import: not found` and `ERR_MODULE_NOT_FOUND`).
 - Scaffold from npm is `npm create @ysk-kit/app` or `pnpm create @ysk-kit/app`. There is no unscoped `create-ysk-app` package on npm; the published package is `@ysk-kit/create-app`.
+- `@ysk-kit/observability` pins OpenTelemetry SDK and exporter packages to versions that exist on npm (`resources` / `sdk-*` 2.11.0, exporters / instrumentation 0.222.0). Caret ranges floated onto `sdk-metrics@2.12.0`, which depends on missing `resources@2.12.0`.
 
 ### Internal/CI
 
 - CI job `pack-and-run` builds, `pnpm pack`s all 26 public packages, installs the tarballs in a clean directory, imports each package, runs the CLI `--help` bins, and scaffolds a non-interactive `php-bridge` dest from the in-tree CLI.
-- Release no longer keys off Changesets `published` (custom `pnpm release:publish` stdout is not Changesets' tag format). After a successful publish it creates the annotated `vX.Y.Z` tag at that commit, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Pending changeset files skip the tag (version PR path). Publish stays OIDC Trusted Publishing only.
+- Release skips the tag step when `changesets/action` reports `hasChangesets` (version PR opened or updated). `.github/tag-and-release.mjs` reads versions, pending changeset files, and `CHANGELOG.md` at `GITHUB_SHA`. After a successful publish it creates the annotated `vX.Y.Z` tag at that commit, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Publish stays OIDC Trusted Publishing only.
+- `thin-smoke`, `flavor-smoke`, create-app, and upgrade tests assert the new skill files and Cursor rules.
 
 ## v1.2.1
 

@@ -31,9 +31,10 @@ Do not invent a capability folder outside the catalogue. Do not add an industry 
 1. Confirm the name is in the catalogue.
 2. If the name is `billing`, run `pnpm ysk-kit add team` first.
 3. `pnpm ysk-kit add <name>`.
-4. `pnpm db:migrate` when Prisma changed.
+4. When Prisma changed, follow [db-migration](db-migration.md), then `pnpm db:migrate`.
 5. Fill env keys from `.env.example` (never commit secrets).
-6. [verify-change](verify-change.md).
+6. Before billing goes live, follow [webhook-handling](webhook-handling.md) (webhook secret, signature, event-id idempotency). Org-scoped billing must keep `requireBiller` ([security-review](security-review.md)).
+7. [verify-change](verify-change.md).
 
 A second add of `llm` / `team` / `billing` / `push` is a no-op when the skip token is already in `app.ts` or `composition.ts`.
 

@@ -205,6 +205,10 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Write tests | [write-tests](docs/skills/write-tests.md), [testing guide](docs/guides/testing.md) |
 | Add or change a screen | [ui-design](docs/skills/ui-design.md) |
 | Finish UI | [ui-review](docs/skills/ui-review.md) |
+| Security review | [security-review](docs/skills/security-review.md) |
+| Prisma migration | [db-migration](docs/skills/db-migration.md) |
+| Inbound webhook | [webhook-handling](docs/skills/webhook-handling.md) |
+| Electron desktop | [desktop-electron](docs/skills/desktop-electron.md) |
 | Refresh a product | [upgrade](docs/guides/upgrade.md) |
 | CLI flags | [ysk-kit](docs/cli/ysk-kit.md) |
 

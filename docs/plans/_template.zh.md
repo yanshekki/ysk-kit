@@ -71,7 +71,7 @@ DTO 名稱、欄位、error code、ts-rest 路徑。先加 `OkSchema`／`ErrSche
 
 ## 資料模型／Prisma 與遷移
 
-Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明是否需要 `pnpm db:migrate`。
+Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明是否需要 `pnpm db:migrate`。破壞性改欄：[db-migration](../skills/db-migration.zh.md)（expand/contract；禁止默默 reset）。
 
 ## 模組切片與分層
 
@@ -87,7 +87,7 @@ Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明�
 
 ## 安全與私隱
 
-授權（角色／權限）、速率限制、密鑰（不要把 OTP、Stripe `sk_`、webhook 密鑰寫進日誌）、個人資料。
+授權（角色／權限）、速率限制、密鑰（不要把 OTP、Stripe `sk_`、webhook 密鑰寫進日誌）、個人資料。程序：[security-review](../skills/security-review.zh.md)。入站 webhook：[webhook-handling](../skills/webhook-handling.zh.md)。桌面 main／preload：[desktop-electron](../skills/desktop-electron.zh.md)。
 
 ## 測試計劃
 

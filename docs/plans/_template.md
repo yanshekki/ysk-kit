@@ -71,7 +71,7 @@ DTO names, fields, error codes, and ts-rest paths. Add `OkSchema` / `ErrSchema` 
 
 ## Data model / Prisma and migrations
 
-Models, fields, relations. Prisma stays in `apps/api/src/modules/*/infra`. Note whether `pnpm db:migrate` is required.
+Models, fields, relations. Prisma stays in `apps/api/src/modules/*/infra`. Note whether `pnpm db:migrate` is required. Breaking column changes: [db-migration](../skills/db-migration.md) (expand/contract; no silent reset).
 
 ## Module slices and layers
 
@@ -87,7 +87,7 @@ Queue names, mail templates, socket events, in-app notifications — or “none�
 
 ## Security and privacy
 
-Authz (role / permission), rate limits, secrets (never log OTP, Stripe `sk_`, webhook secrets), personal data.
+Authz (role / permission), rate limits, secrets (never log OTP, Stripe `sk_`, webhook secrets), personal data. Procedure: [security-review](../skills/security-review.md). Inbound webhooks: [webhook-handling](../skills/webhook-handling.md). Desktop main/preload: [desktop-electron](../skills/desktop-electron.md).
 
 ## Test plan
 

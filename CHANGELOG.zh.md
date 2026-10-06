@@ -39,16 +39,26 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 ## v1.2.2
 
+### 新功能
+
+- Agent skills `security-review`、`db-migration`、`webhook-handling` 與 `desktop-electron`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、範圍限定的 Cursor／Copilot 指針，以及 create-app／upgrade 模板。
+
+### 改進
+
+- `add-module`、`add-capability`、`verify-change` 與 `envelope-api` 指向新程序。計劃模板的資料模型與安全段標明 Prisma expand/contract、安全審查、webhook 與 Electron。
+
 ### 修正
 
 - 已發佈的 `@ysk-kit/*` 程式庫輸出有效的 Node ESM：`dist/` 的相對路徑帶 `.js` 副檔名，因此 `node` 可以載入 tarball（`import('@ysk-kit/<pkg>')`）。公開套件從 `tsconfig.base.json` 繼承 `module`／`moduleResolution` `NodeNext`。
 - `@ysk-kit/create-app` 與 `@ysk-kit/cli` 的 bin 以 `#!/usr/bin/env node` 開頭而且可執行，因此安裝後 `create-ysk-app`／`ysk-kit`／`yskk` 可以運行（先前會以 `import: not found` 與 `ERR_MODULE_NOT_FOUND` 失敗）。
 - 從 npm 開倉使用 `npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`。npm 上沒有無 scope 的 `create-ysk-app` 套件；發佈的套件是 `@ysk-kit/create-app`。
+- `@ysk-kit/observability` 把 OpenTelemetry SDK 與 exporter 釘在 npm 上存在的版本（`resources`／`sdk-*` 2.11.0，exporters／instrumentation 0.222.0）。Caret 範圍會浮到 `sdk-metrics@2.12.0`，而該版本依賴尚未發佈的 `resources@2.12.0`。
 
 ### 內部／CI
 
 - CI job `pack-and-run` 編譯後把 26 個公開套件 `pnpm pack`，在乾淨目錄安裝 tarball，import 每一個套件，執行 CLI `--help`，並用倉內 CLI 非互動建立 `php-bridge` dest。
-- Release 不再以 Changesets 的 `published` 為準（自訂 `pnpm release:publish` 的 stdout 不是 Changesets 的 tag 格式）。成功發佈後會在該 commit 建立 annotated `vX.Y.Z` tag，用該版本 `CHANGELOG.md` 章節開 GitHub Release，再安裝已發佈的 tarball 並執行 CLI bin 做驗證。仍有待處理 changeset 檔時略過 tag（版本 PR 路徑）。發佈仍然只使用 OIDC Trusted Publishing。
+- 當 `changesets/action` 回報 `hasChangesets`（打開或更新版本 PR）時，Release 跳過 tag 步驟。`.github/tag-and-release.mjs` 在 `GITHUB_SHA` 讀取版本、待處理 changeset 與 `CHANGELOG.md`。成功發佈後會在該 commit 建立 annotated `vX.Y.Z` tag，用該版本 `CHANGELOG.md` 章節開 GitHub Release，再安裝已發佈的 tarball 並執行 CLI bin 做驗證。發佈仍然只使用 OIDC Trusted Publishing。
+- `thin-smoke`、`flavor-smoke`、create-app 與 upgrade 測試會斷言新的 skill 檔與 Cursor 規則。
 
 ## v1.2.1
 

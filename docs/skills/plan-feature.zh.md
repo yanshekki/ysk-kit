@@ -41,7 +41,7 @@ Language: [English](plan-feature.md) · 中文
    ```
 
    會寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md`、`.zh.md` 配對，以及根目錄 `plan.md` 指針（已 gitignore）。`--force` 覆寫。`--date` 固定曆日。
-5. 填滿每個模板章節。不要刪標題。在合約之前寫「現況與重用」，範圍／非目標旁邊寫「假設」，並寫「考慮過的方案」（有真正替代時兩個做法，或 `單一明顯做法 — 原因`）。每條清單寫明檔案、介面／合約／資料、風險、回滾、驗收。每條驗證命令有預期結果；有 UI／envelope／授權時加人手檢查。優先重用既有 error code。未決項目放未決問題，不要默默猜測。
+5. 填滿每個模板章節。不要刪標題。在合約之前寫「現況與重用」，範圍／非目標旁邊寫「假設」，並寫「考慮過的方案」（有真正替代時兩個做法，或 `單一明顯做法 — 原因`）。每條清單寫明檔案、介面／合約／資料、風險、回滾、驗收。每條驗證命令有預期結果；有 UI／envelope／授權時加人手檢查。優先重用既有 error code。未決項目放未決問題，不要默默猜測。授權、密鑰或 webhook 在範圍內時，跟隨 [security-review](security-review.zh.md)（並按適用情況跟隨 [webhook-handling](webhook-handling.zh.md)／[db-migration](db-migration.zh.md)）。
 6. 工作階段 `plan.md` 只做指向日期檔的指針。請改日期檔。若工具寫了原生計劃（Grok 工作階段 `plan.md`、Cursor `.cursor/plans/`、Copilot `/memories/session/plan.md` 等），抄進日期模板。對照：[docs/plans/README.zh.md](../plans/README.zh.md)。
 7. 執行 `pnpm ysk-kit plan --check docs/plans/<yyyy-mm-dd>-<slug>.md`（及 `.zh.md` 配對）。缺標題或仍是佔位內容就不算完整。
 8. 使用者接受計劃之後（或他們要求直接執行時），接 [加模組](add-module.zh.md)、[加能力](add-capability.zh.md) 或 [envelope-api](envelope-api.zh.md)。合約先行。批准之前不要改專案檔，除非使用者豁免。

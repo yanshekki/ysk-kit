@@ -43,6 +43,8 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit c
 
 不要為了讓單元測試通過而啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 
+範圍內再跟：[security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[webhook-handling](webhook-handling.zh.md)、[desktop-electron](desktop-electron.zh.md)。
+
 ## 驗證
 
 - [ ] 五條命令都顯示成功

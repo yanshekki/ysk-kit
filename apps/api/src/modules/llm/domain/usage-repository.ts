@@ -7,4 +7,5 @@ export interface ILlmUsageRepository {
     usage: LlmUsage;
     requestId?: string | undefined;
   }): Promise<void>;
+  countSince(userId: string, since: Date): Promise<number>;
 }

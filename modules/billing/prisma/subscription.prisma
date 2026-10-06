@@ -11,3 +11,16 @@ model Subscription {
   updatedAt        DateTime     @updatedAt
   organization     Organization @relation(fields: [organizationId], references: [id])
 }
+
+model ProcessedWebhookEvent {
+  id             String   @id @default(uuid())
+  provider       String
+  eventId        String
+  eventType      String
+  eventCreatedAt DateTime
+  organizationId String?
+  createdAt      DateTime @default(now())
+
+  @@unique([provider, eventId])
+  @@index([provider, organizationId, eventCreatedAt])
+}

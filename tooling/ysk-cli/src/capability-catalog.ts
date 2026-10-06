@@ -113,7 +113,15 @@ export const CATALOG: Record<Capability, CapabilityRecipe> = {
   llm: {
     prisma: 'modules/llm/prisma/llm-usage.prisma',
     userFields: ['llmUsages LlmUsage[]'],
-    env: ['LLM_BASE_URL', 'LLM_API_KEY', 'XAI_API_KEY', 'LLM_MODEL'],
+    env: [
+      'LLM_BASE_URL',
+      'LLM_API_KEY',
+      'XAI_API_KEY',
+      'LLM_MODEL',
+      'LLM_SYSTEM_PROMPT',
+      'LLM_QUOTA_MAX',
+      'LLM_QUOTA_WINDOW_MS',
+    ],
     apiDeps: ['@ysk-kit/llm'],
     skipSourceIf: 'createLlmService',
     copySource: true,

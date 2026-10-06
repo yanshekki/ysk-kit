@@ -3,7 +3,9 @@ import { BILLING_PLANS, orgRoleCan } from '@ysk-kit/contracts';
 import { AppError } from '@ysk-kit/domain-kernel';
 import type { IOrganizationRepository } from '../../organizations/domain/organization-repository';
 import type { IBillingPort } from '../domain/billing-port';
+import type { StripeWebhookEvent } from '../domain/stripe-webhook-event';
 import type { ISubscriptionRepository } from '../domain/subscription-repository';
+import type { IProcessedWebhookRepository } from '../domain/webhook-event-repository';
 
 const PERIOD_MS = 1000 * 60 * 60 * 24 * 30;
 
@@ -30,6 +32,7 @@ export const createBillingService = (opts: {
   subscriptions: ISubscriptionRepository;
   billing: IBillingPort;
   orgs: IOrganizationRepository;
+  webhookEvents: IProcessedWebhookRepository;
   now?: () => Date;
 }) => {
   const now = () => opts.now?.() ?? new Date();
@@ -42,6 +45,25 @@ export const createBillingService = (opts: {
       throw new AppError('FORBIDDEN');
     }
     return org;
+  };
+
+  const activate = async (
+    organizationId: string,
+    planCode: SubscriptionDto['planCode'],
+    customerId?: string,
+    seatCount = 1,
+  ) => {
+    if (planCode === 'free') return;
+    const org = await opts.orgs.findById(organizationId);
+    if (!org) throw new AppError('NOT_FOUND');
+    await opts.subscriptions.upsert({
+      organizationId,
+      planCode,
+      status: 'active',
+      currentPeriodEnd: new Date(now().getTime() + PERIOD_MS),
+      seatCount,
+    });
+    if (customerId) await opts.orgs.setStripeCustomerId(organizationId, customerId);
   };
 
   return {
@@ -64,24 +86,7 @@ export const createBillingService = (opts: {
         invoiceId,
       });
     },
-    activate: async (
-      organizationId: string,
-      planCode: SubscriptionDto['planCode'],
-      customerId?: string,
-      seatCount = 1,
-    ) => {
-      if (planCode === 'free') return;
-      const org = await opts.orgs.findById(organizationId);
-      if (!org) throw new AppError('NOT_FOUND');
-      await opts.subscriptions.upsert({
-        organizationId,
-        planCode,
-        status: 'active',
-        currentPeriodEnd: new Date(now().getTime() + PERIOD_MS),
-        seatCount,
-      });
-      if (customerId) await opts.orgs.setStripeCustomerId(organizationId, customerId);
-    },
+    activate,
     portal: async (userId: string, organizationId: string, returnUrl: string) => {
       const org = await requireBiller(userId, organizationId);
       const customerId = org.stripeCustomerId;
@@ -119,6 +124,54 @@ export const createBillingService = (opts: {
         });
       }
       return { url: result.url };
+    },
+    handleStripeEvent: async (event: StripeWebhookEvent) => {
+      if (!event.id) throw new AppError('VALIDATION_FAILED', 'Stripe event id required');
+      const organizationId = event.data.object.metadata?.organizationId;
+      const eventCreatedAt = new Date((Number.isFinite(event.created) ? event.created : 0) * 1000);
+      const claim = await opts.webhookEvents.tryClaim({
+        provider: 'stripe',
+        eventId: event.id,
+        eventType: event.type,
+        eventCreatedAt,
+        ...(organizationId ? { organizationId } : {}),
+      });
+      if (claim === 'duplicate') return { received: true as const };
+
+      try {
+        if (organizationId) {
+          const latest = await opts.webhookEvents.maxEventCreatedAt(
+            'stripe',
+            organizationId,
+            event.id,
+          );
+          if (latest && eventCreatedAt < latest) return { received: true as const };
+        }
+        if (event.type === 'checkout.session.completed') {
+          const planCode = event.data.object.metadata?.planCode;
+          const seatRaw = Number(event.data.object.metadata?.seatCount ?? '1');
+          const seatCount = Number.isFinite(seatRaw) && seatRaw >= 1 ? Math.floor(seatRaw) : 1;
+          if (organizationId && (planCode === 'pro' || planCode === 'free')) {
+            const customer = event.data.object.customer;
+            await activate(
+              organizationId,
+              planCode,
+              typeof customer === 'string' ? customer : undefined,
+              seatCount,
+            );
+          }
+        }
+        return { received: true as const };
+      } catch (error) {
+        if (
+          error instanceof AppError &&
+          (error.code === 'NOT_FOUND' || error.code === 'VALIDATION_FAILED')
+        ) {
+          return { received: true as const };
+        }
+        await opts.webhookEvents.release('stripe', event.id);
+        throw error;
+      }
     },
     cancel: async (userId: string, organizationId: string) => {
       await requireBiller(userId, organizationId);

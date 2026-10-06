@@ -23,6 +23,9 @@ Language: [English](env.md) · 中文
 | `LLM_BASE_URL` | OpenAI 相容基底（預設 `https://api.x.ai/v1`）。 |
 | `LLM_API_KEY` / `XAI_API_KEY` | LLM 密鑰。非生產環境缺失 → 假 `pong` 模型。生產環境缺失 → 503。 |
 | `LLM_MODEL` | 預設 `grok-4.7`。 |
+| `LLM_SYSTEM_PROMPT` | 伺服器持有的 system prompt，會前置到 `/v1/llm/complete` 與 `/v1/llm/stream`。空白 → kit 預設。客戶端不能傳送 `role=system`。 |
+| `LLM_QUOTA_MAX` | 每個用戶在視窗內的 LLM 完成次數。`0` 關閉。預設 60。 |
+| `LLM_QUOTA_WINDOW_MS` | LLM 配額視窗（預設 3600000）。 |
 | `HTTP_ADAPTER` | `express`（預設）或 `fastify`。 |
 | `CRYPTO_MASTER_KEY` | AES-256-GCM 用的 64 個十六進位字元。 |
 | `TWILIO_ACCOUNT_SID`、`TWILIO_AUTH_TOKEN`、`TWILIO_FROM` | SMS OTP。生產環境三者皆須。 |

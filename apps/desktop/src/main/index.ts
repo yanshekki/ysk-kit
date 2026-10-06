@@ -1,53 +1,98 @@
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { app, BrowserWindow, ipcMain, safeStorage } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  type IpcMainInvokeEvent,
+  ipcMain,
+  safeStorage,
+  session,
+} from 'electron';
+import { createSecretStore } from './secret-store';
+import {
+  desktopCsp,
+  isTrustedIpcSender,
+  rendererAllowedOrigins,
+  windowOpenDecision,
+} from './security';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
 const tokenDir = (): string => join(app.getPath('userData'), 'tokens');
-const tokenPath = (name: string): string => join(tokenDir(), name);
 
-const writeSecret = (name: string, value: string): void => {
-  mkdirSync(tokenDir(), { recursive: true });
-  const payload = safeStorage.isEncryptionAvailable()
-    ? safeStorage.encryptString(value)
-    : Buffer.from(value, 'utf8');
-  writeFileSync(tokenPath(name), payload);
-};
+const secrets = createSecretStore({
+  tokenDir,
+  io: {
+    encryptionAvailable: () => safeStorage.isEncryptionAvailable(),
+    encrypt: (value) => safeStorage.encryptString(value),
+    decrypt: (buf) => safeStorage.decryptString(buf),
+    writeFile: (path, data) => {
+      writeFileSync(path, data);
+    },
+    readFile: (path) => readFileSync(path),
+    exists: (path) => existsSync(path),
+    unlink: (path) => {
+      unlinkSync(path);
+    },
+    mkdir: (path) => {
+      mkdirSync(path, { recursive: true });
+    },
+    warn: (message) => {
+      console.warn(message);
+    },
+  },
+});
 
-const readSecret = (name: string): string | null => {
-  const path = tokenPath(name);
-  if (!existsSync(path)) return null;
-  const buf = readFileSync(path);
-  try {
-    return safeStorage.isEncryptionAvailable()
-      ? safeStorage.decryptString(buf)
-      : buf.toString('utf8');
-  } catch {
-    return null;
+const allowedOrigins = (): string[] =>
+  rendererAllowedOrigins({
+    ...(process.env.ELECTRON_RENDERER_URL
+      ? { rendererUrl: process.env.ELECTRON_RENDERER_URL }
+      : {}),
+  });
+
+const assertTrustedSender = (event: IpcMainInvokeEvent): void => {
+  if (!isTrustedIpcSender(event.senderFrame?.url, allowedOrigins())) {
+    throw new Error('untrusted ipc sender');
   }
 };
 
-const clearSecrets = (): void => {
-  for (const name of ['access', 'refresh']) {
-    const path = tokenPath(name);
-    if (existsSync(path)) unlinkSync(path);
-  }
-};
+ipcMain.handle('ysk:token:get', (event) => {
+  assertTrustedSender(event);
+  return secrets.read('access');
+});
+ipcMain.handle('ysk:token:set', (event, token: string) => {
+  assertTrustedSender(event);
+  secrets.write('access', token);
+});
+ipcMain.handle('ysk:token:getRefresh', (event) => {
+  assertTrustedSender(event);
+  return secrets.read('refresh');
+});
+ipcMain.handle('ysk:token:setPair', (event, access: string, refresh: string) => {
+  assertTrustedSender(event);
+  secrets.write('access', access);
+  secrets.write('refresh', refresh);
+});
+ipcMain.handle('ysk:token:clear', (event) => {
+  assertTrustedSender(event);
+  secrets.clear();
+});
 
-ipcMain.handle('ysk:token:get', () => readSecret('access'));
-ipcMain.handle('ysk:token:set', (_event, token: string) => {
-  writeSecret('access', token);
-});
-ipcMain.handle('ysk:token:getRefresh', () => readSecret('refresh'));
-ipcMain.handle('ysk:token:setPair', (_event, access: string, refresh: string) => {
-  writeSecret('access', access);
-  writeSecret('refresh', refresh);
-});
-ipcMain.handle('ysk:token:clear', () => {
-  clearSecrets();
-});
+const applyDesktopCsp = (): void => {
+  const csp = desktopCsp({
+    production: app.isPackaged,
+    connectSrc: [process.env.API_PUBLIC_URL ?? 'http://localhost:3001'],
+  });
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [csp],
+      },
+    });
+  });
+};
 
 const createWindow = (): void => {
   const win = new BrowserWindow({
@@ -57,7 +102,15 @@ const createWindow = (): void => {
       preload: join(here, '../preload/index.js'),
       contextIsolation: true,
       nodeIntegration: false,
+      sandbox: true,
+      webSecurity: true,
     },
+  });
+  win.webContents.setWindowOpenHandler(() => windowOpenDecision());
+  win.webContents.on('will-navigate', (event, url) => {
+    if (!isTrustedIpcSender(url, allowedOrigins())) {
+      event.preventDefault();
+    }
   });
   if (process.env.ELECTRON_RENDERER_URL) {
     void win.loadURL(process.env.ELECTRON_RENDERER_URL);
@@ -67,6 +120,7 @@ const createWindow = (): void => {
 };
 
 void app.whenReady().then(() => {
+  applyDesktopCsp();
   createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

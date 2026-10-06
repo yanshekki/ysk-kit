@@ -1,4 +1,10 @@
-import { corsOrigins, loadServerEnv, type ServerEnv } from '@ysk-kit/config';
+import {
+  corsOrigins,
+  DEFAULT_LLM_SYSTEM_PROMPT,
+  llmQuotaFromEnv,
+  loadServerEnv,
+  type ServerEnv,
+} from '@ysk-kit/config';
 import { createBullmqQueue, createMemoryQueue, type IJobQueue } from '@ysk-kit/jobs';
 import { createLlmFromEnv, type ILlmPort } from '@ysk-kit/llm';
 import { createLogger, type Logger } from '@ysk-kit/logger';
@@ -21,6 +27,7 @@ import {
 } from './modules/billing/application/billing-service';
 import { createLogBilling } from './modules/billing/infra/log-billing';
 import { createPrismaSubscriptionRepository } from './modules/billing/infra/prisma-subscription-repository';
+import { createPrismaWebhookEventRepository } from './modules/billing/infra/prisma-webhook-event-repository';
 import { createBillingFromEnv } from './modules/billing/infra/stripe-billing';
 import {
   createDeviceService,
@@ -103,11 +110,14 @@ export const createComposition = async (opts?: {
   const mail = opts?.mail ?? createMailerFromEnv(env);
   const llm = opts?.llm ?? createLlmFromEnv(env);
   const realtime = opts?.realtime ?? createRealtimeFromEnv(env);
+  const llmQuota = llmQuotaFromEnv(env);
   const llmService = createLlmService({
     llm,
     usage: createPrismaLlmUsageRepository(prisma),
     configured: Boolean(env.LLM_API_KEY || env.XAI_API_KEY),
     production: env.NODE_ENV === 'production',
+    systemPrompt: env.LLM_SYSTEM_PROMPT || DEFAULT_LLM_SYSTEM_PROMPT,
+    ...(llmQuota ? { quota: llmQuota } : {}),
   });
   const authService = createAuthService({
     users,
@@ -145,6 +155,7 @@ export const createComposition = async (opts?: {
       subscriptions: createPrismaSubscriptionRepository(prisma),
       billing: createBillingFromEnv(env, createLogBilling()),
       orgs,
+      webhookEvents: createPrismaWebhookEventRepository(prisma),
     }),
     fileService: createFileService(createPrismaFileRepository(prisma), storage, audit),
     notificationService: createNotificationService(notifications),

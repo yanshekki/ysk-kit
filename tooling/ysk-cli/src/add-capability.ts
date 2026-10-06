@@ -53,7 +53,7 @@ const HINTS: Record<Capability, string[]> = {
   llm: [
     'POST /v1/llm/complete and POST /v1/llm/stream (SSE)',
     'merges LlmUsage; wires createLlmService + registerLlmRoutes when composition is not already hand-wired',
-    'env: LLM_BASE_URL (default https://api.x.ai/v1), LLM_API_KEY or XAI_API_KEY, LLM_MODEL=grok-4.7',
+    'env: LLM_BASE_URL (default https://api.x.ai/v1), LLM_API_KEY or XAI_API_KEY, LLM_MODEL=grok-4.7, LLM_SYSTEM_PROMPT, LLM_QUOTA_MAX, LLM_QUOTA_WINDOW_MS',
   ],
   websocket: [
     'Socket.IO on the API HTTP server, auth.token handshake',

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LlmRoleSchema } from '../enums/llm-role.js';
+import { LlmClientRoleSchema, LlmRoleSchema } from '../enums/llm-role.js';
 
 export const LlmMessageSchema = z.object({
   role: LlmRoleSchema,
@@ -7,8 +7,14 @@ export const LlmMessageSchema = z.object({
 });
 export type LlmMessage = z.infer<typeof LlmMessageSchema>;
 
+export const LlmClientMessageSchema = z.object({
+  role: LlmClientRoleSchema,
+  content: z.string().min(1).max(32_000),
+});
+export type LlmClientMessage = z.infer<typeof LlmClientMessageSchema>;
+
 export const LlmCompleteCommandSchema = z.object({
-  messages: z.array(LlmMessageSchema).min(1).max(50),
+  messages: z.array(LlmClientMessageSchema).min(1).max(50),
   temperature: z.number().min(0).max(2).optional(),
 });
 export type LlmCompleteCommand = z.infer<typeof LlmCompleteCommandSchema>;

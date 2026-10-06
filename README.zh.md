@@ -131,6 +131,14 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - 從 npm 開倉使用 `npm create @ysk-kit/app` 或 `pnpm create @ysk-kit/app`。npm 上沒有無 scope 的 `create-ysk-app` 套件；發佈的套件是 `@ysk-kit/create-app`。
 - `@ysk-kit/observability` 把 OpenTelemetry SDK 與 exporter 釘在 npm 上存在的版本。Caret 範圍會浮到 `sdk-metrics@2.12.0`，而該版本依賴尚未發佈的 `resources@2.12.0`。
 
+#### 安全
+
+- Electron 在 `safeStorage` 不可用時不再把 access／refresh 權杖以明文寫入磁碟。權杖只留在該次工作階段的記憶體，主行程會記錄不含密鑰的警告。
+- 桌面設定 Content-Security-Policy、`sandbox: true` 與 `webSecurity: true`，拒絕未預期的導航與 `window.open`，並拒絕 sender frame 不是已載入 renderer 的 IPC。
+- `@ysk-kit/logger` 會遮蔽 authorization、cookie、token、password、API key 等欄位（pino `redact`）。
+- `/v1/llm/complete` 與 `/v1/llm/stream` 只接受 `user` 與 `assistant` 訊息。system prompt 來自 `LLM_SYSTEM_PROMPT`（伺服器持有）。每用戶配額是 `LLM_QUOTA_MAX`／`LLM_QUOTA_WINDOW_MS`，回 envelope `RATE_LIMITED`（429）。
+- `POST /v1/billing/webhook` 仍在 raw body 上驗證 `Stripe-Signature`，把 Stripe `event.id` 寫入 `ProcessedWebhookEvent`，重送直接確認，並忽略同一組織較舊的事件。
+
 #### 內部／CI
 
 - CI job `pack-and-run` 把 26 個公開套件 pack，在乾淨目錄安裝 tarball，import 每一個，執行 CLI bin，並用倉內 CLI 非互動建立 php-bridge dest。

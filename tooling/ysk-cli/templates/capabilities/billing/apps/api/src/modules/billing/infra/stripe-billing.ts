@@ -2,16 +2,16 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import type { InvoiceDto } from '@ysk-kit/contracts';
 import { AppError } from '@ysk-kit/domain-kernel';
 import type { IBillingPort } from '../domain/billing-port';
+import type { StripeWebhookEvent } from '../domain/stripe-webhook-event';
+
+export type { StripeWebhookEvent };
 
 export const verifyStripeSignature = (
   raw: Buffer,
   header: string,
   secret: string,
   nowMs = Date.now(),
-): {
-  type: string;
-  data: { object: { metadata?: Record<string, string>; customer?: string } };
-} => {
+): StripeWebhookEvent => {
   const parts = Object.fromEntries(
     header.split(',').map((item) => {
       const [key, ...rest] = item.split('=');
@@ -33,10 +33,37 @@ export const verifyStripeSignature = (
   if (a.length !== b.length || !timingSafeEqual(a, b)) {
     throw new AppError('UNAUTHENTICATED', 'Invalid Stripe signature');
   }
-  return JSON.parse(raw.toString('utf8')) as {
-    type: string;
-    data: { object: { metadata?: Record<string, string>; customer?: string } };
+  const parsed = JSON.parse(raw.toString('utf8')) as Partial<StripeWebhookEvent>;
+  if (!parsed.id || typeof parsed.id !== 'string' || typeof parsed.type !== 'string') {
+    throw new AppError('VALIDATION_FAILED', 'Stripe event id required');
+  }
+  return {
+    id: parsed.id,
+    type: parsed.type,
+    created: typeof parsed.created === 'number' ? parsed.created : 0,
+    data: {
+      object: {
+        ...(parsed.data?.object?.metadata ? { metadata: parsed.data.object.metadata } : {}),
+        ...(typeof parsed.data?.object?.customer === 'string'
+          ? { customer: parsed.data.object.customer }
+          : {}),
+        ...(typeof parsed.data?.object?.payment_status === 'string'
+          ? { payment_status: parsed.data.object.payment_status }
+          : {}),
+      },
+    },
   };
+};
+
+export const applyVerifiedStripeWebhook = async (
+  raw: Buffer,
+  header: string,
+  secret: string,
+  billing: { handleStripeEvent: (event: StripeWebhookEvent) => Promise<unknown> },
+  nowMs = Date.now(),
+): Promise<void> => {
+  const event = verifyStripeSignature(raw, header, secret, nowMs);
+  await billing.handleStripeEvent(event);
 };
 
 export const createStripeBilling = (opts: {

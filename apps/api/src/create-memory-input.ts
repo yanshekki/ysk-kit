@@ -11,6 +11,7 @@ import { createMemoryApiKeyRepository } from './modules/api-keys/infra/memory-ap
 import { createBillingService } from './modules/billing/application/billing-service';
 import { createLogBilling } from './modules/billing/infra/log-billing';
 import { createMemorySubscriptionRepository } from './modules/billing/infra/memory-subscription-repository';
+import { createMemoryWebhookEventRepository } from './modules/billing/infra/memory-webhook-event-repository';
 import { createDeviceService } from './modules/devices/application/device-service';
 import { createMemoryDeviceRepository } from './modules/devices/infra/memory-device-repository';
 import { createFileService } from './modules/files/application/file-service';
@@ -97,6 +98,7 @@ export const createMemoryInput = () => {
       subscriptions: createMemorySubscriptionRepository(),
       billing: createLogBilling(),
       orgs,
+      webhookEvents: createMemoryWebhookEventRepository(),
     }),
     fileService: createFileService(createMemoryFileRepository(), storage, audit),
     notificationService: createNotificationService(notifications),

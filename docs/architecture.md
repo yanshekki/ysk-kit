@@ -155,7 +155,7 @@ Handlers are framework-free maps in `@ysk-kit/api-http`. Express 5 is the defaul
 
 Web and admin use TanStack Router and `features/*`. Forms reuse command Zod schemas. Permissions use contracts `Permission` plus `@ysk-kit/ui` `<Can>`. AppShell is `{ brand, nav, trailing?, children }`.
 
-Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens use Electron `safeStorage` when available. Prisma never runs inside Electron.
+Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens persist with Electron `safeStorage` when encryption is available, otherwise they stay in memory for the session. The main process sets a Content-Security-Policy, `sandbox: true`, and denies unexpected navigation, new windows, and untrusted IPC. Prisma never runs inside Electron.
 
 ## Generators
 

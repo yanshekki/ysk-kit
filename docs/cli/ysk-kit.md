@@ -72,7 +72,7 @@ Merges a catalogued platform capability. Unknown names throw `unknown capability
 | `team` | Organization + Membership fragment, source tree + web and Expo org screens |
 | `apikey` | ApiKey fragment |
 | `crypto` | `CRYPTO_MASTER_KEY`, `@ysk-kit/crypto` |
-| `billing` | Subscription fragment on Organization; **requires `team` first** |
+| `billing` | Subscription + `ProcessedWebhookEvent` on Organization; **requires `team` first** |
 
 For `llm`, `team`, `billing`, and `push`, the command copies `tooling/ysk-cli/templates/capabilities/<name>/` when the product does not already contain the skip token (`createLlmService`, `createOrganizationService`, `createBillingService`, `createDeviceService`) in `app.ts` or `composition.ts`. This repository already wires those services, so a second add is a no-op.
 

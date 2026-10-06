@@ -72,7 +72,7 @@ pnpm layers && pnpm typecheck && pnpm test
 | `team` | Organization + Membership fragment、源碼樹 + web 與 Expo 組織畫面 |
 | `apikey` | ApiKey fragment |
 | `crypto` | `CRYPTO_MASTER_KEY`、`@ysk-kit/crypto` |
-| `billing` | Organization 上的 Subscription fragment；**須先有 `team`** |
+| `billing` | Organization 上的 Subscription 與 `ProcessedWebhookEvent` fragment；**須先有 `team`** |
 
 對 `llm`、`team`、`billing`、`push`，若產品的 `app.ts` 或 `composition.ts` 尚未包含略過標記（`createLlmService`、`createOrganizationService`、`createBillingService`、`createDeviceService`），命令會複製 `tooling/ysk-cli/templates/capabilities/<name>/`。本倉已經接上那些 service，再加一次是空操作。
 

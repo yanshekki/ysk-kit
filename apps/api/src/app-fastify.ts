@@ -16,7 +16,7 @@ import { healthHandlers } from './health-handlers';
 import { apiKeyHandlers } from './modules/api-keys/infra/api-key-router';
 import { auditHandlers } from './modules/audit-log/infra/audit-router';
 import { billingHandlers } from './modules/billing/infra/billing-router';
-import { verifyStripeSignature } from './modules/billing/infra/stripe-billing';
+import { applyVerifiedStripeWebhook } from './modules/billing/infra/stripe-billing';
 import { deviceHandlers } from './modules/devices/infra/device-router';
 import { fileHandlers } from './modules/files/infra/file-router';
 import { authHandlers } from './modules/identity/infra/auth-router';
@@ -70,26 +70,12 @@ export const createFastifyApp = async (input: CreateAppInput): Promise<FastifyIn
         done(null, body);
       });
       scope.post('/v1/billing/webhook', async (req, reply) => {
-        const event = verifyStripeSignature(
+        await applyVerifiedStripeWebhook(
           Buffer.isBuffer(req.body) ? req.body : Buffer.from(String(req.body ?? '')),
           String(req.headers['stripe-signature'] ?? ''),
           webhookSecret,
+          input.billingService,
         );
-        if (event.type === 'checkout.session.completed') {
-          const organizationId = event.data.object.metadata?.organizationId;
-          const planCode = event.data.object.metadata?.planCode;
-          const seatRaw = Number(event.data.object.metadata?.seatCount ?? '1');
-          const seatCount = Number.isFinite(seatRaw) && seatRaw >= 1 ? Math.floor(seatRaw) : 1;
-          if (organizationId && (planCode === 'pro' || planCode === 'free')) {
-            const customer = event.data.object.customer;
-            await input.billingService.activate(
-              organizationId,
-              planCode,
-              typeof customer === 'string' ? customer : undefined,
-              seatCount,
-            );
-          }
-        }
         return reply.status(200).send({ ok: true, data: { received: true } });
       });
     });

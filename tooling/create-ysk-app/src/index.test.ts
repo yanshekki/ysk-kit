@@ -131,6 +131,12 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.zh.md'))).toBe(true);
+    expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
+      '## Current state and reuse',
+    );
+    expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
+      '## Options considered',
+    );
     expect(existsSync(join(dest, '.github/copilot-instructions.md'))).toBe(true);
     expect(existsSync(join(dest, '.gemini/settings.json'))).toBe(true);
     expect(existsSync(join(dest, 'GEMINI.md'))).toBe(true);
@@ -296,6 +302,9 @@ describe('create-ysk-app', () => {
     });
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
+    expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
+      '## Current state and reuse',
+    );
     expect(existsSync(join(dest, '.github/copilot-instructions.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/api/src/modules/llm'))).toBe(false);
     expect(existsSync(join(dest, 'apps/api/src/modules/billing'))).toBe(false);

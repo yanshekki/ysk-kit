@@ -10,7 +10,7 @@ Language: 英文配對 `{{date}}-{{slug}}.md` · 中文 `{{date}}-{{slug}}.zh.md
 | **正規檔** | `docs/plans/{{date}}-{{slug}}.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
 
-法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。
+法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。檢查：`pnpm ysk-kit plan --check docs/plans/{{date}}-{{slug}}.zh.md`。
 
 ## 目標與使用者問題
 
@@ -24,6 +24,12 @@ Language: 英文配對 `{{date}}-{{slug}}.md` · 中文 `{{date}}-{{slug}}.zh.md
 
 - 不含：
 
+## 假設
+
+尚未在樹內或向使用者核實的事實。不要默默猜測。仍未解決的項目放到未決問題。
+
+- 
+
 ## 受影響的 flavor／preset／capability
 
 | 軸 | 值 | 備註 |
@@ -31,6 +37,26 @@ Language: 英文配對 `{{date}}-{{slug}}.md` · 中文 `{{date}}-{{slug}}.zh.md
 | Flavor | saas / desktop / gateway / trading / static-web3 / php-bridge / kit 本身 | |
 | Preset | thin / full / 不適用 | |
 | Capabilities | auth、team、billing、llm、push、… | |
+
+## 現況與重用
+
+先探索樹，才提議新檔。列出相關的既有檔案與符號，並寫出倉內路徑（模組、合約、SDK resource、hooks、產生器例如 `ysk-kit add module`）。說明會重用甚麼，而不是另寫一套。
+
+| 路徑 | 符號 | 重用為 |
+|---|---|---|
+| | | |
+
+## 考慮過的方案
+
+有真正替代方案時，至少列出兩個可行做法。每列寫權衡：複雜度、觸及的分層、遷移風險、客戶端影響。然後寫選定方案與原因。瑣碎、只有一條路的工作可寫：`單一明顯做法 — 原因`。
+
+| 方案 | 複雜度 | 分層 | 遷移 | 客戶端 | 備註 |
+|---|---|---|---|---|---|
+| A | | | | | |
+| B | | | | | |
+
+**選定：**  
+**原因：**
 
 ## 合約先行
 
@@ -73,11 +99,26 @@ Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明�
 
 ## 驗證命令
 
-```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
-```
+每條命令都有預期結果。按改動增刪列。
+
+| 命令 | 預期結果 |
+|---|---|
+| `pnpm layers` | 退出碼 0；客戶端不碰 Express／Prisma／jobs／mail／push／AWS SDK |
+| `pnpm typecheck` | 退出碼 0 |
+| `pnpm test` | 退出碼 0 |
+| `pnpm gen:openapi` | `docs/openapi.yaml` 與 ts-rest 合約相符 |
+| `pnpm ysk-kit check agent` | 印出 `ysk-kit check agent: ok` |
+| `pnpm ysk-kit plan --check docs/plans/{{date}}-{{slug}}.zh.md` | 印出 `ysk-kit plan --check: ok` |
 
 可選：`pnpm lint`。若改了登入或 shell，且 3001／5173 空閒，執行 `pnpm e2e`。Grok Build：`grok inspect`。
+
+### 人手檢查
+
+沒有 UI、HTTP 或授權改動才可省略本節。否則列出流程。
+
+- [ ] UI 流程：
+- [ ] Envelope 形狀 `{ ok: true, data }`／`{ ok: false, error }`
+- [ ] 授權角色：
 
 ## 文件／變更紀錄／changeset
 
@@ -91,15 +132,47 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit c
 
 ## 任務清單
 
-按順序列出。每項都有驗收條件。
+按順序列出。每步寫明要改的檔案、介面／合約／資料變更、風險、回滾、驗收條件。
 
-1. [ ] 合約 — *驗收：* DTO + `OkSchema`／`ErrSchema` 存在；沒有 TypeScript `enum`
-2. [ ] 骨架 — *驗收：* 適用時使用 `ysk-kit add module`／`add <capability>`
-3. [ ] Application 規則 — *驗收：* 記憶體 port 測試通過
-4. [ ] 客戶端 — *驗收：* 只用 SDK／web-sdk
-5. [ ] 驗證 — *驗收：* 上述五條命令全綠
-6. [ ] 文件 — *驗收：* 中英配對深度一致
+1. [ ] 合約
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** DTO + `OkSchema`／`ErrSchema` 存在；沒有 TypeScript `enum`
+2. [ ] 骨架
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** 適用時使用 `ysk-kit add module`／`add <capability>`
+3. [ ] Application 規則
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** 記憶體 port 測試通過
+4. [ ] 客戶端
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** 只用 SDK／web-sdk
+5. [ ] 驗證
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** 上表驗證命令全綠
+6. [ ] 文件
+   - **檔案：**
+   - **介面／合約／資料：**
+   - **風險：**
+   - **回滾：**
+   - **驗收：** 中英配對深度一致
 
 ## 未決問題
+
+未解決的項目留在這裏。不要用猜測填滿。
 
 - 

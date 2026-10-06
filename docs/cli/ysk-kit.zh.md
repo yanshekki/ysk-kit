@@ -12,6 +12,7 @@ pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
+pnpm ysk-kit plan --check <file>
 ```
 
 環境變數：`YSK_ROOT` — 要修補的產品根目錄。未設定時預設為本 kit。
@@ -145,14 +146,16 @@ pnpm ysk-kit check agent
 pnpm ysk-kit plan <kebab-slug>
 pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
 pnpm ysk-kit plan <kebab-slug> --force
+pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
 ```
 
 | 旗標 | 作用 |
 |---|---|
 | `--date YYYY-MM-DD` | 檔名中的曆日。預設：今天（本地） |
 | `--force` | 覆寫已有的日期配對 |
+| `--check <file>` | 缺必要標題或仍是佔位內容時退出 1 |
 
-會建立 `docs/plans/<date>-<slug>.md`、`docs/plans/<date>-<slug>.zh.md`，以及根目錄 `plan.md` 指針（已 gitignore）。Slug 必須符合 `^[a-z][a-z0-9-]*$`。程序：[plan-feature](../skills/plan-feature.zh.md)。
+會建立 `docs/plans/<date>-<slug>.md`、`docs/plans/<date>-<slug>.zh.md`，以及根目錄 `plan.md` 指針（已 gitignore）。Slug 必須符合 `^[a-z][a-z0-9-]*$`。程序：[plan-feature](../skills/plan-feature.zh.md)。模板章節與工具計劃模式：[docs/plans/README.zh.md](../plans/README.zh.md)。
 
 ## `ysk-kit doctor`
 

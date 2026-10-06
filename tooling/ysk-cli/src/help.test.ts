@@ -17,6 +17,7 @@ describe('ysk help', () => {
     expect(HELP).toContain('check agent');
     expect(HELP).toContain('doctor [--json]');
     expect(HELP).toContain('plan <kebab-slug>');
+    expect(HELP).toContain('plan --check <file>');
     expect(HELP).toContain('--prisma');
     expect(HELP).toContain('--no-web');
     expect(HELP).toContain('docs/cli/ysk-kit.md');

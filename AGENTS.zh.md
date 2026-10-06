@@ -114,9 +114,21 @@ ysk-kit/
 
 **工作階段檔：** 根目錄 `plan.md` 是可選草稿，給會尋找該檔名的工具。`pnpm ysk-kit plan <slug>` 會寫出日期檔（及中文配對），並寫入根目錄 `plan.md` 指針。請改日期檔，並保持指針同步。根目錄 `plan.md` 已 gitignore。日期計劃才是要提交的紀錄。
 
-用 `pnpm ysk-kit plan <slug>` 建立，或複製 [docs/plans/_template.zh.md](docs/plans/_template.zh.md)。程序：[plan-feature](docs/skills/plan-feature.zh.md)。
+用 `pnpm ysk-kit plan <slug>` 建立，或複製 [docs/plans/_template.zh.md](docs/plans/_template.zh.md)。程序：[plan-feature](docs/skills/plan-feature.zh.md)。工具對照與可複製的 `/plan` 提示：[docs/plans/README.zh.md](docs/plans/README.zh.md)。
 
-模板章節（不要刪）：目標與使用者問題；範圍／非目標；受影響的 flavor／preset／capability；合約先行（DTO、error code、ts-rest 路徑）；資料模型／Prisma 與遷移；模組切片與分層；SDK／web-sdk／客戶端表面；jobs／mail／realtime／notifications；安全與私隱；測試計劃（記憶體 port）；精確驗證命令；文件／變更紀錄／changeset；風險與回滾；帶驗收條件的有序任務清單；未決問題。
+**先探索。** 寫計劃之前先搜樹。在合約之前的「現況與重用」列出既有模組、合約、SDK resource、hooks、產生器（`ysk-kit add module`）。能重用就不要新寫。
+
+**假設。** 未核實的事實放進假設或未決問題。不要默默猜測。
+
+**方案。** 有真正替代時，至少列兩個做法並寫權衡（複雜度、分層、遷移、客戶端），再寫選定與原因。瑣碎工作可寫 `單一明顯做法 — 原因`。
+
+**批准閘。** 計劃獲准之前不要改專案檔（除非使用者豁免）。不要退出 plan mode 或交出草稿。缺任何模板章節都不算完整。若使用者拒絕或說太短，補上缺的章節，不要縮短。`/compact` 或長工作階段之後，繼續之前先重讀日期計劃檔。`pnpm ysk-kit plan --check <file>` 會在缺標題或仍是佔位內容時失敗。
+
+模板章節（不要刪）：目標與使用者問題；範圍／非目標；假設；受影響的 flavor／preset／capability；現況與重用；考慮過的方案；合約先行（DTO、error code、ts-rest 路徑）；資料模型／Prisma 與遷移；模組切片與分層；SDK／web-sdk／客戶端表面；jobs／mail／realtime／notifications；安全與私隱；測試計劃（記憶體 port）；帶預期結果與人手檢查的驗證命令；文件／變更紀錄／changeset；風險與回滾；有序任務清單（檔案、介面／合約／資料、風險、回滾、驗收）；未決問題。
+
+### 工具計劃模式
+
+各工具的原生計劃檔只是草稿。Grok Build 寫入 `~/.grok/sessions/<cwd>/<session-id>/plan.md`；Cursor、Claude Code、Codex、OpenCode、Copilot 各自有計劃介面。無論工具寫到哪裏，獲准的計劃必須跟本模板，並用 `pnpm ysk-kit plan <slug>` 存成 `docs/plans/<date>-<slug>.md`。詳情：[docs/plans/README.zh.md](docs/plans/README.zh.md)。
 
 ## 完成定義
 
@@ -154,6 +166,7 @@ ysk-kit/
 | 工具檔重複本指引 | 還原成三行、指向 `AGENTS.md` 的指針。 |
 | 行業模型進了本倉 | 移到已產生的產品或 `examples/`。 |
 | 先寫程式再補計劃 | 停下。先寫日期計劃，再從合約繼續。 |
+| 計劃是草稿、缺標題、或仍是佔位內容 | 填滿每個模板章節。`pnpm ysk-kit plan --check <file>`。若因太短被拒，補長，不要縮。 |
 | 根目錄加巢狀 `AGENTS.md` 超過 24 KiB | 縮短當地檔；程序放進 `docs/skills/`。 |
 
 ## 程式工具

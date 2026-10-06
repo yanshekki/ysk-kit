@@ -12,6 +12,7 @@ pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
+pnpm ysk-kit plan --check <file>
 ```
 
 Environment: `YSK_ROOT` — product root to patch. Defaults to this kit when unset.
@@ -145,14 +146,16 @@ Writes a bilingual feature plan from [docs/plans/_template.md](../plans/_templat
 pnpm ysk-kit plan <kebab-slug>
 pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
 pnpm ysk-kit plan <kebab-slug> --force
+pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
 ```
 
 | Flag | Effect |
 |---|---|
 | `--date YYYY-MM-DD` | Calendar day in the filename. Default: today (local) |
 | `--force` | Overwrite an existing dated pair |
+| `--check <file>` | Exit 1 if a required heading is missing or still placeholder-only |
 
-Creates `docs/plans/<date>-<slug>.md`, `docs/plans/<date>-<slug>.zh.md`, and a root `plan.md` pointer (gitignored). Slug must match `^[a-z][a-z0-9-]*$`. Procedure: [plan-feature](../skills/plan-feature.md).
+Creates `docs/plans/<date>-<slug>.md`, `docs/plans/<date>-<slug>.zh.md`, and a root `plan.md` pointer (gitignored). Slug must match `^[a-z][a-z0-9-]*$`. Procedure: [plan-feature](../skills/plan-feature.md). Template sections and tool plan modes: [docs/plans/README.md](../plans/README.md).
 
 ## `ysk-kit doctor`
 

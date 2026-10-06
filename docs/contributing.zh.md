@@ -9,7 +9,7 @@ Language: [English](contributing.md) · 中文
 1. 寫程式之前先讀 [AGENTS.zh.md](../AGENTS.zh.md)。
 2. 新的 HTTP 資源由 `pnpm ysk-kit add module <kebab> --prisma --web` 開始。
 3. 業務規則放在 `application/`。Prisma 留在 `infra/`。
-4. [計劃協議](../AGENTS.zh.md#計劃協議)要求計劃時，先寫 `docs/plans/<yyyy-mm-dd>-<slug>.md`（`pnpm ysk-kit plan <slug>`）。
+4. [計劃協議](../AGENTS.zh.md#計劃協議)要求計劃時，先寫 `docs/plans/<yyyy-mm-dd>-<slug>.md`（`pnpm ysk-kit plan <slug>`）。實作之前 `pnpm ysk-kit plan --check <file>` 必須通過。
 5. 完成前執行：`pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent`。
 
 不要把行業 domain（沙龍、交易所、地圖產品）加進本 kit。那些業務寫在 `create-ysk-app` 產生的產品倉。

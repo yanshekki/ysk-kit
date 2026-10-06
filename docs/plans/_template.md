@@ -10,7 +10,7 @@ Language: Chinese pair `{{date}}-{{slug}}.zh.md` · English `{{date}}-{{slug}}.m
 | **Canonical file** | `docs/plans/{{date}}-{{slug}}.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
 
-Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md).
+Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md). Check: `pnpm ysk-kit plan --check docs/plans/{{date}}-{{slug}}.md`.
 
 ## Goal and user problem
 
@@ -24,6 +24,12 @@ What outcome the user needs, and why the current tree does not provide it.
 
 - Out:
 
+## Assumptions
+
+Anything not verified in the tree or by the user. Do not guess silently. If it is still unresolved, put it under Open questions instead.
+
+- 
+
 ## Affected flavors / presets / capabilities
 
 | Axis | Value | Notes |
@@ -31,6 +37,26 @@ What outcome the user needs, and why the current tree does not provide it.
 | Flavor | saas / desktop / gateway / trading / static-web3 / php-bridge / kit itself | |
 | Preset | thin / full / n/a | |
 | Capabilities | auth, team, billing, llm, push, … | |
+
+## Current state and reuse
+
+Explore the tree before proposing new files. List the relevant existing files and symbols with repo paths (modules, contracts, SDK resources, hooks, generators such as `ysk-kit add module`). Say what will be reused instead of written new.
+
+| Path | Symbol | Reuse as |
+|---|---|---|
+| | | |
+
+## Options considered
+
+At least two viable approaches when a real alternative exists. Each row: tradeoffs for complexity, layers touched, migration risk, and client impact. Then the chosen option and why. For trivial single-path work: `single obvious approach — reason`.
+
+| Option | Complexity | Layers | Migration | Clients | Notes |
+|---|---|---|---|---|---|
+| A | | | | | |
+| B | | | | | |
+
+**Chosen:**  
+**Why:**
 
 ## Contracts first
 
@@ -73,11 +99,26 @@ In-memory ports only. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafan
 
 ## Verification commands
 
-```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
-```
+Each command has an expected result. Add or drop rows to match the change.
+
+| Command | Expected result |
+|---|---|
+| `pnpm layers` | exit 0; clients stay off Express / Prisma / jobs / mail / push / AWS SDK |
+| `pnpm typecheck` | exit 0 |
+| `pnpm test` | exit 0 |
+| `pnpm gen:openapi` | `docs/openapi.yaml` matches the ts-rest contract |
+| `pnpm ysk-kit check agent` | prints `ysk-kit check agent: ok` |
+| `pnpm ysk-kit plan --check docs/plans/{{date}}-{{slug}}.md` | prints `ysk-kit plan --check: ok` |
 
 Optional: `pnpm lint`. `pnpm e2e` when login or shell changed and ports 3001/5173 are free. On Grok Build: `grok inspect`.
+
+### Manual checks
+
+Omit this subsection only when there is no UI, HTTP, or authz change. Otherwise list the flows.
+
+- [ ] UI flow:
+- [ ] Envelope shape `{ ok: true, data }` / `{ ok: false, error }`
+- [ ] Auth roles:
 
 ## Docs / changelog / changeset
 
@@ -91,15 +132,47 @@ What can go wrong, and how to revert (migration down, revert commit, leave capab
 
 ## Task checklist
 
-Ordered. Each item has acceptance criteria.
+Ordered. Each step names files to change, interface / contract / data changes, risk, rollback, and acceptance criteria.
 
-1. [ ] Contracts — *acceptance:* DTO + `OkSchema` / `ErrSchema` exist; no TypeScript `enum`
-2. [ ] Scaffold — *acceptance:* `ysk-kit add module` / `add <capability>` used when applicable
-3. [ ] Application rules — *acceptance:* tests on memory ports pass
-4. [ ] Clients — *acceptance:* SDK / web-sdk only
-5. [ ] Verify — *acceptance:* the five commands above are green
-6. [ ] Docs — *acceptance:* EN + zh pairs match
+1. [ ] Contracts
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** DTO + `OkSchema` / `ErrSchema` exist; no TypeScript `enum`
+2. [ ] Scaffold
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** `ysk-kit add module` / `add <capability>` used when applicable
+3. [ ] Application rules
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** tests on memory ports pass
+4. [ ] Clients
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** SDK / web-sdk only
+5. [ ] Verify
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** the verification table above is green
+6. [ ] Docs
+   - **Files:**
+   - **Interface / contract / data:**
+   - **Risk:**
+   - **Rollback:**
+   - **Acceptance:** EN + zh pairs match
 
 ## Open questions
+
+Unresolved items stay here. Do not fill them with guesses.
 
 - 

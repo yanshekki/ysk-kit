@@ -9,7 +9,7 @@ This document is for people who change YSK Kit itself: code, tests, or documenta
 1. Read [AGENTS.md](../AGENTS.md) before writing code.
 2. New HTTP resources start with `pnpm ysk-kit add module <kebab> --prisma --web`.
 3. Put business rules in `application/`. Keep Prisma in `infra/`.
-4. When the [planning protocol](../AGENTS.md#planning-protocol) requires a plan, write `docs/plans/<yyyy-mm-dd>-<slug>.md` first (`pnpm ysk-kit plan <slug>`).
+4. When the [planning protocol](../AGENTS.md#planning-protocol) requires a plan, write `docs/plans/<yyyy-mm-dd>-<slug>.md` first (`pnpm ysk-kit plan <slug>`). `pnpm ysk-kit plan --check <file>` must pass before implementation.
 5. Before you finish: `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent`.
 
 Do not add an industry domain (salon, trading venue, map product) to this kit. Build those in a product repository created by `create-ysk-app`.

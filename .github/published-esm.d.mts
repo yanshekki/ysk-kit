@@ -23,4 +23,20 @@ export function postPublishPlan(input: {
   pendingCount: number;
   allInstallable: boolean;
 }): 'version-pr' | 'not-published' | 'tag';
+export function inspectAtSha(input: {
+  sha: string;
+  tree: {
+    listDir: (rel: string) => string[];
+    readJson: (rel: string) => { name?: string; version?: string; private?: boolean };
+    resolveDir?: (dir: string, name: string) => string;
+  };
+  npmView: (name: string, version: string) => boolean;
+}): {
+  plan: 'version-pr' | 'not-published' | 'tag';
+  version: string;
+  pending: string[];
+  missing: { name: string; version: string; dir: string }[];
+  pkgs: { name: string; version: string; dir: string }[];
+  sha: string;
+};
 export function npmPackFileName(name: string, version: string): string;

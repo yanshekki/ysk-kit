@@ -5,7 +5,11 @@
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { publicPackages } from './unpublished-packages.mjs';
+import {
+  pendingChangesetFilesFromTree,
+  publicPackages,
+  publicPackagesFromTree,
+} from './unpublished-packages.mjs';
 
 const HAS_EXT = /\.[a-zA-Z][a-zA-Z0-9]*$/;
 const RELATIVE_FROM = /(?:from\s+|import\s*\(\s*)(['"])(\.[^'"]+)\1/g;
@@ -169,6 +173,22 @@ export const postPublishPlan = ({ pendingCount, allInstallable }) => {
   if (pendingCount > 0) return 'version-pr';
   if (!allInstallable) return 'not-published';
   return 'tag';
+};
+
+/**
+ * Decide the post-publish action from a tree (working directory or GITHUB_SHA).
+ * `npmView(name, version)` is true when that tarball is installable.
+ */
+export const inspectAtSha = ({ sha, tree, npmView }) => {
+  const pkgs = publicPackagesFromTree(tree);
+  const version = lockstepVersion(pkgs);
+  const pending = pendingChangesetFilesFromTree(tree);
+  const missing = pkgs.filter((pkg) => !npmView(pkg.name, pkg.version));
+  const plan = postPublishPlan({
+    pendingCount: pending.length,
+    allInstallable: missing.length === 0,
+  });
+  return { plan, version, pending, missing, pkgs, sha };
 };
 
 export const npmPackFileName = (name, version) => {

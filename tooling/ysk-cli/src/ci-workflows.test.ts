@@ -101,7 +101,15 @@ describe('CI workflows', () => {
     expect(release).not.toContain('publish-packages.mjs --verify-only');
     expect(release).not.toContain("steps.changesets.outputs.published == 'true'");
     expect(release).toContain('tag-and-release.mjs');
+    expect(release).toContain("steps.changesets.outputs.hasChangesets != 'true'");
     expect(release).toContain("steps.tag.outputs.published == 'true'");
+    const tagSource = readFileSync(join(kitRoot, '.github/tag-and-release.mjs'), 'utf8');
+    expect(tagSource).toContain('git show');
+    expect(tagSource).toContain('git ls-tree');
+    expect(tagSource).toContain('--dry-run');
+    expect(tagSource).toContain('inspectAtSha');
+    expect(tagSource).not.toMatch(/publicPackages\(\)/);
+    expect(tagSource).not.toMatch(/pendingChangesetFiles\(\)/);
     expect(release).toContain('pack-and-run.mjs --registry');
     expect(release).toContain('create-github-releases: false');
     expect(release).toContain('push-git-tags: false');

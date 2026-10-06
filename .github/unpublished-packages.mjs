@@ -7,23 +7,46 @@ const ROOT = join(import.meta.dirname, '..');
 const DIRS = ['packages', 'tooling'];
 const REGISTRY = 'https://registry.npmjs.org';
 
-const publicPackages = () => {
+/** List public packages from a directory listing + package.json reader (disk or git SHA). */
+export const publicPackagesFromTree = ({
+  listDir,
+  readJson,
+  resolveDir = (dir, name) => join(dir, name),
+}) => {
   const out = [];
   for (const dir of DIRS) {
-    const base = join(ROOT, dir);
-    for (const name of readdirSync(base)) {
+    let names;
+    try {
+      names = listDir(dir);
+    } catch {
+      continue;
+    }
+    for (const name of names) {
       let pkg;
       try {
-        pkg = JSON.parse(readFileSync(join(base, name, 'package.json'), 'utf8'));
+        pkg = readJson(`${dir}/${name}/package.json`);
       } catch {
         continue;
       }
       if (pkg.private === true || !pkg.name || !pkg.version) continue;
-      out.push({ name: pkg.name, version: pkg.version, dir: join(base, name) });
+      out.push({ name: pkg.name, version: pkg.version, dir: resolveDir(dir, name) });
     }
   }
   return out;
 };
+
+export const pendingChangesetFilesFromTree = ({ listDir }) =>
+  listDir('.changeset').filter(
+    (name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md',
+  );
+
+const diskTree = (root) => ({
+  listDir: (rel) => readdirSync(join(root, rel)),
+  readJson: (rel) => JSON.parse(readFileSync(join(root, rel), 'utf8')),
+  resolveDir: (dir, name) => join(root, dir, name),
+});
+
+const publicPackages = (root = ROOT) => publicPackagesFromTree(diskTree(root));
 
 export { publicPackages };
 
@@ -46,10 +69,7 @@ const isOnRegistry = async (name, version) => {
   return versionIsInstallable(await res.json(), version);
 };
 
-export const pendingChangesetFiles = (root = ROOT) =>
-  readdirSync(join(root, '.changeset')).filter(
-    (name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md',
-  );
+export const pendingChangesetFiles = (root = ROOT) => pendingChangesetFilesFromTree(diskTree(root));
 
 /** Skip only when nothing is waiting: versions are on npm and no changeset is pending. */
 export const shouldSkipRelease = (unpublishedCount, pendingCount) =>

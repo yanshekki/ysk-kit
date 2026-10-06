@@ -1,5 +1,15 @@
 # @ysk-kit/mail
 
+## 1.2.3
+
+### Patch Changes
+
+- f5fa75b: Add daily-loop agent skills (contract-change, debug-issue, review-change, llm-feature) and thicken existing skill wrappers with steps, Chinese triggers, and Do-not lines. Pin shell-quote@1.11.0 (GHSA-pqg4-j6r4-53mv).
+- bdf0e42: Release waits up to 20 minutes (backoff, NPM_VIEW_WAIT_MS) for npm view after a successful upload and tags even when the packument lags. Recover a missing vX.Y.Z tag from npm provenance. create-ysk-app authenticates GitHub, falls back off the REST rate limit, and deletes leftover kit.tgz.
+- Updated dependencies [f5fa75b]
+- Updated dependencies [bdf0e42]
+  - @ysk-kit/contracts@1.2.3
+
 ## 1.2.2
 
 ### Patch Changes

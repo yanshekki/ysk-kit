@@ -119,16 +119,19 @@ The latest three versions. Older versions are in the full changelog.
 #### New features
 
 - `pnpm ysk-kit plan --check <file>` verifies a plan has every required template heading and fails when a required section is still placeholder-only.
+- Agent skills `test-plan`, `write-tests`, `ui-design`, and `ui-review` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers and scoped Cursor / Copilot pointers so generated products get them via `create-ysk-app` and `ysk-kit upgrade`.
 
 #### Improvements
 
 - The planning protocol keeps the v1.2.0 kit-specific sections and adds: explore-before-planning (**Current state and reuse** before Contracts), **Assumptions** next to Scope / Non-goals, **Options considered** (two approaches when a real alternative exists), task steps that name files / interface / contract / data / risk / rollback / acceptance, verification commands with expected results and a manual-check list, and an approval / anti-shrinking gate.
 - [docs/plans/README.md](docs/plans/README.md) maps native plan modes (Grok Build, Cursor, Claude Code, Codex, OpenCode, Copilot) to this template, with a copy-paste `/plan` prompt (EN + zh). The approved plan is still `docs/plans/<date>-<slug>.md` via `pnpm ysk-kit plan <slug>`.
+- The plan template's Test plan section points at `test-plan` (risk-ranked given/when/then, fixtures, out of scope, layer map).
+- Nested `AGENTS.md` files point API/contracts at testing skills and client apps at UI skills.
+- The lockstep test requires any pending changeset set to list all 26 public `@ysk-kit` packages at one bump type.
 
 #### Internal/CI
 
-- `thin-smoke` and `flavor-smoke` assert the new template headings. Generated products receive the upgraded `_template.md` pair.
-- The lockstep test requires any pending changeset set to list all 26 public `@ysk-kit` packages.
+- `thin-smoke` and `flavor-smoke` assert the new template headings plus the testing/UI skill files and Cursor rules. Generated products receive the upgraded `_template.md` pair. create-app and upgrade tests assert the same skill files.
 
 ### v1.2.0
 

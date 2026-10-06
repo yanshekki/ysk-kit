@@ -2,6 +2,8 @@
 
 Language: [中文](testing.zh.md) · English
 
+Procedures for agents: [test-plan](../skills/test-plan.md) (rank cases), then [write-tests](../skills/write-tests.md) (how to write them here). UI screens also need [ui-review](../skills/ui-review.md).
+
 ## Vitest (default)
 
 API tests inject memory ports. They do not start MySQL, Redis, Stripe, Twilio, FCM, Jaeger, or Grafana. `create-memory-input.ts` builds the same services composition uses in production.

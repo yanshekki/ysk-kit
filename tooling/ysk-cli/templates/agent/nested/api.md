@@ -7,3 +7,4 @@ Local notes for `apps/api`. Root law: `AGENTS.md`.
 - JSON routes return `{ ok: true, data }` / `{ ok: false, error }`.
 - Envelope exceptions stay listed in the root guide. Do not add one silently.
 - Tests use in-memory ports. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.
+- Plan cases with `docs/skills/test-plan.md`. Write them with `docs/skills/write-tests.md`.

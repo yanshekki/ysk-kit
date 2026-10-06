@@ -13,6 +13,10 @@ const SKILLS = [
   'fix-layers',
   'envelope-api',
   'plan-feature',
+  'test-plan',
+  'write-tests',
+  'ui-design',
+  'ui-review',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

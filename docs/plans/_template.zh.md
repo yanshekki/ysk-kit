@@ -91,11 +91,13 @@ Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明�
 
 ## 測試計劃
 
-只用記憶體 port。不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
+用 [test-plan](../skills/test-plan.zh.md) 填寫（按風險排序的 `given / when / then`、夾具、不涵蓋範圍、分層對應）。只用記憶體 port。不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 
 - [ ] Memory-repo 服務案例
 - [ ] Envelope／error code 案例
+- [ ] 資源有擁有者時，授權／租戶／另一作者案例
 - [ ] 若改了 UI，hooks 只經 SDK
+- [ ] 僅在改了登入、shell 或使用者可見路徑時才加 Playwright／ui-review
 
 ## 驗證命令
 

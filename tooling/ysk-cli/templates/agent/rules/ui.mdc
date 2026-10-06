@@ -1,0 +1,9 @@
+---
+description: UI — kit tokens, @ysk-kit/ui, ui-review before done
+globs: "packages/ui/**/*,packages/ui-logic/**/*,apps/web/src/**/*.tsx,apps/admin/src/**/*.tsx,apps/mobile/src/**/*.tsx,apps/desktop/src/renderer/**/*.tsx"
+alwaysApply: false
+---
+
+Local reminder. Law: `AGENTS.md`.
+
+Reuse `@ysk-kit/ui` and the zinc theme (`docs/skills/ui-design.md`). Do not invent a parallel design system. A screen is not done until `docs/skills/ui-review.md` is green. No raw `fetch`.

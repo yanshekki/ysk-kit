@@ -50,12 +50,18 @@ jobs:
         run: |
           test -f AGENTS.md
           test -f .agents/skills/plan-feature/SKILL.md
+          test -f .agents/skills/test-plan/SKILL.md
+          test -f .agents/skills/write-tests/SKILL.md
+          test -f .agents/skills/ui-design/SKILL.md
+          test -f .agents/skills/ui-review/SKILL.md
           test -f docs/plans/_template.md
           grep -q '## Current state and reuse' docs/plans/_template.md
           grep -q '## Assumptions' docs/plans/_template.md
           grep -q '## Options considered' docs/plans/_template.md
           test -f .github/copilot-instructions.md
           test -f .gemini/settings.json
+          test -f .cursor/rules/tests.mdc
+          test -f .cursor/rules/ui.mdc
           grep -q AGENTS.md CLAUDE.md
           pnpm install
           cp .env.example .env

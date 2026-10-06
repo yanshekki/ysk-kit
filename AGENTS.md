@@ -68,7 +68,7 @@ Nested `AGENTS.md` files under `packages/contracts`, `apps/api`, and the client 
 
 ## Hard rules
 
-Keep all ten. Each line is the rule; the following sentence is why.
+Keep all twelve. Each line is the rule; the following sentence is why.
 
 1. **`@ysk-kit/contracts` is the only source** of enums, DTOs, error codes, and ts-rest paths. Add the DTO plus `OkSchema` / `ErrSchema` before handlers, SDK methods, or UI. Why: one contract feeds OpenAPI, SDK, tests, and every client.
 2. **No TypeScript `enum`.** Use `as const` + Zod in contracts. Why: TypeScript `enum` emits runtime objects and drifts from Zod / Prisma unions. `pnpm ysk-kit check agent` fails the change.
@@ -80,6 +80,8 @@ Keep all ten. Each line is the rule; the following sentence is why.
 8. **`exactOptionalPropertyTypes` is on.** Omit optional keys; do not pass `undefined`. Why: `key?: T` is “absent or T”, not “T | undefined”.
 9. **Tests use in-memory ports.** Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana in CI. Why: unit tests must run on a clean runner without secrets or paid APIs.
 10. **Discover paths from `GET /openapi.json` or `docs/openapi.yaml`.** Still call them through `@ysk-kit/sdk`. Why: OpenAPI is the catalogue; the SDK is the caller.
+11. **Plan tests with `test-plan`, then write them with `write-tests`.** Rank data loss, auth, money, concurrency, and tenancy first; use in-memory ports. Why: envelope and authz bugs show up without Redis or Stripe.
+12. **Client UI follows `ui-design` and is not done until `ui-review` is green.** Reuse `@ysk-kit/ui` and the zinc theme. Why: products stay accessible, consistent, and free of generic AI-slop chrome.
 
 ## Mandatory workflow
 
@@ -168,6 +170,8 @@ If a required fact is missing (which flavor, which database, whether billing may
 | Plan written after the code | Stop. Write the dated plan, then resume from contracts. |
 | Plan is a sketch, missing a heading, or still placeholders | Fill every template section. `pnpm ysk-kit plan --check <file>`. If rejected as too short, expand — do not shrink. |
 | Root + nested `AGENTS.md` over 24 KiB | Shorten local files; put procedure in `docs/skills/`. |
+| Tests mock Prisma or boot Stripe | Inject a memory port. Follow [write-tests](docs/skills/write-tests.md). |
+| New gradients / radii / raw `fetch` in UI | Reuse `@ysk-kit/ui`. Run [ui-review](docs/skills/ui-review.md). |
 
 ## Coding tools
 
@@ -196,6 +200,10 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Envelope / SSE / PDF | [envelope-api](docs/skills/envelope-api.md), [envelope guide](docs/guides/envelope.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |
 | After any feature | [verify-change](docs/skills/verify-change.md) |
+| Plan how to test | [test-plan](docs/skills/test-plan.md) |
+| Write tests | [write-tests](docs/skills/write-tests.md), [testing guide](docs/guides/testing.md) |
+| Add or change a screen | [ui-design](docs/skills/ui-design.md) |
+| Finish UI | [ui-review](docs/skills/ui-review.md) |
 | Refresh a product | [upgrade](docs/guides/upgrade.md) |
 | CLI flags | [ysk-kit](docs/cli/ysk-kit.md) |
 

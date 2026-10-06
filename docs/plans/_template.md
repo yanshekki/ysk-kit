@@ -91,11 +91,13 @@ Authz (role / permission), rate limits, secrets (never log OTP, Stripe `sk_`, we
 
 ## Test plan
 
-In-memory ports only. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.
+Fill with [test-plan](../skills/test-plan.md) (risk-ranked `given / when / then`, fixtures, out of scope, layer map). In-memory ports only. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.
 
 - [ ] Memory-repo service cases
 - [ ] Envelope / error-code cases
+- [ ] Authz / tenancy / other-author cases when the resource is owned
 - [ ] Client hooks only via SDK (if UI changed)
+- [ ] Playwright / ui-review only when login, shell, or a user-visible path changed
 
 ## Verification commands
 

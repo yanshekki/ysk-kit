@@ -32,21 +32,25 @@ const publicPackages = (): { name: string; version: string }[] => {
 describe('kit version sync', () => {
   it('keeps public packages on one version, via a lockstep changeset or an applied bump', () => {
     const pkgs = publicPackages();
-    const pending = readdirSync(join(kitRoot, '.changeset')).filter(
-      (name) => name.endsWith('.md') && name.toLowerCase() !== 'readme.md',
-    );
-    if (pending.length === 0) {
+    const dir = join(kitRoot, '.changeset');
+    const files = readdirSync(dir).filter((name) => name.endsWith('.md') && name !== 'README.md');
+    if (files.length === 0) {
       expect(new Set(pkgs.map((pkg) => pkg.version)).size).toBe(1);
       return;
     }
-    const declared = new Set<string>();
-    for (const name of pending) {
-      const text = readFileSync(join(kitRoot, '.changeset', name), 'utf8');
-      for (const match of text.matchAll(/"(@ysk-kit\/[^"]+)":\s*(?:patch|minor|major)/g)) {
-        if (match[1]) declared.add(match[1]);
+    const names = new Set<string>();
+    const bumps = new Set<string>();
+    for (const file of files) {
+      const text = readFileSync(join(dir, file), 'utf8');
+      for (const match of text.matchAll(/"(@ysk-kit\/[^"]+)":\s*(patch|minor|major)/g)) {
+        const pkgName = match[1];
+        const bump = match[2];
+        if (pkgName) names.add(pkgName);
+        if (bump) bumps.add(bump);
       }
     }
-    expect([...declared].sort()).toEqual(pkgs.map((pkg) => pkg.name));
+    expect([...names].sort()).toEqual(pkgs.map((pkg) => pkg.name));
+    expect(bumps.size).toBe(1);
   });
 
   it('copies the create-app version into the root package.json', () => {

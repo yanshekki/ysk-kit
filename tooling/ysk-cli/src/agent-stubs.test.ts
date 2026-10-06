@@ -16,6 +16,8 @@ describe('writeAgentStubs', () => {
     expect(existsSync(join(dest, '.cursor/rules/contracts.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/api-modules.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/clients.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/tests.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/ui.mdc'))).toBe(true);
     const agents = readFileSync(join(dest, '.agents/skills/add-module/SKILL.md'), 'utf8');
     const claude = readFileSync(join(dest, '.claude/skills/add-module/SKILL.md'), 'utf8');
     const grok = readFileSync(join(dest, '.grok/skills/add-module/SKILL.md'), 'utf8');
@@ -27,6 +29,10 @@ describe('writeAgentStubs', () => {
     expect(agents).toContain('AGENTS.md');
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/verify-change/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/test-plan/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/write-tests/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/ui-design/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
     expect(AGENT_SKILL_TREES).toContain('.agents/skills');
   });
 

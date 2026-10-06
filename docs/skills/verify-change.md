@@ -38,6 +38,8 @@ Optional:
 - `pnpm e2e` when the login or shell path changed and ports 3001/5173 are free
 - Open `GET /docs` and confirm new paths after `gen:openapi`
 - On Grok Build: `grok inspect` to confirm which rule files loaded
+- UI screens: [ui-review](ui-review.md) before declaring the UI done
+- New tests: [write-tests](write-tests.md) after [test-plan](test-plan.md)
 
 Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana to make unit tests pass.
 

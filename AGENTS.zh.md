@@ -68,7 +68,7 @@ ysk-kit/
 
 ## 硬規則
 
-十條全部保留。每條先寫規則，下一句說明原因。
+十二條全部保留。每條先寫規則，下一句說明原因。
 
 1. **`@ysk-kit/contracts` 是唯一來源**：enum、DTO、error code、ts-rest 路徑。先加 DTO 與 `OkSchema` / `ErrSchema`，才寫 handler、SDK 或 UI。原因：一份合約同時餵 OpenAPI、SDK、測試與所有客戶端。
 2. **不用 TypeScript `enum`。** 在 contracts 用 `as const` + Zod。原因：`enum` 會產生 runtime 物件，並與 Zod／Prisma union 漂移。`pnpm ysk-kit check agent` 會令改動失敗。
@@ -80,6 +80,8 @@ ysk-kit/
 8. **已開啟 `exactOptionalPropertyTypes`。** 省略可選鍵，不要傳 `undefined`。原因：`key?: T` 是「缺席或 T」，不是 `T | undefined`。
 9. **測試使用記憶體 port。** CI 不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。原因：單元測試必須在沒有密鑰、也沒有收費 API 的乾淨 runner 上通過。
 10. **從 `GET /openapi.json` 或 `docs/openapi.yaml` 發現路徑。** 呼叫仍然經 `@ysk-kit/sdk`。原因：OpenAPI 是目錄；SDK 是呼叫端。
+11. **先用 `test-plan` 寫測試計劃，再用 `write-tests` 寫測試。** 先排資料遺失、授權、金錢、併發與租戶隔離；用記憶體 port。原因：不必啟動 Redis 或 Stripe 也能捉到 envelope 與授權錯誤。
+12. **客戶端 UI 跟 `ui-design`，未通過 `ui-review` 不算完成。** 重用 `@ysk-kit/ui` 與 zinc 主題。原因：產品保持可及、一致，而且沒有泛用 AI 風格裝飾。
 
 ## 強制工作流程
 
@@ -168,6 +170,8 @@ ysk-kit/
 | 先寫程式再補計劃 | 停下。先寫日期計劃，再從合約繼續。 |
 | 計劃是草稿、缺標題、或仍是佔位內容 | 填滿每個模板章節。`pnpm ysk-kit plan --check <file>`。若因太短被拒，補長，不要縮。 |
 | 根目錄加巢狀 `AGENTS.md` 超過 24 KiB | 縮短當地檔；程序放進 `docs/skills/`。 |
+| 測試 mock Prisma 或啟動 Stripe | 注入記憶體 port。跟 [write-tests](docs/skills/write-tests.zh.md)。 |
+| UI 出現新漸層／圓角或 raw `fetch` | 重用 `@ysk-kit/ui`。跑 [ui-review](docs/skills/ui-review.zh.md)。 |
 
 ## 程式工具
 
@@ -196,6 +200,10 @@ ysk-kit/
 | Envelope／SSE／PDF | [envelope-api](docs/skills/envelope-api.zh.md)、[envelope 指南](docs/guides/envelope.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |
 | 任何功能之後 | [verify-change](docs/skills/verify-change.zh.md) |
+| 計劃如何測試 | [test-plan](docs/skills/test-plan.zh.md) |
+| 寫測試 | [write-tests](docs/skills/write-tests.zh.md)、[測試指南](docs/guides/testing.zh.md) |
+| 新增或改動畫面 | [ui-design](docs/skills/ui-design.zh.md) |
+| 完成 UI | [ui-review](docs/skills/ui-review.zh.md) |
 | 更新產品 | [upgrade](docs/guides/upgrade.zh.md) |
 | CLI 旗標 | [ysk-kit](docs/cli/ysk-kit.zh.md) |
 

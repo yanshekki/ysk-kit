@@ -7,9 +7,13 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | Skill | When |
 |---|---|
 | [plan-feature](plan-feature.md) | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` before contracts and code |
+| [test-plan](test-plan.md) | Rank risks and list given/when/then cases before writing tests |
+| [write-tests](write-tests.md) | Vitest / Testing Library / Playwright in this repo |
 | [new-product](new-product.md) | Scaffold a product with `create-ysk-app` |
 | [add-module](add-module.md) | New HTTP resource |
 | [add-capability](add-capability.md) | Restore llm / team / billing / push (or other catalogue names) |
+| [ui-design](ui-design.md) | Screens in web / admin / mobile / desktop |
+| [ui-review](ui-review.md) | QA checklist before UI work is done |
 | [verify-change](verify-change.md) | After any feature |
 | [fix-layers](fix-layers.md) | `pnpm layers` failed |
 | [envelope-api](envelope-api.md) | New route, SSE, PDF, or error shape |

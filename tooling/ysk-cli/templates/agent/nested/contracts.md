@@ -7,3 +7,4 @@ Local notes for `@ysk-kit/contracts`. Root law: `AGENTS.md`.
 - No TypeScript `enum`. Use `as const` + Zod.
 - Do not import apps, Prisma, Express, Fastify, React, or BullMQ.
 - After path changes run `pnpm gen:openapi`. Still call paths through `@ysk-kit/sdk`.
+- Contract tests live in this package. Follow `docs/skills/write-tests.md`.

@@ -2,6 +2,8 @@
 
 Language: [English](testing.md) · 中文
 
+給 agent 的程序：先 [test-plan](../skills/test-plan.zh.md)（排序案例），再 [write-tests](../skills/write-tests.zh.md)（在本倉怎麼寫）。UI 畫面還要 [ui-review](../skills/ui-review.zh.md)。
+
 ## Vitest（預設）
 
 API 測試注入記憶體 port。它們不啟動 MySQL、Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。`create-memory-input.ts` 組出與生產 composition 相同的 service。

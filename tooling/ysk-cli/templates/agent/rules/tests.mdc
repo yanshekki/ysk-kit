@@ -1,0 +1,9 @@
+---
+description: Tests — in-memory ports, envelope, given/when/then
+globs: "**/*.test.ts,**/*.test.tsx,**/*.spec.ts,apps/web/e2e/**/*"
+alwaysApply: false
+---
+
+Local reminder. Law: `AGENTS.md`.
+
+Plan with `docs/skills/test-plan.md`, then write with `docs/skills/write-tests.md`. In-memory ports only. Assert `{ ok, data }` / `{ ok, error }`. Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana.

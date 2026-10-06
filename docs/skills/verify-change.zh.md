@@ -38,6 +38,8 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit c
 - 若改了登入或 shell 路徑，且 3001／5173 空閒，執行 `pnpm e2e`
 - `gen:openapi` 之後打開 `GET /docs`，確認新路徑
 - Grok Build：用 `grok inspect` 確認載入了哪些規則檔
+- UI 畫面：標為完成之前跑 [ui-review](ui-review.zh.md)
+- 新測試：先 [test-plan](test-plan.zh.md)，再 [write-tests](write-tests.zh.md)
 
 不要為了讓單元測試通過而啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 

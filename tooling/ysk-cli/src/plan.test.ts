@@ -93,6 +93,8 @@ describe('ysk-kit plan', () => {
     expect(en).toContain('## Contracts first');
     expect(en).toContain('## Security and privacy');
     expect(en).toContain('Expected result');
+    expect(en).toContain('## Test plan');
+    expect(en).toContain('test-plan');
     expect(en).toContain('## Open questions');
     expect(en).toContain('`booking-reminders`');
     expect(zh).toContain('# 計劃：Booking Reminders');
@@ -100,6 +102,7 @@ describe('ysk-kit plan', () => {
     expect(zh).toContain('## 現況與重用');
     expect(zh).toContain('## 考慮過的方案');
     expect(zh).toContain('## 合約先行');
+    expect(zh).toContain('test-plan');
     expect(readFileSync(join(dest, 'plan.md'), 'utf8')).toContain(
       'docs/plans/2026-10-06-booking-reminders.md',
     );

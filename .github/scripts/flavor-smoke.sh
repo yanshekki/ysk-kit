@@ -29,11 +29,17 @@ if [[ "$FLAVOR" != "php-bridge" ]]; then
     docs/plans/_template.zh.md \
     .agents/skills/add-module/SKILL.md \
     .agents/skills/plan-feature/SKILL.md \
+    .agents/skills/test-plan/SKILL.md \
+    .agents/skills/write-tests/SKILL.md \
+    .agents/skills/ui-design/SKILL.md \
+    .agents/skills/ui-review/SKILL.md \
     .claude/skills/add-module/SKILL.md \
     .github/copilot-instructions.md \
     .gemini/settings.json \
     .cursor/rules/ysk-kit.mdc \
-    .cursor/rules/contracts.mdc
+    .cursor/rules/contracts.mdc \
+    .cursor/rules/tests.mdc \
+    .cursor/rules/ui.mdc
   do
     if [[ ! -f "$DEST/$rel" ]]; then
       echo "missing agent guidance file: $rel"

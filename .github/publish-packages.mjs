@@ -22,12 +22,12 @@ export const DEFAULT_NPM_VIEW_INTERVAL_MS = 15_000;
 export const DEFAULT_NPM_VIEW_INTERVAL_MAX_MS = 60_000;
 export const NPM_VIEW_BACKOFF = 1.5;
 
-const envNumber = (env, key, fallback) => {
+const envNumber = (env, key, fallback, { min = 0 } = {}) => {
   const raw = env[key];
   if (raw === undefined || raw === '') return fallback;
   const n = Number(raw);
-  if (!Number.isFinite(n) || n < 0) {
-    throw new Error(`${key} must be a non-negative number`);
+  if (!Number.isFinite(n) || n < min) {
+    throw new Error(`${key} must be a number >= ${min}`);
   }
   return n;
 };
@@ -35,8 +35,10 @@ const envNumber = (env, key, fallback) => {
 /** Wait budget and backoff for `npm view` after a successful PUT. */
 export const npmViewWaitConfig = (env = process.env) => ({
   waitMs: envNumber(env, 'NPM_VIEW_WAIT_MS', DEFAULT_NPM_VIEW_WAIT_MS),
-  intervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MS', DEFAULT_NPM_VIEW_INTERVAL_MS),
-  maxIntervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MAX_MS', DEFAULT_NPM_VIEW_INTERVAL_MAX_MS),
+  intervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MS', DEFAULT_NPM_VIEW_INTERVAL_MS, { min: 1 }),
+  maxIntervalMs: envNumber(env, 'NPM_VIEW_INTERVAL_MAX_MS', DEFAULT_NPM_VIEW_INTERVAL_MAX_MS, {
+    min: 1,
+  }),
   backoff: NPM_VIEW_BACKOFF,
 });
 
@@ -100,10 +102,10 @@ const REGISTRY_AUTH_KEYS = [
   '_auth',
 ];
 
-/** skip: npm view works. wait: registry already accepted this version. publish: PUT it. */
-export const publishPlan = ({ installable, accepted }) => {
+/** skip: npm view works. wait: accepted or 429/5xx. publish: PUT it. */
+export const publishPlan = ({ installable, accepted, unknown = false }) => {
   if (installable) return 'skip';
-  if (accepted) return 'wait';
+  if (accepted || unknown) return 'wait';
   return 'publish';
 };
 
@@ -123,13 +125,26 @@ const registryConfig = () => {
   return { registry, scoped, authValues };
 };
 
-export const versionAccepted = async (name, version) => {
+/** accepted / missing / retry (429 or 5xx) / error. */
+export const versionDocumentStatus = (status) => {
+  if (status === 200) return 'accepted';
+  if (status === 404) return 'missing';
+  if (status === 429 || status >= 500) return 'retry';
+  return 'error';
+};
+
+/**
+ * True: version document exists. False: 404. Null: 429/5xx (unknown, retry).
+ */
+export const versionAccepted = async (name, version, fetchImpl = fetch) => {
   const url = `${REGISTRY}/${encodedName(name)}/${encodeURIComponent(version)}`;
-  const res = await fetch(url, {
+  const res = await fetchImpl(url, {
     headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
   });
-  if (res.status === 200) return true;
-  if (res.status === 404) return false;
+  const kind = versionDocumentStatus(res.status);
+  if (kind === 'accepted') return true;
+  if (kind === 'missing') return false;
+  if (kind === 'retry') return null;
   throw new Error(`${name}@${version}: version document HTTP ${res.status}`);
 };
 
@@ -170,8 +185,9 @@ const verifyAll = async (pkgs, env = process.env) => {
   const accepted = [];
   const never = [];
   for (const pkg of missing) {
-    if (await versionAccepted(pkg.name, pkg.version)) accepted.push(pkg);
-    else never.push(pkg);
+    const seen = await versionAccepted(pkg.name, pkg.version);
+    if (seen === false) never.push(pkg);
+    else accepted.push(pkg);
   }
   const list = (rows) => rows.map((pkg) => `${pkg.name}@${pkg.version}`).join('\n');
   if (verifyOutcome({ missingCount: missing.length, acceptedCount: accepted.length }) === 'fail') {
@@ -225,7 +241,11 @@ const main = async () => {
   for (const pkg of pkgs) {
     const installable = npmViewOk(pkg.name, pkg.version);
     const accepted = installable ? true : await versionAccepted(pkg.name, pkg.version);
-    const plan = publishPlan({ installable, accepted });
+    const plan = publishPlan({
+      installable,
+      accepted: accepted === true,
+      unknown: accepted === null,
+    });
     console.log(`${pkg.name}@${pkg.version}: ${plan}`);
     if (verifyOnly || plan !== 'publish') continue;
     publishOne(pkg, registry || REGISTRY);

@@ -7,6 +7,14 @@ export type GitRun = (
 export function gitShow(sha: string, path: string, runFn?: GitRun): string;
 export function gitLsTree(sha: string, path: string, runFn?: GitRun): string[];
 export function versionBumpCommit(version: string, runFn?: GitRun): string | null;
+export function provenanceGitCommit(bundle: unknown): string | null;
+export function isAncestorOfMain(sha: string, runFn?: GitRun): boolean;
+export function resolvePublishSha(input: {
+  version: string;
+  runFn?: GitRun;
+  fetchImpl?: typeof fetch;
+  contractsName?: string;
+}): Promise<{ sha: string | null; source: 'provenance' | 'heuristic' | 'none' }>;
 export function treeAtSha(
   sha: string,
   runFn?: GitRun,

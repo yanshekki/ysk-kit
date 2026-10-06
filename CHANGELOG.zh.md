@@ -54,11 +54,15 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 - `fix-layers` 把每條 cruiser 規則對到典型壞 import，未經批准禁止改 `.dependency-cruiser.cjs`。
 - Skill 索引加上「不要用於」與「相關外部 skill」欄。
 
+### 修正
+
+- `create-ysk-app` 在有 `GITHUB_TOKEN`／`GH_TOKEN` 時送 `Authorization: Bearer`，GitHub HTTP 403／429 時改走 `git ls-remote` + codeload，失敗時提示設定 `GITHUB_TOKEN`，並刪掉 dest 裡殘留的 `kit.tgz`。
+
 ### 內部／CI
 
 - `skill-triggers.test.ts` 靜態檢查包裝 description。thin-smoke、flavor-smoke、create-app 與 upgrade 測試會斷言新的 skill 檔。
-- Release 在成功上傳後最多等 20 分鐘（`NPM_VIEW_WAIT_MS`，backoff）讓 `npm view` 看到套件。若 registry 已接受該版本但 install packument 仍落後，job 會警告並繼續，讓 tag 可以執行。
-- 當每個公開 `name@version` 已在 npm、沒有待處理 changeset，但缺少 tag `vX.Y.Z` 或其 GitHub Release 時，Release 會在 version commit 補上（`tag-and-release.mjs --recover`），push 到 `main` 與 `workflow_dispatch` 都適用。不會重新發佈套件。
+- Release 在成功上傳後最多等 20 分鐘（`NPM_VIEW_WAIT_MS`，backoff）讓 `npm view` 看到套件。registry 429／5xx 會重試。拒絕 `NPM_VIEW_INTERVAL_MS=0`。packument 落後時仍會打 tag，且 `pack-and-run --registry` 等到 tarball 可見。
+- 補上缺少的 `vX.Y.Z` tag 時，使用 npm provenance 的 `gitCommit`（SLSA `resolvedDependencies`），且必須是 `origin/main` 的祖先。Release 說明來自該 tag commit 的 `CHANGELOG.md`。若 tag 已指向別的 SHA 則不移動，仍會補 GitHub Release。recovery 只在 `refs/heads/main` 執行。
 
 ### 安全
 

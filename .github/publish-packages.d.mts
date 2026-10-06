@@ -7,7 +7,9 @@ export function registryAuthConfigured(values: readonly string[]): boolean;
 export function publishPlan(input: {
   installable: boolean;
   accepted: boolean;
+  unknown?: boolean;
 }): 'skip' | 'wait' | 'publish';
+export function versionDocumentStatus(status: number): 'accepted' | 'missing' | 'retry' | 'error';
 export const DEFAULT_NPM_VIEW_WAIT_MS: number;
 export const DEFAULT_NPM_VIEW_INTERVAL_MS: number;
 export const DEFAULT_NPM_VIEW_INTERVAL_MAX_MS: number;
@@ -29,4 +31,8 @@ export function verifyOutcome(input: {
   missingCount: number;
   acceptedCount: number;
 }): 'ok' | 'warn' | 'fail';
-export function versionAccepted(name: string, version: string): Promise<boolean>;
+export function versionAccepted(
+  name: string,
+  version: string,
+  fetchImpl?: typeof fetch,
+): Promise<boolean | null>;

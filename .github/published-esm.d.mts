@@ -18,7 +18,7 @@ export function changelogSection(markdown: string, version: string): string;
 export function tagPlan(input: {
   headSha: string;
   existingTarget: string | null;
-}): 'create' | 'exists';
+}): 'create' | 'exists' | 'keep';
 export function postPublishPlan(input: {
   pendingCount: number;
   allInstallable: boolean;

@@ -27,4 +27,4 @@
 "@ysk-kit/web-sdk": patch
 ---
 
-Release waits up to 20 minutes (backoff, NPM_VIEW_WAIT_MS) for npm view after a successful upload and tags even when the packument lags. If the version is already on npm but vX.Y.Z or its GitHub Release is missing, recover the tag and notes without republishing.
+Release waits up to 20 minutes (backoff, NPM_VIEW_WAIT_MS) for npm view after a successful upload and tags even when the packument lags. Recover a missing vX.Y.Z tag from npm provenance. create-ysk-app authenticates GitHub, falls back off the REST rate limit, and deletes leftover kit.tgz.

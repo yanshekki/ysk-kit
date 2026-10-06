@@ -145,7 +145,7 @@ const ensureGithubRelease = (tag, sha, notes) => {
 const isDryRun = (argv) => argv.includes('--dry-run');
 const isRecover = (argv) => argv.includes('--recover');
 
-/** First commit that set packages/contracts to this lockstep version. */
+/** First commit that set packages/contracts to this lockstep version. Fallback only. */
 export const versionBumpCommit = (version, runFn = run) => {
   const result = runFn(
     'git',
@@ -163,6 +163,69 @@ export const versionBumpCommit = (version, runFn = run) => {
   if (result.status !== 0) return null;
   const first = (result.stdout ?? '').trim().split('\n').filter(Boolean)[0];
   return first ?? null;
+};
+
+const COMMIT_SHA = /^[0-9a-f]{40}$/i;
+
+/** SLSA v1 gitCommit from an npm attestations bundle. */
+export const provenanceGitCommit = (bundle) => {
+  const atts = bundle?.attestations;
+  if (!Array.isArray(atts)) return null;
+  for (const att of atts) {
+    const payload = att?.bundle?.dsseEnvelope?.payload;
+    if (typeof payload !== 'string') continue;
+    let stmt;
+    try {
+      stmt = JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
+    } catch {
+      continue;
+    }
+    if (stmt?.predicateType !== 'https://slsa.dev/provenance/v1') continue;
+    const sha = stmt?.predicate?.buildDefinition?.resolvedDependencies?.[0]?.digest?.gitCommit;
+    if (typeof sha === 'string' && COMMIT_SHA.test(sha)) return sha.toLowerCase();
+  }
+  return null;
+};
+
+export const isAncestorOfMain = (sha, runFn = run) => {
+  const result = runFn('git', ['merge-base', '--is-ancestor', sha, 'origin/main'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  return result.status === 0;
+};
+
+const npmAttestationsUrl = (name, version, runFn = run) => {
+  const result = runFn('npm', ['view', `${name}@${version}`, 'dist.attestations.url', '--json'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (result.status !== 0) return null;
+  const printed = (result.stdout ?? '').trim().replaceAll('"', '');
+  return printed.startsWith('https://') ? printed : null;
+};
+
+export const resolvePublishSha = async ({
+  version,
+  runFn = run,
+  fetchImpl = fetch,
+  contractsName = '@ysk-kit/contracts',
+}) => {
+  const url = npmAttestationsUrl(contractsName, version, runFn);
+  if (url) {
+    try {
+      const res = await fetchImpl(url, {
+        headers: { Accept: 'application/json', 'User-Agent': 'ysk-kit-release' },
+      });
+      if (res.ok) {
+        const sha = provenanceGitCommit(await res.json());
+        if (sha && isAncestorOfMain(sha, runFn)) return { sha, source: 'provenance' };
+      }
+    } catch {
+      // fall through to the contracts package.json heuristic
+    }
+  }
+  const fallback = versionBumpCommit(version, runFn);
+  if (fallback && isAncestorOfMain(fallback, runFn)) return { sha: fallback, source: 'heuristic' };
+  return { sha: null, source: 'none' };
 };
 
 const resolveLagPlan = async (plan, missing) => {
@@ -216,26 +279,34 @@ const main = async () => {
       `npm view still missing ${missing.length} package(s); registry accepted the upload. Tagging anyway.`,
     );
   }
-  const tagSha = recover ? versionBumpCommit(version) : sha;
+  let tagSha = sha;
+  if (recover) {
+    const resolved = await resolvePublishSha({ version, runFn: run });
+    tagSha = resolved.sha;
+    console.log(`publish SHA for v${version}: ${tagSha ?? 'none'} (${resolved.source})`);
+  }
   if (!tagSha) {
     throw new Error(`could not find the version commit for v${version}`);
   }
-  writeOutput(env, 'published', 'true');
   const tag = productTag(version);
-  const notes = changelogSection(tree.readText('CHANGELOG.md'), version);
-  if (dryRun) {
-    console.log(`dry-run tag ${tag} at ${tagSha}`);
-    return;
-  }
   const existing = existingTagCommit(tag);
   const action = tagPlan({ headSha: tagSha, existingTarget: existing });
+  const notesSha = action === 'keep' ? existing : tagSha;
+  const notes = changelogSection(gitShow(notesSha, 'CHANGELOG.md'), version);
+  writeOutput(env, 'published', 'true');
+  if (dryRun) {
+    console.log(`dry-run tag ${tag} at ${notesSha} (${action})`);
+    return;
+  }
   if (action === 'create') {
     console.log(`create annotated ${tag} at ${tagSha}`);
     createAnnotatedTag(tag, tagSha);
-  } else {
+  } else if (action === 'exists') {
     console.log(`tag ${tag} already points at ${tagSha}`);
+  } else {
+    console.log(`tag ${tag} already points at ${existing}; not moving`);
   }
-  ensureGithubRelease(tag, tagSha, notes);
+  ensureGithubRelease(tag, notesSha, notes);
   console.log(`tag-and-release ok ${tag}`);
 };
 

@@ -4,7 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { inspectAtSha } from '../../../.github/published-esm.mjs';
-import { type GitRun, treeAtSha, versionBumpCommit } from '../../../.github/tag-and-release.mjs';
+import {
+  type GitRun,
+  isAncestorOfMain,
+  provenanceGitCommit,
+  resolvePublishSha,
+  treeAtSha,
+  versionBumpCommit,
+} from '../../../.github/tag-and-release.mjs';
 
 const runAt =
   (cwd: string): GitRun =>
@@ -125,5 +132,70 @@ describe('tag-and-release at GITHUB_SHA', () => {
     git(root, ['add', '.']);
     git(root, ['commit', '-m', 'docs']);
     expect(versionBumpCommit('1.2.2', runAt(root))).toBe(bump);
+    expect(isAncestorOfMain(bump, runAt(root))).toBe(false);
+  });
+
+  it('reads the publish SHA from SLSA provenance', () => {
+    const commit = 'b8ce8ebbe7fcf412418e54ff094bef4f1d129b2c';
+    const stmt = {
+      predicateType: 'https://slsa.dev/provenance/v1',
+      predicate: {
+        buildDefinition: {
+          resolvedDependencies: [{ digest: { gitCommit: commit } }],
+        },
+      },
+    };
+    const payload = Buffer.from(JSON.stringify(stmt), 'utf8').toString('base64');
+    expect(
+      provenanceGitCommit({
+        attestations: [
+          {
+            predicateType: 'https://slsa.dev/provenance/v1',
+            bundle: { dsseEnvelope: { payload } },
+          },
+        ],
+      }),
+    ).toBe(commit);
+    expect(provenanceGitCommit({ attestations: [] })).toBeNull();
+  });
+
+  it('prefers provenance over the versionBumpCommit heuristic when the SHA is on main', async () => {
+    const provenance = 'b8ce8ebbe7fcf412418e54ff094bef4f1d129b2c';
+    const stmt = {
+      predicateType: 'https://slsa.dev/provenance/v1',
+      predicate: {
+        buildDefinition: {
+          resolvedDependencies: [{ digest: { gitCommit: provenance } }],
+        },
+      },
+    };
+    const payload = Buffer.from(JSON.stringify(stmt), 'utf8').toString('base64');
+    const runFn: GitRun = (command, args) => {
+      if (command === 'npm') {
+        return {
+          status: 0,
+          stdout: '"https://registry.npmjs.org/-/npm/v1/attestations/@ysk-kit%2fcontracts@1.2.2"\n',
+          stderr: '',
+        };
+      }
+      if (command === 'git' && args[0] === 'merge-base') {
+        return { status: args[2] === provenance ? 0 : 1, stdout: '', stderr: '' };
+      }
+      if (command === 'git' && args.includes('-S')) {
+        return { status: 0, stdout: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n', stderr: '' };
+      }
+      return { status: 1, stdout: '', stderr: '' };
+    };
+    const resolved = await resolvePublishSha({
+      version: '1.2.2',
+      runFn,
+      fetchImpl: async () =>
+        new Response(
+          JSON.stringify({
+            attestations: [{ bundle: { dsseEnvelope: { payload } } }],
+          }),
+        ),
+    });
+    expect(resolved).toEqual({ sha: provenance, source: 'provenance' });
   });
 });

@@ -159,9 +159,7 @@ export const tagPlan = ({ headSha, existingTarget }) => {
   if (!headSha) throw new Error('missing commit SHA for the product tag');
   if (!existingTarget) return 'create';
   if (existingTarget === headSha) return 'exists';
-  throw new Error(
-    `tag already points at ${existingTarget}, working commit is ${headSha}. Refusing to move the tag.`,
-  );
+  return 'keep';
 };
 
 /**

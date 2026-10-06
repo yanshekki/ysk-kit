@@ -22,6 +22,7 @@ import {
   registryAuthConfigured,
   staticCredentialNames,
   verifyOutcome,
+  versionDocumentStatus,
 } from '../../../.github/publish-packages.mjs';
 import {
   githubReleaseExists,
@@ -110,7 +111,9 @@ describe('CI workflows', () => {
     expect(release).toContain('tag-and-release.mjs');
     expect(release).toContain("steps.changesets.outputs.hasChangesets != 'true'");
     expect(release).toContain("steps.unpublished.outputs.recover == 'true'");
+    expect(release).toContain("github.ref == 'refs/heads/main'");
     expect(release).toContain('--recover');
+    expect(release).not.toContain('Diagnostic only');
     expect(release).toContain("steps.tag.outputs.published == 'true'");
     const tagSource = readFileSync(join(kitRoot, '.github/tag-and-release.mjs'), 'utf8');
     expect(tagSource).toContain('git show');
@@ -118,6 +121,7 @@ describe('CI workflows', () => {
     expect(tagSource).toContain('--dry-run');
     expect(tagSource).toContain('--recover');
     expect(tagSource).toContain('versionBumpCommit');
+    expect(tagSource).toContain('provenanceGitCommit');
     expect(tagSource).toContain('inspectAtSha');
     expect(tagSource).not.toMatch(/publicPackages\(\)/);
     expect(tagSource).not.toMatch(/pendingChangesetFiles\(\)/);
@@ -134,6 +138,12 @@ describe('CI workflows', () => {
     expect(publishPlan({ installable: true, accepted: true })).toBe('skip');
     expect(publishPlan({ installable: false, accepted: true })).toBe('wait');
     expect(publishPlan({ installable: false, accepted: false })).toBe('publish');
+    expect(publishPlan({ installable: false, accepted: false, unknown: true })).toBe('wait');
+    expect(versionDocumentStatus(200)).toBe('accepted');
+    expect(versionDocumentStatus(404)).toBe('missing');
+    expect(versionDocumentStatus(429)).toBe('retry');
+    expect(versionDocumentStatus(503)).toBe('retry');
+    expect(versionDocumentStatus(401)).toBe('error');
     const missing = describeAuth({});
     expect(formatAuth(missing)).toContain('OIDC trusted publishing is unavailable');
     expect(() => assertOidc(missing)).toThrow(/not a fallback/);
@@ -215,7 +225,8 @@ describe('CI workflows', () => {
   it('waits for npm view with backoff and warns when the upload was accepted', () => {
     expect(npmViewWaitConfig({}).waitMs).toBe(20 * 60 * 1000);
     expect(npmViewWaitConfig({ NPM_VIEW_WAIT_MS: '120000' }).waitMs).toBe(120_000);
-    expect(() => npmViewWaitConfig({ NPM_VIEW_WAIT_MS: '-1' })).toThrow(/non-negative/);
+    expect(() => npmViewWaitConfig({ NPM_VIEW_WAIT_MS: '-1' })).toThrow(/>= 0/);
+    expect(() => npmViewWaitConfig({ NPM_VIEW_INTERVAL_MS: '0' })).toThrow(/>= 1/);
     expect(
       nextVerifyDelayMs({
         attempt: 0,

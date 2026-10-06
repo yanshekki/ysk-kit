@@ -92,13 +92,13 @@ describe('published ESM', () => {
     expect(() => changelogSection(markdown, '9.9.9')).toThrow(/missing ## v9.9.9/);
   });
 
-  it('tagPlan creates, keeps, or refuses to move a tag', () => {
+  it('tagPlan creates, keeps, or leaves a mismatched tag in place', () => {
     const sha = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
     expect(tagPlan({ headSha: sha, existingTarget: null })).toBe('create');
     expect(tagPlan({ headSha: sha, existingTarget: sha })).toBe('exists');
-    expect(() =>
+    expect(
       tagPlan({ headSha: sha, existingTarget: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' }),
-    ).toThrow(/Refusing to move the tag/);
+    ).toBe('keep');
   });
 
   it('postPublishPlan skips the version PR and tags only after publish', () => {

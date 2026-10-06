@@ -22,6 +22,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { nextVerifyDelayMs, npmViewWaitConfig } from './publish-packages.mjs';
 import {
   cliBinPackages,
   extraPeerDependencies,
@@ -32,8 +33,6 @@ import {
 import { publicPackages } from './unpublished-packages.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
-const REGISTRY_RETRY_MS = 5 * 60 * 1000;
-const REGISTRY_INTERVAL_MS = 15_000;
 
 const run = (command, args, options) => spawnSync(command, args, { encoding: 'utf8', ...options });
 
@@ -76,21 +75,31 @@ const packRegistryOnce = (pkg, outDir) => {
   return null;
 };
 
-const packRegistry = async (pkg, outDir) => {
-  const deadline = Date.now() + REGISTRY_RETRY_MS;
+const packRegistry = async (pkg, outDir, env = process.env) => {
+  const { waitMs, intervalMs, maxIntervalMs, backoff } = npmViewWaitConfig(env);
+  const deadline = Date.now() + waitMs;
+  let attempt = 0;
   for (;;) {
     const packed = packRegistryOnce(pkg, outDir);
     if (packed) return packed;
     const remaining = deadline - Date.now();
-    if (remaining <= 0) {
+    const delay = nextVerifyDelayMs({
+      attempt,
+      intervalMs,
+      maxIntervalMs,
+      remainingMs: remaining,
+      backoff,
+    });
+    if (delay <= 0) {
       throw new Error(
-        `npm pack ${pkg.name}@${pkg.version} did not write a tarball within ${REGISTRY_RETRY_MS / 1000}s`,
+        `npm pack ${pkg.name}@${pkg.version} did not write a tarball within ${waitMs / 1000}s`,
       );
     }
     console.log(
-      `npm pack ${pkg.name}@${pkg.version} not ready; retrying for ${Math.ceil(remaining / 1000)}s`,
+      `npm pack ${pkg.name}@${pkg.version} not ready; retrying in ${Math.ceil(delay / 1000)}s`,
     );
-    await sleep(Math.min(REGISTRY_INTERVAL_MS, remaining));
+    await sleep(delay);
+    attempt += 1;
   }
 };
 

@@ -3,8 +3,8 @@ name: Release
 on:
   push:
     branches: [main]
-  # Diagnostic only. Logs whether OIDC is available, the target registry, and
-  # `npm view` for every public package. It does not publish.
+  # Manual run: log OIDC/registry/`npm view`, and recover a missing vX.Y.Z tag
+  # or GitHub Release on main. It does not republish packages.
   workflow_dispatch:
 
 # Default deny. The release job raises only what Changesets and npm provenance need.
@@ -73,7 +73,7 @@ jobs:
       # version commit (never republishes). Same path on workflow_dispatch.
       - id: tag
         name: Tag vX.Y.Z and GitHub Release
-        if: (github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.hasChangesets != 'true') || steps.unpublished.outputs.recover == 'true'
+        if: (github.event_name == 'push' && steps.unpublished.outputs.skip != 'true' && steps.changesets.outputs.hasChangesets != 'true') || (github.ref == 'refs/heads/main' && steps.unpublished.outputs.recover == 'true')
         run: node .github/tag-and-release.mjs ${{ steps.unpublished.outputs.recover == 'true' && '--recover' || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

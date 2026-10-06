@@ -12,6 +12,7 @@ const SKILLS = [
   'verify-change',
   'fix-layers',
   'envelope-api',
+  'plan-feature',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);
@@ -57,7 +58,7 @@ describe('public docs language pairs', () => {
     expect(missing.map((path) => relative(kitRoot, path))).toEqual([]);
   });
 
-  it('ships six agent skill templates that point at docs and law', () => {
+  it('ships agent skill templates that point at docs and law', () => {
     const rule = join(kitRoot, 'tooling/ysk-cli/templates/agent/ysk-kit.mdc');
     expect(existsSync(rule), rule).toBe(true);
     expect(readFileSync(rule, 'utf8')).toContain('AGENTS.md');
@@ -67,6 +68,12 @@ describe('public docs language pairs', () => {
       const body = readFileSync(tmpl, 'utf8');
       expect(body).toContain(`docs/skills/${name}.md`);
       expect(body).toContain('AGENTS.md');
+      const agents = join(kitRoot, '.agents/skills', name, 'SKILL.md');
+      const claude = join(kitRoot, '.claude/skills', name, 'SKILL.md');
+      expect(existsSync(agents), agents).toBe(true);
+      expect(existsSync(claude), claude).toBe(true);
+      expect(readFileSync(agents, 'utf8')).toBe(body);
+      expect(readFileSync(claude, 'utf8')).toBe(body);
     }
   });
 });

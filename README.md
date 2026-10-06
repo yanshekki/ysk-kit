@@ -78,7 +78,8 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk-kit add module <name> --prisma --web` | Hexagonal HTTP slice |
 | `pnpm ysk-kit add <capability>` | Merge a catalogued capability |
 | `pnpm ysk-kit upgrade` | Refresh allowlisted kit guardrails |
-| `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch |
+| `pnpm ysk-kit plan <slug>` | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` from the template |
+| `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift |
 | `pnpm create @ysk-kit/app <name>` | Scaffold a product from npm |
 | `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product from this checkout |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | Verify a change |
@@ -112,6 +113,23 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.2.0
+
+#### New features
+
+- `pnpm ysk-kit plan <slug>` writes a bilingual feature plan to `docs/plans/<yyyy-mm-dd>-<slug>.md` (and the `.zh.md` pair) from the shared template, plus a gitignored root `plan.md` pointer.
+- Thin and full workspace products receive the same agent pointer set: `.agents/skills/`, `.claude/skills/`, scoped `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`, `.gemini/settings.json`, `GEMINI.md`, and the plan template.
+
+#### Improvements
+
+- `AGENTS.md` / `AGENTS.zh.md` are a professional agent guide: orientation, repo map, the ten hard rules with reasons, a mandatory understand → plan → contracts → scaffold → implement → verify → docs workflow, definition of done, ask-vs-decide, pitfalls, and a coding-tool table. Procedures stay in `docs/skills/`.
+- `pnpm ysk-kit check agent` also fails when a pointer file drops `AGENTS.md`, skill copies drift, or root + nested `AGENTS.md` exceed 24 KiB.
+- Skills (`docs/skills/` and `.agents/skills/`) now include `plan-feature` and use trigger / inputs / steps / verification / done criteria.
+
+#### Internal/CI
+
+- `thin-smoke` and `flavor-smoke` assert the generated pointer set. `php-bridge` still skips workspace agent stubs.
+
 ### v1.1.3
 
 #### Improvements
@@ -135,28 +153,6 @@ The latest three versions. Older versions are in the full changelog.
 
 - Post-publish `npm view` verification stays.
 - The product release remains one annotated tag `vX.Y.Z`.
-
-### v1.1.1
-
-#### Improvements
-
-- `ysk-kit doctor` quotes the product's `packageManager` pin in the engines fix.
-- `pnpm version:packages` copies `@ysk-kit/create-app`'s version into the root `package.json` and into the version cells in `README.md` and `README.zh.md`.
-
-#### Security
-
-- Overrides stay on `deepmerge-ts` 8.0.2, `mariadb` 3.4.7 (the Prisma adapter declares 3.4.5), and `mysql2` 3.24.5.
-- Accepted, with no patched npm release: uuid 7 via Expo `xcode` (GHSA-w5hq-g745-h8pq), node-forge 1.4.0 via Expo CLI code signing (GHSA-86w9-cpqp-85rv), and braces 3.0.3 via Metro's file map (GHSA-vfj7-8cjw-p6xm).
-
-#### Dependency upgrades
-
-- pnpm 12.9.0 (the 12.9.0 `pnpm login` redirect no longer forwards credentials; 12.9.1 was still inside the 24-hour release-age window), Turborepo 2.11.7, pino 10.4.0, `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner` 3.1146.0, `@tanstack/react-query` 5.104.1, supertest 7.3.1, and `@types/node` 24.19.1.
-- Held: TypeScript 7.0.2, `@types/node` 26 (engines are Node 24), Prisma 8.0.0-rc.19, desktop Vite 7.3.6 with `@vitejs/plugin-react` 5 (electron-vite 5 peers Vite 5–7), Expo 57.0.26 / React Native 0.86.3 / React 19.2.8 (Expo SDK 58 targets React Native 0.88, which is still a release candidate), and `@ts-rest/core` 3.53.0-rc.1.
-- `prom-client` 15.1.3 stays until `@prometheus-io/client` replaces the `/metrics` registry. Compose images stay MySQL 8.4, Redis 8.10.2, Jaeger 2.21.0, Prometheus v3.15.0, and Grafana 13.2.3. Actions stay on their commit SHAs.
-
-#### Internal/CI
-
-- The release job fails unless `npm view` sees each published version. `pnpm release:publish` runs `pnpm publish --provenance` (commit `817e0f0`, after the v1.1.0 tag and before v1.1.1).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

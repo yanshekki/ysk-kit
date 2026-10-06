@@ -9,6 +9,7 @@ Usage:
   pnpm ysk-kit upgrade [--dry-run]
   pnpm ysk-kit check agent
   pnpm ysk-kit doctor [--json]
+  pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 
 Commands:
   add module <name>
@@ -35,14 +36,21 @@ Commands:
       Copy allowlisted guardrail files from this kit checkout into the
       product root (YSK_ROOT). Overwrites AGENTS.md, skills, TypeScript
       and Biome config, and dependency-cruiser. Workspace products also
-      receive generated Cursor/Grok skill wrappers (gitignored). Does
-      not touch apps, modules, product README, .env, or Prisma.
+      receive generated agent skill wrappers. Does not touch apps,
+      modules, product README, .env, or Prisma.
       --dry-run   List will copy / skip without writing
 
   check agent
       Scan the product root for typical broken patches: TypeScript enum,
-      Prisma imports in web/admin/mobile/desktop, and raw fetch in those
-      apps. Prints rule id + file:line. Exit 1 when anything matches.
+      Prisma imports in web/admin/mobile/desktop, raw fetch in those
+      apps, pointer files that dropped AGENTS.md, drifted skill copies,
+      and root + nested AGENTS.md over 24 KiB. Prints rule id + file:line.
+      Exit 1 when anything matches.
+
+  plan <slug> [--date YYYY-MM-DD] [--force]
+      Write docs/plans/<date>-<slug>.md and the Chinese pair from the
+      bilingual template, plus a gitignored root plan.md pointer.
+      Slug must be kebab-case. --date defaults to today. --force overwrites.
 
   doctor [--json]
       Check a generated product: Node and pnpm versus engines, required

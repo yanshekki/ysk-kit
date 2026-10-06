@@ -11,6 +11,7 @@ pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit doctor [--json]
+pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 ```
 
 環境變數：`YSK_ROOT` — 要修補的產品根目錄。未設定時預設為本 kit。
@@ -97,7 +98,7 @@ pnpm ysk-kit upgrade --dry-run
 |---|---|
 | `--dry-run` | 列印 `will copy` / `skip` / `will write agent stubs` / `will write .ysk-kit.json`，不寫檔 |
 
-會覆寫的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`。複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過。工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 Cursor／Grok skill 包裝（`.cursor/` 與 `.grok/` 已 gitignore）。
+會覆寫的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`GEMINI.md`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`、`docs/plans/`（模板與 README）、`.agents/`、`.gemini/`、`.github/copilot-instructions.md`、`.github/instructions/`。複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過。工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 skill 包裝到 `.agents/skills/`、`.claude/skills/`、`.cursor/skills/`、`.grok/skills/`，以及範圍限定的 `.cursor/rules/*.mdc`。
 
 不會改動：`apps/**`、`modules/**`、產品 DTO、產品 `README.md`、`.env`、Prisma 遷移、`docs/openapi.yaml`。
 
@@ -126,12 +127,32 @@ pnpm ysk-kit check agent
 | `no-ts-enum` | `apps/**`、`packages/**`、`modules/**`（`.ts` / `.tsx`） | TypeScript `enum` / `const enum` |
 | `clients-no-prisma` | `apps/web`、`apps/admin`、`apps/mobile`、`apps/desktop` | import `@prisma/client`、`@ysk-kit/db-prisma`、`apps/api/src/generated` 或 `generated/prisma` |
 | `clients-no-raw-fetch` | 同上四個 client app | `fetch(` |
+| `pointer-agents-md` | `CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`.cursor/rules/*.mdc`、`.github/instructions/*.instructions.md`、skill 的 `SKILL.md` 副本 | 檔案存在但不含 `AGENTS.md` |
+| `skill-drift` | `.agents/skills`、`.claude/skills`、`.cursor/skills`、`.grok/skills`，以及（若存在）kit 模板 | 副本缺失或內容不同 |
+| `agents-md-budget` | 產品根底下每個 `AGENTS.md` | UTF-8 合計超過 24 KiB |
 
 略過：`*.test.ts` / `*.test.tsx`、註解行、`node_modules`、`dist`、`generated`、`coverage`。Prisma schema 的 `enum UserStatus` 在 `.prisma` 檔，不是 TypeScript，不會掃描。
 
 允許的 raw `fetch`：`apps/admin/src/features/queues/queues-page.tsx`（Bull Board HTML 探測）。`@ysk-kit/sdk` 的 HTTP 在 `packages/sdk`，不是 client app。
 
 測試：[測試指南](../guides/testing.zh.md)。
+
+## `ysk-kit plan`
+
+按 [docs/plans/_template.md](../plans/_template.md) 寫出雙語功能計劃。
+
+```text
+pnpm ysk-kit plan <kebab-slug>
+pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
+pnpm ysk-kit plan <kebab-slug> --force
+```
+
+| 旗標 | 作用 |
+|---|---|
+| `--date YYYY-MM-DD` | 檔名中的曆日。預設：今天（本地） |
+| `--force` | 覆寫已有的日期配對 |
+
+會建立 `docs/plans/<date>-<slug>.md`、`docs/plans/<date>-<slug>.zh.md`，以及根目錄 `plan.md` 指針（已 gitignore）。Slug 必須符合 `^[a-z][a-z0-9-]*$`。程序：[plan-feature](../skills/plan-feature.zh.md)。
 
 ## `ysk-kit doctor`
 
@@ -155,4 +176,4 @@ pnpm ysk-kit doctor --json
 
 SQLite 用 Node 的 `node:sqlite` 開啟（`_prisma_migrations` 中 `finished_at` 有值且 `rolled_back_at` 為 null）。MySQL 與 PostgreSQL 在 `apps/api` 執行 `prisma migrate status`。報告會遮蓋連線字串。
 
-`rules` 使用與 `upgrade` 相同的路徑：`AGENTS.md`、`AGENTS.zh.md`、`CLAUDE.md`、`.dependency-cruiser.cjs`、`packages/typescript-config/`、`packages/biome-config/`、`docs/skills/`。工作區產品亦比較 `.cursor/rules/ysk-kit.mdc` 與 Cursor／Grok skill 包裝。非工作區產品（`php-bridge`）略過此檢查。
+`rules` 使用與 `upgrade` 相同的路徑。工作區產品亦比較 `.cursor/rules/*.mdc` 與 skill 包裝（一定比較 `.agents/skills`；其他 skill 樹只在存在時比較）。非工作區產品（`php-bridge`）略過此檢查。

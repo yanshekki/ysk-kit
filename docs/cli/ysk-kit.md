@@ -11,6 +11,7 @@ pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit doctor [--json]
+pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 ```
 
 Environment: `YSK_ROOT` — product root to patch. Defaults to this kit when unset.
@@ -97,7 +98,7 @@ pnpm ysk-kit upgrade --dry-run
 |---|---|
 | `--dry-run` | Print `will copy` / `skip` / `will write agent stubs` / `will write .ysk-kit.json` without writing files |
 
-Overwritten paths: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`. Directory copies skip `node_modules` and `dist`. Missing kit paths are skipped. Workspace products also receive Cursor/Grok skill wrappers generated from `tooling/ysk-cli/templates/agent/` (gitignored `.cursor/` and `.grok/`).
+Overwritten paths: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `GEMINI.md`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`, `docs/plans/` (template + README), `.agents/`, `.gemini/`, `.github/copilot-instructions.md`, `.github/instructions/`. Directory copies skip `node_modules` and `dist`. Missing kit paths are skipped. Workspace products also receive skill wrappers generated from `tooling/ysk-cli/templates/agent/` into `.agents/skills/`, `.claude/skills/`, `.cursor/skills/`, `.grok/skills/`, plus scoped `.cursor/rules/*.mdc` files.
 
 Left alone: `apps/**`, `modules/**`, product DTOs, product `README.md`, `.env`, Prisma migrations, `docs/openapi.yaml`.
 
@@ -126,12 +127,32 @@ Exit 0 prints `ysk-kit check agent: ok`. Exit 1 prints one line per finding: `ru
 | `no-ts-enum` | `apps/**`, `packages/**`, `modules/**` (`.ts` / `.tsx`) | TypeScript `enum` / `const enum` |
 | `clients-no-prisma` | `apps/web`, `apps/admin`, `apps/mobile`, `apps/desktop` | Import of `@prisma/client`, `@ysk-kit/db-prisma`, `apps/api/src/generated`, or `generated/prisma` |
 | `clients-no-raw-fetch` | Same four client apps | `fetch(` |
+| `pointer-agents-md` | `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.gemini/settings.json`, `.cursor/rules/*.mdc`, `.github/instructions/*.instructions.md`, skill `SKILL.md` copies | File exists and does not contain `AGENTS.md` |
+| `skill-drift` | `.agents/skills`, `.claude/skills`, `.cursor/skills`, `.grok/skills`, and kit templates when present | A copy is missing or differs |
+| `agents-md-budget` | Every `AGENTS.md` under the product root | Combined UTF-8 size exceeds 24 KiB |
 
 Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `generated`, `coverage`. Prisma schema `enum UserStatus` in `.prisma` files is not TypeScript and is not scanned.
 
 Allowlisted raw `fetch`: `apps/admin/src/features/queues/queues-page.tsx` (Bull Board HTML probe). `@ysk-kit/sdk` HTTP lives under `packages/sdk` and is not a client app.
 
 Testing: [testing guide](../guides/testing.md).
+
+## `ysk-kit plan`
+
+Writes a bilingual feature plan from [docs/plans/_template.md](../plans/_template.md).
+
+```text
+pnpm ysk-kit plan <kebab-slug>
+pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
+pnpm ysk-kit plan <kebab-slug> --force
+```
+
+| Flag | Effect |
+|---|---|
+| `--date YYYY-MM-DD` | Calendar day in the filename. Default: today (local) |
+| `--force` | Overwrite an existing dated pair |
+
+Creates `docs/plans/<date>-<slug>.md`, `docs/plans/<date>-<slug>.zh.md`, and a root `plan.md` pointer (gitignored). Slug must match `^[a-z][a-z0-9-]*$`. Procedure: [plan-feature](../skills/plan-feature.md).
 
 ## `ysk-kit doctor`
 
@@ -155,4 +176,4 @@ Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--
 
 SQLite is opened with Node's `node:sqlite` (`_prisma_migrations` where `finished_at` is set and `rolled_back_at` is null). MySQL and PostgreSQL run `prisma migrate status` in `apps/api`. Connection strings are redacted in the report.
 
-`rules` uses the same paths as `upgrade`: `AGENTS.md`, `AGENTS.zh.md`, `CLAUDE.md`, `.dependency-cruiser.cjs`, `packages/typescript-config/`, `packages/biome-config/`, `docs/skills/`. Workspace products also compare `.cursor/rules/ysk-kit.mdc` and the Cursor/Grok skill stubs. A non-workspace product (`php-bridge`) skips this check.
+`rules` uses the same paths as `upgrade`. Workspace products also compare `.cursor/rules/*.mdc` and skill wrappers (`.agents/skills` always; other skill trees when they exist). A non-workspace product (`php-bridge`) skips this check.

@@ -1,3 +1,3 @@
-# YSK Kit
+@AGENTS.md
 
-Follow [AGENTS.md](./AGENTS.md) (Chinese: [AGENTS.zh.md](./AGENTS.zh.md)). Procedures: [docs/skills/](docs/skills/). Architecture: [docs/architecture.md](./docs/architecture.md). Add a feature with `pnpm ysk-kit add module <name> --prisma --web`, then `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi`.
+Claude Code only: project skills are `.claude/skills/<name>/SKILL.md` (identical to `.agents/skills/`; `pnpm ysk-kit check agent` fails on drift). Full steps stay in `docs/skills/`. Do not paste `AGENTS.md` into this file.

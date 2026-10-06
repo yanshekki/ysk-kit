@@ -57,8 +57,14 @@ describe('ysk upgrade', () => {
     expect(existsSync(join(dest, 'docs/skills/new-product.md'))).toBe(true);
     expect(existsSync(join(dest, 'packages/typescript-config/package.json'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/contracts.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
+    expect(existsSync(join(dest, 'GEMINI.md'))).toBe(true);
     expect(logs.some((line) => line === 'wrote agent stubs')).toBe(true);
   });
 

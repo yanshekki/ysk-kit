@@ -6,6 +6,7 @@ import { checkAgent, formatAgentFindings } from './check-agent';
 import { doctor, formatDoctorReport } from './doctor';
 import { generateOpenApi } from './generate-openapi';
 import { HELP } from './help';
+import { localIsoDate, writePlan } from './plan';
 import { upgrade } from './upgrade';
 
 const args = process.argv.slice(2);
@@ -50,6 +51,20 @@ try {
     if (args.includes('--json')) console.log(JSON.stringify(report, null, 2));
     else console.log(formatDoctorReport(report));
     process.exit(report.ok ? 0 : 1);
+  }
+
+  if (args[0] === 'plan' && args[1] && !args[1].startsWith('-')) {
+    const dateFlag = args.indexOf('--date');
+    const dateArg = dateFlag >= 0 ? args[dateFlag + 1] : localIsoDate();
+    const logs = writePlan({
+      productRoot: root,
+      kitRoot,
+      slug: args[1],
+      date: dateArg ?? localIsoDate(),
+      force: args.includes('--force'),
+    });
+    for (const line of logs) console.log(line);
+    process.exit(0);
   }
 
   if (args[0] === 'upgrade') {

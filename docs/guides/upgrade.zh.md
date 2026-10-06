@@ -49,13 +49,15 @@ YSK_ROOT=/path/to/your-product pnpm ysk-kit upgrade --dry-run
 | 路徑 | 職責 |
 |---|---|
 | `AGENTS.md` · `AGENTS.zh.md` | Agent 法律 |
-| `CLAUDE.md` | Agent 入口 |
+| `CLAUDE.md` · `GEMINI.md` | 精簡工具指針 |
+| `.agents/` · `.gemini/` · `.github/copilot-instructions.md` · `.github/instructions/` | 共用 skills 與工具指針 |
+| `docs/plans/` | 計劃模板與 README |
 | `.dependency-cruiser.cjs` | `pnpm layers` |
 | `packages/typescript-config/` | 編譯設定（沒有業務型別） |
 | `packages/biome-config/` | lint 設定 |
 | `docs/skills/` | Agent 程序正文 |
 
-工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 Cursor／Grok skill 包裝到 `.cursor/` 與 `.grok/`（已 gitignore）。`php-bridge` 不會收到這些包裝。
+工作區產品也會從 `tooling/ysk-cli/templates/agent/` 產生 skill 包裝到 `.agents/skills/`、`.claude/skills/`、`.cursor/skills/`、`.grok/skills/`，以及範圍限定的 `.cursor/rules/*.mdc`。`php-bridge` 不會收到這些包裝。
 
 複製目錄時略過 `node_modules` 與 `dist`。Kit 沒有的路徑會略過（`php-bridge` 沒有 TypeScript 工作區套件時屬常見情況）。產品端若缺少父目錄，會先建立。
 

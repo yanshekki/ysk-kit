@@ -8,12 +8,21 @@ coverage
 .env.*
 !.env.example
 
-.cursor/
+# Editor caches. Committed agent guidance is un-ignored below.
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+.claude/*
+!.claude/skills/
+!.claude/skills/**
 .grok/
 .idea/
 .vscode/
-.claude/
 .codex/
+
+# Session scratch. Durable plans live in docs/plans/<yyyy-mm-dd>-<slug>.md
+/plan.md
+
 *.pem
 *.key
 

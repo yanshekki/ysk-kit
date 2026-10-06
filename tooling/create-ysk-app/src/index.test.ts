@@ -123,8 +123,20 @@ describe('create-ysk-app', () => {
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain(`YSK Kit ${kitVersion}`);
     expect(readFileSync(join(dest, 'README.zh.md'), 'utf8')).toContain('pnpm ysk-kit upgrade');
     expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/rules/contracts.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
+    expect(existsSync(join(dest, 'docs/plans/_template.zh.md'))).toBe(true);
+    expect(existsSync(join(dest, '.github/copilot-instructions.md'))).toBe(true);
+    expect(existsSync(join(dest, '.gemini/settings.json'))).toBe(true);
+    expect(existsSync(join(dest, 'GEMINI.md'))).toBe(true);
+    expect(readFileSync(join(dest, '.gemini/settings.json'), 'utf8')).toContain('AGENTS.md');
+    expect(existsSync(join(dest, 'apps/api/AGENTS.md'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/web/AGENTS.md'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/examples/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/create-ysk-app/package.json'))).toBe(true);
     expect(existsSync(join(dest, 'tooling/create-ysk-app/src/index.test.ts'))).toBe(false);
@@ -282,6 +294,9 @@ describe('create-ysk-app', () => {
       admin: false,
       mobile: false,
     });
+    expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
+    expect(existsSync(join(dest, '.github/copilot-instructions.md'))).toBe(true);
     expect(existsSync(join(dest, 'apps/api/src/modules/llm'))).toBe(false);
     expect(existsSync(join(dest, 'apps/api/src/modules/billing'))).toBe(false);
     expect(existsSync(join(dest, 'apps/api/src/modules/organizations'))).toBe(false);

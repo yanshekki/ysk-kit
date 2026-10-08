@@ -9,7 +9,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
-    "@types/node": "^24.19.1",
+    "@types/node": "^26.6.4",
     "playwright": "^1.63.0",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",

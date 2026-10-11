@@ -37,6 +37,13 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.2.4
+
+### 依賴升級
+
+- `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。
+- `pino-pretty` 13.1.3 → 13.2.0（`@ysk-kit/logger`）。
+
 ## v1.2.3
 
 ### 新功能

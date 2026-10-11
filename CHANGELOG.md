@@ -37,6 +37,13 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.2.4
+
+### Dependency upgrades
+
+- `nodemailer` 10.0.13 → 10.0.14 (`@ysk-kit/mail`).
+- `pino-pretty` 13.1.3 → 13.2.0 (`@ysk-kit/logger`).
+
 ## v1.2.3
 
 ### New features

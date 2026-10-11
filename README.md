@@ -114,6 +114,17 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.2.4
+
+#### Security
+
+- Workspace override `mariadb@3.5.4` closes [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68) / CVE-2026-107382 (uncaught `ReferenceError` in `Ed25519PasswordAuth.hash()` on the zero-config TLS fingerprint path). Transitive through `@prisma/adapter-mariadb` 7.10.0. Prisma stays 7.10.0.
+
+#### Dependency upgrades
+
+- `nodemailer` 10.0.13 → 10.0.14 (`@ysk-kit/mail`).
+- `pino-pretty` 13.1.3 → 13.2.0 (`@ysk-kit/logger`).
+
 ### v1.2.3
 
 #### New features
@@ -168,25 +179,6 @@ The latest three versions. Older versions are in the full changelog.
 - CI job `pack-and-run` packs all 26 public packages, installs the tarballs in a clean directory, imports each, runs the CLI bins, and scaffolds a non-interactive php-bridge dest from the in-tree CLI.
 - Release skips the tag step when Changesets opened or updated a version PR. After a successful publish it creates the annotated `vX.Y.Z` tag at `GITHUB_SHA`, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Publish stays OIDC Trusted Publishing only.
 - `thin-smoke`, `flavor-smoke`, create-app, and upgrade tests assert the new skill files and Cursor rules.
-
-### v1.2.1
-
-#### New features
-
-- `pnpm ysk-kit plan --check <file>` verifies a plan has every required template heading and fails when a required section is still placeholder-only.
-- Agent skills `test-plan`, `write-tests`, `ui-design`, and `ui-review` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers and scoped Cursor / Copilot pointers so generated products get them via `create-ysk-app` and `ysk-kit upgrade`.
-
-#### Improvements
-
-- The planning protocol keeps the v1.2.0 kit-specific sections and adds: explore-before-planning (**Current state and reuse** before Contracts), **Assumptions** next to Scope / Non-goals, **Options considered** (two approaches when a real alternative exists), task steps that name files / interface / contract / data / risk / rollback / acceptance, verification commands with expected results and a manual-check list, and an approval / anti-shrinking gate.
-- [docs/plans/README.md](docs/plans/README.md) maps native plan modes (Grok Build, Cursor, Claude Code, Codex, OpenCode, Copilot) to this template, with a copy-paste `/plan` prompt (EN + zh). The approved plan is still `docs/plans/<date>-<slug>.md` via `pnpm ysk-kit plan <slug>`.
-- The plan template's Test plan section points at `test-plan` (risk-ranked given/when/then, fixtures, out of scope, layer map).
-- Nested `AGENTS.md` files point API/contracts at testing skills and client apps at UI skills.
-- The lockstep test requires any pending changeset set to list all 26 public `@ysk-kit` packages at one bump type.
-
-#### Internal/CI
-
-- `thin-smoke` and `flavor-smoke` assert the new template headings plus the testing/UI skill files and Cursor rules. Generated products receive the upgraded `_template.md` pair. create-app and upgrade tests assert the same skill files.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

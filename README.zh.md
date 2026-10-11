@@ -114,6 +114,17 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.2.4
+
+#### 安全
+
+- 工作區 override `mariadb@3.5.4` 修復 [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68)／CVE-2026-107382（零設定 TLS fingerprint 路徑上 `Ed25519PasswordAuth.hash()` 未捕獲的 `ReferenceError`）。經 `@prisma/adapter-mariadb` 7.10.0 間接引入。Prisma 維持 7.10.0。
+
+#### 依賴升級
+
+- `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。
+- `pino-pretty` 13.1.3 → 13.2.0（`@ysk-kit/logger`）。
+
 ### v1.2.3
 
 #### 新功能
@@ -168,25 +179,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - CI job `pack-and-run` 把 26 個公開套件 pack，在乾淨目錄安裝 tarball，import 每一個，執行 CLI bin，並用倉內 CLI 非互動建立 php-bridge dest。
 - 當 Changesets 打開或更新版本 PR 時，Release 跳過 tag 步驟。成功發佈後會在 `GITHUB_SHA` 建立 annotated `vX.Y.Z` tag，用該版本變更紀錄開 GitHub Release，再安裝已發佈的 tarball 並執行 CLI bin 做驗證。發佈仍然只使用 OIDC Trusted Publishing。
 - `thin-smoke`、`flavor-smoke`、create-app 與 upgrade 測試會斷言新的 skill 檔與 Cursor 規則。
-
-### v1.2.1
-
-#### 新功能
-
-- `pnpm ysk-kit plan --check <file>` 檢查計劃是否具備每個必要模板標題，必填章節若仍是佔位內容則失敗。
-- Agent skills `test-plan`、`write-tests`、`ui-design` 與 `ui-review`（英文 + 香港書面語），連同 `.agents`／`.claude` 包裝與範圍限定的 Cursor／Copilot 指針，因此 `create-ysk-app` 與 `ysk-kit upgrade` 會把它們寫進已產生的產品。
-
-#### 改進
-
-- 計劃協議保留 v1.2.0 的 kit 專用章節，並新增：先探索再計劃（合約之前的**現況與重用**）、範圍／非目標旁邊的**假設**、**考慮過的方案**（有真正替代時兩個做法）、任務步驟寫明檔案／介面／合約／資料／風險／回滾／驗收、驗證命令附預期結果與人手檢查清單，以及批准／禁止縮水閘。
-- [docs/plans/README.zh.md](docs/plans/README.zh.md) 把各工具原生計劃模式（Grok Build、Cursor、Claude Code、Codex、OpenCode、Copilot）對照到本模板，並附可複製的 `/plan` 提示（中英）。獲准計劃仍是 `docs/plans/<date>-<slug>.md`，用 `pnpm ysk-kit plan <slug>` 建立。
-- 計劃模板的「測試計劃」一節指向 `test-plan`（按風險排序的 given/when/then、夾具、不涵蓋範圍、分層對應）。
-- 巢狀 `AGENTS.md` 把 API／contracts 指向測試 skills，把客戶端 app 指向 UI skills。
-- 鎖步測試要求任何待處理 changeset 都以同一種 bump 列出全部 26 個公開 `@ysk-kit` 套件。
-
-#### 內部／CI
-
-- `thin-smoke` 與 `flavor-smoke` 會斷言新的模板標題，以及測試／UI skill 檔與 Cursor 規則。產生出來的產品會收到升級後的 `_template.md` 配對。create-app 與 upgrade 測試會斷言同一批 skill 檔。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

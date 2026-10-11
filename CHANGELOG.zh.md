@@ -37,6 +37,17 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.2.4
+
+### 安全
+
+- 工作區 override `mariadb@3.5.4` 修復 [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68)／CVE-2026-107382（零設定 TLS fingerprint 路徑上 `Ed25519PasswordAuth.hash()` 未捕獲的 `ReferenceError`，可令 Node 客戶端進程拒絕服務）。經 `@prisma/adapter-mariadb` 7.10.0 間接引入。Prisma 維持 7.10.0。3.4.x 沒有修補。
+
+### 依賴升級
+
+- `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。
+- `pino-pretty` 13.1.3 → 13.2.0（`@ysk-kit/logger`）。
+
 ## v1.2.3
 
 ### 新功能

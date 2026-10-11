@@ -37,6 +37,15 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.4.0
+
+### Dependency upgrades
+
+- Mobile Expo 57.0.26 → **58.0.7** (npm dist-tag **`next`**; **`latest` is still 57.0.27**). `expo-secure-store` ~57.0.4 → ~58.0.2. `expo-status-bar` ~57.0.1 → ~58.0.3. React Native 0.86.3 → **0.88.0-rc.4** (npm `next`; `latest` is 0.87.1). React 19.2.8 → **19.3.0** workspace-wide (Expo 58 bundled natives). `react-native@0.88.0-rc.4` is on `minimumReleaseAgeExclude` (published inside the 24-hour window).
+- Supersedes Dependabot **#35**, which bumped `expo` only to `^58.0.3` and left companions on SDK 57 and React Native 0.86.3.
+- Kit has no expo-router and no checked-in `ios/` / `android/` tree. Consumers who prebuild: iOS UIScene life cycle; Android R8 minify on release by default. React Native 0.88 is a release candidate; Expo Go store builds may lag — read the [SDK 58 beta notes](https://expo.dev/changelog/sdk-58-beta).
+- v1.3.0 shipped desktop Vite 8 (#41 / #44).
+
 ## v1.3.0
 
 ### Dependency upgrades

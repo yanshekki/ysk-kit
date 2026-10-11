@@ -125,3 +125,5 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 **v1.1.2：** npm 發佈只使用 Trusted Publishing。release 工作流程保留 `id-token: write` 與 provenance，不傳入靜態 npm 憑證。`actions/setup-node` 不接收 `registry-url` 或 `scope`，因此不會寫入會蓋過 OIDC 的 registry 認證行。`.github/publish-packages.mjs` 在 OIDC token 不存在時退出。發佈後的 `npm view` 核對仍然保留。產品發佈維持單一 annotated tag `vX.Y.Z`。
 
 **v1.3.0：** 桌面 Vite 7.3.6 → 8.3.2，配 electron-vite 6.0.0-beta.8（beta；peer Vite 6–8）。web／admin 已在 Vite 8.3.2。取代 Dependabot #36。
+
+**v1.4.0：** 流動應用 Expo 57.0.26 → 58.0.7（npm `next`；`latest` 仍是 57.0.27），連同 expo-secure-store ~58.0.2、expo-status-bar ~58.0.3、React Native 0.88.0-rc.4，以及工作區 React 19.3.0。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。

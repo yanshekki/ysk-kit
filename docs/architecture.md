@@ -21,9 +21,9 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 |---|---|---|
 | Monorepo | pnpm 12.9.0 workspaces + Turborepo 2.11.7 | — |
 | Language | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when dependency-cruiser supports that compiler API |
-| Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
+| Web / admin | Vite 8.3 + React 19.3 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
 | Desktop | Electron 44 + electron-vite 6.0.0-beta.8 + Vite 8 | electron-vite 6 is still beta (`latest` dist-tag is 5.0.0); rollback is Vite 7 + electron-vite 5 |
-| Mobile | Expo 57 / React Native 0.86 / React 19.2 | — |
+| Mobile | Expo 58.0.7 / React Native 0.88.0-rc.4 / React 19.3 | Expo 58 is npm `next` (`latest` is still 57); RN 0.88 is RC |
 | HTTP API | Express 5 adapter (default) | Fastify 5 via `HTTP_ADAPTER=fastify` |
 | Contract | ts-rest + Zod 4 | — |
 | Database | Prisma 7.10 (`prisma-client` generator, MariaDB adapter, client at `apps/api/src/generated/prisma`) | PostgreSQL or SQLite adapters via `--db` |
@@ -50,7 +50,7 @@ ysk-kit/
 │   ├── api/          Express 5 default; HTTP_ADAPTER=fastify
 │   ├── web/          Vite 8
 │   ├── admin/        Vite 8
-│   ├── mobile/       Expo 57
+│   ├── mobile/       Expo 58
 │   └── desktop/      Electron 44 + Vite 8
 ├── packages/         @ysk-kit/* libraries (contracts, sdk, ui, jobs, …)
 ├── modules/          Prisma fragments and the notes-shaped generator example

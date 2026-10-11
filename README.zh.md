@@ -114,6 +114,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.4.0
+
+#### 依賴升級
+
+- 流動應用 Expo 57.0.26 → **58.0.7**（npm dist-tag **`next`**；**`latest` 仍是 57.0.27**）、`expo-secure-store` ~58.0.2、`expo-status-bar` ~58.0.3、React Native 0.86.3 → **0.88.0-rc.4**、React 19.2.8 → **19.3.0**（工作區）。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。
+
 ### v1.3.0
 
 #### 依賴升級
@@ -130,30 +136,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 - `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。
 - `pino-pretty` 13.1.3 → 13.2.0（`@ysk-kit/logger`）。
-
-### v1.2.3
-
-#### 新功能
-
-- Agent skills `contract-change`、`debug-issue`、`review-change` 與 `llm-feature`（英文 + 香港繁體中文），連同 `.agents`／`.claude` 包裝、Cursor／Copilot 指針，以及 create-app／upgrade 模板。
-
-#### 改進
-
-- 每個 skill 包裝改為短步驟摘要（Use when、中文觸發、「不要用於…」）。缺漏的 skill 補上輸出格式、反模式與升級／詢問。
-- `verify-change` 寫明預期輸出、OpenAPI `git diff --exit-code` 與固定驗證報告。`new-product` 跑 `doctor` 並列出手填欄。`add-module` 要求 Express 與 Fastify app 測試。`add-capability` 每個 capability 有上線前一行。`envelope-api` 列出錯誤碼表。`fix-layers` 禁止默默改 cruiser。
-
-#### 修正
-
-- `create-ysk-app` 有 `GITHUB_TOKEN` 時會認證 GitHub，403／429 時改走 `git ls-remote` + codeload，並刪掉殘留的 `kit.tgz`。
-
-#### 內部／CI
-
-- `skill-triggers.test.ts` 靜態檢查包裝 description。thin-smoke、flavor-smoke、create-app 與 upgrade 測試會斷言新的 skill 檔。
-- Release 最多等 20 分鐘讓 `npm view` 看到套件（backoff；429／5xx 重試）。缺少 `vX.Y.Z` 時用 npm provenance `gitCommit` 補 tag，說明來自該 commit 的 CHANGELOG，且只在 `main` 執行。
-
-#### 安全
-
-- 工作區 override `shell-quote@1.11.0` 修復 [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv)（`quote()` 在 comment token 之後的注入；經 Expo／React Native 間接引入）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

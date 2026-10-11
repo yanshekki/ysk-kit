@@ -1,5 +1,20 @@
 # @ysk-kit/api-fastify
 
+## 1.3.0
+
+### Minor Changes
+
+- d660c9c: Lockstep minor for desktop Vite 8.3.2 and electron-vite 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36.
+
+### Patch Changes
+
+- Updated dependencies [d660c9c]
+  - @ysk-kit/api-http@1.3.0
+  - @ysk-kit/apikey@1.3.0
+  - @ysk-kit/auth@1.3.0
+  - @ysk-kit/contracts@1.3.0
+  - @ysk-kit/domain-kernel@1.3.0
+
 ## 1.2.4
 
 ### Patch Changes

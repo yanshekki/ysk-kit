@@ -45,7 +45,7 @@ const productBase = {
   ...guardrails,
   'package.json': JSON.stringify({
     name: 'demo',
-    engines: { node: '>=24.0.0', pnpm: '>=12.0.0' },
+    engines: { node: '>=26.0.0', pnpm: '>=12.0.0' },
     packageManager: 'pnpm@12.8.1',
   }),
   'pnpm-workspace.yaml': 'packages:\n  - apps/*\n',
@@ -98,7 +98,7 @@ const run = (
     productRoot: dirs.product,
     kitRoot: dirs.kit,
     env: extra?.env ?? {},
-    nodeVersion: extra?.nodeVersion ?? '24.11.0',
+    nodeVersion: extra?.nodeVersion ?? '26.9.0',
     pnpmVersion: extra?.pnpmVersion === undefined ? '12.8.1' : extra.pnpmVersion,
     probeDatabase: extra?.probeDatabase ?? (() => upToDate()),
   });
@@ -112,6 +112,8 @@ describe('ysk-kit doctor', () => {
   it('parses engines ranges and env files', () => {
     expect(satisfiesRange('24.11.0', '>=24.0.0')).toBe(true);
     expect(satisfiesRange('22.14.0', '>=24.0.0')).toBe(false);
+    expect(satisfiesRange('26.9.0', '>=26.0.0')).toBe(true);
+    expect(satisfiesRange('24.11.0', '>=26.0.0')).toBe(false);
     expect(satisfiesRange('12.8.1', '>=12.0.0')).toBe(true);
     expect(satisfiesRange('12.0.0', '>=12.0.0 <13')).toBe(true);
     expect(parseEnvFile('# c\nFOO=bar\nEMPTY=\nQUOTED="a b"\n')).toEqual({
@@ -143,6 +145,7 @@ describe('ysk-kit doctor', () => {
     expect(engines?.status).toBe('error');
     expect(engines?.message).toContain('Node 22.14.0');
     expect(engines?.message).toContain('pnpm is not on PATH');
+    expect(engines?.fix).toContain('Install Node 26');
     expect(engines?.fix).toContain('corepack prepare pnpm@12.8.1');
     expect(report.ok).toBe(false);
   });
@@ -266,7 +269,7 @@ describe('ysk-kit doctor', () => {
       productRoot: dirs.product,
       kitRoot: dirs.kit,
       env: {},
-      nodeVersion: '24.11.0',
+      nodeVersion: '26.9.0',
       pnpmVersion: '12.8.1',
     });
     expect(report.checks.find((item) => item.id === 'database')).toMatchObject({
@@ -280,7 +283,7 @@ describe('ysk-kit doctor', () => {
       productRoot: dirs.product,
       kitRoot: dirs.kit,
       env: {},
-      nodeVersion: '24.11.0',
+      nodeVersion: '26.9.0',
       pnpmVersion: '12.8.1',
     });
     expect(pending.checks.find((item) => item.id === 'database')?.message).toContain(
@@ -334,7 +337,7 @@ describe('ysk-kit doctor', () => {
       productRoot: bridge,
       kitRoot: kit,
       env: {},
-      nodeVersion: '24.11.0',
+      nodeVersion: '26.9.0',
       pnpmVersion: '12.8.1',
     });
     expect(bridgeReport.checks.find((item) => item.id === 'database')?.status).toBe('ok');

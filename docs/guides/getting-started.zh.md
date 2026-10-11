@@ -2,7 +2,7 @@
 
 Language: [English](getting-started.md) · 中文
 
-兩條路徑：運行本倉，或產生一個新產品。兩者都需要 **Node 24** 與 **pnpm 12**。
+兩條路徑：運行本倉，或產生一個新產品。兩者都需要 **Node 26** 與 **pnpm 12**。
 
 ## 路徑 A — 本倉（可運行的 `saas`）
 

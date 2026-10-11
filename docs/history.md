@@ -127,3 +127,5 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 **v1.3.0:** Desktop Vite 7.3.6 → 8.3.2 with electron-vite 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36.
 
 **v1.4.0:** Mobile Expo 57.0.26 → 58.0.7 (npm `next`; `latest` still 57.0.27) with expo-secure-store ~58.0.2, expo-status-bar ~58.0.3, React Native 0.88.0-rc.4, and React 19.3.0 workspace-wide. Supersedes Dependabot #35. v1.3.0 shipped desktop Vite 8 (#41 / #44).
+
+**v1.5.0:** Kit runtime is Node 26 (Current, not LTS as of 2026-10-11). `engines.node` `>=26.0.0`, GitHub Actions `node-version: 26`, `@types/node` ^26.6.5. Coordinated bump supersedes Dependabot #38 (types-only). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45). Dest products on Node 24 fail `ysk-kit doctor` engines.

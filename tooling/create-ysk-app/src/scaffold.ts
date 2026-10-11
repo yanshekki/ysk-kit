@@ -599,7 +599,7 @@ Language: [中文](README.zh.md) · English
 ${generatedFromEn(opts)}
 
 \`\`\`bash
-# Node 24 + pnpm 12
+# Node 26 + pnpm 12
 pnpm install
 cp .env.example .env
 pnpm --filter @ysk-kit/web dev
@@ -618,7 +618,7 @@ Language: [English](README.md) · 中文
 ${generatedFromZh(opts)}
 
 \`\`\`bash
-# Node 24 + pnpm 12
+# Node 26 + pnpm 12
 pnpm install
 cp .env.example .env
 pnpm --filter @ysk-kit/web dev
@@ -640,7 +640,7 @@ Language: [中文](README.zh.md) · English
 ${generatedFromEn(opts)}
 
 \`\`\`bash
-# Node 24 + pnpm 12
+# Node 26 + pnpm 12
 pnpm install
 cp .env.example .env
 ${compose}pnpm db:generate
@@ -665,7 +665,7 @@ Language: [English](README.md) · 中文
 ${generatedFromZh(opts)}
 
 \`\`\`bash
-# Node 24 + pnpm 12
+# Node 26 + pnpm 12
 pnpm install
 cp .env.example .env
 ${compose}pnpm db:generate

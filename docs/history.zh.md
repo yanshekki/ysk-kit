@@ -127,3 +127,5 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 **v1.3.0：** 桌面 Vite 7.3.6 → 8.3.2，配 electron-vite 6.0.0-beta.8（beta；peer Vite 6–8）。web／admin 已在 Vite 8.3.2。取代 Dependabot #36。
 
 **v1.4.0：** 流動應用 Expo 57.0.26 → 58.0.7（npm `next`；`latest` 仍是 57.0.27），連同 expo-secure-store ~58.0.2、expo-status-bar ~58.0.3、React Native 0.88.0-rc.4，以及工作區 React 19.3.0。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。
+
+**v1.5.0：** kit 運行時是 Node 26（Current，截至 2026-10-11 不是 LTS）。`engines.node` `>=26.0.0`、GitHub Actions `node-version: 26`、`@types/node` ^26.6.5。協調 bump 取代 Dependabot #38（只改 types）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。停在 Node 24 的 dest 產品會過不了 `ysk-kit doctor` engines.

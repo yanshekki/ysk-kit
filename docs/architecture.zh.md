@@ -34,7 +34,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 | Lint | Biome 2.5 | — |
 | 測試 | Vitest 5.0、Testing Library、一條 Playwright Chromium smoke | — |
 | 文件 | ts-rest → OpenAPI → Scalar（`GET /docs`） | — |
-| 運行時 | Node 24 LTS | — |
+| 運行時 | Node 26 Current | — |
 | 觀測 | Prometheus `GET /metrics`；可選 OTLP traces／metrics；Compose 可選 Jaeger／Grafana | — |
 
 預設 ORM 是 Prisma，因為遷移、Studio、巢狀寫入與招聘。Domain 仍然只對 `IRepository` port 說話——application 程式永不 `import { prisma }`。未附帶 Drizzle。tRPC 不是預設；公開 HTTP、webhook 與非 TypeScript 客戶端需要 REST。

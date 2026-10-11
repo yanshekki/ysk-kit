@@ -23,7 +23,7 @@ Small warehouses and retail counters. About **20–30 minutes** the first time.
 
 ## 3. Prerequisites
 
-- **Node 24** and **pnpm 12**
+- **Node 26** and **pnpm 12**
 - A checkout of this kit
 - Optional: Docker MySQL 8.4 if you override `--db mysql`
 

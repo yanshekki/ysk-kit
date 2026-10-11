@@ -11,7 +11,7 @@ Language: [中文](README.zh.md) · English
 | **Company** | [YSK Limited](https://ysk.hk/) |
 | **Contact** | email@ysk.hk |
 
-Requires **Node 24** (Active LTS) and **pnpm 12**. Agent law: [AGENTS.md](./AGENTS.md). Documentation map: [docs/README.md](docs/README.md).
+Requires **Node 26** (Current) and **pnpm 12**. Agent law: [AGENTS.md](./AGENTS.md). Documentation map: [docs/README.md](docs/README.md).
 
 This repository is the living `saas` flavor. Identity, files, notifications, jobs, mail, API keys, crypto, and realtime are already wired. Product domains stay out of the kit.
 
@@ -114,6 +114,17 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.5.0
+
+#### Improvements
+
+- Kit runtime is **Node 26 (Current)**. `engines.node` is `>=26.0.0`. GitHub Actions `node-version` is `26`. `@types/node` is `^26.6.5` so the DefinitelyTyped major matches the Node major. Dest products on Node 24 fail `ysk-kit doctor` engines.
+- `ysk-kit doctor` engines hints say Install Node 26. `create-ysk-app` dest README comments say Node 26 + pnpm 12.
+
+#### Internal/CI
+
+- Coordinated bump supersedes Dependabot #38 (types-only while CI stayed 24). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45).
+
 ### v1.4.0
 
 #### Dependency upgrades
@@ -125,17 +136,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Dependency upgrades
 
 - Desktop Vite 7.3.6 → 8.3.2 and electron-vite 5.0.0 → 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36, which bumped vite only and left electron-vite 5 (peer range excludes Vite 8).
-
-### v1.2.4
-
-#### Security
-
-- Workspace override `mariadb@3.5.4` closes [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68) / CVE-2026-107382 (uncaught `ReferenceError` in `Ed25519PasswordAuth.hash()` on the zero-config TLS fingerprint path). Transitive through `@prisma/adapter-mariadb` 7.10.0. Prisma stays 7.10.0.
-
-#### Dependency upgrades
-
-- `nodemailer` 10.0.13 → 10.0.14 (`@ysk-kit/mail`).
-- `pino-pretty` 13.1.3 → 13.2.0 (`@ysk-kit/logger`).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

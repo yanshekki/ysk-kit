@@ -26,7 +26,7 @@ Freelancers, agencies, and any “named client plus a HKD figure”. About **15�
 
 ## 3. Prerequisites
 
-- **Node 24** and **pnpm 12**
+- **Node 26** and **pnpm 12**
 - A checkout of this kit (the apply CLI lives here)
 - Optional: Docker MySQL 8.4 if you override `--db mysql`
 

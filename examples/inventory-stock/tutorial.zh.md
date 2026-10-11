@@ -23,7 +23,7 @@
 
 ## 3. 前置
 
-- **Node 24** 與 **pnpm 12**
+- **Node 26** 與 **pnpm 12**
 - 此 kit 的 checkout
 - 可選：若改 `--db mysql`，需要 Docker MySQL 8.4
 

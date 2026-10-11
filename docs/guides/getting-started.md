@@ -2,7 +2,7 @@
 
 Language: [中文](getting-started.zh.md) · English
 
-Two paths: run this repository, or scaffold a new product. Both need **Node 24** and **pnpm 12**.
+Two paths: run this repository, or scaffold a new product. Both need **Node 26** and **pnpm 12**.
 
 ## Path A — this repository (living `saas`)
 

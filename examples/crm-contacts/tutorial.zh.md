@@ -24,7 +24,7 @@ B2B 銷售，以及任何「具名人物加下一步行動」。第一次約 **2
 
 ## 3. 前置
 
-- **Node 24** 與 **pnpm 12**
+- **Node 26** 與 **pnpm 12**
 - 此 kit 的 checkout
 - 可選：若改 `--db mysql`，需要 Docker MySQL 8.4
 

@@ -21,7 +21,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - run: pnpm install
       - run: pnpm lint
@@ -42,7 +42,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - run: pnpm install
       - run: pnpm build:packages
@@ -57,7 +57,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - run: pnpm install
       - run: pnpm --filter @ysk-kit/create-app start /tmp/ysk-thin-smoke --preset thin --flavor saas --no-admin --no-mobile --db sqlite
@@ -121,7 +121,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -155,7 +155,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - run: pnpm install
       - name: apply ${{ matrix.slug }}
@@ -201,7 +201,7 @@ jobs:
           version: 12.9.0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - run: pnpm install
       - name: write env

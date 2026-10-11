@@ -37,6 +37,12 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.3.0
+
+### Dependency upgrades
+
+- Desktop Vite 7.3.6 → 8.3.2 and electron-vite 5.0.0 → 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36, which bumped vite only and left electron-vite 5 (peer range excludes Vite 8).
+
 ## v1.2.4
 
 ### Security

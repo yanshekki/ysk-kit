@@ -37,6 +37,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.3.0
+
+### 依賴升級
+
+- 桌面 Vite 7.3.6 → 8.3.2，electron-vite 5.0.0 → 6.0.0-beta.8（beta；peer Vite 6–8）。web／admin 已在 Vite 8.3.2。取代 Dependabot #36（該 PR 只升 vite，留下 electron-vite 5，peer 範圍不含 Vite 8）。
+
 ## v1.2.4
 
 ### 安全

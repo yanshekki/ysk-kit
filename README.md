@@ -114,6 +114,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.3.0
+
+#### Dependency upgrades
+
+- Desktop Vite 7.3.6 → 8.3.2 and electron-vite 5.0.0 → 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36, which bumped vite only and left electron-vite 5 (peer range excludes Vite 8).
+
 ### v1.2.4
 
 #### Security
@@ -148,37 +154,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Security
 
 - Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) (`quote()` injection after a comment token; transitive through Expo / React Native).
-
-### v1.2.2
-
-#### New features
-
-- Agent skills `security-review`, `db-migration`, `webhook-handling`, and `desktop-electron` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, scoped Cursor / Copilot pointers, and create-app / upgrade templates.
-
-#### Improvements
-
-- `add-module`, `add-capability`, `verify-change`, and `envelope-api` point at the new procedures. The plan template's data-model and security sections name Prisma expand/contract, security review, webhooks, and Electron.
-
-#### Fixes
-
-- Published `@ysk-kit/*` libraries emit valid Node ESM: relative imports in `dist/` include `.js` extensions, so `node` can load the tarball. Public packages inherit `module` / `moduleResolution` `NodeNext` from `tsconfig.base.json`.
-- `@ysk-kit/create-app` and `@ysk-kit/cli` bins start with `#!/usr/bin/env node` and are executable, so `create-ysk-app` / `ysk-kit` / `yskk` run after install.
-- Scaffold from npm is `npm create @ysk-kit/app` or `pnpm create @ysk-kit/app`. There is no unscoped `create-ysk-app` package on npm; the published package is `@ysk-kit/create-app`.
-- `@ysk-kit/observability` pins OpenTelemetry SDK and exporter packages to versions that exist on npm. Caret ranges floated onto `sdk-metrics@2.12.0`, which depends on missing `resources@2.12.0`.
-
-#### Security
-
-- Electron no longer writes access or refresh tokens to disk in plaintext when `safeStorage` is unavailable. Tokens stay in memory for the session and the main process logs a warning that does not include the secret.
-- Desktop sets a Content-Security-Policy, `sandbox: true`, and `webSecurity: true`, denies unexpected navigation and `window.open`, and rejects IPC whose sender frame is not the loaded renderer.
-- `@ysk-kit/logger` redacts authorization headers, cookies, tokens, passwords, API keys, and similar fields (pino `redact`).
-- `/v1/llm/complete` and `/v1/llm/stream` accept only `user` and `assistant` messages. The system prompt comes from `LLM_SYSTEM_PROMPT` (server-owned). Per-user quota is `LLM_QUOTA_MAX` / `LLM_QUOTA_WINDOW_MS` and returns envelope `RATE_LIMITED` (429).
-- `POST /v1/billing/webhook` still verifies `Stripe-Signature` on the raw body, persists Stripe `event.id` on `ProcessedWebhookEvent`, acks duplicates, and ignores older events for the same organization.
-
-#### Internal/CI
-
-- CI job `pack-and-run` packs all 26 public packages, installs the tarballs in a clean directory, imports each, runs the CLI bins, and scaffolds a non-interactive php-bridge dest from the in-tree CLI.
-- Release skips the tag step when Changesets opened or updated a version PR. After a successful publish it creates the annotated `vX.Y.Z` tag at `GITHUB_SHA`, opens a GitHub Release with that version's changelog notes, and verifies by installing the published tarballs and running the CLI bins. Publish stays OIDC Trusted Publishing only.
-- `thin-smoke`, `flavor-smoke`, create-app, and upgrade tests assert the new skill files and Cursor rules.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

@@ -1,5 +1,20 @@
 # @ysk-kit/api-fastify
 
+## 1.5.0
+
+### Minor Changes
+
+- 02df7fe: Lockstep minor for Node 26 (Current) as the kit runtime: `engines.node` `>=26.0.0`, GitHub Actions `node-version: 26`, and `@types/node` ^26.6.5. Supersedes Dependabot #38 (types-only). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45).
+
+### Patch Changes
+
+- Updated dependencies [02df7fe]
+  - @ysk-kit/api-http@1.5.0
+  - @ysk-kit/apikey@1.5.0
+  - @ysk-kit/auth@1.5.0
+  - @ysk-kit/contracts@1.5.0
+  - @ysk-kit/domain-kernel@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @ysk-kit/jobs
 
+## 1.2.4
+
+### Patch Changes
+
+- ec9e413: Lockstep patch for nodemailer 10.0.14 (`@ysk-kit/mail`), pino-pretty 13.2.0 (`@ysk-kit/logger`), and workspace override mariadb 3.5.4 (GHSA-cx2f-j9fh-8g68).
+- Updated dependencies [ec9e413]
+  - @ysk-kit/contracts@1.2.4
+
 ## 1.2.3
 
 ### Patch Changes

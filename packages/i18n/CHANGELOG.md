@@ -1,5 +1,11 @@
 # @ysk-kit/i18n
 
+## 1.3.0
+
+### Minor Changes
+
+- d660c9c: Lockstep minor for desktop Vite 8.3.2 and electron-vite 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36.
+
 ## 1.2.4
 
 ### Patch Changes

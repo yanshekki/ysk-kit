@@ -22,7 +22,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 | Monorepo | pnpm 12.9.0 workspaces + Turborepo 2.11.7 | — |
 | 語言 | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 要等 dependency-cruiser 支援該 compiler API |
 | Web / admin | Vite 8.3 + React 19.2 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
-| 桌面 | Electron 44 + electron-vite 5 + Vite 7 | 穩定版 electron-vite 支援 Vite 8 之後（6 仍是 beta） |
+| 桌面 | Electron 44 + electron-vite 6.0.0-beta.8 + Vite 8 | electron-vite 6 仍是 beta（`latest` dist-tag 是 5.0.0）；回滾是 Vite 7 + electron-vite 5 |
 | 流動應用 | Expo 57 / React Native 0.86 / React 19.2 | — |
 | HTTP API | Express 5 adapter（預設） | `HTTP_ADAPTER=fastify` 切 Fastify 5 |
 | 合約 | ts-rest + Zod 4 | — |
@@ -51,7 +51,7 @@ ysk-kit/
 │   ├── web/          Vite 8
 │   ├── admin/        Vite 8
 │   ├── mobile/       Expo 57
-│   └── desktop/      Electron 44 + Vite 7
+│   └── desktop/      Electron 44 + Vite 8
 ├── packages/         @ysk-kit/* 程式庫（contracts、sdk、ui、jobs、…）
 ├── modules/          Prisma fragments 與 notes 形狀的產生器例子
 ├── tooling/

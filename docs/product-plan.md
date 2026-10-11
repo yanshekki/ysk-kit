@@ -12,7 +12,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | npmjs | Public `@ysk-kit/*` libraries and `@ysk-kit/create-app` 1.0.2 on [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit). Dest products still use copy-tree + `ysk-kit upgrade` |
 | Slice | `ysk-kit add module` writes contract, DTO, repos, Express + Fastify, SDK, web-sdk, page, test |
 | Capabilities | Sixteen catalogued adds; `llm`, `team`, `billing`, `push` copy source when missing |
-| Clients | Vite 8.3 web/admin with AppShell; Expo 57 mobile with organisation list and invite; Electron 44 desktop (Vite 7) |
+| Clients | Vite 8.3 web/admin with AppShell; Expo 57 mobile with organisation list and invite; Electron 44 desktop (Vite 8 + electron-vite 6 beta) |
 | Data | `pnpm db:seed` upserts `admin@ysk.hk` and `user@ysk.hk` |
 | Verify | `pnpm layers`, typecheck, Vitest (memory ports), Testing Library login, one Playwright smoke |
 | Docs | Bilingual public manuals, CLI reference, agent skills, `AGENTS.md`. Ten worked examples in `examples/` |

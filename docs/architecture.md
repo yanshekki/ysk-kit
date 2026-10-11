@@ -34,7 +34,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 | Lint | Biome 2.5 | — |
 | Test | Vitest 5.0, Testing Library, one Playwright Chromium smoke | — |
 | Docs | ts-rest → OpenAPI → Scalar at `GET /docs` | — |
-| Runtime | Node 24 LTS | — |
+| Runtime | Node 26 Current | — |
 | Observability | Prometheus `GET /metrics`; optional OTLP traces/metrics; optional Jaeger / Grafana in Compose | — |
 
 Prisma is the default ORM because of migrations, Studio, nested writes, and hiring. Domain still talks to an `IRepository` port — never `import { prisma }` from application code. Drizzle is not shipped. tRPC is not the default; public HTTP, webhooks, and non-TypeScript clients need REST.

@@ -11,7 +11,7 @@ Language: [English](README.md) · 中文
 | **公司** | [YSK Limited](https://ysk.hk/) |
 | **聯絡** | email@ysk.hk |
 
-需要 **Node 24**（Active LTS）與 **pnpm 12**。Agent 法律：[AGENTS.zh.md](./AGENTS.zh.md)。文件地圖：[docs/README.zh.md](docs/README.zh.md)。
+需要 **Node 26**（Current）與 **pnpm 12**。Agent 法律：[AGENTS.zh.md](./AGENTS.zh.md)。文件地圖：[docs/README.zh.md](docs/README.zh.md)。
 
 本倉是可運行的 `saas` flavor。身分、檔案、通知、工作、郵件、API 金鑰、加密、即時通訊已經接上。產品業務 domain 不寫入 kit。
 
@@ -114,6 +114,17 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.5.0
+
+#### 改進
+
+- kit 運行時是 **Node 26（Current）**。`engines.node` 是 `>=26.0.0`。GitHub Actions `node-version` 是 `26`。`@types/node` 是 `^26.6.5`，DefinitelyTyped major 對齊 Node major。停在 Node 24 的 dest 產品會過不了 `ysk-kit doctor` engines。
+- `ysk-kit doctor` engines 提示改為安裝 Node 26。`create-ysk-app` dest README 註解寫 Node 26 + pnpm 12。
+
+#### 內部／CI
+
+- 協調 bump 取代 Dependabot #38（只改 types，CI 仍停在 24）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。
+
 ### v1.4.0
 
 #### 依賴升級
@@ -125,17 +136,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 依賴升級
 
 - 桌面 Vite 7.3.6 → 8.3.2，electron-vite 5.0.0 → 6.0.0-beta.8（beta；peer Vite 6–8）。web／admin 已在 Vite 8.3.2。取代 Dependabot #36（該 PR 只升 vite，留下 electron-vite 5，peer 範圍不含 Vite 8）。
-
-### v1.2.4
-
-#### 安全
-
-- 工作區 override `mariadb@3.5.4` 修復 [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68)／CVE-2026-107382（零設定 TLS fingerprint 路徑上 `Ed25519PasswordAuth.hash()` 未捕獲的 `ReferenceError`）。經 `@prisma/adapter-mariadb` 7.10.0 間接引入。Prisma 維持 7.10.0。
-
-#### 依賴升級
-
-- `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。
-- `pino-pretty` 13.1.3 → 13.2.0（`@ysk-kit/logger`）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

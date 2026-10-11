@@ -8,7 +8,7 @@ Read this file before changing code. Procedures: [docs/skills/](docs/skills/). A
 
 ## Orientation
 
-YSK Kit is a contract-first SaaS platform (pnpm 12 + Turborepo + Node 24). This checkout is the living `saas` flavor: identity, files, notifications, jobs, mail, API keys, crypto, and realtime are already wired.
+YSK Kit is a contract-first SaaS platform (pnpm 12 + Turborepo + Node 26). This checkout is the living `saas` flavor: identity, files, notifications, jobs, mail, API keys, crypto, and realtime are already wired.
 
 **Product domains stay out of the kit.** Salon, trading venue, map, or any other industry model belongs in a generated product (or in `examples/`, applied onto a new destination). Agents that invent a parallel tree, a new HTTP framework, or a client `fetch` to kit paths are doing the wrong work.
 

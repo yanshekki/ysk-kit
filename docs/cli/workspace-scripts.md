@@ -2,7 +2,7 @@
 
 Language: [中文](workspace-scripts.zh.md) · English
 
-Root `package.json` scripts. Requires Node 24 and pnpm 12 (`packageManager` is `pnpm@12.9.0`).
+Root `package.json` scripts. Requires Node 26 and pnpm 12 (`packageManager` is `pnpm@12.9.0`).
 
 | Script | Command | Purpose |
 |---|---|---|
@@ -56,7 +56,7 @@ What to turn on at npmjs.com, per public `@ysk-kit/*` package (packages under `p
 2. Organization or user: `yanshekki`. Repository: `ysk-kit`. Workflow filename: `release.yml` (exact, including `.yml`).
 3. Leave the environment empty unless the workflow later sets `environment:`. The name is case-sensitive and must match.
 4. Use a GitHub-hosted runner (this workflow uses `ubuntu-latest`). Self-hosted runners cannot mint the npm OIDC token.
-5. This repository already uses Node 24, which ships an npm that can exchange the OIDC token (npm 11.5.1 or newer).
+5. This repository already uses Node 26, which ships an npm that can exchange the OIDC token (npm 11.5.1 or newer).
 
 Do not add a static npm credential back into the release job. Do not set `NPM_CONFIG_PROVENANCE=false`.
 

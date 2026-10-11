@@ -2,7 +2,7 @@
 
 Language: [English](workspace-scripts.md) · 中文
 
-根 `package.json` 的 script。需要 Node 24 與 pnpm 12（`packageManager` 為 `pnpm@12.9.0`）。
+根 `package.json` 的 script。需要 Node 26 與 pnpm 12（`packageManager` 為 `pnpm@12.9.0`）。
 
 | Script | 命令 | 用途 |
 |---|---|---|
@@ -56,7 +56,7 @@ Provenance 需要公開倉與公開套件。GitHub 用 OIDC token 簽署證明�
 2. Organization 或 user：`yanshekki`。Repository：`ysk-kit`。Workflow 檔名：`release.yml`（必須完全一致，包括 `.yml`）。
 3. 除非工作流程之後設定 `environment:`，否則環境留空。名稱區分大小寫，必須相符。
 4. 使用 GitHub 託管的 runner（此工作流程用 `ubuntu-latest`）。自託管 runner 不能鑄造 npm 的 OIDC token。
-5. 本倉已使用 Node 24，其 npm 可以交換 OIDC token（npm 11.5.1 或更新）。
+5. 本倉已使用 Node 26，其 npm 可以交換 OIDC token（npm 11.5.1 或更新）。
 
 不要把靜態 npm 憑證加回 release job。不要設定 `NPM_CONFIG_PROVENANCE=false`。
 

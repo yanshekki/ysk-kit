@@ -37,6 +37,17 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.5.0
+
+### Improvements
+
+- Kit runtime is **Node 26 (Current)**, not LTS, as of 2026-10-11. `engines.node` is `>=26.0.0`. GitHub Actions `ci.yml` and `release.yml` use `node-version: 26`. `@types/node` is `^26.6.5` so the DefinitelyTyped major matches the Node major. Dest products still on Node 24 fail `ysk-kit doctor` engines.
+- `ysk-kit doctor` engines hints say Install Node 26 / `engines.node >=26.0.0`. `create-ysk-app` dest README comments say Node 26 + pnpm 12.
+
+### Internal/CI
+
+- Coordinated bump supersedes Dependabot #38 (types-only 26.6.4 while CI stayed 24). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45).
+
 ## v1.4.0
 
 ### Dependency upgrades

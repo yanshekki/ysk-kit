@@ -8,7 +8,7 @@ Language: [English](AGENTS.md) · 中文
 
 ## 定位
 
-YSK Kit 是合約先行的 SaaS 平台（pnpm 12 + Turborepo + Node 24）。本 checkout 是可運行的 `saas` flavor：身分、檔案、通知、工作、郵件、API 金鑰、加密、即時通訊已經接上。
+YSK Kit 是合約先行的 SaaS 平台（pnpm 12 + Turborepo + Node 26）。本 checkout 是可運行的 `saas` flavor：身分、檔案、通知、工作、郵件、API 金鑰、加密、即時通訊已經接上。
 
 **產品業務 domain 不寫入 kit。** 沙龍、交易所、地圖或其他行業模型屬於已產生的產品（或 `examples/`，再套用到新目的地）。若 agent 另起目錄樹、另選 HTTP 框架，或在客戶端對 kit 路徑直接 `fetch`，就是做錯。
 

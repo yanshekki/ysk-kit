@@ -305,8 +305,8 @@ const enginesCheck = (
       'error',
       message,
       pinned
-        ? `Install Node 24 and run \`corepack enable && corepack prepare pnpm@${pinned} --activate\`.`
-        : 'Install Node 24 and pnpm 12 (`corepack enable && corepack prepare pnpm@12 --activate`).',
+        ? `Install Node 26 and run \`corepack enable && corepack prepare pnpm@${pinned} --activate\`.`
+        : 'Install Node 26 and pnpm 12 (`corepack enable && corepack prepare pnpm@12 --activate`).',
     );
   }
   if (warnings.length > 0) {
@@ -316,7 +316,7 @@ const enginesCheck = (
       warnings.join('; '),
       pinned
         ? `Run \`corepack prepare pnpm@${pinned} --activate\` so the packageManager pin matches.`
-        : 'Add engines.node >=24.0.0 and engines.pnpm >=12.0.0 to package.json.',
+        : 'Add engines.node >=26.0.0 and engines.pnpm >=12.0.0 to package.json.',
     );
   }
   const nodeMsg = nodeRange ? `Node ${nodeVersion} satisfies ${nodeRange}` : `Node ${nodeVersion}`;

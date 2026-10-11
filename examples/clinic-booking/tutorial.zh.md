@@ -26,7 +26,7 @@ Language: [English](tutorial.md) · 中文
 
 ## 3. 前置
 
-- **Node 24** 與 **pnpm 12**
+- **Node 26** 與 **pnpm 12**
 - 本 kit 的工作副本（套用器在此）
 - 可選：若改用 `--db mysql`，需要 Docker MySQL 8.4
 

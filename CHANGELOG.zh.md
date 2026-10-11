@@ -37,6 +37,17 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.5.0
+
+### 改進
+
+- kit 運行時是 **Node 26（Current）**，截至 2026-10-11 不是 LTS。`engines.node` 是 `>=26.0.0`。GitHub Actions `ci.yml` 與 `release.yml` 使用 `node-version: 26`。`@types/node` 是 `^26.6.5`，DefinitelyTyped major 對齊 Node major。仍停在 Node 24 的 dest 產品會過不了 `ysk-kit doctor` engines。
+- `ysk-kit doctor` engines 提示改為安裝 Node 26／`engines.node >=26.0.0`。`create-ysk-app` dest README 註解寫 Node 26 + pnpm 12。
+
+### 內部／CI
+
+- 協調 bump 取代 Dependabot #38（只改 types 26.6.4，CI 仍停在 24）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。
+
 ## v1.4.0
 
 ### 依賴升級

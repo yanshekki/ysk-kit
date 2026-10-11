@@ -27,7 +27,7 @@ Clubs, associations, and any “named membership inside an org that can subscrib
 
 ## 3. Prerequisites
 
-- **Node 24** and **pnpm 12**
+- **Node 26** and **pnpm 12**
 - A checkout of this kit
 - Optional: Docker MySQL 8.4 if you override `--db mysql`
 

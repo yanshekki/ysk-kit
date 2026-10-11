@@ -116,6 +116,10 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 ### v1.2.4
 
+#### 安全
+
+- 工作區 override `mariadb@3.5.4` 修復 [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68)／CVE-2026-107382（零設定 TLS fingerprint 路徑上 `Ed25519PasswordAuth.hash()` 未捕獲的 `ReferenceError`）。經 `@prisma/adapter-mariadb` 7.10.0 間接引入。Prisma 維持 7.10.0。
+
 #### 依賴升級
 
 - `nodemailer` 10.0.13 → 10.0.14（`@ysk-kit/mail`）。

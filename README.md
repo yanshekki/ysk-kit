@@ -116,6 +116,10 @@ The latest three versions. Older versions are in the full changelog.
 
 ### v1.2.4
 
+#### Security
+
+- Workspace override `mariadb@3.5.4` closes [GHSA-cx2f-j9fh-8g68](https://github.com/advisories/GHSA-cx2f-j9fh-8g68) / CVE-2026-107382 (uncaught `ReferenceError` in `Ed25519PasswordAuth.hash()` on the zero-config TLS fingerprint path). Transitive through `@prisma/adapter-mariadb` 7.10.0. Prisma stays 7.10.0.
+
 #### Dependency upgrades
 
 - `nodemailer` 10.0.13 → 10.0.14 (`@ysk-kit/mail`).

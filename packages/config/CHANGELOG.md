@@ -1,5 +1,11 @@
 # @ysk-kit/config
 
+## 1.4.0
+
+### Minor Changes
+
+- 3cd3332: Lockstep minor for Expo SDK 58.0.7 (npm `next`; `latest` is still 57.0.27) with expo-secure-store ~58.0.2, expo-status-bar ~58.0.3, React Native 0.88.0-rc.4, and React 19.3.0 workspace-wide. Supersedes Dependabot #35.
+
 ## 1.3.0
 
 ### Minor Changes

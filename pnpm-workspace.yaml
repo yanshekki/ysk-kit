@@ -5,8 +5,8 @@ packages:
 
 overrides:
   bullmq: "6.3.11"
-  react: "19.2.8"
-  react-dom: "19.2.8"
+  react: "19.3.0"
+  react-dom: "19.3.0"
   # GHSA-ggr8-5vv4-36mx: Prisma 7.10 pins deepmerge-ts 7.1.5. v8 fixes the advisory.
   deepmerge-ts: "8.0.2"
   # GHSA-cqhc-2h57-wpxf, GHSA-42r5-vhpq-m858, GHSA-g5xc-5w98-jfvm, GHSA-cx2f-j9fh-8g68
@@ -71,4 +71,5 @@ minimumReleaseAgeExclude:
   - turbo@2.11.7
   - vite@8.3.2
   - electron-vite@6.0.0-beta.8
+  - react-native@0.88.0-rc.4
   - source-map-js@1.2.2

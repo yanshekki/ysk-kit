@@ -37,6 +37,15 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.4.0
+
+### 依賴升級
+
+- 流動應用 Expo 57.0.26 → **58.0.7**（npm dist-tag **`next`**；**`latest` 仍是 57.0.27**）。`expo-secure-store` ~57.0.4 → ~58.0.2。`expo-status-bar` ~57.0.1 → ~58.0.3。React Native 0.86.3 → **0.88.0-rc.4**（npm `next`；`latest` 是 0.87.1）。React 19.2.8 → **19.3.0**（工作區；Expo 58 bundled natives）。`react-native@0.88.0-rc.4` 列在 `minimumReleaseAgeExclude`（發佈未滿 24 小時）。
+- 取代 Dependabot **#35**（只把 `expo` bump 到 `^58.0.3`，同伴留在 SDK 57、React Native 0.86.3）。
+- kit 沒有 expo-router，也沒有已提交的 `ios/`／`android/` 樹。會 prebuild 的消費者：iOS UIScene 生命週期；Android release 預設 R8 minify。React Native 0.88 是 release candidate；Expo Go 商店版可能落後 — 請讀 [SDK 58 beta 說明](https://expo.dev/changelog/sdk-58-beta)。
+- v1.3.0 已發佈桌面 Vite 8（#41／#44）。
+
 ## v1.3.0
 
 ### 依賴升級

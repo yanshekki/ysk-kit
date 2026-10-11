@@ -114,6 +114,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.4.0
+
+#### Dependency upgrades
+
+- Mobile Expo 57.0.26 → **58.0.7** (npm dist-tag **`next`**; **`latest` is still 57.0.27**), `expo-secure-store` ~58.0.2, `expo-status-bar` ~58.0.3, React Native 0.86.3 → **0.88.0-rc.4**, React 19.2.8 → **19.3.0** workspace-wide. Supersedes Dependabot #35. v1.3.0 shipped desktop Vite 8 (#41 / #44).
+
 ### v1.3.0
 
 #### Dependency upgrades
@@ -130,30 +136,6 @@ The latest three versions. Older versions are in the full changelog.
 
 - `nodemailer` 10.0.13 → 10.0.14 (`@ysk-kit/mail`).
 - `pino-pretty` 13.1.3 → 13.2.0 (`@ysk-kit/logger`).
-
-### v1.2.3
-
-#### New features
-
-- Agent skills `contract-change`, `debug-issue`, `review-change`, and `llm-feature` (English + Hong Kong Traditional Chinese), with `.agents` / `.claude` wrappers, Cursor / Copilot pointers, and create-app / upgrade templates.
-
-#### Improvements
-
-- Every skill wrapper is a short step summary (Use when, Chinese triggers, Do not use for…). Skills gain Output format, Anti-patterns, and Escalate / ask where they were missing.
-- `verify-change` names expected output, OpenAPI `git diff --exit-code`, and a fixed verification report. `new-product` runs `doctor` and lists human-filled fields. `add-module` requires Express and Fastify app tests. `add-capability` has a before-production line per capability. `envelope-api` tables error codes. `fix-layers` forbids silent cruiser edits.
-
-#### Fixes
-
-- `create-ysk-app` authenticates GitHub with `GITHUB_TOKEN` when set, falls back to `git ls-remote` + codeload on 403/429, and deletes leftover `kit.tgz`.
-
-#### Internal/CI
-
-- `skill-triggers.test.ts` statically checks wrapper descriptions. thin-smoke, flavor-smoke, create-app, and upgrade tests assert the new skill files.
-- Release waits up to 20 minutes for `npm view` (backoff; 429/5xx retry). Missing `vX.Y.Z` recovery uses npm provenance `gitCommit`, notes from that commit's CHANGELOG, and runs only on `main`.
-
-#### Security
-
-- Workspace override `shell-quote@1.11.0` closes [GHSA-pqg4-j6r4-53mv](https://github.com/advisories/GHSA-pqg4-j6r4-53mv) (`quote()` injection after a comment token; transitive through Expo / React Native).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

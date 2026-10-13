@@ -112,9 +112,21 @@ Webhook signatures: verify HMAC on the raw body (`createHmac`), reject bad signa
 
 `pnpm test:coverage` is a **signal** (configured 95% on `apps/*/src` and `packages/*/src`). CI `check` runs `pnpm test`, not coverage. Do not add tests that only exist to bump a percentage. Do not import Prisma, Redis, or Stripe to close a gap.
 
+## Vertical TDD slice (features)
+
+Seams are the rows in the [test-plan](test-plan.md) **layer map**. For a behaviour change, do **one vertical slice** at a time — not all tests then all code (horizontal).
+
+1. Confirm seams from the test plan (contract → application → HTTP → SDK → UI as needed).
+2. Pick the **highest-risk** case. Write one `it(...)` at that layer. Confirm it is **red**.
+3. Write the **minimum** code to make that `it` green (contracts → `application/` → HTTP). Do not refactor yet.
+4. Repeat with the next risk. Keep each slice green before starting the next.
+5. **Forbidden:** write every `it` in the plan, then implement the module. That is a horizontal slice.
+
+Bug fixes stay **regression-first** (section below). Do not add `@axe-core/playwright` or `fast-check` unless the user asks.
+
 ## Bug fixes
 
-Write the failing regression test **first**. Confirm it fails for the reported case, then fix. Keep that test.
+Write the failing regression test **first**. Confirm it fails for the reported case, then fix. Keep that test. Do not use the feature TDD slice to postpone a red regression.
 
 ## Commands
 
@@ -163,6 +175,7 @@ Accessibility of UI: follow [ui-review](ui-review.md). Prefer Testing Library qu
 - [ ] Envelope `ok` / `error.code` asserted on HTTP tests
 - [ ] Other-tenant / unauthenticated case when the resource is owned
 - [ ] Deterministic (fake clock, no sleep, no live network)
+- [ ] Feature path: one red `it()` per slice, then minimum code to green (not all tests then all code)
 - [ ] Regression test first when this is a bug fix
 - [ ] `pnpm test` green; `pnpm e2e` when login/shell changed and ports are free
 
@@ -172,6 +185,7 @@ Accessibility of UI: follow [ui-review](ui-review.md). Prefer Testing Library qu
 ## Tests — <scope>
 Layer: <file>
 HTTP adapters: Express + Fastify | n/a
+TDD slice: <case> red → green | n/a (bug regression-first)
 Regression-first: yes | n/a
 Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 ```
@@ -183,6 +197,7 @@ Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 | Mock Prisma from a client | SDK + SuperTest |
 | Sleep to wait for the UI | Testing Library finder / fake timers |
 | Snapshot the whole envelope | `toMatchObject` on `ok` / `error.code` |
+| Write all tests then all code | One highest-risk `it()` red, then minimum code |
 
 ## Escalate / ask
 
@@ -192,6 +207,7 @@ Ask before adding `@axe-core/playwright`, visual-regression CI, or `fast-check`.
 
 - Cloudflare sandbox-sdk testing skill (unit vs E2E, filter one file / `-t`)
 - Cloudflare Agents `test-plan` (given / when / then)
+- Vertical TDD slice (one red `it` per seam; kit-bound — no extra TDD skill)
 - Testing trophy; Testing Library guiding principles (query by role/label)
 - Playwright best practices (web-first assertions, no `waitForTimeout`)
 - “Never mock what you don’t own”

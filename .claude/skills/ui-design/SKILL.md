@@ -13,6 +13,6 @@ Read `docs/skills/ui-design.md`. Law: `AGENTS.md`.
 1. Reuse `@ysk-kit/ui` zinc tokens (`rounded-md`, `h-9`). No new palette.
 2. Loading / empty / error / disabled. Forms: FormField + contracts Zod.
 3. WCAG 2.2 AA, `zh-HK` length, no raw fetch. Then ui-review.
-Gotcha: no purple gradients, no placeholder-as-label, no `div` buttons.
+Gotcha: complex layout → layout-system first. No purple gradients, no placeholder-as-label, no `div` buttons.
 Verify: ui-review checklist, then verify-change.
 Full steps: `docs/skills/ui-design.md`.

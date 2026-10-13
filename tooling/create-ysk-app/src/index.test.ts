@@ -154,6 +154,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/write-tests/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-design/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/layout-system/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/tests.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/ui.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
@@ -341,6 +342,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/test-plan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/layout-system/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/llm-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);

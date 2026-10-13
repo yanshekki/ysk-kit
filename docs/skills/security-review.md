@@ -55,7 +55,7 @@ Do not flag: server-controlled values as attacker input; documented envelope exc
 6. Rate limits: `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS` via `createRateLimit` in `@ysk-kit/api-http`. Auth OTP already returns `RATE_LIMITED`. Do not disable the limiter to make a test pass (`RATE_LIMIT_MAX=0` is a test/CI escape hatch, not production).
 7. CORS: `corsOrigins` in `packages/config` is the web + admin public URLs. Do not use `*` with credentials. Adding helmet / CSP headers is a plan decision (the API does not ship them today).
 8. LLM: product features own the prompt in `application/` (`LLM_SYSTEM_PROMPT`). Clients send only `user` / `assistant` (`LlmClientRoleSchema`). Treat user content as untrusted. Follow [llm-feature](llm-feature.md).
-9. Supply chain: a new runtime dependency is an **ask first** (AGENTS.md).
+9. Walk [Supply chain](#supply-chain). A new runtime dependency is still **ask first**.
 10. If mode is `threat-model`, run [Threat-model sub-mode](#threat-model-sub-mode) **before** writing findings. Confirm assumptions with the user.
 11. Emit the [output format](#output-format). Then [verify-change](verify-change.md) if you changed code.
 
@@ -63,7 +63,7 @@ Do not flag: server-controlled values as attacker input; documented envelope exc
 
 These are review locations, not confirmed exploits. Describe the right pattern; do not “fix” them in a docs-only change.
 
-| Area | Today (v1.2.2) | Keep doing |
+| Area | Today | Keep doing |
 |---|---|---|
 | Logger | `packages/logger` pino `redact` paths | Never log OTP, JWT, `sk_`, `whsec_` |
 | Billing webhook | Signature + `ProcessedWebhookEvent` | [webhook-handling](webhook-handling.md); still queue fulfilment |
@@ -71,6 +71,19 @@ These are review locations, not confirmed exploits. Describe the right pattern; 
 | Electron tokens | `safeStorage` only; memory if unavailable | [desktop-electron](desktop-electron.md) |
 | Tenancy | `requireBiller` / `requireMember` | Every org-scoped use case copies that pattern |
 | LLM | Server `LLM_SYSTEM_PROMPT`; client has no `system` role; quota `RATE_LIMITED` | [llm-feature](llm-feature.md) |
+
+## Supply chain
+
+Do not treat “it compiled” as a security review of new code you did not write.
+
+| Surface | Rule |
+|---|---|
+| New **runtime** dependency | **Ask first** (AGENTS.md). Prefer an existing port over a new package. Record the ask in the plan |
+| Transitive bumps | Diff-scoped; a bump with no new trust boundary is not this skill. A new native addon, installer, or HTTP client is |
+| Agent skills | Do not `npx skills add` (or equivalent) from an unknown source into this kit. Pin and read `SKILL.md` before copying. Vendor skills are pointers in `docs/skills/index.md`, not extra trees |
+| GitHub Actions | Workflows are supply chain: pin actions by SHA when changing `.github/`; do not add a third-party action that posts secrets to an unknown endpoint |
+
+Optional research (not a second kit skill): getsentry/cisco **skill-scanner** for auditing an *external* skill you might vendor; it is not a scan of product HTTP.
 
 ## Threat-model sub-mode
 
@@ -136,11 +149,12 @@ Every HIGH finding has a fix or written user acceptance. Org-scoped use cases ha
 
 ## Escalate / ask
 
-Stop and ask before weakening authz, rate limits, or secret-logging rules; before adding an envelope exception; before a new runtime dependency.
+Stop and ask before weakening authz, rate limits, or secret-logging rules; before adding an envelope exception; before a new runtime dependency; before vendoring an unknown agent skill.
 
 ## Sources
 
 - getsentry `security-review` and `secret-serialization` — <https://github.com/getsentry/skills>
+- getsentry / cisco skill-scanner (audit external skills, not product APIs)
 - openai `security-threat-model` / `security-best-practices` — <https://github.com/openai/skills>
 - OWASP ASVS 5.0 V8 Authorization (V8.4.1 cross-tenant) — <https://asvs.dev/v5.0.0/V8-Authorization/>
 - OWASP Authorization Cheat Sheet — <https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html>

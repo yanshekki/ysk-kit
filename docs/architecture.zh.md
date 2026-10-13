@@ -157,6 +157,8 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在加密可用時用 Electron `safeStorage` 持久化，否則只留在該次工作階段的記憶體。主行程會設 Content-Security-Policy、`sandbox: true`，並拒絕未預期的導航、新視窗與未信任的 IPC。Prisma 永不在 Electron 內運行。
 
+非 TypeScript 客戶端是可選的。它們經產生出來、明白 envelope 的客戶端消費 `docs/openapi.yaml`（或 `GET /openapi.json`）——既有模式是 `php-bridge`。它們不可複製 domain 或業務規則、不可 import Prisma，也不可對 kit 路徑發臨時 HTTP。決定：[ADR 0002](adr/0002-polyglot-clients.zh.md)。語言選擇表：[flavors](guides/flavors.zh.md#客戶端語言選擇)。
+
 ## 產生器
 
 | 命令 | 作用 |
@@ -177,7 +179,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 - 預設 HTTP 是 Express；Fastify 是第二個 adapter。Hono、Nest、Next 不是預設。
 - 預設 ORM 是 Prisma。未附帶 Drizzle。
-- 公開 API 是 ts-rest + OpenAPI。釘選與 v2 退出路徑記在 [ADR 0001](adr/0001-ts-rest.zh.md)。tRPC 與 GraphQL 不是預設。
+- 公開 API 是 ts-rest + OpenAPI。釘選與 v2 退出路徑記在 [ADR 0001](adr/0001-ts-rest.zh.md)。多語言客戶端用該 OpenAPI 加 envelope；它們沒有兄弟 domain（[ADR 0002](adr/0002-polyglot-clients.zh.md)）。tRPC 與 GraphQL 不是預設。FastAPI 不是第二個公開 API。Tauri、Flutter 與 Kotlin Multiplatform 不是預設。
 - 行業 domain 寫在產品倉。
 - CI 使用記憶體 port。不啟動 Redis、Stripe、Twilio、FCM、Jaeger、Grafana 或 OTLP collector。
 - Kit 的資料表沒有 `ysk_` 前綴。

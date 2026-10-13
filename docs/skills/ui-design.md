@@ -12,12 +12,14 @@ description: >
 
 Language: [中文](ui-design.zh.md) · English
 
-Build screens that look like this kit, not like a generated marketing page. Law: [AGENTS.md](../../AGENTS.md). Components: `@ysk-kit/ui`. Copy-free view rules: `@ysk-kit/ui-logic`. Review before done: [ui-review](ui-review.md).
+Build screens that look like this kit, not like a generated marketing page. Law: [AGENTS.md](../../AGENTS.md). Components: `@ysk-kit/ui`. Copy-free view rules: `@ysk-kit/ui-logic`. Complex structure (new shell, columns, nav, list+detail): [layout-system](layout-system.md) first. Review before done: [ui-review](ui-review.md).
 
 ## Trigger
 
 - New or changed page, form, table, empty state, or shell in web / admin / mobile / desktop.
 - The user asks for UI, UX, layout, dark mode, or accessibility.
+
+If the change is a new shell, dashboard columns, sidebar vs top-nav, or a multi-column form, run [layout-system](layout-system.md) (ASCII wireframe) before this skill.
 
 ## Inputs
 
@@ -58,6 +60,8 @@ Breakpoints: Tailwind defaults. Verify **375**, **768**, **1280**. Main column s
 Dark mode: **not shipped**. `:root { color-scheme: light; }`. Do not add a palette unless the user asks. If they do: set `color-scheme: dark` on `html`, invert zinc, keep contrast, do not ship a purple gradient theme.
 
 ## Layout and states
+
+Structure (grid, shell, reading order) is [layout-system](layout-system.md). This section is states and kit chrome on top of that structure.
 
 Every list/detail screen implements:
 
@@ -139,6 +143,7 @@ Spend boldness nowhere in kit product screens: the memorable thing is the data, 
 Tokens: zinc / rounded-md / h-9
 States: loading / empty / error / disabled
 Forms: FormField + contracts Zod
+Layout: layout-system (if shell/columns) | n/a
 Next: ui-review
 ```
 
@@ -148,6 +153,7 @@ Next: ui-review
 - [ ] Loading, empty, error, and disabled states exist
 - [ ] Forms have labels, Zod from contracts, envelope errors inline
 - [ ] Contrast, focus, target size, and `zh-HK` length hold
+- [ ] Complex structure used [layout-system](layout-system.md) first (wireframe in the plan or PR)
 - [ ] [ui-review](ui-review.md) checklist is green
 
 ## Escalate / ask

@@ -82,7 +82,7 @@ Keep all twelve. Each line is the rule; the following sentence is why.
 9. **Tests use in-memory ports.** Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana in CI. Why: unit tests must run on a clean runner without secrets or paid APIs.
 10. **Discover paths from `GET /openapi.json` or `docs/openapi.yaml`.** Still call them through `@ysk-kit/sdk`. Why: OpenAPI is the catalogue; the SDK is the caller.
 11. **Plan tests with `test-plan`, then write them with `write-tests`.** Rank data loss, auth, money, concurrency, and tenancy first; use in-memory ports. Why: envelope and authz bugs show up without Redis or Stripe.
-12. **Client UI follows `ui-design` and is not done until `ui-review` is green.** Reuse `@ysk-kit/ui` and the zinc theme. Why: products stay accessible, consistent, and free of generic AI-slop chrome.
+12. **Client UI follows `ui-design` and is not done until `ui-review` is green.** Complex structure goes through `layout-system` before `ui-design`. Reuse `@ysk-kit/ui` and the zinc theme. Why: products stay accessible, consistent, and free of generic AI-slop chrome.
 
 ## Mandatory workflow
 
@@ -207,6 +207,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | After any feature | [verify-change](docs/skills/verify-change.md) |
 | Plan how to test | [test-plan](docs/skills/test-plan.md) |
 | Write tests | [write-tests](docs/skills/write-tests.md), [testing guide](docs/guides/testing.md) |
+| Layout structure (shell, grid, reading order) | [layout-system](docs/skills/layout-system.md) |
 | Add or change a screen | [ui-design](docs/skills/ui-design.md) |
 | Finish UI | [ui-review](docs/skills/ui-review.md) |
 | Security review | [security-review](docs/skills/security-review.md) |
@@ -221,6 +222,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 - Put salon, trading, map, or other industry domain in this kit. Tutorials live in `examples/` (`pnpm --filter @ysk-kit/examples start apply <slug> --yes`).
 - Import `@ysk-kit/observability` from web / admin / mobile / desktop.
 - Add Hono / Drizzle / Nest / Next as a default.
+- Copy domain or business rules into a sibling Python, Rust, or C++ API. Non-TypeScript clients use generated OpenAPI clients that unwrap the envelope ([ADR 0002](docs/adr/0002-polyglot-clients.md)).
 - Log secrets, OTP codes, Stripe `sk_`, or webhook secrets.
 - Duplicate this file into tool-specific wrappers.
 - Rely on `opencode.json` `instructions` as the OpenCode entry.

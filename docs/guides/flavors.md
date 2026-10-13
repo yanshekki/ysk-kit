@@ -27,4 +27,20 @@ Language: [中文](flavors.zh.md) · English
 
 **static-web3** — Vite web and `@ysk-kit/*` client libraries only. No Prisma, no `DATABASE_URL`. Point `API_PUBLIC_URL` at a remote API if the UI needs one. Wallet libraries belong in the product. Writes `WEB3.md`.
 
+## Client language choice
+
+The default stack is TypeScript. A different client language is a **flavor (or future flavor) plus OpenAPI codegen**, not a second domain. Law: [ADR 0002](../adr/0002-polyglot-clients.md). Kit TypeScript apps still call `@ysk-kit/sdk`; they do not gain raw `fetch`.
+
+| Need | Choose | Do not |
+|---|---|---|
+| Ship with this monorepo, one team language | **Expo** (mobile) and **Electron** (desktop) — the living `saas` / `desktop` flavors | A second native UI “just in case” |
+| PHP (or another HTTP client) against an existing Kit API | **`php-bridge` today**: OpenAPI + envelope-aware generated clients | Copy `apps/api` or Prisma into PHP |
+| Pixel-native iOS/Android chrome, or a Dart/Kotlin team already in place | Optional future `mobile-flutter` **or** `mobile-kmp` — pick one when a product pays for it | Flutter and KMP and Expo in the same product without a business reason |
+| Smaller desktop binary / OS webview | Optional future `desktop-tauri` (still consumes OpenAPI; does not replace Electron as the kit default) | Two desktop defaults (Electron + Tauri) |
+| CPU-hot crypto, codecs, or signing | **Rust sidecar** behind a TS port (`application/` still owns rules). C++ only to wrap an existing lib | Membership, billing, or tenancy rules in Rust/C++ |
+| ML infer | Python process as an **internal sidecar**; Node remains the product API | FastAPI as a sibling public API |
+| Partner / machine traffic | REST envelope + API keys (`gateway`) | Public gRPC |
+
+`create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language.
+
 CLI flags: [create-ysk-app](../cli/create-ysk-app.md).

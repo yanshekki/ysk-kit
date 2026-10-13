@@ -36,8 +36,8 @@ Language: [English](test-plan.md) · 中文
 
 1. 用一句重述改動。
 2. **最危險的行為排最前**：資料遺失、認證／授權、金錢、併發、租戶／組織隔離、密鑰（OTP、Stripe `sk_`、webhook 簽名）、冪等、速率限制。
-3. 把每項風險對應到下表的 YSK Kit 層。較低層能令案例失敗時，不要升到 E2E。
-4. 用 `given / when / then` 列出具體案例。先寫快樂路徑，再寫邊界與失敗。每個案例寫明層與檔案。
+3. 把每項風險對應到下表的 YSK Kit 層。較低層能令案例失敗時，不要升到 E2E。**分層對應的列就是接縫**，[write-tests](write-tests.zh.md) 的垂直 TDD 切片會用它們。
+4. 用 `given / when / then` 列出具體案例。先寫快樂路徑，再寫邊界與失敗。每個案例寫明層與檔案。標明哪一條是**第一條紅燈 `it()`**（風險最高）。
 5. 註明 setup、夾具、factory。預設夾具：`createMemoryInput()` 加模組的記憶體 repository。
 6. **明確寫出不涵蓋的範圍**，讓計劃短到可以立刻執行。
 
@@ -56,6 +56,8 @@ Language: [English](test-plan.md) · 中文
 | Mobile／desktop | Token store、adapter | `apps/mobile/src/**/*.test.ts`、`apps/desktop/src/**/*.test.ts` | 記憶體 token store。CI 沒有 Expo／Electron driver |
 
 用 trophy，不要堆 E2E：大多數案例放在用例 + API envelope。E2E 保持一條薄 smoke。
+
+**分層對應**的每一列都是接縫。功能實作跟 [write-tests](write-tests.zh.md) 的**垂直 TDD 切片**：最高風險一條 `it()` 先紅，再最少程式，再下一列。不要計劃先倒出所有測試再寫產品程式。修 bug 仍是回歸先行。
 
 ## 輸出格式
 
@@ -106,7 +108,8 @@ Language: [English](test-plan.md) · 中文
 - [ ] 每個案例都是 `given / when / then`，並寫明層與檔案
 - [ ] 夾具是記憶體（或注入的假物件）
 - [ ] 不涵蓋範圍已寫明
-- [ ] 案例實作接 [write-tests](write-tests.zh.md)
+- [ ] 分層對應的列是 TDD 接縫；已寫明第一條紅燈 `it()`
+- [ ] 案例實作接 [write-tests](write-tests.zh.md)（垂直切片，不是先測後碼一次過）
 
 ## 反模式
 
@@ -114,6 +117,7 @@ Language: [English](test-plan.md) · 中文
 |---|---|
 | 只有快樂路徑 | 把授權／租戶／envelope 失敗排進去 |
 | 「全部用 Playwright」 | Trophy：先 memory-port |
+| 計劃好每個 `it` 再實作模組 | 點名第一條紅燈案例；write-tests 走垂直 TDD |
 | 為了計劃測試而啟動 Stripe | 記憶體夾具 |
 
 ## 升級／詢問

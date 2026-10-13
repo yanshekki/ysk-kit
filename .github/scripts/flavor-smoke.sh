@@ -43,6 +43,7 @@ if [[ "$FLAVOR" != "php-bridge" ]]; then
     .agents/skills/write-tests/SKILL.md \
     .agents/skills/ui-design/SKILL.md \
     .agents/skills/ui-review/SKILL.md \
+    .agents/skills/layout-system/SKILL.md \
     .claude/skills/add-module/SKILL.md \
     .github/copilot-instructions.md \
     .gemini/settings.json \

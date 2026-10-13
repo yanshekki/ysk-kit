@@ -12,7 +12,7 @@ description: >
 
 Language: [中文](ui-review.zh.md) · English
 
-Run this checklist before marking UI work done. Design rules: [ui-design](ui-design.md). Law: [AGENTS.md](../../AGENTS.md). Tests: [write-tests](write-tests.md).
+Run this checklist before marking UI work done. Design rules: [ui-design](ui-design.md). Complex structure: [layout-system](layout-system.md) first. Law: [AGENTS.md](../../AGENTS.md). Tests: [write-tests](write-tests.md).
 
 ## Trigger
 
@@ -41,7 +41,8 @@ Copy the list into the PR or plan. Unchecked items mean the work is not done.
 - [ ] Uses `@ysk-kit/ui` (or RN primitives on mobile), not a new kit
 - [ ] Zinc page (`bg-zinc-50` / `text-zinc-900`), `rounded-md` only, `h-9` controls
 - [ ] No gradient mesh, glass, purple glow, or mixed radii
-- [ ] Header / table / form align to `max-w-4xl` and the `px-4` gutter
+- [ ] Header / table / form align to `max-w-4xl` and the `px-4` gutter (optical alignment: labels and columns share one edge)
+- [ ] Reading order matches the [layout-system](layout-system.md) wireframe (brand → nav → title → primary action → body)
 - [ ] Long `zh-HK` strings wrap (`flex-wrap`); nothing clipped at 375px
 
 ### Accessibility
@@ -59,6 +60,7 @@ Copy the list into the PR or plan. Unchecked items mean the work is not done.
 ### Responsive
 
 - [ ] 375 / 768 / 1280: no horizontal scroll, no overlapping controls
+- [ ] New shell / columns used [layout-system](layout-system.md) (wireframe present)
 - [ ] `PageHeader` actions wrap; tables can scroll horizontally if needed
 - [ ] Desktop Electron: same layout as web at 1280
 

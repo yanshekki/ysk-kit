@@ -82,7 +82,7 @@ ysk-kit/
 9. **測試使用記憶體 port。** CI 不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。原因：單元測試必須在沒有密鑰、也沒有收費 API 的乾淨 runner 上通過。
 10. **從 `GET /openapi.json` 或 `docs/openapi.yaml` 發現路徑。** 呼叫仍然經 `@ysk-kit/sdk`。原因：OpenAPI 是目錄；SDK 是呼叫端。
 11. **先用 `test-plan` 寫測試計劃，再用 `write-tests` 寫測試。** 先排資料遺失、授權、金錢、併發與租戶隔離；用記憶體 port。原因：不必啟動 Redis 或 Stripe 也能捉到 envelope 與授權錯誤。
-12. **客戶端 UI 跟 `ui-design`，未通過 `ui-review` 不算完成。** 重用 `@ysk-kit/ui` 與 zinc 主題。原因：產品保持可及、一致，而且沒有泛用 AI 風格裝飾。
+12. **客戶端 UI 跟 `ui-design`，未通過 `ui-review` 不算完成。** 複雜結構先走 `layout-system`，再 `ui-design`。重用 `@ysk-kit/ui` 與 zinc 主題。原因：產品保持可及、一致，而且沒有泛用 AI 風格裝飾。
 
 ## 強制工作流程
 
@@ -207,6 +207,7 @@ ysk-kit/
 | 任何功能之後 | [verify-change](docs/skills/verify-change.zh.md) |
 | 計劃如何測試 | [test-plan](docs/skills/test-plan.zh.md) |
 | 寫測試 | [write-tests](docs/skills/write-tests.zh.md)、[測試指南](docs/guides/testing.zh.md) |
+| 版面結構（殼、欄、閱讀順序） | [layout-system](docs/skills/layout-system.zh.md) |
 | 新增或改動畫面 | [ui-design](docs/skills/ui-design.zh.md) |
 | 完成 UI | [ui-review](docs/skills/ui-review.zh.md) |
 | 安全審查 | [security-review](docs/skills/security-review.zh.md) |
@@ -221,6 +222,7 @@ ysk-kit/
 - 把沙龍、交易、地圖或其他行業 domain 放進本 kit。教程在 `examples/`（`pnpm --filter @ysk-kit/examples start apply <slug> --yes`）。
 - 從 web／admin／mobile／desktop import `@ysk-kit/observability`。
 - 把 Hono／Drizzle／Nest／Next 設為預設。
+- 把 domain 或業務規則複製進兄弟 Python、Rust 或 C++ API。非 TypeScript 客戶端使用會解開 envelope 的 OpenAPI 產生客戶端（[ADR 0002](docs/adr/0002-polyglot-clients.zh.md)）。
 - 把密鑰、OTP 代碼、Stripe `sk_` 或 webhook 密鑰寫進日誌。
 - 把本檔複製進各工具包裝。
 - 把 `opencode.json` 的 `instructions` 當成 OpenCode 入口。

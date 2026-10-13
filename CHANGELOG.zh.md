@@ -37,6 +37,14 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.5.1
+
+### 改進
+
+- [ADR 0002](docs/adr/0002-polyglot-clients.zh.md) 記錄 OpenAPI + envelope 為唯一多語言邊界。預設堆疊維持 TypeScript。禁止用 Python／Rust／C++ 做兄弟 domain。可選非 TS 客戶端跟隨 `php-bridge`。Rust 只做 port 背後的 worker／crypto adapter。FastAPI 當主 API，以及 Tauri／Flutter／KMP flavor，仍然暫緩。[Flavors](docs/guides/flavors.zh.md) 加上客戶端語言選擇表。
+- Agent skill `layout-system`（英文 + 香港繁體中文）：ASCII 線框、AppShell、欄、375／768／1280、zh-HK 寬度，然後 `ui-design`／`ui-review`。含包裝、create-app／upgrade 模板與 skill-drift 副本。
+- `write-tests`／`test-plan` 加入垂直 TDD 切片（每個接縫一條紅燈 `it()`；禁止先寫完所有測試再寫程式）。`debug-issue` 加入 3–5 列假設表。`security-review` 去掉熱點表過時版本字，並加供應鏈一節。`verify-change` 要求本回合新鮮的五條命令成功輸出；行為改動至少一條新增或更新的 Vitest。
+
 ## v1.5.0
 
 ### 改進

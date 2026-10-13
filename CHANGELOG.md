@@ -37,6 +37,14 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.5.1
+
+### Improvements
+
+- [ADR 0002](docs/adr/0002-polyglot-clients.md) records OpenAPI + envelope as the sole polyglot boundary. Default stack stays TypeScript. Sibling domain in Python/Rust/C++ is out. Optional non-TS clients follow `php-bridge`. Rust is a worker/crypto adapter behind ports. FastAPI as a main API, and Tauri/Flutter/KMP flavors, stay deferred. [Flavors](docs/guides/flavors.md) adds a Client language choice table.
+- Agent skill `layout-system` (English + Hong Kong Traditional Chinese): ASCII wireframe, AppShell, grid, 375/768/1280, zh-HK width, then `ui-design` / `ui-review`. Wrappers, create-app / upgrade templates, and skill-drift copies included.
+- `write-tests` / `test-plan` add a vertical TDD slice (one red `it()` per seam; no all-tests-then-all-code). `debug-issue` adds a 3–5 row hypotheses table. `security-review` drops stale hotspot version strings and adds a supply-chain section. `verify-change` requires fresh five-command output this turn and a new/updated Vitest when behaviour changes.
+
 ## v1.5.0
 
 ### Improvements

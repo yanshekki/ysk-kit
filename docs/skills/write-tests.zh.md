@@ -112,9 +112,21 @@ Webhook 簽名：對原始 body 做 HMAC（`createHmac`），拒絕壞簽名。�
 
 `pnpm test:coverage` 是**訊號**（`apps/*/src` 與 `packages/*/src` 設定 95%）。CI `check` 跑 `pnpm test`，不以 coverage 為閘。不要為了百分比而加測試。不要為了補缺口而 import Prisma、Redis 或 Stripe。
 
+## 垂直 TDD 切片（功能）
+
+接縫是 [test-plan](test-plan.zh.md) **分層對應**表的列。行為改動時，一次只做 **一條垂直切片**——不是先寫完所有測試再寫所有程式（水平切片）。
+
+1. 用測試計劃確認接縫（按需要：合約 → application → HTTP → SDK → UI）。
+2. 揀**風險最高**的一條案例。在該層寫一個 `it(...)`。確認它是**紅燈**。
+3. 寫**最少**程式讓該 `it` 變綠（合約 → `application/` → HTTP）。先不要重構。
+4. 下一項風險再重複。下一切片開始前，保持已完成的切片為綠。
+5. **禁止：**把計劃裡每個 `it` 一次寫完，再實作模組。那是水平切片。
+
+修 bug 仍是**回歸先行**（下一節）。除非使用者要求，否則不要加 `@axe-core/playwright` 或 `fast-check`。
+
 ## 修 bug
 
-**先寫會失敗的回歸測試**。確認它對該案例失敗，再修。保留該測試。
+**先寫會失敗的回歸測試**。確認它對該案例失敗，再修。保留該測試。不要用功能 TDD 切片拖延紅燈回歸。
 
 ## 命令
 
@@ -163,6 +175,7 @@ UI 可及性跟 [ui-review](ui-review.zh.md)。Testing Library 查詢在缺少 l
 - [ ] HTTP 測試斷言 envelope 的 `ok`／`error.code`
 - [ ] 資源有擁有者時，有另一租戶／未認證案例
 - [ ] 可重現（假時鐘、無 sleep、無真實網絡）
+- [ ] 功能路徑：每一切片一條紅燈 `it()`，再以最少程式轉綠（不是先測後碼一次過）
 - [ ] 修 bug 時先寫回歸測試
 - [ ] `pnpm test` 綠色；改了登入／shell 且連接埠空閒時 `pnpm e2e` 通過
 
@@ -172,6 +185,7 @@ UI 可及性跟 [ui-review](ui-review.zh.md)。Testing Library 查詢在缺少 l
 ## Tests — <scope>
 Layer: <file>
 HTTP adapters: Express + Fastify | n/a
+TDD slice: <case> red → green | n/a (bug regression-first)
 Regression-first: yes | n/a
 Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 ```
@@ -183,6 +197,7 @@ Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 | 從客戶端 mock Prisma | SDK + SuperTest |
 | 用 sleep 等 UI | Testing Library finder／假時鐘 |
 | snapshot 整份 envelope | 對 `ok`／`error.code` 用 `toMatchObject` |
+| 先寫完所有測試再寫程式 | 最高風險一條 `it()` 先紅，再最少程式 |
 
 ## 升級／詢問
 
@@ -192,6 +207,7 @@ Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 
 - Cloudflare sandbox-sdk testing skill（單元對 E2E、過濾單一檔／`-t`）
 - Cloudflare Agents `test-plan`（given／when／then）
+- 垂直 TDD 切片（每個接縫一條紅燈 `it`；只寫在本 skill，不加獨立 TDD skill）
 - Testing trophy；Testing Library guiding principles（用 role／label 查詢）
 - Playwright 最佳做法（web-first 斷言，不用 `waitForTimeout`）
 - 「不要 mock 你不擁有的東西」

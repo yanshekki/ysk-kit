@@ -13,6 +13,6 @@ Read `docs/skills/ui-review.md`. Law: `AGENTS.md`.
 1. Walk visual, a11y, states, copy. Fail if any required box is unchecked.
 2. Keyboard-only on web/admin/desktop. Check 375 / 768 / 1280.
 3. Exercise the flow (click, type, submit). Screenshot is not proof.
-Gotcha: do not add axe or screenshot diffs to CI unless asked.
+Gotcha: reading order / optical alignment; complex layout must have used layout-system. Do not add axe or screenshot diffs to CI unless asked.
 Verify: checklist + `pnpm e2e` when login/shell changed.
 Full steps: `docs/skills/ui-review.md`.

@@ -12,7 +12,7 @@ Read `docs/skills/write-tests.md`. Law: `AGENTS.md`.
 
 1. Put the case at the lowest layer that can fail it. Extend the generator test file.
 2. given/when/then; envelope `ok` / `error.code`; other-tenant negative when owned.
-3. Bug fixes: red regression test first. Express and Fastify for HTTP.
-Gotcha: in-memory ports only. Never mock Prisma from a client.
+3. Features: one red `it()` per TDD slice, then minimum code. Bugs: red regression first. Express and Fastify for HTTP.
+Gotcha: in-memory ports only. Never mock Prisma from a client. Do not write all tests then all code.
 Verify: `pnpm --filter @ysk-kit/<pkg> exec vitest run <file>`
 Full steps: `docs/skills/write-tests.md`.

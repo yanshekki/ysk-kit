@@ -12,12 +12,14 @@ description: >
 
 Language: [English](ui-design.md) · 中文
 
-畫面要像本 kit，不要像產生出來的宣傳頁。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。元件：`@ysk-kit/ui`。無 DOM 的檢視規則：`@ysk-kit/ui-logic`。完成前審查：[ui-review](ui-review.zh.md)。
+畫面要像本 kit，不要像產生出來的宣傳頁。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。元件：`@ysk-kit/ui`。無 DOM 的檢視規則：`@ysk-kit/ui-logic`。複雜結構（新殼、分欄、導航、清單+詳情）：先 [layout-system](layout-system.zh.md)。完成前審查：[ui-review](ui-review.zh.md)。
 
 ## 觸發
 
 - web／admin／mobile／desktop 新增或改動頁面、表單、表格、空白狀態或 shell。
 - 使用者要求 UI、UX、版面、深色模式或可及性。
+
+若改動是新殼、dashboard 分欄、側欄對頂欄，或多欄表單，先跑 [layout-system](layout-system.zh.md)（ASCII 線框），再跟本 skill。
 
 ## 輸入
 
@@ -58,6 +60,8 @@ Web、admin 與 desktop 已共用 Tailwind 4 + `@ysk-kit/ui`。Mobile 用 React 
 深色模式：**尚未提供**。`:root { color-scheme: light; }`。除非使用者要求，否則不要加色盤。若要求：在 `html` 設 `color-scheme: dark`、反轉 zinc、維持對比，不要做紫色漸層主題。
 
 ## 版面與狀態
+
+結構（欄、殼、閱讀順序）歸 [layout-system](layout-system.zh.md)。本節是該結構之上的狀態與 kit chrome。
 
 每個清單／詳情畫面都要有：
 
@@ -139,6 +143,7 @@ Kit 產品畫面不要把膽識花在裝飾：值得記住的是資料，不是 
 Tokens: zinc / rounded-md / h-9
 States: loading / empty / error / disabled
 Forms: FormField + contracts Zod
+Layout: layout-system (if shell/columns) | n/a
 Next: ui-review
 ```
 
@@ -148,6 +153,7 @@ Next: ui-review
 - [ ] 有載入、空白、錯誤、停用狀態
 - [ ] 表單有標籤、contracts 的 Zod、envelope 錯誤在欄位旁
 - [ ] 對比、焦點、目標尺寸、`zh-HK` 長度都成立
+- [ ] 複雜結構已先走 [layout-system](layout-system.zh.md)（線框在計劃或 PR）
 - [ ] [ui-review](ui-review.zh.md) 清單為綠色
 
 ## 升級／詢問

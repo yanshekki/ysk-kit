@@ -70,6 +70,7 @@ jobs:
           test -f .agents/skills/write-tests/SKILL.md
           test -f .agents/skills/ui-design/SKILL.md
           test -f .agents/skills/ui-review/SKILL.md
+          test -f .agents/skills/layout-system/SKILL.md
           test -f .agents/skills/security-review/SKILL.md
           test -f .agents/skills/db-migration/SKILL.md
           test -f .agents/skills/webhook-handling/SKILL.md

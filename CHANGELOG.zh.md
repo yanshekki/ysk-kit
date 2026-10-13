@@ -37,6 +37,13 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.5.2
+
+### 改進
+
+- 開發者逐步操作（英文 + 香港繁體中文）：[Admin 雙欄版面](docs/recipes/admin-dual-pane-layout.zh.md)、[PHP OpenAPI 客戶端](docs/recipes/php-openapi-client.zh.md)（ADR 0002／`php-bridge`）、[垂直 TDD 切片](docs/recipes/vertical-tdd-slice.zh.md)、[除錯租戶隔離](docs/recipes/debug-tenancy-isolation.zh.md)。目錄：[docs/recipes/](docs/recipes/README.zh.md)。
+- 現行 [測試](docs/guides/testing.zh.md) 指南加入垂直 TDD 一節。[架構](docs/architecture.zh.md) 與 [flavors](docs/guides/flavors.zh.md) 指向 PHP 逐步說明。`docs/README`、`examples/README` 與 `AGENTS.md` 為操作手冊建立索引。
+
 ## v1.5.1
 
 ### 改進

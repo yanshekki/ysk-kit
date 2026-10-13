@@ -128,5 +128,6 @@ Ask once if acceptance criteria are missing. Do not write tests until this plan 
 ## References
 
 - Cloudflare Agents `test-plan` skill (restate, rank risk, given/when/then, fixtures, out of scope, fixed headings)
+- Worked example: [vertical TDD slice](../recipes/vertical-tdd-slice.md)
 - Cloudflare sandbox-sdk testing skill (unit vs E2E, exact commands)
 - Testing trophy (integration-heavy; E2E stays thin)

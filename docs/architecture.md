@@ -157,7 +157,7 @@ Web and admin use TanStack Router and `features/*`. Forms reuse command Zod sche
 
 Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens persist with Electron `safeStorage` when encryption is available, otherwise they stay in memory for the session. The main process sets a Content-Security-Policy, `sandbox: true`, and denies unexpected navigation, new windows, and untrusted IPC. Prisma never runs inside Electron.
 
-Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /openapi.json`) through generated, envelope-aware clients — `php-bridge` is the existing pattern. They must not copy domain or business rules, import Prisma, or talk to kit paths with ad-hoc HTTP. Decision: [ADR 0002](adr/0002-polyglot-clients.md). Language choice table: [flavors](guides/flavors.md#client-language-choice).
+Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /openapi.json`) through generated, envelope-aware clients — `php-bridge` is the existing pattern. They must not copy domain or business rules, import Prisma, or talk to kit paths with ad-hoc HTTP. Decision: [ADR 0002](adr/0002-polyglot-clients.md). Language choice table: [flavors](guides/flavors.md#client-language-choice). Walkthrough: [PHP OpenAPI client](recipes/php-openapi-client.md).
 
 ## Generators
 

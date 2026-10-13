@@ -41,6 +41,6 @@ The default stack is TypeScript. A different client language is a **flavor (or f
 | ML infer | Python process as an **internal sidecar**; Node remains the product API | FastAPI as a sibling public API |
 | Partner / machine traffic | REST envelope + API keys (`gateway`) | Public gRPC |
 
-`create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language.
+`create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language. Copy-paste PHP walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md).
 
 CLI flags: [create-ysk-app](../cli/create-ysk-app.md).

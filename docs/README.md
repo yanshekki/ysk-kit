@@ -10,6 +10,7 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | Follow a finished system (ten catalogue rows) | [Worked examples](../examples/README.md) |
 | Understand the platform | [Architecture](architecture.md), [root README](../README.md) |
 | Use the generators | [CLI](cli/index.md), [add a module](recipes/add-module.md), [add a capability](recipes/add-capability.md), [refresh guardrails](guides/upgrade.md) |
+| Follow a developer how-to (layout, PHP client, TDD, tenancy) | [Recipes](recipes/README.md) |
 | Learn a subsystem | [Hexagonal layers](guides/hexagonal.md), [envelope](guides/envelope.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [testing](guides/testing.md), [deploy](guides/deploy.md), [upgrade](guides/upgrade.md) |
 | Follow an AI procedure | [Skills](skills/index.md) and [AGENTS.md](../AGENTS.md) |
 | Plan tests / write tests | [test-plan](skills/test-plan.md), [write-tests](skills/write-tests.md) |

@@ -101,5 +101,6 @@ Ask before a new nav pattern, a third breakpoint, dark mode, or a new color toke
 
 - [ui-design](ui-design.md) (zinc tokens, `@ysk-kit/ui`, forms)
 - [ui-review](ui-review.md) (visual, reading order, 375/768/1280)
+- Worked example: [admin dual-pane layout](../recipes/admin-dual-pane-layout.md)
 - jakubkrehel `better-layout` (grouping, alignment, translation room — adapted, not vendored)
 - Anthropic frontend-design wireframe step (structure only; stay on kit zinc)

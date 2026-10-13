@@ -127,5 +127,6 @@ Language: [English](test-plan.md) · 中文
 ## 參考
 
 - Cloudflare Agents `test-plan` skill（重述、風險排序、given/when/then、夾具、不涵蓋、固定標題）
+- 已完成例子：[垂直 TDD 切片](../recipes/vertical-tdd-slice.zh.md)
 - Cloudflare sandbox-sdk testing skill（單元對 E2E、精確命令）
 - Testing trophy（偏整合；E2E 保持薄）

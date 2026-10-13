@@ -145,5 +145,6 @@ Ask before resetting a database, hitting a live Stripe/LLM endpoint, or disablin
 - Testing trophy (fail at the lowest layer that can see the bug)
 - `git bisect` / `git bisect run` — Git documentation
 - [write-tests](write-tests.md) (regression-first, in-memory ports)
+- Worked example: [debug tenancy isolation](../recipes/debug-tenancy-isolation.md)
 - Systematic debugging (root cause → failing repro → one fix); kit-bound hypothesis table above
 - Pino redaction — <https://getpino.io/#/docs/redaction>

@@ -197,6 +197,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Plan a feature | [plan-feature](docs/skills/plan-feature.md), [docs/plans/_template.md](docs/plans/_template.md) |
 | Scaffold a product | [new-product](docs/skills/new-product.md), [create-ysk-app](docs/cli/create-ysk-app.md) |
 | Add a resource | [add-module](docs/skills/add-module.md), [recipe](docs/recipes/add-module.md) |
+| Developer how-to (layout, PHP client, TDD, tenancy) | [docs/recipes/](docs/recipes/README.md) |
 | Restore llm / team / billing / push | [add-capability](docs/skills/add-capability.md) |
 | Envelope / SSE / PDF | [envelope-api](docs/skills/envelope-api.md), [envelope guide](docs/guides/envelope.md) |
 | DTO / path / OpenAPI | [contract-change](docs/skills/contract-change.md) |

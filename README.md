@@ -114,6 +114,13 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.5.2
+
+#### Improvements
+
+- Worked developer recipes (English + Hong Kong Traditional Chinese): admin dual-pane layout, PHP OpenAPI client (ADR 0002 / `php-bridge`), vertical TDD slice, debug tenancy isolation. Index: [docs/recipes/](docs/recipes/README.md).
+- Living testing guide adds Vertical TDD. Architecture and flavors point at the PHP walkthrough.
+
 ### v1.5.1
 
 #### Improvements
@@ -132,12 +139,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - Coordinated bump supersedes Dependabot #38 (types-only while CI stayed 24). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45).
-
-### v1.4.0
-
-#### Dependency upgrades
-
-- Mobile Expo 57.0.26 → **58.0.7** (npm dist-tag **`next`**; **`latest` is still 57.0.27**), `expo-secure-store` ~58.0.2, `expo-status-bar` ~58.0.3, React Native 0.86.3 → **0.88.0-rc.4**, React 19.2.8 → **19.3.0** workspace-wide. Supersedes Dependabot #35. v1.3.0 shipped desktop Vite 8 (#41 / #44).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

@@ -1,5 +1,11 @@
 # @ysk-kit/apikey
 
+## 1.5.2
+
+### Patch Changes
+
+- bd40225: Docs only: bilingual worked recipes for admin dual-pane layout, PHP OpenAPI / php-bridge clients, vertical TDD, and tenancy debug. Living testing / architecture / flavors guides and indexes point at them. No runtime, OpenAPI, or extra flavors.
+
 ## 1.5.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @ysk-kit/api-fastify
 
+## 1.5.2
+
+### Patch Changes
+
+- bd40225: Docs only: bilingual worked recipes for admin dual-pane layout, PHP OpenAPI / php-bridge clients, vertical TDD, and tenancy debug. Living testing / architecture / flavors guides and indexes point at them. No runtime, OpenAPI, or extra flavors.
+- Updated dependencies [bd40225]
+  - @ysk-kit/api-http@1.5.2
+  - @ysk-kit/apikey@1.5.2
+  - @ysk-kit/auth@1.5.2
+  - @ysk-kit/contracts@1.5.2
+  - @ysk-kit/domain-kernel@1.5.2
+
 ## 1.5.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @ysk-kit/cli
 
+## 1.5.1
+
+### Patch Changes
+
+- d88e385: Docs and skills only: polyglot-clients ADR plus flavors language-choice table; bilingual layout-system skill; vertical TDD, debug hypotheses, and security supply-chain polish. No runtime, codegen, or extra flavors.
+- Updated dependencies [d88e385]
+  - @ysk-kit/api-http@1.5.1
+  - @ysk-kit/contracts@1.5.1
+
 ## 1.5.0
 
 ### Minor Changes

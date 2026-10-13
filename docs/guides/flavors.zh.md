@@ -41,6 +41,6 @@ Language: [English](flavors.md) · 中文
 | ML 推論 | Python 行程當**內部 sidecar**；產品 API 仍是 Node | 把 FastAPI 當兄弟公開 API |
 | 合作方／機器流量 | REST envelope + API key（`gateway`） | 公開 gRPC |
 
-`create-ysk-app` 尚未產生 Tauri、Flutter 或 KMP。那些 flavor 出現之前，產生 OpenAPI 客戶端並指向 `API_PUBLIC_URL`。不要用另一種語言另造一套 `application/`。
+`create-ysk-app` 尚未產生 Tauri、Flutter 或 KMP。那些 flavor 出現之前，產生 OpenAPI 客戶端並指向 `API_PUBLIC_URL`。不要用另一種語言另造一套 `application/`。可複製的 PHP 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。
 
 CLI 旗標：[create-ysk-app](../cli/create-ysk-app.zh.md)。

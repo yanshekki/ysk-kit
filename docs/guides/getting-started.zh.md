@@ -97,6 +97,7 @@ docker compose up -d prometheus grafana
 
 - [Hexagonal 分層](hexagonal.zh.md) — 程式放哪裏
 - [加模組](../recipes/add-module.zh.md)
+- [操作手冊](../recipes/README.zh.md) — 版面、PHP 客戶端、垂直 TDD、租戶除錯
 - [已完成的實例](../../examples/README.zh.md)
 - [CLI](../cli/index.zh.md)
 - [更新已產生產品的護欄](upgrade.zh.md)

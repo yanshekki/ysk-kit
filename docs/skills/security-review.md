@@ -156,6 +156,7 @@ Stop and ask before weakening authz, rate limits, or secret-logging rules; befor
 - getsentry `security-review` and `secret-serialization` — <https://github.com/getsentry/skills>
 - getsentry / cisco skill-scanner (audit external skills, not product APIs)
 - openai `security-threat-model` / `security-best-practices` — <https://github.com/openai/skills>
+- Worked example: [debug tenancy isolation](../recipes/debug-tenancy-isolation.md)
 - OWASP ASVS 5.0 V8 Authorization (V8.4.1 cross-tenant) — <https://asvs.dev/v5.0.0/V8-Authorization/>
 - OWASP Authorization Cheat Sheet — <https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html>
 - Pino redaction — <https://getpino.io/#/docs/redaction>

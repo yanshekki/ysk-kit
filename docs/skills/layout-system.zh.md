@@ -101,5 +101,6 @@ Next: ui-design → ui-review
 
 - [ui-design](ui-design.zh.md)（zinc token、`@ysk-kit/ui`、表單）
 - [ui-review](ui-review.zh.md)（視覺、閱讀順序、375／768／1280）
+- 已完成例子：[Admin 雙欄版面](../recipes/admin-dual-pane-layout.zh.md)
 - jakubkrehel `better-layout`（分組、對齊、翻譯空間——改寫使用，不 vendor）
 - Anthropic frontend-design 線框步驟（只取結構；留在 kit zinc）

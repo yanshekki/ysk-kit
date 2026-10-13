@@ -21,6 +21,8 @@ Ten product systems you can scaffold from YSK Kit. Each example is an **overlay*
 
 Gateway, php-bridge, trading, and static-web3 already have flavor manuals under `docs/guides/flavors.md`. They are not duplicated here.
 
+Developer how-tos that are **not** product overlays (ASCII layout, PHP OpenAPI client, vertical TDD, tenancy debug) live in [docs/recipes/](../docs/recipes/README.md). Do not add a new `examples/<slug>` for those workflows.
+
 ## Apply
 
 From the kit checkout:

@@ -97,6 +97,7 @@ Jaeger does nothing until `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`. G
 
 - [Hexagonal layers](hexagonal.md) — where to put code
 - [Add a module](../recipes/add-module.md)
+- [Recipes](../recipes/README.md) — layout, PHP client, vertical TDD, tenancy debug
 - [Worked examples](../../examples/README.md)
 - [CLI](../cli/index.md)
 - [Refreshing a generated product](upgrade.md)

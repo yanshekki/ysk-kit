@@ -4,6 +4,16 @@ Language: [中文](testing.zh.md) · English
 
 Procedures for agents: [test-plan](../skills/test-plan.md) (rank cases), then [write-tests](../skills/write-tests.md) (how to write them here). UI screens also need [ui-review](../skills/ui-review.md).
 
+## Vertical TDD
+
+Layer-map rows in [test-plan](../skills/test-plan.md) are the **seams**. For a behaviour change, take **one vertical slice** at a time:
+
+1. Pick the highest-risk case. Write **one** `it(...)` at that layer. Confirm it is **red**.
+2. Write the **minimum** code that turns that `it` green (contracts → `application/` → HTTP). Do not refactor yet.
+3. Keep the slice green, then the next risk.
+
+Do not write every `it` in the plan and then the module (horizontal). Bug fixes stay regression-first. Copy-paste walkthrough: [Vertical TDD slice](../recipes/vertical-tdd-slice.md).
+
 ## Vitest (default)
 
 API tests inject memory ports. They do not start MySQL, Redis, Stripe, Twilio, FCM, Jaeger, or Grafana. `create-memory-input.ts` builds the same services composition uses in production.

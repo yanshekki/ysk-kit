@@ -207,7 +207,7 @@ Ask before adding `@axe-core/playwright`, visual-regression CI, or `fast-check`.
 
 - Cloudflare sandbox-sdk testing skill (unit vs E2E, filter one file / `-t`)
 - Cloudflare Agents `test-plan` (given / when / then)
-- Vertical TDD slice (one red `it` per seam; kit-bound — no extra TDD skill)
+- Vertical TDD slice (one red `it` per seam; kit-bound — no extra TDD skill). Walkthrough: [vertical TDD slice](../recipes/vertical-tdd-slice.md)
 - Testing trophy; Testing Library guiding principles (query by role/label)
 - Playwright best practices (web-first assertions, no `waitForTimeout`)
 - “Never mock what you don’t own”

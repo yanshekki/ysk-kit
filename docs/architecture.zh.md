@@ -157,7 +157,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在加密可用時用 Electron `safeStorage` 持久化，否則只留在該次工作階段的記憶體。主行程會設 Content-Security-Policy、`sandbox: true`，並拒絕未預期的導航、新視窗與未信任的 IPC。Prisma 永不在 Electron 內運行。
 
-非 TypeScript 客戶端是可選的。它們經產生出來、明白 envelope 的客戶端消費 `docs/openapi.yaml`（或 `GET /openapi.json`）——既有模式是 `php-bridge`。它們不可複製 domain 或業務規則、不可 import Prisma，也不可對 kit 路徑發臨時 HTTP。決定：[ADR 0002](adr/0002-polyglot-clients.zh.md)。語言選擇表：[flavors](guides/flavors.zh.md#客戶端語言選擇)。
+非 TypeScript 客戶端是可選的。它們經產生出來、明白 envelope 的客戶端消費 `docs/openapi.yaml`（或 `GET /openapi.json`）——既有模式是 `php-bridge`。它們不可複製 domain 或業務規則、不可 import Prisma，也不可對 kit 路徑發臨時 HTTP。決定：[ADR 0002](adr/0002-polyglot-clients.zh.md)。語言選擇表：[flavors](guides/flavors.zh.md#客戶端語言選擇)。逐步說明：[PHP OpenAPI 客戶端](recipes/php-openapi-client.zh.md)。
 
 ## 產生器
 

@@ -48,7 +48,7 @@ Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_S
 | `trading` | api, web | `TRADING.md` + `.zh.md` | applied |
 | `static-web3` | web | `WEB3.md` + `.zh.md` | ignored |
 
-Details: [flavors guide](../guides/flavors.md).
+Details: [flavors guide](../guides/flavors.md). `php-bridge` walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md).
 
 ## Thin preset
 

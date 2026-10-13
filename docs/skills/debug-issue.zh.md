@@ -143,5 +143,6 @@ Secrets: none logged
 - Testing trophy（在能看見 bug 的最低層失敗）
 - `git bisect`／`git bisect run` — Git 文件
 - [write-tests](write-tests.zh.md)（回歸先行、記憶體 port）
+- 已完成例子：[除錯租戶隔離](../recipes/debug-tenancy-isolation.zh.md)
 - 系統化除錯（根因 → 失敗重現 → 一次一修）；kit 內假設表見上
 - Pino redaction — <https://getpino.io/#/docs/redaction>

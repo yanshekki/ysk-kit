@@ -197,6 +197,7 @@ ysk-kit/
 | 計劃功能 | [plan-feature](docs/skills/plan-feature.zh.md)、[docs/plans/_template.zh.md](docs/plans/_template.zh.md) |
 | 產生產品 | [new-product](docs/skills/new-product.zh.md)、[create-ysk-app](docs/cli/create-ysk-app.zh.md) |
 | 加資源 | [add-module](docs/skills/add-module.zh.md)、[操作手冊](docs/recipes/add-module.zh.md) |
+| 開發者逐步操作（版面、PHP 客戶端、TDD、租戶） | [docs/recipes/](docs/recipes/README.zh.md) |
 | 還原 llm／team／billing／push | [add-capability](docs/skills/add-capability.zh.md) |
 | Envelope／SSE／PDF | [envelope-api](docs/skills/envelope-api.zh.md)、[envelope 指南](docs/guides/envelope.zh.md) |
 | DTO／路徑／OpenAPI | [contract-change](docs/skills/contract-change.zh.md) |

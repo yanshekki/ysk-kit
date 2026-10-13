@@ -21,6 +21,8 @@ Language: [English](README.md) · 中文
 
 Gateway、php-bridge、trading 與 static-web3 已有 flavor 手冊（`docs/guides/flavors.zh.md`），這裏不重複。
 
+不是產品 overlay 的開發者逐步操作（ASCII 版面、PHP OpenAPI 客戶端、垂直 TDD、租戶除錯）在 [docs/recipes/](../docs/recipes/README.zh.md)。不要為那些工作流程另開 `examples/<slug>`。
+
 ## 套用
 
 在 kit 工作副本執行：

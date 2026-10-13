@@ -207,7 +207,7 @@ Command: pnpm --filter @ysk-kit/<pkg> exec vitest run <file>
 
 - Cloudflare sandbox-sdk testing skill（單元對 E2E、過濾單一檔／`-t`）
 - Cloudflare Agents `test-plan`（given／when／then）
-- 垂直 TDD 切片（每個接縫一條紅燈 `it`；只寫在本 skill，不加獨立 TDD skill）
+- 垂直 TDD 切片（每個接縫一條紅燈 `it`；只寫在本 skill，不加獨立 TDD skill）。逐步說明：[垂直 TDD 切片](../recipes/vertical-tdd-slice.zh.md)
 - Testing trophy；Testing Library guiding principles（用 role／label 查詢）
 - Playwright 最佳做法（web-first 斷言，不用 `waitForTimeout`）
 - 「不要 mock 你不擁有的東西」

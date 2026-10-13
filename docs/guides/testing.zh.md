@@ -4,6 +4,16 @@ Language: [English](testing.md) · 中文
 
 給 agent 的程序：先 [test-plan](../skills/test-plan.zh.md)（排序案例），再 [write-tests](../skills/write-tests.zh.md)（在本倉怎麼寫）。UI 畫面還要 [ui-review](../skills/ui-review.zh.md)。
 
+## 垂直 TDD
+
+[test-plan](../skills/test-plan.zh.md) 層對映表的列就是**接縫**。行為改動時，一次只走**一條垂直切片**：
+
+1. 選最高風險案例。在該層寫**一條** `it(...)`。確認它是**紅燈**。
+2. 寫讓該 `it` 轉綠的**最少**程式（合約 → `application/` → HTTP）。先不要重構。
+3. 切片保持綠色，再處理下一項風險。
+
+不要先寫計劃裏每一條 `it` 再寫模組（橫切）。修 bug 維持回歸先行。可複製的逐步說明：[垂直 TDD 切片](../recipes/vertical-tdd-slice.zh.md)。
+
 ## Vitest（預設）
 
 API 測試注入記憶體 port。它們不啟動 MySQL、Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。`create-memory-input.ts` 組出與生產 composition 相同的 service。

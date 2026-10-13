@@ -152,6 +152,7 @@ Threat-model assumptions (if any): <confirmed / skipped>
 - getsentry `security-review` 與 `secret-serialization` — <https://github.com/getsentry/skills>
 - getsentry／cisco skill-scanner（審核外部 skill，不是產品 API）
 - openai `security-threat-model`／`security-best-practices` — <https://github.com/openai/skills>
+- 已完成例子：[除錯租戶隔離](../recipes/debug-tenancy-isolation.zh.md)
 - OWASP ASVS 5.0 V8 授權（V8.4.1 跨租戶） — <https://asvs.dev/v5.0.0/V8-Authorization/>
 - OWASP Authorization Cheat Sheet — <https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html>
 - Pino redaction — <https://getpino.io/#/docs/redaction>

@@ -114,6 +114,13 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.5.2
+
+#### 改進
+
+- 開發者逐步操作（英文 + 香港繁體中文）：Admin 雙欄版面、PHP OpenAPI 客戶端（ADR 0002／`php-bridge`）、垂直 TDD 切片、除錯租戶隔離。目錄：[docs/recipes/](docs/recipes/README.zh.md)。
+- 現行測試指南加入垂直 TDD。架構與 flavors 指向 PHP 逐步說明。
+
 ### v1.5.1
 
 #### 改進
@@ -132,12 +139,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - 協調 bump 取代 Dependabot #38（只改 types，CI 仍停在 24）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。
-
-### v1.4.0
-
-#### 依賴升級
-
-- 流動應用 Expo 57.0.26 → **58.0.7**（npm dist-tag **`next`**；**`latest` 仍是 57.0.27**）、`expo-secure-store` ~58.0.2、`expo-status-bar` ~58.0.3、React Native 0.86.3 → **0.88.0-rc.4**、React 19.2.8 → **19.3.0**（工作區）。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

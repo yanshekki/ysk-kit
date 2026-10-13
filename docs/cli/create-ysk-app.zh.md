@@ -48,7 +48,7 @@ npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-ki
 | `trading` | api、web | `TRADING.md` + `.zh.md` | 套用 |
 | `static-web3` | web | `WEB3.md` + `.zh.md` | 忽略 |
 
-詳情：[flavors 指南](../guides/flavors.zh.md)。
+詳情：[flavors 指南](../guides/flavors.zh.md)。`php-bridge` 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。
 
 ## Thin preset
 

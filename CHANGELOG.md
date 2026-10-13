@@ -37,6 +37,13 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.5.2
+
+### Improvements
+
+- Worked developer recipes (English + Hong Kong Traditional Chinese): [admin dual-pane layout](docs/recipes/admin-dual-pane-layout.md), [PHP OpenAPI client](docs/recipes/php-openapi-client.md) (ADR 0002 / `php-bridge`), [vertical TDD slice](docs/recipes/vertical-tdd-slice.md), [debug tenancy isolation](docs/recipes/debug-tenancy-isolation.md). Index: [docs/recipes/](docs/recipes/README.md).
+- Living [testing](docs/guides/testing.md) guide adds a Vertical TDD section. [Architecture](docs/architecture.md) and [flavors](docs/guides/flavors.md) point at the PHP walkthrough. `docs/README`, `examples/README`, and `AGENTS.md` index the recipes.
+
 ## v1.5.1
 
 ### Improvements

@@ -43,4 +43,4 @@ Language: [English](flavors.md) · 中文
 
 `create-ysk-app` 尚未產生 Tauri、Flutter 或 KMP。那些 flavor 出現之前，產生 OpenAPI 客戶端並指向 `API_PUBLIC_URL`。不要用另一種語言另造一套 `application/`。可複製的 PHP 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。
 
-CLI 旗標：[create-ysk-app](../cli/create-ysk-app.zh.md)。
+CLI 旗標：[create-ysk-app](../cli/create-ysk-app.zh.md)。互動式 `create-ysk-app` 用編號 TTY 精靈，文案轉述本頁；`--yes`／非 TTY 永不提問。

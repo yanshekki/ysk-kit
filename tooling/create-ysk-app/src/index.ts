@@ -4,7 +4,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HELP } from './help.js';
 import { resolveKitRoot } from './kit-root.js';
-import { resolveCreateOptions, withReadlineAsk } from './prompt.js';
+import {
+  isCreateCancelledError,
+  type ResolvedCreateOptions,
+  resolveCreateOptions,
+  withReadlineAsk,
+} from './prompt.js';
 import { createYskApp, parseArgs } from './scaffold.js';
 
 const isCliEntry = (): boolean => {
@@ -32,10 +37,19 @@ const main = async (): Promise<void> => {
   }
   const parsed = parseArgs(argv);
   const tty = Boolean(process.stdin.isTTY && process.stdout.isTTY);
-  const resolved =
-    !tty || parsed.yes
-      ? await resolveCreateOptions(parsed, { tty: false, ask: async () => '' })
-      : await withReadlineAsk((ask) => resolveCreateOptions(parsed, { tty: true, ask }));
+  let resolved: ResolvedCreateOptions;
+  try {
+    resolved =
+      !tty || parsed.yes
+        ? await resolveCreateOptions(parsed, { tty: false, ask: async () => '' })
+        : await withReadlineAsk((ask) => resolveCreateOptions(parsed, { tty: true, ask }));
+  } catch (error) {
+    if (isCreateCancelledError(error)) {
+      console.log('create cancelled');
+      process.exit(0);
+    }
+    throw error;
+  }
 
   if (!resolved.name) {
     help();

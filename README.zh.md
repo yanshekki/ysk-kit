@@ -114,6 +114,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.0
+
+#### 新功能
+
+- 互動式 `create-ysk-app` 改用編號引導式精靈（適用於／避免何時／寫入前確認）。Flavor 輸入接受 `1`–`6` 與 slug。TTY 文案只用英文。`--yes`／非 TTY 永不提問。
+
 ### v1.5.2
 
 #### 改進
@@ -128,17 +134,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 - [ADR 0002](docs/adr/0002-polyglot-clients.zh.md)：OpenAPI + envelope 是唯一多語言邊界；預設堆疊維持 TypeScript。[Flavors](docs/guides/flavors.zh.md) 加上客戶端語言選擇表。
 - Agent skill `layout-system`（英文 + 香港繁體中文）：線框、AppShell、欄、375／768／1280，然後 `ui-design`／`ui-review`。
 - `write-tests`／`test-plan` 垂直 TDD 切片；`debug-issue` 假設表；`security-review` 供應鏈；`verify-change` 要求本回合新鮮的五條命令成功輸出。
-
-### v1.5.0
-
-#### 改進
-
-- kit 運行時是 **Node 26（Current）**。`engines.node` 是 `>=26.0.0`。GitHub Actions `node-version` 是 `26`。`@types/node` 是 `^26.6.5`，DefinitelyTyped major 對齊 Node major。停在 Node 24 的 dest 產品會過不了 `ysk-kit doctor` engines。
-- `ysk-kit doctor` engines 提示改為安裝 Node 26。`create-ysk-app` dest README 註解寫 Node 26 + pnpm 12。
-
-#### 內部／CI
-
-- 協調 bump 取代 Dependabot #38（只改 types，CI 仍停在 24）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

@@ -129,3 +129,5 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 **v1.4.0：** 流動應用 Expo 57.0.26 → 58.0.7（npm `next`；`latest` 仍是 57.0.27），連同 expo-secure-store ~58.0.2、expo-status-bar ~58.0.3、React Native 0.88.0-rc.4，以及工作區 React 19.3.0。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。
 
 **v1.5.0：** kit 運行時是 Node 26（Current，截至 2026-10-11 不是 LTS）。`engines.node` `>=26.0.0`、GitHub Actions `node-version: 26`、`@types/node` ^26.6.5。協調 bump 取代 Dependabot #38（只改 types）。v1.3.0 已發佈桌面 Vite 8（#41／#44）。v1.4.0 已發佈 Expo SDK 58（#42／#45）。停在 Node 24 的 dest 產品會過不了 `ysk-kit doctor` engines.
+
+**v1.6.0：** 互動式 `create-ysk-app` 編號引導式精靈（適用於／避免何時／寫入前確認）。Flavor 輸入接受 1–6 與 slug。TTY 只用英文。`--yes`／非 TTY 沉默。Tauri／Flutter／KMP 仍延後（ADR 0002）。

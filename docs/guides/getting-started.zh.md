@@ -29,7 +29,7 @@ Fastify：在 `.env` 設 `HTTP_ADAPTER=fastify` 並重啟 API。
 
 ## 路徑 B — 新產品（thin，十五分鐘）
 
-在 TTY 可省略旗標；命令會提示 flavor、preset 與資料庫。旗標與 `--yes` 會略過提問。
+在 TTY 可省略旗標；命令會跑編號引導式精靈（適用於／避免何時），並在寫檔前確認。旗標與 `--yes` 會略過提問。
 
 從 npm（`@ysk-kit/create-app`）。npm 上沒有無 scope 的 `create-ysk-app` 套件：
 

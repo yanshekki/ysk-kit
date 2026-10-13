@@ -18,9 +18,19 @@ Missing `<name>` on a non-TTY prints `--help` and exits 1. Unknown `--flavor` th
 
 ## Interactive
 
-On a TTY, omitted choices are prompted (name, flavor, preset, database, admin, mobile). Empty input keeps the default. Flags already on the command line are not asked again.
+On a TTY, omitted choices are prompted with a numbered guided wizard (English copy):
 
-`--yes` / `-y` skips prompts and uses defaults plus any flags passed. CI and pipes are non-TTY and never prompt.
+1. Product name.
+2. Product shape — flavor `1`–`6` **or** slug (`saas`, `desktop`, `gateway`, `php-bridge`, `trading`, `static-web3`), each with best-for / avoid-when / tradeoffs.
+3. Client language note: default TypeScript; `php-bridge` for OpenAPI + PHP/TS clients; Tauri / Flutter / KMP are deferred ([ADR 0002](../adr/0002-polyglot-clients.md)) — the wizard educates and does not scaffold those trees.
+4. Capability depth — `thin` \| `full` (number or slug). Skipped for `php-bridge` and `static-web3`.
+5. Database — `mysql` \| `postgresql` \| `sqlite` (number or slug). Skipped for the same flavors.
+6. Surfaces (saas only) — admin and mobile yes/no, with implications (`--no-admin` / `--no-mobile`).
+7. Confirm summary. Proceed `no` exits **without writing files**. Empty Enter on Proceed is yes.
+
+Empty input keeps the documented default. Flags already on the command line are not asked again; the language note still appears. TTY strings are English only.
+
+`--yes` / `-y` skips prompts (including confirm) and uses defaults plus any flags passed. CI and pipes are non-TTY and never prompt.
 
 `php-bridge` and `static-web3` are not asked for preset or database. Only `saas` is asked for admin and mobile.
 

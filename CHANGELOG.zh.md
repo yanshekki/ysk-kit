@@ -37,6 +37,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.0
+
+### 新功能
+
+- 互動式 `create-ysk-app` 改用編號引導式精靈：flavor／preset／資料庫選單附適用於／避免何時／權衡、客戶端語言說明（預設 TypeScript；`php-bridge`；Tauri／Flutter／KMP 依 ADR 0002 延後）、saas 的 admin／mobile 提問，以及寫入前確認摘要。Proceed `no` 不建立檔案就退出。Flavor 輸入接受 `1`–`6` 與 slug。TTY 文案只用英文。`--yes`／非 TTY 對旗標與預設保持沉默。
+
 ## v1.5.2
 
 ### 改進

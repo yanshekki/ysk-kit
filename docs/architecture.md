@@ -163,7 +163,7 @@ Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /
 
 | Command | Effect |
 |---|---|
-| `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. TTY prompts for omitted flags; `--yes` skips prompts |
+| `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. TTY runs a numbered guided wizard then confirms before write; `--yes` skips prompts |
 | `ysk-kit add module` | One hexagonal HTTP slice |
 | `ysk-kit add <capability>` | Merge Prisma, env, deps; copy source for llm / team / billing / push when missing |
 | `ysk-kit generate openapi` | Write `docs/openapi.yaml` |

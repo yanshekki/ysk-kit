@@ -15,6 +15,7 @@ const SKILLS = [
   'plan-feature',
   'test-plan',
   'write-tests',
+  'layout-system',
   'ui-design',
   'ui-review',
   'security-review',

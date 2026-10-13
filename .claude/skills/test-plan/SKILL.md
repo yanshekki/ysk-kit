@@ -12,8 +12,8 @@ description: >
 Read `docs/skills/test-plan.md`. Law: `AGENTS.md`.
 
 1. Restate the change. Rank data loss, auth, money, tenancy, secrets first.
-2. Map each risk to a layer and file. Write given/when/then cases.
-3. Name in-memory fixtures and explicit out of scope. Then write-tests.
-Gotcha: do not start Redis or Stripe to plan tests. E2E stays thin.
+2. Map each risk to a layer and file (those rows are TDD seams). Write given/when/then cases.
+3. Name in-memory fixtures and explicit out of scope. Mark the first red `it()`. Then write-tests.
+Gotcha: do not start Redis or Stripe to plan tests. E2E stays thin. Do not dump every test before code.
 Verify: every case has layer + file; out of scope is written.
 Full steps: `docs/skills/test-plan.md`.

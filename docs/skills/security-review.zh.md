@@ -51,7 +51,7 @@ Language: [English](security-review.md) · 中文
 6. 速率限制：`RATE_LIMIT_MAX`／`RATE_LIMIT_WINDOW_MS` 經 `@ysk-kit/api-http` 的 `createRateLimit`。Auth OTP 已回 `RATE_LIMITED`。不要為了測試通過而關掉限制器（`RATE_LIMIT_MAX=0` 是測試／CI 逃生口，不是生產設定）。
 7. CORS：`packages/config` 的 `corsOrigins` 是 web + admin 公開 URL。不要用 `*` 配 credentials。是否加 helmet／CSP header 要寫進計劃（API 目前沒有）。
 8. LLM：產品功能在 `application/` 持有 prompt（`LLM_SYSTEM_PROMPT`）。客戶端只送 `user`／`assistant`（`LlmClientRoleSchema`）。把使用者內容當不可信。跟隨 [llm-feature](llm-feature.zh.md)。
-9. 供應鏈：新的 runtime 依賴屬於 **先問**（AGENTS.md）。
+9. 走 [供應鏈](#供應鏈)。新的 runtime 依賴仍然是 **先問**。
 10. 若模式是 `threat-model`，在寫 findings **之前**跑 [威脅模型子模式](#威脅模型子模式)。先與使用者確認假設。
 11. 輸出 [輸出格式](#輸出格式)。若改了程式，接著 [驗證改動](verify-change.zh.md)。
 
@@ -59,7 +59,7 @@ Language: [English](security-review.md) · 中文
 
 這些是審查位置，不是已確認的漏洞。描述正確模式；不要在只改文件的變更裡「順便修」。
 
-| 範圍 | 現況（v1.2.2） | 繼續這樣做 |
+| 範圍 | 現況 | 繼續這樣做 |
 |---|---|---|
 | Logger | `packages/logger` pino `redact` paths | 不要 log OTP、JWT、`sk_`、`whsec_` |
 | Billing webhook | 驗簽 + `ProcessedWebhookEvent` | [webhook-handling](webhook-handling.zh.md)；履約仍應入隊 |
@@ -67,6 +67,19 @@ Language: [English](security-review.md) · 中文
 | Electron token | 只用 `safeStorage`；不可用時只留記憶體 | [desktop-electron](desktop-electron.zh.md) |
 | 租戶 | `requireBiller`／`requireMember` | 每個 org-scoped use case 都抄此模式 |
 | LLM | 伺服器 `LLM_SYSTEM_PROMPT`；客戶端沒有 `system` role；配額 `RATE_LIMITED` | [llm-feature](llm-feature.zh.md) |
+
+## 供應鏈
+
+不要把「編譯過了」當成你沒有寫過的新程式的安全審查。
+
+| 表面 | 規則 |
+|---|---|
+| 新的 **runtime** 依賴 | **先問**（AGENTS.md）。優先用既有 port，不要新套件。把詢問記進計劃 |
+| 傳遞依賴 bump | 以 diff 為範圍；沒有新信任邊界的 bump 不是本 skill。新的 native addon、安裝程式或 HTTP 客戶端才是 |
+| Agent skills | 不要從未知來源對本 kit 執行 `npx skills add`（或同等命令）。複製前先釘選並讀 `SKILL.md`。外部 skill 只在 `docs/skills/index.zh.md` 當指針，不要另開一棵樹 |
+| GitHub Actions | workflow 也是供應鏈：改 `.github/` 時以 SHA 釘選 action；不要加會把密鑰 POST 到未知端點的第三方 action |
+
+可選研究（不是第二條 kit skill）：getsentry／cisco **skill-scanner** 用來審核你可能引入的*外部* skill；它不是掃產品 HTTP。
 
 ## 威脅模型子模式
 
@@ -132,11 +145,12 @@ Threat-model assumptions (if any): <confirmed / skipped>
 
 ## 升級／詢問
 
-在削弱授權、速率限制或密鑰日誌規則之前；在新增 envelope 例外之前；在加入新 runtime 依賴之前，停下來問使用者。
+在削弱授權、速率限制或密鑰日誌規則之前；在新增 envelope 例外之前；在加入新 runtime 依賴之前；在引入未知 agent skill 之前，停下來問使用者。
 
 ## 來源
 
 - getsentry `security-review` 與 `secret-serialization` — <https://github.com/getsentry/skills>
+- getsentry／cisco skill-scanner（審核外部 skill，不是產品 API）
 - openai `security-threat-model`／`security-best-practices` — <https://github.com/openai/skills>
 - OWASP ASVS 5.0 V8 授權（V8.4.1 跨租戶） — <https://asvs.dev/v5.0.0/V8-Authorization/>
 - OWASP Authorization Cheat Sheet — <https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html>

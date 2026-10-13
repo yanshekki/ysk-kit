@@ -114,6 +114,14 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.5.1
+
+#### 改進
+
+- [ADR 0002](docs/adr/0002-polyglot-clients.zh.md)：OpenAPI + envelope 是唯一多語言邊界；預設堆疊維持 TypeScript。[Flavors](docs/guides/flavors.zh.md) 加上客戶端語言選擇表。
+- Agent skill `layout-system`（英文 + 香港繁體中文）：線框、AppShell、欄、375／768／1280，然後 `ui-design`／`ui-review`。
+- `write-tests`／`test-plan` 垂直 TDD 切片；`debug-issue` 假設表；`security-review` 供應鏈；`verify-change` 要求本回合新鮮的五條命令成功輸出。
+
 ### v1.5.0
 
 #### 改進
@@ -130,12 +138,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 依賴升級
 
 - 流動應用 Expo 57.0.26 → **58.0.7**（npm dist-tag **`next`**；**`latest` 仍是 57.0.27**）、`expo-secure-store` ~58.0.2、`expo-status-bar` ~58.0.3、React Native 0.86.3 → **0.88.0-rc.4**、React 19.2.8 → **19.3.0**（工作區）。取代 Dependabot #35。v1.3.0 已發佈桌面 Vite 8（#41／#44）。
-
-### v1.3.0
-
-#### 依賴升級
-
-- 桌面 Vite 7.3.6 → 8.3.2，electron-vite 5.0.0 → 6.0.0-beta.8（beta；peer Vite 6–8）。web／admin 已在 Vite 8.3.2。取代 Dependabot #36（該 PR 只升 vite，留下 electron-vite 5，peer 範圍不含 Vite 8）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

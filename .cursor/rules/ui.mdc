@@ -6,4 +6,4 @@ alwaysApply: false
 
 Local reminder. Law: `AGENTS.md`.
 
-Reuse `@ysk-kit/ui` and the zinc theme (`docs/skills/ui-design.md`). Do not invent a parallel design system. A screen is not done until `docs/skills/ui-review.md` is green. No raw `fetch`.
+Reuse `@ysk-kit/ui` and the zinc theme (`docs/skills/ui-design.md`). Complex structure: `docs/skills/layout-system.md` first. Do not invent a parallel design system. A screen is not done until `docs/skills/ui-review.md` is green. No raw `fetch`.

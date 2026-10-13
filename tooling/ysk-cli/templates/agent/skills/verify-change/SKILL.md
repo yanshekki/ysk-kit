@@ -11,7 +11,7 @@ Read `docs/skills/verify-change.md`. Law: `AGENTS.md`.
 
 1. Run `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent`.
 2. `git diff --exit-code docs/openapi.yaml` (commit YAML if HTTP changed).
-3. Conditional: lint, check:links, zh pair, lockstep changeset, e2e.
-Gotcha: never claim done without running the five commands in this turn.
+3. Conditional: lint, check:links, zh pair, lockstep changeset, e2e. Behaviour change: at least one new/updated Vitest.
+Gotcha: never claim done without fresh successful output of the five commands in this turn.
 Verify: emit the verification report in the skill output format.
 Full steps: `docs/skills/verify-change.md`.

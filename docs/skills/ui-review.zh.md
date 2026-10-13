@@ -12,7 +12,7 @@ description: >
 
 Language: [English](ui-review.md) · 中文
 
-把 UI 標為完成之前跑此清單。設計規則：[ui-design](ui-design.zh.md)。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。測試：[write-tests](write-tests.zh.md)。
+把 UI 標為完成之前跑此清單。設計規則：[ui-design](ui-design.zh.md)。複雜結構先走 [layout-system](layout-system.zh.md)。法律：[AGENTS.zh.md](../../AGENTS.zh.md)。測試：[write-tests](write-tests.zh.md)。
 
 ## 觸發
 
@@ -41,7 +41,8 @@ Language: [English](ui-review.md) · 中文
 - [ ] 用 `@ysk-kit/ui`（mobile 用 RN 原語），不是另一套 kit
 - [ ] Zinc 頁面（`bg-zinc-50`／`text-zinc-900`）、只有 `rounded-md`、控件 `h-9`
 - [ ] 沒有漸層 mesh、玻璃、紫色光暈或混用圓角
-- [ ] 頁首／表格／表單對齊 `max-w-4xl` 與 `px-4` 溝槽
+- [ ] 頁首／表格／表單對齊 `max-w-4xl` 與 `px-4` 溝槽（光學對齊：標籤與欄共用一條邊）
+- [ ] 閱讀順序符合 [layout-system](layout-system.zh.md) 線框（品牌 → 導航 → 標題 → 主動作 → 正文）
 - [ ] 長的 `zh-HK` 字串會換行（`flex-wrap`）；375px 沒有裁切
 
 ### 可及性
@@ -59,6 +60,7 @@ Language: [English](ui-review.md) · 中文
 ### 響應式
 
 - [ ] 375／768／1280：沒有橫向捲動、控件不重疊
+- [ ] 新殼／分欄已走 [layout-system](layout-system.zh.md)（線框存在）
 - [ ] `PageHeader` 動作會換行；表格必要時可橫向捲
 - [ ] Desktop Electron：1280 時與 web 同一版面
 

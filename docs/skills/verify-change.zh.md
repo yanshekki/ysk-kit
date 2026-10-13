@@ -28,7 +28,7 @@ Language: [English](verify-change.md) · 中文
 
 ## 步驟
 
-未經本回合跑完此鏈，永遠不要聲稱改動已完成。
+未經本回合印出**這五條命令的新鮮成功輸出**，永遠不要聲稱改動已完成。上一回合的輸出、快取的 CI job，或「昨天過了」都不算。貼不出成功行，改動就未完成。
 
 ```bash
 pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
@@ -79,6 +79,7 @@ git diff --exit-code docs/openapi.yaml
 | Grok Build | `grok inspect` |
 | UI | [ui-review](ui-review.zh.md) |
 | 新測試 | 先 [test-plan](test-plan.zh.md)，再 [write-tests](write-tests.zh.md) |
+| 功能**行為**有變 | 本次至少一條**新增或更新**的 Vitest `it()`（垂直 TDD 切片或回歸）。只改文件／機械式重新命名可略過 |
 
 不要為了讓單元測試通過而啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 
@@ -86,7 +87,8 @@ git diff --exit-code docs/openapi.yaml
 
 ## 驗證
 
-- [ ] 本回合五條命令都印出成功
+- [ ] 本回合五條命令都印出成功（新鮮輸出；不是憑記憶）
+- [ ] 行為改動：至少一條新增或更新的 Vitest（或明確 n/a：只改文件）
 - [ ] `git diff --exit-code docs/openapi.yaml` 與「HTTP 有沒有變」的答案一致
 - [ ] 適用的條件性額外都是綠色
 - [ ] 日誌沒有密鑰、OTP、Stripe `sk_` 或 webhook 密鑰
@@ -107,13 +109,15 @@ Done: no | yes (DoD)
 
 ## 完成條件
 
-只有本回合五條命令全綠、OpenAPI 與合約改動一致，而且 `AGENTS.zh.md` 的[完成定義](../../AGENTS.zh.md#完成定義)成立，才可把改動標為完成。
+只有本回合五條命令印出成功、OpenAPI 與合約改動一致、行為改動有新增或更新的 Vitest，而且 `AGENTS.zh.md` 的[完成定義](../../AGENTS.zh.md#完成定義)成立，才可把改動標為完成。
 
 ## 反模式
 
 | 症狀 | 改為 |
 |---|---|
 | 沒跑就說「應該沒問題」 | 跑五條命令 |
+| 用上一回合的 log 宣稱完成 | 現在重跑五條命令 |
+| 功能落地卻沒有新 Vitest | 加一條 `it()`（write-tests），或聲明只改文件 |
 | 因為只改文件就略過 `check agent` | 仍然要跑（budget + drift） |
 | 留下 dirty 的 OpenAPI | 提交或還原 |
 | 為了單元測試通過而啟動 Redis | 記憶體 port |

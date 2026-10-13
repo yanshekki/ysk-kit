@@ -15,6 +15,6 @@ Read `docs/skills/security-review.md`. Law: `AGENTS.md`.
 
 1. Diff is the report scope; the repo is research. HIGH confidence only.
 2. AuthZ in `application/` (membership + role). Cross-tenant memory tests.
-3. No secrets in logs. Webhook signatures. Client token stores.
+3. No secrets in logs. Webhook signatures. Client token stores. Supply chain: ask before new runtime deps; do not `npx skills add` unknown sources.
 4. Threat-model sub-mode only when the user asks or a new trust boundary lands.
 Full steps: `docs/skills/security-review.md`.

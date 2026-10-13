@@ -64,6 +64,7 @@ describe('ysk upgrade', () => {
     expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/test-plan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/layout-system/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/desktop-electron/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/contract-change/SKILL.md'))).toBe(true);

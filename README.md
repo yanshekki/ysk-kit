@@ -114,6 +114,14 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.5.1
+
+#### Improvements
+
+- [ADR 0002](docs/adr/0002-polyglot-clients.md): OpenAPI + envelope is the sole polyglot boundary; default stack stays TypeScript. [Flavors](docs/guides/flavors.md) adds a Client language choice table.
+- Agent skill `layout-system` (English + Hong Kong Traditional Chinese): wireframe, AppShell, grid, 375/768/1280, then `ui-design` / `ui-review`.
+- `write-tests` / `test-plan` vertical TDD slice; `debug-issue` hypotheses table; `security-review` supply chain; `verify-change` requires fresh five-command output this turn.
+
 ### v1.5.0
 
 #### Improvements
@@ -130,12 +138,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Dependency upgrades
 
 - Mobile Expo 57.0.26 → **58.0.7** (npm dist-tag **`next`**; **`latest` is still 57.0.27**), `expo-secure-store` ~58.0.2, `expo-status-bar` ~58.0.3, React Native 0.86.3 → **0.88.0-rc.4**, React 19.2.8 → **19.3.0** workspace-wide. Supersedes Dependabot #35. v1.3.0 shipped desktop Vite 8 (#41 / #44).
-
-### v1.3.0
-
-#### Dependency upgrades
-
-- Desktop Vite 7.3.6 → 8.3.2 and electron-vite 5.0.0 → 6.0.0-beta.8 (beta; peers Vite 6–8). Web/admin were already on Vite 8.3.2. Supersedes Dependabot #36, which bumped vite only and left electron-vite 5 (peer range excludes Vite 8).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

@@ -37,8 +37,8 @@ If acceptance criteria are missing, ask once, then plan.
 
 1. Restate the change in one sentence.
 2. Rank the **riskiest behaviours first**: data loss, auth / authz, money, concurrency, tenancy / org isolation, secrets (OTP, Stripe `sk_`, webhook signatures), idempotency, rate limits.
-3. Map each risk to a YSK Kit layer (table below). Prefer a lower layer when it can fail the case.
-4. List concrete cases as `given / when / then`. Happy path first, then edge and failure. Name the layer and file for each case.
+3. Map each risk to a YSK Kit layer (table below). Prefer a lower layer when it can fail the case. **Those layer-map rows are the seams** [write-tests](write-tests.md) uses for a vertical TDD slice.
+4. List concrete cases as `given / when / then`. Happy path first, then edge and failure. Name the layer and file for each case. Mark which case is the **first red `it()`** (highest risk).
 5. Note setup, fixtures, and factories. Default fixture: `createMemoryInput()` plus the module memory repository.
 6. Call out what is **explicitly out of scope** so the plan stays small enough to run immediately.
 
@@ -57,6 +57,8 @@ Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana. Do not write tests 
 | Mobile / desktop | Token store, adapters | `apps/mobile/src/**/*.test.ts`, `apps/desktop/src/**/*.test.ts` | In-memory token store. No Expo/Electron driver in CI |
 
 Trophy, not pyramid of E2E: most cases sit in use-case + API envelope tests. E2E stays a thin smoke.
+
+Each **Layer map** row is a seam. Feature implementation follows [write-tests](write-tests.md) **Vertical TDD slice**: one highest-risk `it()` red, then minimum code, then the next row. Do not plan a horizontal dump of every test before any production code. Bug fixes stay regression-first.
 
 ## Output format
 
@@ -107,7 +109,8 @@ Change: “Users can create a note.” Risk 1: another author must not see it (t
 - [ ] Every case is `given / when / then` with a layer and a file
 - [ ] Fixtures are in-memory (or injected fakes)
 - [ ] Out of scope is explicit
-- [ ] Implementation of cases continues in [write-tests](write-tests.md)
+- [ ] Layer map rows are the TDD seams; the first red `it()` is named
+- [ ] Implementation of cases continues in [write-tests](write-tests.md) (vertical slice, not all tests then all code)
 
 ## Anti-patterns
 
@@ -115,6 +118,7 @@ Change: “Users can create a note.” Risk 1: another author must not see it (t
 |---|---|
 | Only a happy path | Rank authz / tenancy / envelope failures |
 | “Add Playwright for everything” | Trophy: memory-port first |
+| Plan every `it` then implement the module | Name one first red case; vertical TDD in write-tests |
 | Start Stripe to plan tests | Memory fixtures |
 
 ## Escalate / ask

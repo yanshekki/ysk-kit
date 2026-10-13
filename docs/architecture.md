@@ -157,6 +157,8 @@ Web and admin use TanStack Router and `features/*`. Forms reuse command Zod sche
 
 Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens persist with Electron `safeStorage` when encryption is available, otherwise they stay in memory for the session. The main process sets a Content-Security-Policy, `sandbox: true`, and denies unexpected navigation, new windows, and untrusted IPC. Prisma never runs inside Electron.
 
+Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /openapi.json`) through generated, envelope-aware clients — `php-bridge` is the existing pattern. They must not copy domain or business rules, import Prisma, or talk to kit paths with ad-hoc HTTP. Decision: [ADR 0002](adr/0002-polyglot-clients.md). Language choice table: [flavors](guides/flavors.md#client-language-choice).
+
 ## Generators
 
 | Command | Effect |
@@ -177,7 +179,7 @@ These are product decisions, not unfinished homework:
 
 - Default HTTP is Express; Fastify is the second adapter. Hono, Nest, and Next are not defaults.
 - Default ORM is Prisma. Drizzle is not shipped.
-- Public API is ts-rest + OpenAPI. The pin and the v2 exit are recorded in [ADR 0001](adr/0001-ts-rest.md). tRPC and GraphQL are not defaults.
+- Public API is ts-rest + OpenAPI. The pin and the v2 exit are recorded in [ADR 0001](adr/0001-ts-rest.md). Polyglot clients use that OpenAPI plus the envelope; they do not get a sibling domain ([ADR 0002](adr/0002-polyglot-clients.md)). tRPC and GraphQL are not defaults. FastAPI is not a second public API. Tauri, Flutter, and Kotlin Multiplatform are not defaults.
 - Industry domains live in product repositories.
 - CI uses in-memory ports. It does not start Redis, Stripe, Twilio, FCM, Jaeger, Grafana, or an OTLP collector.
 - Kit tables have no `ysk_` prefix.

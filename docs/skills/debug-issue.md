@@ -65,11 +65,28 @@ Stop climbing the trophy once you have a **red** test you can re-run in seconds.
 
 Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana. Do not log OTP, JWT, `sk_`, `whsec_`, or webhook payloads.
 
+## Hypotheses (write before changing code)
+
+List **3–5** hypotheses and how you would **falsify** each. Verify **one row at a time**. If falsified, strike it and do not “fix” that theory.
+
+```md
+## Hypotheses
+| # | Hypothesis | Falsify by |
+|---|---|---|
+| 1 | Missing `req.user` after `optionalAuth` | Red test: unauthenticated POST → `UNAUTHENTICATED` |
+| 2 | Tenant scope dropped in the memory repo | Author B list is empty / `NOT_FOUND` |
+| 3 | Fastify register omitted the route | `createFastifyApp` SuperTest 404 vs Express 200 |
+| 4 | Envelope unwrap in the SDK | Injected `fetchImpl` returns `{ ok: false }` |
+| 5 | Fixture clock / seed id drift | Same `it()` with frozen `now` |
+```
+
+Do not edit production code until the current hypothesis has a red (or passing) check that would have disproved it. One hypothesis, one experiment.
+
 ## Steps
 
 1. Write the failing test **first** (or isolate the existing one). Confirm it is red.
-2. Triage with the table. Read the contract and the `application/` service before infra.
-3. Fix the cause. Keep both memory and Prisma repositories in sync if data was wrong.
+2. Fill the hypotheses table. Triage with the symptom table. Read the contract and the `application/` service before infra.
+3. Falsify **one** hypothesis, then fix **that** cause. Keep both memory and Prisma repositories in sync if data was wrong.
 4. Re-run the red test until green, then the module file, then [verify-change](verify-change.md).
 5. Keep the regression test. Name it after the symptom (`replays the same Stripe event.id without a second activate`).
 
@@ -95,6 +112,7 @@ Expected: the named test green; `ysk-kit check agent: ok`.
 ```md
 ## Debug — <symptom>
 Loop: memory-port | HTTP Express+Fastify | SDK | e2e | bisect
+Hypotheses: 3–5 rows (one verified at a time)
 Red test: <file> / <it name> (confirmed red)
 Cause: <one sentence>
 Fix: <files>
@@ -116,6 +134,7 @@ The original symptom has a kept regression test, HTTP bugs are covered on both a
 | Log the OTP to see why login fails | Assert `error.code` |
 | Delete the failing test | Fix the cause |
 | Bisect before a red test exists | Write the test first |
+| Change three files while testing three theories | One hypothesis, one falsify, then code |
 
 ## Escalate / ask
 
@@ -126,4 +145,5 @@ Ask before resetting a database, hitting a live Stripe/LLM endpoint, or disablin
 - Testing trophy (fail at the lowest layer that can see the bug)
 - `git bisect` / `git bisect run` — Git documentation
 - [write-tests](write-tests.md) (regression-first, in-memory ports)
+- Systematic debugging (root cause → failing repro → one fix); kit-bound hypothesis table above
 - Pino redaction — <https://getpino.io/#/docs/redaction>

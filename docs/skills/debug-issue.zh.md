@@ -63,11 +63,28 @@ Language: [English](debug-issue.md) · 中文
 
 不要啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。不要 log OTP、JWT、`sk_`、`whsec_` 或 webhook payload。
 
+## 假設（改程式之前先寫）
+
+列出 **3–5** 條假設，以及如何**證偽**每一條。一次只驗證**一列**。被證偽就劃掉，不要去「修」那條理論。
+
+```md
+## Hypotheses
+| # | Hypothesis | Falsify by |
+|---|---|---|
+| 1 | `optionalAuth` 之後沒有 `req.user` | 紅燈測試：未認證 POST → `UNAUTHENTICATED` |
+| 2 | 記憶體 repo 掉了租戶範圍 | 作者 B 列表為空／`NOT_FOUND` |
+| 3 | Fastify register 漏了路由 | `createFastifyApp` SuperTest 404，Express 200 |
+| 4 | SDK 沒有 unwrap envelope | 注入的 `fetchImpl` 回 `{ ok: false }` |
+| 5 | 夾具時鐘／種子 id 漂移 | 同一條 `it()` 凍結 `now` |
+```
+
+在目前假設有一條足以證偽它的紅燈（或通過）檢查之前，不要改產品程式。一次一條假設、一次一個實驗。
+
 ## 步驟
 
 1. **先**寫失敗測試（或隔離既有那條）。確認它是紅燈。
-2. 用表分流。先讀合約與 `application/` service，再看 infra。
-3. 修原因。若資料錯了，記憶體與 Prisma repository 兩邊同步。
+2. 填假設表。用症狀表分流。先讀合約與 `application/` service，再看 infra。
+3. **證偽一條**假設，再修**該**原因。若資料錯了，記憶體與 Prisma repository 兩邊同步。
 4. 重跑紅燈測試直到綠，再跑模組檔，再 [驗證改動](verify-change.zh.md)。
 5. 保留回歸測試。以症狀命名（`replays the same Stripe event.id without a second activate`）。
 
@@ -93,6 +110,7 @@ pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit c
 ```md
 ## Debug — <symptom>
 Loop: memory-port | HTTP Express+Fastify | SDK | e2e | bisect
+Hypotheses: 3–5 rows (one verified at a time)
 Red test: <file> / <it name> (confirmed red)
 Cause: <one sentence>
 Fix: <files>
@@ -114,6 +132,7 @@ Secrets: none logged
 | 為了看登入為何失敗而 log OTP | 斷言 `error.code` |
 | 刪掉失敗測試 | 修原因 |
 | 還沒有紅燈測試就 bisect | 先寫測試 |
+| 同時改三個檔、驗證三條理論 | 一條假設、一次證偽，再改程式 |
 
 ## 升級／詢問
 
@@ -124,4 +143,5 @@ Secrets: none logged
 - Testing trophy（在能看見 bug 的最低層失敗）
 - `git bisect`／`git bisect run` — Git 文件
 - [write-tests](write-tests.zh.md)（回歸先行、記憶體 port）
+- 系統化除錯（根因 → 失敗重現 → 一次一修）；kit 內假設表見上
 - Pino redaction — <https://getpino.io/#/docs/redaction>

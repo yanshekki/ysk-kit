@@ -13,13 +13,13 @@ Public manuals for YSK Kit. A reader who has never seen this repository should b
 | Learn a subsystem | [Hexagonal layers](guides/hexagonal.md), [envelope](guides/envelope.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [testing](guides/testing.md), [deploy](guides/deploy.md), [upgrade](guides/upgrade.md) |
 | Follow an AI procedure | [Skills](skills/index.md) and [AGENTS.md](../AGENTS.md) |
 | Plan tests / write tests | [test-plan](skills/test-plan.md), [write-tests](skills/write-tests.md) |
-| Design or review UI | [ui-design](skills/ui-design.md), [ui-review](skills/ui-review.md) |
+| Design or review UI | [layout-system](skills/layout-system.md), [ui-design](skills/ui-design.md), [ui-review](skills/ui-review.md) |
 | Write a feature plan | [Planning](plans/README.md) and [plan-feature](skills/plan-feature.md) |
 | See what shipped in a version | [Changelog](../CHANGELOG.md) |
 | Read the phase diary | [History](history.md) |
 | Report a vulnerability | [Security](../SECURITY.md) |
 | See what is planned | [Product direction](product-plan.md) |
-| Read an architecture decision | [ADR 0001: ts-rest](adr/0001-ts-rest.md) |
+| Read an architecture decision | [ADR 0001: ts-rest](adr/0001-ts-rest.md), [ADR 0002: polyglot clients](adr/0002-polyglot-clients.md) |
 | Contribute documentation | [Contributing](contributing.md) |
 
 Generated OpenAPI lives at [`openapi.yaml`](openapi.yaml) (`GET /openapi.json` on a running API). It is produced by `pnpm gen:openapi` and is not translated.

@@ -33,6 +33,7 @@ describe('writeAgentStubs', () => {
     expect(existsSync(join(dest, '.agents/skills/write-tests/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-design/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/layout-system/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/db-migration/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/webhook-handling/SKILL.md'))).toBe(true);

@@ -29,7 +29,7 @@ Fastify: set `HTTP_ADAPTER=fastify` in `.env` and restart the API.
 
 ## Path B — a new product (thin, fifteen minutes)
 
-On a TTY you may omit the flags; the command prompts for flavor, preset, and database. Flags and `--yes` skip prompts.
+On a TTY you may omit the flags; the command runs a numbered guided wizard (best-for / avoid-when) and confirms before writing files. Flags and `--yes` skip prompts.
 
 From npm (`@ysk-kit/create-app`). There is no unscoped `create-ysk-app` package:
 

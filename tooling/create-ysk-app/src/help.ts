@@ -24,8 +24,10 @@ Options:
   --yes, -y
       Accept defaults (or flags already passed). Never prompt.
 
-On a TTY, omitted name / flavor / preset / db / admin / mobile are prompted.
-Non-TTY (CI, pipes) never prompts.
+On a TTY, omitted name / flavor / preset / db / admin / mobile are prompted
+with a numbered guided wizard (best-for / avoid-when / tradeoffs) and a
+confirm-before-write summary. Enter 1–6 or a flavor slug. Proceed no exits
+without creating files. Non-TTY (CI, pipes) never prompts.
 
 php-bridge and static-web3 ignore --preset.
 

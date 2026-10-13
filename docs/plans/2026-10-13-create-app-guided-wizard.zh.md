@@ -6,12 +6,13 @@ Language: 英文配對 `2026-10-13-create-app-guided-wizard.md` · 中文 `2026-
 |---|---|
 | **Slug** | `create-app-guided-wizard` |
 | **日期** | 2026-10-13 |
-| **狀態** | draft — waiting for user approval |
+| **狀態** | approved |
 | **正規檔** | `docs/plans/2026-10-13-create-app-guided-wizard.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
-| **Gate** | waiting for user |
+| **Gate** | approved |
+| **批准人** | Shek Ki Yan，2026-10-13 HKT，經 YSK Kit 總管 |
 
-法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。檢查：`pnpm ysk-kit plan --check docs/plans/2026-10-13-create-app-guided-wizard.zh.md`。此 PR **只含計劃**。使用者批准本檔之前，不要實作 `create-ysk-app`。
+法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。檢查：`pnpm ysk-kit plan --check docs/plans/2026-10-13-create-app-guided-wizard.zh.md`。已於 2026-10-13 批准。本分支按方案 A 實作。
 
 ## 目標與使用者問題
 
@@ -23,8 +24,8 @@ Language: 英文配對 `2026-10-13-create-app-guided-wizard.md` · 中文 `2026-
 
 ## 範圍
 
-- 包含：在使用者批准之前，只提交此日期計劃配對。狀態維持 **draft — waiting for user approval**。Gate：waiting for user。
-- 包含（批准後、未來 commit）：把 `tooling/create-ysk-app/src/prompt.ts` 的 TTY 提問改成編號多步精靈，附豐富文案（適用於、避免何時、權衡）以及寫入前確認閘門。
+- 包含：日期計劃配對，狀態 **approved**（Shek Ki Yan，2026-10-13 HKT，經 YSK Kit 總管）。
+- 包含：把 `tooling/create-ysk-app/src/prompt.ts` 的 TTY 提問改成編號多步精靈，附豐富文案（適用於、避免何時、權衡）以及寫入前確認閘門。
 - 包含（未來）：保留 `AskFn` 注入，讓 Vitest 可用腳本答案（`prompt.test.ts` 模式）。
 - 包含（未來）：跳過所選 flavor 不用的層（`PRESET_SKIP` 涵蓋 `php-bridge`／`static-web3`；admin／mobile 只問 `saas`；尊重 `parsed.explicit.*`，已傳 CLI 旗標不再問）。
 - 包含（未來）：flavor 確定後印出語言／客戶端邊界說明：預設堆疊是 TypeScript；`php-bridge` 是 OpenAPI + PHP／TS 客戶端 flavor；Tauri／Flutter／KMP **已延後**（[ADR 0002](../adr/0002-polyglot-clients.zh.md)）——只教育，不搭那些樹。
@@ -36,8 +37,8 @@ Language: 英文配對 `2026-10-13-create-app-guided-wizard.md` · 中文 `2026-
 
 ## 非目標
 
-- 不含：本 PR **不**改 `tooling/create-ysk-app/src/`（沒有 `prompt.ts`、`scaffold.ts`、`help.ts`、`index.ts` 或測試）。只交計劃檔。
-- 不含：改 CLI 旗標、`parseArgs`、`FLAVORS`／`PRESETS`／`DBS`、複製／略過樹、thin preset、php-bridge 模板，或 dest 標記 `.ysk-kit.json`。
+- 不含：改複製／略過樹、thin preset、php-bridge 模板、dest 標記 `.ysk-kit.json`，或 `parseArgs` 旗標目錄。實作**會**改 `prompt.ts`／`help.ts`／`index.ts`／測試（已批准）。
+- 不含：加 CLI 旗標。`FLAVORS`／`PRESETS`／`DBS` 目錄維持原樣。
 - 不含：搭 Tauri、Flutter、Kotlin Multiplatform，或第二套 HTTP API。精靈只教育，不加 flavor。
 - 不含：HTTP 路徑、Prisma model、ts-rest 路徑、SDK／web-sdk、web／admin／mobile／desktop 畫面、envelope 例外。
 - 不含：把行業領域放進本套件（salon、venue、map）。`create-ysk-app` 仍是平台骨架。
@@ -58,7 +59,8 @@ Language: 英文配對 `2026-10-13-create-app-guided-wizard.md` · 中文 `2026-
 - 無效答案仍是三次嘗試後 `unknown <label>`（今天的 `pick`／`pickYesNo`），除非後續任務收緊——第一切片不要求。
 - 產品名稱規則維持今天（`pickName`、三次、`product name required`）。dest 非空仍是確認 yes 之後 `createYskApp` 拋錯。
 - 根目錄 `plan.md` 已 gitignore；只提交日期配對。
-- 未決的 UX 選擇留在未決問題。本計劃不選定 TTY 語言，也不選定「只接受編號 vs 編號加 slug」。
+- TTY 語言是**只用英文**（已批准）。文件維持雙語。
+- Flavor 輸入**同時**接受編號 `1–6` 與 flavor slug。Preset 與資料庫選單同樣接受編號與 slug（同一易用模式）。
 
 ## 受影響的 flavor／preset／capability
 
@@ -229,7 +231,7 @@ Envelope 例外維持現有四項。本工作不要求第五項。
 
 ## 文件／變更紀錄／changeset
 
-計劃-only PR：**沒有** changelog、README 窗口或 changeset（尚未有可發布行為）。
+實作 PR：changelog v1.6.0、README 三版本窗口、全部 26 個公開套件 lockstep **minor** changeset（confirm-no 是使用者可見的 TTY 行為）。
 
 未來實作之後：
 
@@ -335,7 +337,7 @@ Envelope 例外維持現有四項。本工作不要求第五項。
 
 ## 未決問題
 
-未解決。不要用猜測填滿。對應細節等使用者回答後才實作。
+已由 Shek Ki Yan 於 2026-10-13 HKT 經 YSK Kit 總管回答。沒有剩餘阻擋項。
 
-- **TTY 提問語言：** 只用英文（今天 `prompt.ts`／`HELP` 是英文）還是雙語提問（同一 TTY 英＋香港書面語，或 `LANG`／旗標切換）？文件無論哪邊都維持雙語。本計劃的草稿文案用英文，方便實作者有來源；這不是決定。
-- **編號答案（1–6）對仍接受輸入 flavor slug？** 方法論要求編號選單。該提問是否仍接受 `saas`／`desktop`／…（今天 `allowed.includes(raw)` 行為）尚未決定。同一問題可能適用於 preset（`thin`／`full` 對 1–2）與資料庫（`mysql` 對 1–3）。任務 5 的測試必須跟使用者的回答；不要默默兩種都做。
+- **TTY 提問語言：** **只用英文。** 不是雙語 TTY 提問。本故事不加 `LANG`／旗標切換。給人讀的文件仍維持英文 + 香港書面語配對。
+- **編號答案對 flavor slug：** **兩種都接受。** Flavor 選單：`1`–`6` **以及** slug `saas`、`desktop`、`gateway`、`php-bridge`、`trading`、`static-web3`。Preset 與資料庫跟同一模式（編號與 slug）。空白 Enter 仍代表已記錄的預設。

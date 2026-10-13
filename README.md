@@ -114,6 +114,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.0
+
+#### New features
+
+- Interactive `create-ysk-app` uses a numbered guided wizard (best-for / avoid-when / confirm-before-write). Flavor input accepts `1`–`6` and slugs. TTY copy is English. `--yes` / non-TTY never prompt.
+
 ### v1.5.2
 
 #### Improvements
@@ -128,17 +134,6 @@ The latest three versions. Older versions are in the full changelog.
 - [ADR 0002](docs/adr/0002-polyglot-clients.md): OpenAPI + envelope is the sole polyglot boundary; default stack stays TypeScript. [Flavors](docs/guides/flavors.md) adds a Client language choice table.
 - Agent skill `layout-system` (English + Hong Kong Traditional Chinese): wireframe, AppShell, grid, 375/768/1280, then `ui-design` / `ui-review`.
 - `write-tests` / `test-plan` vertical TDD slice; `debug-issue` hypotheses table; `security-review` supply chain; `verify-change` requires fresh five-command output this turn.
-
-### v1.5.0
-
-#### Improvements
-
-- Kit runtime is **Node 26 (Current)**. `engines.node` is `>=26.0.0`. GitHub Actions `node-version` is `26`. `@types/node` is `^26.6.5` so the DefinitelyTyped major matches the Node major. Dest products on Node 24 fail `ysk-kit doctor` engines.
-- `ysk-kit doctor` engines hints say Install Node 26. `create-ysk-app` dest README comments say Node 26 + pnpm 12.
-
-#### Internal/CI
-
-- Coordinated bump supersedes Dependabot #38 (types-only while CI stayed 24). v1.3.0 shipped desktop Vite 8 (#41 / #44). v1.4.0 shipped Expo SDK 58 (#42 / #45).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

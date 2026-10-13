@@ -30,7 +30,7 @@ Do not invent a parallel monorepo layout. Do not copy this kit by hand. Do not p
 | `--db` | no | `mysql` |
 | `--yes` | agents: yes | Skip TTY prompts |
 
-Agents pass flags. Do not wait for TTY prompts.
+Agents pass flags. Do not wait for TTY prompts. Humans on a TTY get a numbered guided wizard (best-for / avoid-when) and a confirm-before-write step; `--yes` still skips that path.
 
 ## Flavor hint
 

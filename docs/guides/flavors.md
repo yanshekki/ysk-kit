@@ -43,4 +43,4 @@ The default stack is TypeScript. A different client language is a **flavor (or f
 
 `create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language. Copy-paste PHP walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md).
 
-CLI flags: [create-ysk-app](../cli/create-ysk-app.md).
+CLI flags: [create-ysk-app](../cli/create-ysk-app.md). Interactive `create-ysk-app` uses a numbered TTY wizard whose copy paraphrases this page; `--yes` / non-TTY never prompt.

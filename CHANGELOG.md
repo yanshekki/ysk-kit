@@ -37,6 +37,12 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.0
+
+### New features
+
+- Interactive `create-ysk-app` uses a numbered guided wizard: flavor/preset/database menus with best-for / avoid-when / tradeoffs, a client-language note (TypeScript default; `php-bridge`; Tauri/Flutter/KMP deferred per ADR 0002), saas admin/mobile questions, and a confirm-before-write summary. Proceed `no` exits without creating files. Flavor input accepts `1`–`6` and slugs. TTY copy is English. `--yes` / non-TTY stay silent on flags and defaults.
+
 ## v1.5.2
 
 ### Improvements

@@ -163,7 +163,7 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 | 命令 | 作用 |
 |---|---|
-| `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。TTY 會提示未傳的旗標；`--yes` 略過提問 |
+| `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。TTY 跑編號引導式精靈，寫入前確認；`--yes` 略過提問 |
 | `ysk-kit add module` | 一條 hexagonal HTTP 切片 |
 | `ysk-kit add <capability>` | 合併 Prisma、環境變數、依賴；llm／team／billing／push 在缺失時複製源碼 |
 | `ysk-kit generate openapi` | 寫出 `docs/openapi.yaml` |

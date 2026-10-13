@@ -30,7 +30,7 @@ Language: [English](new-product.md) · 中文
 | `--db` | 否 | `mysql` |
 | `--yes` | agent：是 | 略過 TTY 提問 |
 
-Agent 請傳旗標，不要等 TTY 提問。
+Agent 請傳旗標，不要等 TTY 提問。人類在 TTY 會遇到編號引導式精靈（適用於／避免何時）以及寫入前確認；`--yes` 仍略過該路徑。
 
 ## Flavor 提示
 

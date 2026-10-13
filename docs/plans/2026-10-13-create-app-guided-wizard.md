@@ -6,12 +6,13 @@ Language: Chinese pair `2026-10-13-create-app-guided-wizard.zh.md` · English `2
 |---|---|
 | **Slug** | `create-app-guided-wizard` |
 | **Date** | 2026-10-13 |
-| **Status** | draft — waiting for user approval |
+| **Status** | approved |
 | **Canonical file** | `docs/plans/2026-10-13-create-app-guided-wizard.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
-| **Gate** | waiting for user |
+| **Gate** | approved |
+| **Approved by** | Shek Ki Yan, 2026-10-13 HKT, via YSK Kit 總管 |
 
-Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md). Check: `pnpm ysk-kit plan --check docs/plans/2026-10-13-create-app-guided-wizard.md`. This PR is **plan-only**. Do not implement `create-ysk-app` until the user approves this file.
+Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md). Check: `pnpm ysk-kit plan --check docs/plans/2026-10-13-create-app-guided-wizard.md`. Approved 2026-10-13. Implementation follows Option A on this branch.
 
 ## Goal and user problem
 
@@ -23,8 +24,8 @@ Outcome after a future implementation (not this PR): a TTY run walks numbered de
 
 ## Scope
 
-- In: this dated plan pair only, until the user approves. Status stays **draft — waiting for user approval**. Gate: waiting for user.
-- In (after approval, future commits): rewrite TTY prompting in `tooling/create-ysk-app/src/prompt.ts` into a numbered multi-step wizard with rich copy (best-for, avoid-when, tradeoffs) and a confirm-before-write gate.
+- In: dated plan pair, status **approved** (Shek Ki Yan, 2026-10-13 HKT, via YSK Kit 總管).
+- In: rewrite TTY prompting in `tooling/create-ysk-app/src/prompt.ts` into a numbered multi-step wizard with rich copy (best-for, avoid-when, tradeoffs) and a confirm-before-write gate.
 - In (future): keep `AskFn` injection so Vitest can script answers (`prompt.test.ts` pattern).
 - In (future): skip layers that the chosen flavor does not use (`PRESET_SKIP` for `php-bridge` / `static-web3`; admin/mobile only for `saas`; honour `parsed.explicit.*` so CLI flags are not re-asked).
 - In (future): after flavor, print a language/client boundary note: default stack is TypeScript; `php-bridge` is the OpenAPI + PHP/TS client flavor; Tauri / Flutter / KMP are **deferred** ([ADR 0002](../adr/0002-polyglot-clients.md)) — educate only, do not scaffold those trees.
@@ -36,8 +37,8 @@ Outcome after a future implementation (not this PR): a TTY run walks numbered de
 
 ## Non-goals
 
-- Out: this PR does **not** edit `tooling/create-ysk-app/src/` (no `prompt.ts`, `scaffold.ts`, `help.ts`, `index.ts`, or tests). Plan files only.
-- Out: changing CLI flags, `parseArgs`, `FLAVORS` / `PRESETS` / `DBS`, copy/skip trees, thin preset, php-bridge templates, or dest marker `.ysk-kit.json`.
+- Out: changing copy/skip trees, thin preset, php-bridge templates, dest marker `.ysk-kit.json`, or `parseArgs` flag catalogues. Implementation **does** edit `prompt.ts` / `help.ts` / `index.ts` / tests (approved).
+- Out: adding CLI flags. `FLAVORS` / `PRESETS` / `DBS` catalogues stay as they are.
 - Out: scaffolding Tauri, Flutter, Kotlin Multiplatform, or a second HTTP API. The wizard educates; it does not add flavors.
 - Out: HTTP routes, Prisma models, ts-rest paths, SDK / web-sdk, web / admin / mobile / desktop screens, envelope exceptions.
 - Out: industry domain in this kit (salon, venue, map). `create-ysk-app` remains a platform scaffold.
@@ -58,7 +59,8 @@ Outcome after a future implementation (not this PR): a TTY run walks numbered de
 - Invalid answers still get three attempts then `unknown <label>` (today’s `pick` / `pickYesNo`), unless a later task tightens that — not required for the first slice.
 - Product name rules stay as today (`pickName`, three attempts, `product name required`). Dest-not-empty remains a `createYskApp` throw after confirm yes.
 - Root `plan.md` is gitignored; only the dated pair is committed.
-- Unresolved UX choices stay under Open questions. This plan does not pick TTY language or “numbers only vs numbers + slug”.
+- TTY language is **English only** (approved). Docs stay bilingual.
+- Flavor input accepts **both** numbered choices `1–6` and flavor slugs. Preset and database menus accept numbers and slugs the same way (user-friendly, same pattern).
 
 ## Affected flavors / presets / capabilities
 
@@ -229,7 +231,7 @@ No HTTP or authz change. TTY UX is the product surface after implementation — 
 
 ## Docs / changelog / changeset
 
-Plan-only PR: **no** changelog, README window, or changeset (no publishable behaviour yet).
+Implementation PR: changelog v1.6.0, README three-version window, lockstep **minor** changeset for all 26 public packages (confirm-no is user-visible TTY behaviour).
 
 After future implementation:
 
@@ -335,7 +337,7 @@ Ordered. Implementation starts only after Gate is approved. This PR stops after 
 
 ## Open questions
 
-Unresolved. Do not fill with guesses. Implementation of the matching details waits.
+Answered by Shek Ki Yan on 2026-10-13 HKT via YSK Kit 總管. No remaining blockers.
 
-- **TTY prompt language:** English-only (today’s `prompt.ts` / `HELP` are English) versus bilingual prompts (English + 香港書面語 on the same TTY, or a `LANG`/flag switch)? Docs stay bilingual either way. This plan’s draft copy is English so implementers have a source; it is not a decision.
-- **Numbered answers (1–6) versus typing the flavor slug still accepted?** Methodology requires a numbered menu. Whether `saas` / `desktop` / … remain valid input at that prompt (today’s `allowed.includes(raw)` behaviour) is undecided. Same question may apply to preset (`thin`/`full` vs 1–2) and database (`mysql` vs 1–3). Tests in Task 5 must follow the user’s answer; do not implement both silently.
+- **TTY prompt language:** **English only.** Not bilingual TTY prompts. No `LANG`/flag switch in this story. Human-readable docs stay English + 香港書面語 pairs.
+- **Numbered answers versus flavor slugs:** **Accept both.** Flavor menu: `1`–`6` **and** slugs `saas`, `desktop`, `gateway`, `php-bridge`, `trading`, `static-web3`. Preset and database follow the same pattern (numbers and slugs). Empty Enter still means the documented default.

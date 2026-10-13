@@ -40,6 +40,8 @@ describe('create-ysk-app', () => {
     expect(HELP).toContain('npm create @ysk-kit/app');
     expect(HELP).toContain('pnpm create @ysk-kit/app');
     expect(HELP).toContain('no unscoped create-ysk-app package');
+    expect(HELP).toContain('guided wizard');
+    expect(HELP).toContain('confirm-before-write');
   });
 
   it('does not run the CLI when imported as a module', () => {

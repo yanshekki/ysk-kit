@@ -18,9 +18,19 @@ npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-ki
 
 ## 互動
 
-在 TTY 下，未傳的選項會被提問（名稱、flavor、preset、資料庫、admin、mobile）。空輸入保留預設。命令列已有的旗標不會再問。
+在 TTY 下，未傳的選項會以編號引導式精靈提問（TTY 文案只用英文）：
 
-`--yes` / `-y` 略過提問，使用預設值加上已傳的旗標。CI 與 pipe 是非 TTY，永不提問。
+1. 產品名稱。
+2. 產品形態 — flavor `1`–`6` **或** slug（`saas`、`desktop`、`gateway`、`php-bridge`、`trading`、`static-web3`），每項附適用於／避免何時／權衡。
+3. 客戶端語言說明：預設 TypeScript；`php-bridge` 用於 OpenAPI + PHP／TS 客戶端；Tauri／Flutter／KMP 已延後（[ADR 0002](../adr/0002-polyglot-clients.zh.md)）——精靈只教育，不搭那些樹。
+4. 能力深度 — `thin` \| `full`（編號或 slug）。`php-bridge` 與 `static-web3` 跳過。
+5. 資料庫 — `mysql` \| `postgresql` \| `sqlite`（編號或 slug）。同樣 flavor 跳過。
+6. 表面（只限 saas）— admin 與 mobile yes／no，並說明後果（`--no-admin`／`--no-mobile`）。
+7. 確認摘要。Proceed `no` **不寫檔**就退出。Proceed 空白 Enter 是 yes。
+
+空輸入保留已記錄的預設。命令列已有的旗標不會再問；語言說明仍會出現。TTY 字串只用英文。
+
+`--yes` / `-y` 略過提問（包括確認），使用預設值加上已傳的旗標。CI 與 pipe 是非 TTY，永不提問。
 
 `php-bridge` 與 `static-web3` 不問 preset 或資料庫。只有 `saas` 會問 admin 與 mobile。
 

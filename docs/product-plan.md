@@ -8,7 +8,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 
 | Area | Available now |
 |---|---|
-| Scaffold | `pnpm create @ysk-kit/app` or `create-ysk-app --preset thin\|full` (default thin) and six flavors. TTY prompts for omitted flags; `--yes` skips prompts |
+| Scaffold | `pnpm create @ysk-kit/app` or `create-ysk-app --preset thin\|full` (default thin) and six flavors. TTY numbered guided wizard + confirm-before-write; `--yes` skips prompts |
 | npmjs | Public `@ysk-kit/*` libraries and `@ysk-kit/create-app` 1.0.2 on [npmjs.com/org/ysk-kit](https://www.npmjs.com/org/ysk-kit). Dest products still use copy-tree + `ysk-kit upgrade` |
 | Slice | `ysk-kit add module` writes contract, DTO, repos, Express + Fastify, SDK, web-sdk, page, test |
 | Capabilities | Sixteen catalogued adds; `llm`, `team`, `billing`, `push` copy source when missing |

@@ -1,5 +1,11 @@
 # @ysk-kit/crypto
 
+## 1.6.0
+
+### Minor Changes
+
+- f29245c: Interactive create-ysk-app numbered guided wizard: best-for / avoid-when / tradeoffs, confirm-before-write, numbers and flavor slugs. TTY English only. --yes / non-TTY stay silent. Lockstep minor toward v1.6.0.
+
 ## 1.5.2
 
 ### Patch Changes

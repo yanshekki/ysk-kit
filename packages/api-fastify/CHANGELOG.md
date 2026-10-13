@@ -1,5 +1,20 @@
 # @ysk-kit/api-fastify
 
+## 1.6.0
+
+### Minor Changes
+
+- f29245c: Interactive create-ysk-app numbered guided wizard: best-for / avoid-when / tradeoffs, confirm-before-write, numbers and flavor slugs. TTY English only. --yes / non-TTY stay silent. Lockstep minor toward v1.6.0.
+
+### Patch Changes
+
+- Updated dependencies [f29245c]
+  - @ysk-kit/api-http@1.6.0
+  - @ysk-kit/apikey@1.6.0
+  - @ysk-kit/auth@1.6.0
+  - @ysk-kit/contracts@1.6.0
+  - @ysk-kit/domain-kernel@1.6.0
+
 ## 1.5.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "ysk-kit",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "private": true,
   "description": "YSK Kit — shared TypeScript monorepo starter for YSK products",
   "license": "MIT",

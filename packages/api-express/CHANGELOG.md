@@ -1,5 +1,17 @@
 # @ysk-kit/api-express
 
+## 1.6.1
+
+### Patch Changes
+
+- cc38a7d: Lockstep patch after re-checking stable versions: electron-vite 6.0.0 (npm latest; was 6.0.0-beta.8), React Native 0.88.0 (npm latest; was 0.88.0-rc.4) including Expo CLI @react-native/* overrides, Expo 58.0.10 (still npm next), pnpm 12.11.2, Vite 8.3.4, Vitest 5.0.5, OpenTelemetry 2.12.0 / 0.223.0. Held: TypeScript 6.0.3, Prisma 7.10.0, @ts-rest/core 3.53.0-rc.1. Supersedes Dependabot #53–#63.
+- Updated dependencies [cc38a7d]
+  - @ysk-kit/api-http@1.6.1
+  - @ysk-kit/apikey@1.6.1
+  - @ysk-kit/auth@1.6.1
+  - @ysk-kit/contracts@1.6.1
+  - @ysk-kit/domain-kernel@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes

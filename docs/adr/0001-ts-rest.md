@@ -7,7 +7,7 @@ Language: [中文](0001-ts-rest.zh.md) · English
 
 ## Context
 
-`@ysk-kit/contracts` depends on `@ts-rest/core` at the exact version `3.53.0-rc.1` (`packages/contracts/package.json`). That build was published on 2 June 2025. The newest stable release, `3.52.1`, was published on 4 March 2025. The GitHub release list for `ts-rest/ts-rest` still ends at `v3.53.0-rc.1` (2 June 2025). As of 1 October 2026 there has been no newer release.
+`@ysk-kit/contracts` depends on `@ts-rest/core` at the exact version `3.53.0-rc.1` (`packages/contracts/package.json`). That build was published on 2 June 2025. The newest stable release, `3.52.1`, was published on 4 March 2025. The GitHub release list for `ts-rest/ts-rest` still ends at `v3.53.0-rc.1` (2 June 2025). As of 15 October 2026 there has been no newer release.
 
 [ts-rest/ts-rest#859](https://github.com/ts-rest/ts-rest/issues/859) (opened 20 November 2025, still open, last comment 16 September 2026) asks whether the project is maintained. Maintainers have not answered on that issue. Commenters report no reply on GitHub or Discord and describe moving to oRPC, Hono with a Zod OpenAPI plugin, or Fastify plus a Zod type provider.
 

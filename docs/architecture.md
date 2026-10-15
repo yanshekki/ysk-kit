@@ -19,11 +19,11 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 
 | Layer | Default | Alternative |
 |---|---|---|
-| Monorepo | pnpm 12.9.0 workspaces + Turborepo 2.11.7 | — |
+| Monorepo | pnpm 12.11.2 workspaces + Turborepo 2.11.8 | — |
 | Language | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when dependency-cruiser supports that compiler API |
 | Web / admin | Vite 8.3 + React 19.3 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
-| Desktop | Electron 44 + electron-vite 6.0.0-beta.8 + Vite 8 | electron-vite 6 is still beta (`latest` dist-tag is 5.0.0); rollback is Vite 7 + electron-vite 5 |
-| Mobile | Expo 58.0.7 / React Native 0.88.0-rc.4 / React 19.3 | Expo 58 is npm `next` (`latest` is still 57); RN 0.88 is RC |
+| Desktop | Electron 44 + electron-vite 6.0.0 + Vite 8 | electron-vite 6 is npm `latest`; rollback is Vite 7 + electron-vite 5 |
+| Mobile | Expo 58.0.10 / React Native 0.88.0 / React 19.3 | Expo 58 is still npm `next` (`latest` is 57.0.30); RN 0.88.0 is npm `latest` |
 | HTTP API | Express 5 adapter (default) | Fastify 5 via `HTTP_ADAPTER=fastify` |
 | Contract | ts-rest + Zod 4 | — |
 | Database | Prisma 7.10 (`prisma-client` generator, MariaDB adapter, client at `apps/api/src/generated/prisma`) | PostgreSQL or SQLite adapters via `--db` |

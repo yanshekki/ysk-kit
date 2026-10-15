@@ -2,7 +2,7 @@
 
 Language: [English](workspace-scripts.md) · 中文
 
-根 `package.json` 的 script。需要 Node 26 與 pnpm 12（`packageManager` 為 `pnpm@12.9.0`）。
+根 `package.json` 的 script。需要 Node 26 與 pnpm 12（`packageManager` 為 `pnpm@12.11.2`）。
 
 | Script | 命令 | 用途 |
 |---|---|---|

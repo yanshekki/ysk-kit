@@ -224,7 +224,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
 };
 
 const jaegerService = `  jaeger:
-    image: jaegertracing/jaeger:2.21.0
+    image: jaegertracing/jaeger:2.22.0
     restart: unless-stopped
     ports:
       - "16686:16686"
@@ -239,7 +239,7 @@ const jaegerService = `  jaeger:
     volumes:
       - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   grafana:
-    image: grafana/grafana:13.2.3
+    image: grafana/grafana:13.2.4
     restart: unless-stopped
     ports:
       - "3000:3000"

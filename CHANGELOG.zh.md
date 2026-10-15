@@ -37,6 +37,21 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.1
+
+### 依賴升級
+
+- 2026-10-15 對照 npm `latest`／Docker 穩定 tag 重新檢查。**electron-vite** `6.0.0-beta.8` → **`6.0.0`**（`latest`）。桌面 Vite `8.3.2` → `8.3.4`。Electron `44.5.1` → `44.7.2`。桌面 `@vitejs/plugin-react` `5.2.0` → `6.1.2`。
+- **React Native** `0.88.0-rc.4` → **`0.88.0`**（`latest`，2026-10-15 發佈）。Expo `58.0.7` → `58.0.10`（仍是 npm **`next`**；**`latest` 是 57.0.30**）。工作區 React 維持 **19.3.0**（Expo 58 bundled natives；不要漂到 19.3.1）。pnpm override 把 Expo CLI 殘留的 `@react-native/*` `0.88.0-rc.4` 傳遞依賴釘到 **`0.88.0`**。
+- 同主版 `latest`：pnpm `12.9.0` → **`12.11.2`**、Turborepo `2.11.8`、Vitest `5.0.5`、Vite `8.3.4`、Zod `4.6.7`、Express `5.3.0`、Fastify `5.12.7`、BullMQ `6.3.15`、Playwright `1.64.1`、TanStack Query `5.104.3`／Router `1.170.44`、AWS SDK S3 `3.1152.0`、nodemailer `10.1.1`、`@bull-board/*` `9.10.4`、dependency-cruiser `18.6.0`、happy-dom `21.0.1`、mysql2 override `3.24.6`。
+- OpenTelemetry 成組升級：`resources`／`sdk-*` **2.12.0**（packument 現已存在）與 exporters／instrumentation **0.223.0**。取代 Dependabot #53–#63。
+- Compose：Jaeger `2.22.0`、Grafana `13.2.4`。Redis `8.10.2-alpine`、MySQL `8.4`、Prometheus `v3.15.0` 不變。
+- GitHub Actions `actions/setup-node` **v7.1.0**。
+
+### 內部／CI
+
+- 暫緩：TypeScript 6.0.3（不是 7.0.2）、Prisma 7.10.0（CLI `latest` 仍是 `8.0.0-rc.23`）、`@ts-rest/core` `3.53.0-rc.1`（ADR 0001）、Fastify 5（不是 6 alpha）、Node 26 Current（不是 LTS；24 是 Krypton）、Expo 58 留在 `next`（不回退 SDK 57）、pnpm `latest` 12.11.2（不是 `next-12` 12.14.0）。
+
 ## v1.6.0
 
 ### 新功能

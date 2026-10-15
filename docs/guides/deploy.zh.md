@@ -10,9 +10,9 @@ Language: [English](deploy.md) · 中文
 |---|---|---|
 | mysql | `mysql:8.4` | 3306 |
 | redis | `redis:8.10.2-alpine` | 6379 |
-| jaeger | `jaegertracing/jaeger:2.21.0` | 16686 UI、4318 OTLP HTTP |
+| jaeger | `jaegertracing/jaeger:2.22.0` | 16686 UI、4318 OTLP HTTP |
 | prometheus | `prom/prometheus:v3.15.0` | 9090 |
-| grafana | `grafana/grafana:13.2.3` | 3000（`admin` / `admin`） |
+| grafana | `grafana/grafana:13.2.4` | 3000（`admin` / `admin`） |
 
 只啟動你需要的服務。API 只需 `docker compose up -d mysql`。多行程 Socket.IO、持久 BullMQ，以及共用的 IP 速率視窗需要 Redis。未設 `REDIS_URL` 時，速率限制是每個 API 行程自己的記憶體。Jaeger／Prometheus／Grafana 是可選介面。
 

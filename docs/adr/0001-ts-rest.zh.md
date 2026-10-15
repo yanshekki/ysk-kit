@@ -7,7 +7,7 @@ Language: [English](0001-ts-rest.md) · 中文
 
 ## 背景
 
-`@ysk-kit/contracts` 依賴 `@ts-rest/core`，版本精確為 `3.53.0-rc.1`（`packages/contracts/package.json`）。該版本於 2025 年 6 月 2 日發佈。最新穩定版 `3.52.1` 於 2025 年 3 月 4 日發佈。`ts-rest/ts-rest` 的 GitHub release 清單仍止於 `v3.53.0-rc.1`（2025 年 6 月 2 日）。截至 2026 年 10 月 1 日，沒有更新的 release。
+`@ysk-kit/contracts` 依賴 `@ts-rest/core`，版本精確為 `3.53.0-rc.1`（`packages/contracts/package.json`）。該版本於 2025 年 6 月 2 日發佈。最新穩定版 `3.52.1` 於 2025 年 3 月 4 日發佈。`ts-rest/ts-rest` 的 GitHub release 清單仍止於 `v3.53.0-rc.1`（2025 年 6 月 2 日）。截至 2026 年 10 月 15 日，沒有更新的 release。
 
 [ts-rest/ts-rest#859](https://github.com/ts-rest/ts-rest/issues/859)（2025 年 11 月 20 日開啟，仍然開放，最後留言 2026 年 9 月 16 日）詢問專案是否仍有人維護。維護者沒有在該 issue 回覆。留言者表示在 GitHub 與 Discord 都沒有收到回覆，並描述已改用 oRPC、Hono 配 Zod OpenAPI 插件，或 Fastify 加 Zod type provider。
 

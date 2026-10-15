@@ -4,15 +4,27 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.3.11"
+  bullmq: "6.3.15"
   react: "19.3.0"
   react-dom: "19.3.0"
+  # Expo 58.0.10 still depends on these at 0.88.0-rc.4; npm latest is 0.88.0.
+  "@react-native/asset-utils": "0.88.0"
+  "@react-native/babel-plugin-codegen": "0.88.0"
+  "@react-native/codegen": "0.88.0"
+  "@react-native/community-cli-plugin": "0.88.0"
+  "@react-native/debugger-frontend": "0.88.0"
+  "@react-native/debugger-shell": "0.88.0"
+  "@react-native/dev-middleware": "0.88.0"
+  "@react-native/gradle-plugin": "0.88.0"
+  "@react-native/js-polyfills": "0.88.0"
+  "@react-native/normalize-colors": "0.88.0"
+  "@react-native/virtualized-lists": "0.88.0"
   # GHSA-ggr8-5vv4-36mx: Prisma 7.10 pins deepmerge-ts 7.1.5. v8 fixes the advisory.
   deepmerge-ts: "8.0.2"
   # GHSA-cqhc-2h57-wpxf, GHSA-42r5-vhpq-m858, GHSA-g5xc-5w98-jfvm, GHSA-cx2f-j9fh-8g68
   mariadb: "3.5.4"
   # GHSA-3f6p-5ww8-9rcr, GHSA-rgwj-5xj2-c3m3: Prisma 7.10 pins mysql2 3.15.3.
-  mysql2: "3.24.5"
+  mysql2: "3.24.6"
   # One pg so bullmq's optional peer matches @bull-board (two copies break Queue types).
   pg: "8.23.1"
   # GHSA-68fv-2mgg-jv7q / CVE-2026-93749: indexed source-map offset DoS. Patched in 1.2.2.
@@ -43,8 +55,6 @@ auditConfig:
     - GHSA-vfj7-8cjw-p6xm
 
 minimumReleaseAgeExclude:
-  - "@aws-sdk/client-s3@3.1146.0"
-  - "@aws-sdk/s3-request-presigner@3.1146.0"
   - "@biomejs/biome@2.5.15"
   - "@biomejs/cli-darwin-arm64@2.5.15"
   - "@biomejs/cli-darwin-x64@2.5.15"
@@ -54,22 +64,47 @@ minimumReleaseAgeExclude:
   - "@biomejs/cli-linux-x64@2.5.15"
   - "@biomejs/cli-win32-arm64@2.5.15"
   - "@biomejs/cli-win32-x64@2.5.15"
-  - "@tanstack/react-router@1.170.41"
-  - "@tanstack/router-core@1.171.34"
-  - "@turbo/darwin-64@2.11.7"
-  - "@turbo/darwin-arm64@2.11.7"
-  - "@turbo/linux-64@2.11.7"
-  - "@turbo/linux-arm64@2.11.7"
-  - "@turbo/windows-64@2.11.7"
-  - "@turbo/windows-arm64@2.11.7"
-  - bullmq@6.3.11
-  - dependency-cruiser@18.5.0
   - pg-cloudflare@1.4.1
   - pg-connection-string@2.14.1
   - pg-protocol@1.16.1
   - pg@8.23.1
-  - turbo@2.11.7
-  - vite@8.3.2
-  - electron-vite@6.0.0-beta.8
-  - react-native@0.88.0-rc.4
+  - electron-vite@6.0.0
+  - react-native@0.88.0
   - source-map-js@1.2.2
+  - "@aws-sdk/client-s3@3.1152.0"
+  - "@aws-sdk/s3-request-presigner@3.1152.0"
+  - "@expo/cli@58.1.8"
+  - "@expo/config-plugins@58.0.9"
+  - "@expo/config@58.0.6"
+  - "@expo/image-utils@0.12.5"
+  - "@expo/inline-modules@0.2.6"
+  - "@expo/local-build-cache-provider@58.0.6"
+  - "@expo/metro-config@58.0.13"
+  - "@expo/metro-file-map@58.0.5"
+  - "@expo/prebuild-config@58.0.13"
+  - "@expo/require-utils@58.0.4"
+  - "@expo/router-server@58.0.13"
+  - "@react-native/asset-utils@0.88.0"
+  - "@react-native/codegen@0.88.0"
+  - "@react-native/community-cli-plugin@0.88.0"
+  - "@react-native/debugger-frontend@0.88.0"
+  - "@react-native/debugger-shell@0.88.0"
+  - "@react-native/dev-middleware@0.88.0"
+  - "@react-native/gradle-plugin@0.88.0"
+  - "@react-native/normalize-colors@0.88.0"
+  - "@react-native/virtualized-lists@0.88.0"
+  - "@tanstack/query-core@5.104.3"
+  - "@tanstack/react-query@5.104.3"
+  - "@vitest/coverage-v8@5.0.5"
+  - "@vitest/mocker@5.0.5"
+  - "@vitest/spy@5.0.5"
+  - babel-preset-expo@58.0.14
+  - expo-asset@58.0.15
+  - expo-constants@58.0.12
+  - expo-modules-autolinking@58.0.13
+  - expo-modules-core@58.0.18
+  - expo-modules-jsi@58.0.13
+  - expo@58.0.10
+  - vitest@5.0.5
+  - "@react-native/babel-plugin-codegen@0.88.0"
+  - "@react-native/js-polyfills@0.88.0"

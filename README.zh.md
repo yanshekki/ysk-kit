@@ -114,6 +114,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.1
+
+#### 依賴升級
+
+- electron-vite **6.0.0**（`latest`；先前 6.0.0-beta.8）。React Native **0.88.0**（`latest`；先前 0.88.0-rc.4）。Expo 58.0.10 仍是 npm `next`。pnpm 12.11.2、Vite 8.3.4、Vitest 5.0.5、OTEL 2.12.0／0.223.0。暫緩：TypeScript 6、Prisma 7.10、`@ts-rest/core` 3.53.0-rc.1、Node 26 Current。
+
 ### v1.6.0
 
 #### 新功能
@@ -126,14 +132,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 - 開發者逐步操作（英文 + 香港繁體中文）：Admin 雙欄版面、PHP OpenAPI 客戶端（ADR 0002／`php-bridge`）、垂直 TDD 切片、除錯租戶隔離。目錄：[docs/recipes/](docs/recipes/README.zh.md)。
 - 現行測試指南加入垂直 TDD。架構與 flavors 指向 PHP 逐步說明。
-
-### v1.5.1
-
-#### 改進
-
-- [ADR 0002](docs/adr/0002-polyglot-clients.zh.md)：OpenAPI + envelope 是唯一多語言邊界；預設堆疊維持 TypeScript。[Flavors](docs/guides/flavors.zh.md) 加上客戶端語言選擇表。
-- Agent skill `layout-system`（英文 + 香港繁體中文）：線框、AppShell、欄、375／768／1280，然後 `ui-design`／`ui-review`。
-- `write-tests`／`test-plan` 垂直 TDD 切片；`debug-issue` 假設表；`security-review` 供應鏈；`verify-change` 要求本回合新鮮的五條命令成功輸出。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

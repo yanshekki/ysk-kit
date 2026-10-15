@@ -13,18 +13,18 @@
     "build": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@fastify/cors": "^11.3.0",
+    "@fastify/cors": "^11.3.1",
     "@ysk-kit/apikey": "workspace:*",
     "@ysk-kit/api-http": "workspace:*",
     "@ysk-kit/auth": "workspace:*",
     "@ysk-kit/contracts": "workspace:*",
     "@ysk-kit/domain-kernel": "workspace:*",
-    "fastify": "^5.12.5"
+    "fastify": "^5.12.7"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5"
   },
   "files": [
     "dist"

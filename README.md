@@ -114,6 +114,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.1
+
+#### Dependency upgrades
+
+- electron-vite **6.0.0** (`latest`; was 6.0.0-beta.8). React Native **0.88.0** (`latest`; was 0.88.0-rc.4). Expo 58.0.10 still npm `next`. pnpm 12.11.2, Vite 8.3.4, Vitest 5.0.5, OTEL 2.12.0 / 0.223.0. Held: TypeScript 6, Prisma 7.10, `@ts-rest/core` 3.53.0-rc.1, Node 26 Current.
+
 ### v1.6.0
 
 #### New features
@@ -126,14 +132,6 @@ The latest three versions. Older versions are in the full changelog.
 
 - Worked developer recipes (English + Hong Kong Traditional Chinese): admin dual-pane layout, PHP OpenAPI client (ADR 0002 / `php-bridge`), vertical TDD slice, debug tenancy isolation. Index: [docs/recipes/](docs/recipes/README.md).
 - Living testing guide adds Vertical TDD. Architecture and flavors point at the PHP walkthrough.
-
-### v1.5.1
-
-#### Improvements
-
-- [ADR 0002](docs/adr/0002-polyglot-clients.md): OpenAPI + envelope is the sole polyglot boundary; default stack stays TypeScript. [Flavors](docs/guides/flavors.md) adds a Client language choice table.
-- Agent skill `layout-system` (English + Hong Kong Traditional Chinese): wireframe, AppShell, grid, 375/768/1280, then `ui-design` / `ui-review`.
-- `write-tests` / `test-plan` vertical TDD slice; `debug-issue` hypotheses table; `security-review` supply chain; `verify-change` requires fresh five-command output this turn.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

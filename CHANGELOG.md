@@ -37,6 +37,21 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.1
+
+### Dependency upgrades
+
+- Re-checked the stack against npm `latest` / Docker stable tags on 2026-10-15. **electron-vite** `6.0.0-beta.8` → **`6.0.0`** (`latest`). Desktop Vite `8.3.2` → `8.3.4`. Electron `44.5.1` → `44.7.2`. Desktop `@vitejs/plugin-react` `5.2.0` → `6.1.2`.
+- **React Native** `0.88.0-rc.4` → **`0.88.0`** (`latest`, published 2026-10-15). Expo `58.0.7` → `58.0.10` (still npm **`next`**; **`latest` is 57.0.30**). Workspace React stays **19.3.0** (Expo 58 bundled natives; do not float to 19.3.1). pnpm overrides pin Expo CLI’s leftover `@react-native/*` `0.88.0-rc.4` transitives to **`0.88.0`**.
+- Same-major `latest`: pnpm `12.9.0` → **`12.11.2`**, Turborepo `2.11.8`, Vitest `5.0.5`, Vite `8.3.4`, Zod `4.6.7`, Express `5.3.0`, Fastify `5.12.7`, BullMQ `6.3.15`, Playwright `1.64.1`, TanStack Query `5.104.3` / Router `1.170.44`, AWS SDK S3 `3.1152.0`, nodemailer `10.1.1`, `@bull-board/*` `9.10.4`, dependency-cruiser `18.6.0`, happy-dom `21.0.1`, mysql2 override `3.24.6`.
+- OpenTelemetry coordinated bump: `resources` / `sdk-*` **2.12.0** (packument now exists) and exporters / instrumentation **0.223.0**. Supersedes Dependabot #53–#63.
+- Compose: Jaeger `2.22.0`, Grafana `13.2.4`. Redis `8.10.2-alpine`, MySQL `8.4`, Prometheus `v3.15.0` unchanged.
+- GitHub Actions `actions/setup-node` **v7.1.0**.
+
+### Internal/CI
+
+- Held: TypeScript 6.0.3 (not 7.0.2), Prisma 7.10.0 (CLI `latest` is still `8.0.0-rc.23`), `@ts-rest/core` `3.53.0-rc.1` (ADR 0001), Fastify 5 (not 6 alpha), Node 26 Current (not LTS; 24 is Krypton), Expo 58 on `next` (no rollback to SDK 57), pnpm `latest` 12.11.2 (not `next-12` 12.14.0).
+
 ## v1.6.0
 
 ### New features

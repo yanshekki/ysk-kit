@@ -55,6 +55,7 @@ pnpm layers
 
 ```bash
 pnpm ysk-kit check agent
+pnpm ysk-kit check errors
 ```
 
 對產品根目錄做文字掃描。有發現時退出 1。
@@ -64,8 +65,11 @@ pnpm ysk-kit check agent
 | `no-ts-enum` | `apps`、`packages` 或 `modules` 出現 TypeScript `enum` / `const enum` |
 | `clients-no-prisma` | web／admin／mobile／desktop import 了 Prisma 或 generated client |
 | `clients-no-raw-fetch` | 那些 app 呼叫了 `fetch(` |
+| `application-throw-plain-error` | `application/` 寫了 `throw new Error(` — 改拋 `AppError` |
+| `console-in-api` | `apps/api` 呼叫了 `console.*`（`seed.ts` 允許） |
+| `log-process-env` | `JSON.stringify(process.env)` 或 `logger` + `process.env` |
 
-略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk-kit check agent`](../cli/ysk-kit.zh.md#ysk-kit-check-agent)。
+略過 `*.test.ts`、註解行與 generated 目錄。Admin Bull Board 探測頁 `apps/admin/src/features/queues/queues-page.tsx` 可以使用 `fetch`。CLI 參考：[`ysk-kit check agent`](../cli/ysk-kit.zh.md#ysk-kit-check-agent)、[`ysk-kit check errors`](../cli/ysk-kit.zh.md#ysk-kit-check-errors)。有 JSONL 時用 [`ysk-kit check logs`](../cli/ysk-kit.zh.md#ysk-kit-check-logs)。
 
 `@ysk-kit/biome` 把 Biome `style.noEnum` 設為 `error`，因此 `pnpm lint` 也會拒絕 TypeScript enum。
 
@@ -73,9 +77,9 @@ pnpm ysk-kit check agent
 
 | Job | 運行甚麼 |
 |---|---|
-| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm ysk-kit check errors && pnpm typecheck && pnpm test` |
 | `pack-and-run` | `pnpm build:packages` 然後 `.github/pack-and-run.mjs`：把 26 個公開套件 pack、在乾淨目錄安裝 tarball、`import('@ysk-kit/<pkg>')`、CLI `--help`、倉內 php-bridge create |
-| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk-kit check agent`／typecheck／test／OpenAPI |
+| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`，然後 generate／layers／`ysk-kit check agent`／`ysk-kit check errors`／typecheck／test／OpenAPI |
 | `flavor-smoke` | 每個 flavor × `thin` 與 `full` 的 matrix。sqlite。install、typecheck、test、build。快取 pnpm store 與 Electron 下載 |
 | `example-smoke` | 把每個已完成實例套用到 sqlite dest |
 | `e2e` | MySQL 8.4 服務、migrate deploy、種子、Chromium Playwright。API 用 `tsx`。沒有 Redis、Stripe、Twilio、FCM、Jaeger、Grafana |
@@ -84,5 +88,5 @@ pnpm ysk-kit check agent
 功能完成後，本機門檻是：
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors
 ```

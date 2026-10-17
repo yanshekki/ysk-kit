@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { AGENT_SKILL_TREES, agentTemplatesDir, listAgentRuleFiles } from './agent-stubs.js';
 import { checkAgent, formatAgentFindings } from './check-agent.js';
+import { checkErrors, formatErrorFindings } from './check-errors.js';
 import { readKitVersion, UPGRADE_PATHS } from './upgrade.js';
 
 type SqliteDatabase = {
@@ -22,7 +23,14 @@ const openSqlite = (file: string): SqliteDatabase => {
 
 export type DoctorStatus = 'ok' | 'warn' | 'error';
 
-export type DoctorCheckId = 'engines' | 'env' | 'secrets' | 'database' | 'rules' | 'agent';
+export type DoctorCheckId =
+  | 'engines'
+  | 'env'
+  | 'secrets'
+  | 'database'
+  | 'rules'
+  | 'agent'
+  | 'errors';
 
 export type DoctorCheck = {
   id: DoctorCheckId;
@@ -729,6 +737,19 @@ const agentCheck = (productRoot: string): DoctorCheck => {
   );
 };
 
+const errorsCheck = (productRoot: string): DoctorCheck => {
+  const findings = checkErrors(productRoot);
+  if (findings.length === 0) return check('errors', 'ok', 'ysk-kit check errors: ok');
+  const shown = findings.slice(0, 20);
+  const extra = findings.length > shown.length ? `\n(+${findings.length - shown.length} more)` : '';
+  return check(
+    'errors',
+    'warn',
+    `${formatErrorFindings(shown)}${extra}`,
+    'Throw AppError from application/, do not console.log in apps/api (except seed), and do not log process.env. See `pnpm ysk-kit check errors`.',
+  );
+};
+
 export const doctor = (opts: DoctorOptions): DoctorReport => {
   const nodeVersion = opts.nodeVersion ?? process.versions.node;
   const pnpmVersion = opts.pnpmVersion === undefined ? pnpmOnPath() : opts.pnpmVersion;
@@ -749,6 +770,7 @@ export const doctor = (opts: DoctorOptions): DoctorReport => {
     databaseCheck(hasApi, flavor, env, opts.productRoot, probe),
     rulesCheck(opts.productRoot, opts.kitRoot),
     agentCheck(opts.productRoot),
+    errorsCheck(opts.productRoot),
   ];
   const errors = checks.filter((item) => item.status === 'error').length;
   const warnings = checks.filter((item) => item.status === 'warn').length;

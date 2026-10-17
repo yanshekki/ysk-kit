@@ -55,6 +55,7 @@ Must stay green. See [hexagonal](hexagonal.md).
 
 ```bash
 pnpm ysk-kit check agent
+pnpm ysk-kit check errors
 ```
 
 Text scan of the product root. Exit 1 on any finding.
@@ -64,8 +65,11 @@ Text scan of the product root. Exit 1 on any finding.
 | `no-ts-enum` | TypeScript `enum` / `const enum` in `apps`, `packages`, or `modules` |
 | `clients-no-prisma` | web / admin / mobile / desktop imported Prisma or the generated client |
 | `clients-no-raw-fetch` | those apps called `fetch(` |
+| `application-throw-plain-error` | `application/` threw `new Error(` — throw `AppError` |
+| `console-in-api` | `apps/api` called `console.*` (`seed.ts` allowlisted) |
+| `log-process-env` | `JSON.stringify(process.env)` or `logger` + `process.env` |
 
-`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk-kit check agent`](../cli/ysk-kit.md#ysk-kit-check-agent).
+`*.test.ts` files, comment lines, and generated folders are skipped. The Admin Bull Board probe at `apps/admin/src/features/queues/queues-page.tsx` may use `fetch`. CLI reference: [`ysk-kit check agent`](../cli/ysk-kit.md#ysk-kit-check-agent), [`ysk-kit check errors`](../cli/ysk-kit.md#ysk-kit-check-errors). Error JSON: [`ysk-kit check logs`](../cli/ysk-kit.md#ysk-kit-check-logs) when you have JSONL.
 
 Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects TypeScript enums.
 
@@ -73,9 +77,9 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 
 | Job | What it runs |
 |---|---|
-| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm typecheck && pnpm test` |
+| `check` | `pnpm lint && pnpm layers && pnpm ysk-kit check agent && pnpm ysk-kit check errors && pnpm typecheck && pnpm test` |
 | `pack-and-run` | `pnpm build:packages` then `.github/pack-and-run.mjs`: pack all 26 public packages, install tarballs in a clean dir, `import('@ysk-kit/<pkg>')`, CLI `--help`, in-tree php-bridge create |
-| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk-kit check agent` / typecheck / test / OpenAPI |
+| `thin-smoke` | `create-ysk-app --preset thin --flavor saas --no-admin --no-mobile --db sqlite`, then generate / layers / `ysk-kit check agent` / `ysk-kit check errors` / typecheck / test / OpenAPI |
 | `flavor-smoke` | Matrix of every flavor × `thin` and `full`. sqlite. install, typecheck, test, build. pnpm store and Electron download are cached |
 | `example-smoke` | Apply each worked example onto a sqlite dest |
 | `e2e` | MySQL 8.4 service, migrate deploy, seed, Chromium Playwright. API via `tsx`. No Redis, Stripe, Twilio, FCM, Jaeger, Grafana |
@@ -84,5 +88,5 @@ Biome `style.noEnum` is `error` in `@ysk-kit/biome`, so `pnpm lint` also rejects
 After a feature, the local bar is:
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors
 ```

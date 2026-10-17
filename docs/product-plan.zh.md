@@ -18,6 +18,7 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 | 文件 | 雙語公開手冊、CLI 參考、agent skills、`AGENTS.md`。十個已完成實例在 `examples/`。開發者逐步操作在 `docs/recipes/` |
 | 護欄 | `.ysk-kit.json` 記錄 kit 版本、flavor、preset 與資料庫。`ysk-kit upgrade` 從 kit 工作副本複製允許清單上的法律、skills 與編譯／lint 設定 |
 | Agent 掃描 | `ysk-kit check agent` 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch`。Biome `noEnum` 為 error。CI 會跑此掃描 |
+| 錯誤日誌 | INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）與 `ysk_http_errors_total`。`ysk-kit check errors`／`check logs`。程序：[error-log-review](skills/error-log-review.zh.md) |
 
 十五分鐘路徑：
 

@@ -31,6 +31,35 @@
       "targets": [{ "expr": "process_resident_memory_bytes", "refId": "A" }],
       "title": "Process resident memory",
       "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "sum(rate(ysk_http_errors_total{status=~\"5..\"}[5m]))",
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP 5xx error rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "sum by (code) (rate(ysk_http_errors_total[5m]))",
+          "legendFormat": "{{code}}",
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP errors by code",
+      "type": "timeseries"
     }
   ],
   "schemaVersion": 39,

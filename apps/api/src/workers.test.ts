@@ -1,7 +1,7 @@
 import { createMemoryQueue } from '@ysk-kit/jobs';
 import { createLogMailer } from '@ysk-kit/mail';
 import { createMemoryRealtime } from '@ysk-kit/realtime';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createMemoryNotificationRepository } from './modules/notifications/infra/memory-notification-repository';
 import { registerWorkers } from './workers';
 
@@ -27,5 +27,31 @@ describe('registerWorkers', () => {
     });
     expect(rows.items).toHaveLength(1);
     expect(realtime.events.some((event) => event.event === 'notification.created')).toBe(true);
+  });
+
+  it('logs job failures then rethrows', async () => {
+    const queue = createMemoryQueue();
+    const logger = { error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn() };
+    registerWorkers({
+      queue,
+      mail: {
+        send: async () => {
+          throw new Error('smtp down');
+        },
+      },
+      notifications: createMemoryNotificationRepository(),
+      realtime: createMemoryRealtime(),
+      logger: logger as never,
+    });
+    await expect(
+      queue.enqueue('email.send', {
+        to: 'user@ysk.hk',
+        template: 'auth.welcome',
+        locale: 'en',
+        vars: { name: 'Ki' },
+      }),
+    ).rejects.toThrow('smtp down');
+    expect(logger.error).toHaveBeenCalledTimes(1);
+    expect(logger.error.mock.calls[0]?.[0]).toMatchObject({ job: 'email.send' });
   });
 });

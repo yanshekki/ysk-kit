@@ -1,3 +1,4 @@
+export { createHttpErrorCounter, type HttpErrorLabels } from './http-errors.js';
 export { withJobSpan } from './job-span.js';
 export { pinoOtelMixin } from './pino-otel-mixin.js';
 export { getTracer, type OtelEnv, type OtelHandle, startOtelFromEnv } from './tracing.js';

@@ -1,6 +1,23 @@
 import { ErrSchema, type Platform } from '@ysk-kit/contracts';
-import { AppError } from '@ysk-kit/domain-kernel';
+import { AppError, attachRequestId } from '@ysk-kit/domain-kernel';
 import type { TokenStore } from './token-store.js';
+
+const throwEnvelope = (
+  error: {
+    code: AppError['code'];
+    message: string;
+    details?: unknown;
+    requestId?: string | undefined;
+  },
+  status: number,
+): never => {
+  const thrown =
+    error.details !== undefined
+      ? new AppError(error.code, error.message, status, error.details)
+      : new AppError(error.code, error.message, status);
+  if (error.requestId !== undefined) throw attachRequestId(thrown, error.requestId);
+  throw thrown;
+};
 
 export class HttpClient {
   private refreshing: Promise<boolean> | null = null;
@@ -37,12 +54,7 @@ export class HttpClient {
       if (ok) return this.request<T>(path, init, true);
     }
     if (failed.success) {
-      throw new AppError(
-        failed.data.error.code,
-        failed.data.error.message,
-        res.status,
-        failed.data.error.details,
-      );
+      throwEnvelope(failed.data.error, res.status);
     }
     if (!res.ok) {
       throw new AppError('INTERNAL', `HTTP ${res.status}`, res.status);
@@ -71,12 +83,7 @@ export class HttpClient {
     const json: unknown = await res.json().catch(() => null);
     const failed = ErrSchema.safeParse(json);
     if (failed.success) {
-      throw new AppError(
-        failed.data.error.code,
-        failed.data.error.message,
-        res.status,
-        failed.data.error.details,
-      );
+      throwEnvelope(failed.data.error, res.status);
     }
     throw new AppError('NOT_FOUND', 'Invoice PDF not found', res.status);
   }

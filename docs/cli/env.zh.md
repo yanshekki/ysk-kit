@@ -32,6 +32,7 @@ Language: [English](env.md) · 中文
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | Traces。空白 → 關閉 OTel traces。Jaeger OTLP HTTP 為 `http://localhost:4318`。 |
 | `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` | Metrics。不要把 traces 網址重用於 Jaeger（只支援 traces）。 |
 | `OTEL_SERVICE_NAME` | 覆寫；API 預設 `ysk-api`，worker 預設 `ysk-worker`。 |
+| `LOG_LEVEL` | 可選 Pino 級別（`fatal`／`error`／`warn`／`info`／`debug`／`trace`）。空白 → 生產 `info`，其餘 `debug`。 |
 | `STRIPE_SECRET_KEY`、`STRIPE_PRICE_PRO` | 啟用 Stripe Checkout。未設時預設日誌 billing adapter。 |
 | `STRIPE_WEBHOOK_SECRET` | `POST /v1/billing/webhook`。缺失 → 404。 |
 | `RATE_LIMIT_MAX` | 每個 IP 在視窗內的請求數。`0` 關閉。預設 300。略過 `/health` `/ready` `/metrics`。未設 `REDIS_URL` 時每個行程用記憶體；設了之後多個 API 行程共用同一個 Redis 固定視窗。 |

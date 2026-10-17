@@ -23,7 +23,7 @@ export const ErrSchema = z.object({
 
 Every ts-rest success and error response should wrap with `OkSchema` / `ErrSchema`. `@ysk-kit/sdk` unwraps `ok: true` and throws on `ok: false`. Do not `fetch` kit paths from a client.
 
-Error `code` values live in contracts (`VALIDATION_FAILED`, `UNAUTHENTICATED`, `FORBIDDEN`, `NOT_FOUND`, `CONFLICT`, `RATE_LIMITED`, `INTERNAL`, …). Frontends, logs, and metrics key off `code`, not a translated `message`.
+Error `code` values live in contracts (`VALIDATION_FAILED`, `UNAUTHENTICATED`, `FORBIDDEN`, `NOT_FOUND`, `CONFLICT`, `RATE_LIMITED`, `INTERNAL`, …). Frontends, logs, and metrics key off `code`, not a translated `message`. HTTP adapters write `logger.error` for `INTERNAL` / HTTP 5xx (with `err`, `requestId`, `code`). Expected 4xx `AppError` stays off ERROR; the access log still records status. Guide: [observability](observability.md).
 
 ## Exceptions
 

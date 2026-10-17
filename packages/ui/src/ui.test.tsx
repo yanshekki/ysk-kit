@@ -78,8 +78,14 @@ describe('@ysk-kit/ui', () => {
     expect(screen.getByText('Users')).toBeDefined();
     expect(screen.getByText('Required')).toBeDefined();
     expect(screen.getByText('Nope')).toBeDefined();
+    expect(screen.queryByText(/Request ID/)).toBeNull();
     expect(screen.getByText('None')).toBeDefined();
     expect(screen.getByLabelText('Loading')).toBeDefined();
     expect(screen.getByText('Ki')).toBeDefined();
+  });
+
+  it('shows requestId on ErrorBanner when provided', () => {
+    render(<ErrorBanner message="Nope" requestId="rid-ui" />);
+    expect(screen.getByRole('alert').textContent).toContain('Request ID: rid-ui');
   });
 });

@@ -10,6 +10,8 @@ pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
+pnpm ysk-kit check errors
+pnpm ysk-kit check logs [--file <jsonl>]
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 pnpm ysk-kit plan --check <file>
@@ -138,6 +140,35 @@ pnpm ysk-kit check agent
 
 測試：[測試指南](../guides/testing.zh.md)。
 
+## `ysk-kit check errors`
+
+掃描原始碼裏高訊號的錯誤處理失誤。只做文字掃描。
+
+```text
+pnpm ysk-kit check errors
+```
+
+退出 0 時列印 `ysk-kit check errors: ok`。退出 1 時每條發現一行：`rule  file:line`。
+
+| 規則 | 掃描範圍 | 標記甚麼 |
+|---|---|---|
+| `application-throw-plain-error` | `**/application/**`（`.ts`／`.tsx`） | `throw new Error(` — 改拋 `AppError` |
+| `console-in-api` | `apps/api/**` | `console.log`／`console.error`／`console.warn`／`console.debug`／`console.info` |
+| `log-process-env` | `apps/**`、`packages/**` | `JSON.stringify(process.env)` 或 `logger.*(… process.env` |
+
+略過：`*.test.ts`／`*.test.tsx`、註解行、`node_modules`、`dist`、`generated`、`coverage`。允許的 console：`apps/api/src/infra/seed.ts`。CI 會跑此掃描。Doctor 把發現列為**警告**。程序：[error-log-review](../skills/error-log-review.zh.md)。
+
+## `ysk-kit check logs`
+
+驗證捕捉到的 **Pino JSON 行**（stdin 或 `--file`）。不要餵 pino-pretty／開發環境彩色日誌。
+
+```text
+pnpm ysk-kit check logs --file /tmp/api.jsonl
+NODE_ENV=production pnpm --filter @ysk-kit/api start | pnpm ysk-kit check logs
+```
+
+出現密鑰字面量（`sk_live`／`sk_test`／`rk_`／`whsec_`／`"otp":` 不是 `[Redacted]`），或 ERROR 行缺少 `requestId`／`reqId` 時退出 1。摘要含 ERROR 與 INTERNAL 計數。不進入預設驗證鏈——有 JSONL 才跑。操作手冊：[檢查錯誤日誌](../recipes/review-error-logs.zh.md)。
+
 ## `ysk-kit plan`
 
 按 [docs/plans/_template.md](../plans/_template.md) 寫出雙語功能計劃。
@@ -176,6 +207,7 @@ pnpm ysk-kit doctor --json
 | `database` | 伺服器連不上、SQLite 檔案不存在，或 Prisma 遷移未套用 | — | 開發用 `pnpm db:migrate`，生產用 `pnpm --filter @ysk-kit/api prisma:migrate:deploy`。沒有 `apps/api/prisma/schema.prisma` 時略過（`static-web3`、`php-bridge`） |
 | `rules` | 允許清單上的護欄檔與本 kit 不同 | 檔案相符，但 `.ysk-kit.json` 缺失或其 `version` 落後本 kit | `pnpm ysk-kit upgrade` |
 | `agent` | `check agent` 有發現 | — | 規則與 [`ysk-kit check agent`](#ysk-kit-check-agent) 相同 |
+| `errors` | — | `check errors` 有發現 | 在 `application/` 拋 `AppError`，不要在 `apps/api` `console.log`（seed 除外），不要 log `process.env`。見 [`ysk-kit check errors`](#ysk-kit-check-errors) |
 
 SQLite 用 Node 的 `node:sqlite` 開啟（`_prisma_migrations` 中 `finished_at` 有值且 `rolled_back_at` 為 null）。MySQL 與 PostgreSQL 在 `apps/api` 執行 `prisma migrate status`。報告會遮蓋連線字串。
 

@@ -1,4 +1,13 @@
-export { type EnvelopeErrorJson, envelopeError } from './envelope-error.js';
+export {
+  classifyEnvelopeLog,
+  type EnvelopeErrorJson,
+  type EnvelopeErrorLogger,
+  type EnvelopeLogClassification,
+  type EnvelopeLogLevel,
+  envelopeError,
+  type HttpErrorRecorder,
+  reportEnvelopeError,
+} from './envelope-error.js';
 export {
   type ContractRoute,
   type ContractRouter,

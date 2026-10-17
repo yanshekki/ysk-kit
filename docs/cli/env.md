@@ -32,6 +32,7 @@ Aligned with `.env.example`. Copy to `.env` for local runs. Never commit secrets
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | Traces. Empty → OTel traces off. Jaeger OTLP HTTP is `http://localhost:4318`. |
 | `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` | Metrics. Do not reuse the traces URL for Jaeger (traces only). |
 | `OTEL_SERVICE_NAME` | Override; API defaults `ysk-api`, worker `ysk-worker`. |
+| `LOG_LEVEL` | Optional Pino level (`fatal` / `error` / `warn` / `info` / `debug` / `trace`). Empty → production `info`, otherwise `debug`. |
 | `STRIPE_SECRET_KEY`, `STRIPE_PRICE_PRO` | Enable Stripe Checkout. Log billing adapter is the default without them. |
 | `STRIPE_WEBHOOK_SECRET` | `POST /v1/billing/webhook`. Missing → 404. |
 | `RATE_LIMIT_MAX` | Requests per window per IP. `0` disables. Default 300. Skips `/health` `/ready` `/metrics`. In-memory per process unless `REDIS_URL` is set, in which case the window is a Redis fixed window shared by every API process. |

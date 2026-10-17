@@ -15,6 +15,7 @@ const start = async () => {
     realtime: composition.realtime,
     devices: composition.devices,
     push: composition.push,
+    logger: composition.logger,
   });
   if (!composition.env.REDIS_URL) {
     composition.logger.warn('standalone worker: live inbox needs REDIS_URL or in-process workers');

@@ -23,7 +23,7 @@ export const ErrSchema = z.object({
 
 每條 ts-rest 成功與錯誤回應都應以 `OkSchema` / `ErrSchema` 包裝。`@ysk-kit/sdk` 會解開 `ok: true`，並在 `ok: false` 時丟出錯誤。客戶端不要對 kit 路徑直接 `fetch`。
 
-錯誤 `code` 寫在 contracts（`VALIDATION_FAILED`、`UNAUTHENTICATED`、`FORBIDDEN`、`NOT_FOUND`、`CONFLICT`、`RATE_LIMITED`、`INTERNAL`……）。前端、日誌與監控以 `code` 為鍵，不以翻譯後的 `message` 為鍵。
+錯誤 `code` 寫在 contracts（`VALIDATION_FAILED`、`UNAUTHENTICATED`、`FORBIDDEN`、`NOT_FOUND`、`CONFLICT`、`RATE_LIMITED`、`INTERNAL`……）。前端、日誌與監控以 `code` 為鍵，不以翻譯後的 `message` 為鍵。HTTP adapter 對 `INTERNAL`／HTTP 5xx 寫 `logger.error`（帶 `err`、`requestId`、`code`）。預期 4xx `AppError` 不打 ERROR；access log 仍記 status。指南：[觀測](observability.zh.md)。
 
 ## 例外
 

@@ -32,7 +32,31 @@ describe('HttpClient', () => {
           { status: 409, headers: { 'content-type': 'application/json' } },
         ),
     });
+    await expect(http.request('/v1/users')).rejects.toMatchObject({
+      code: 'CONFLICT',
+      requestId: 'r1',
+    });
     await expect(http.request('/v1/users')).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('omits requestId when the envelope has none', async () => {
+    const http = new HttpClient({
+      baseUrl: 'http://api.test',
+      platform: 'web',
+      tokenStore: memoryTokenStore(),
+      fetchImpl: async () =>
+        new Response(
+          JSON.stringify({
+            ok: false,
+            error: { code: 'NOT_FOUND', message: 'gone' },
+          }),
+          { status: 404, headers: { 'content-type': 'application/json' } },
+        ),
+    });
+    const error = await http.request('/v1/users').catch((err: unknown) => err);
+    expect(error).toBeInstanceOf(AppError);
+    expect(error).toMatchObject({ code: 'NOT_FOUND' });
+    expect((error as AppError).requestId).toBeUndefined();
   });
 
   it('returns a 302 Location for invoice PDFs', async () => {

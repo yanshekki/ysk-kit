@@ -81,9 +81,11 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
 | `pnpm ysk-kit plan --check <file>` | 計劃缺標題或仍是佔位內容時失敗 |
 | `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
+| `pnpm ysk-kit check errors` | 標記 `application/` 普通 `Error`、API `console.log`、`process.env` 日誌 |
+| `pnpm ysk-kit check logs --file <jsonl>` | 驗證捕捉到的 Pino JSON（密鑰、ERROR `requestId`） |
 | `pnpm create @ysk-kit/app <name>`／`npm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
-| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | 驗證一次改動 |
+| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` | 驗證一次改動 |
 
 完整表格：[CLI](docs/cli/index.zh.md)、[工作區 script](docs/cli/workspace-scripts.zh.md)、[環境變數](docs/cli/env.zh.md)。
 
@@ -114,6 +116,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.2
+
+#### 新功能
+
+- HTTP adapter 對 INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）。有限 `ysk_http_errors_total`。`ysk-kit check errors`／`check logs`。Skill [error-log-review](docs/skills/error-log-review.zh.md)。
+
+#### 修正
+
+- Error middleware 不再略過 `logger.error`。SDK 把 envelope `requestId` 複製到 `AppError`。
+
 ### v1.6.1
 
 #### 依賴升級
@@ -125,13 +137,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 新功能
 
 - 互動式 `create-ysk-app` 改用編號引導式精靈（適用於／避免何時／寫入前確認）。Flavor 輸入接受 `1`–`6` 與 slug。TTY 文案只用英文。`--yes`／非 TTY 永不提問。
-
-### v1.5.2
-
-#### 改進
-
-- 開發者逐步操作（英文 + 香港繁體中文）：Admin 雙欄版面、PHP OpenAPI 客戶端（ADR 0002／`php-bridge`）、垂直 TDD 切片、除錯租戶隔離。目錄：[docs/recipes/](docs/recipes/README.zh.md)。
-- 現行測試指南加入垂直 TDD。架構與 flavors 指向 PHP 逐步說明。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

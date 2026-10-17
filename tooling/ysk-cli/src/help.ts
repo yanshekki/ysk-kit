@@ -8,6 +8,8 @@ Usage:
   pnpm ysk-kit generate openapi
   pnpm ysk-kit upgrade [--dry-run]
   pnpm ysk-kit check agent
+  pnpm ysk-kit check errors
+  pnpm ysk-kit check logs [--file <jsonl>]
   pnpm ysk-kit doctor [--json]
   pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
   pnpm ysk-kit plan --check <file>
@@ -48,6 +50,16 @@ Commands:
       and root + nested AGENTS.md over 24 KiB. Prints rule id + file:line.
       Exit 1 when anything matches.
 
+  check errors
+      Scan application/ for throw new Error, apps/api for console.log
+      (seed.ts allowlisted), and logger/JSON.stringify(process.env).
+      Prints rule id + file:line. Exit 1 when anything matches.
+
+  check logs [--file <jsonl>]
+      Validate captured Pino JSON lines (stdin or --file): secret
+      literals, ERROR lines missing requestId/reqId, INTERNAL counts.
+      Exit 1 on secret leak or missing requestId. Not for pretty/dev logs.
+
   plan <slug> [--date YYYY-MM-DD] [--force]
       Write docs/plans/<date>-<slug>.md and the Chinese pair from the
       bilingual template, plus a gitignored root plan.md pointer.
@@ -61,7 +73,8 @@ Commands:
       Check a generated product: Node and pnpm versus engines, required
       env vars, insecure defaults (JWT_SECRET placeholder or shorter than
       32 characters), database reachability and applied Prisma migrations,
-      guardrail files versus \`ysk-kit upgrade\`, and \`check agent\`.
+      guardrail files versus \`ysk-kit upgrade\`, \`check agent\`, and
+      \`check errors\` (warnings).
       Warnings stay on exit 0. Exit 1 when any check is an error.
       --json   Print { ok, errors, warnings, checks } and no secret values.
 
@@ -69,7 +82,7 @@ Environment:
   YSK_ROOT    Product root to patch (default: this repository)
 
 After add module / add capability:
-  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent
+  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent && pnpm ysk-kit check errors
 
 Manual: docs/cli/ysk-kit.md
 Chinese: docs/cli/ysk-kit.zh.md

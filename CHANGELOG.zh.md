@@ -37,6 +37,20 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.2
+
+### 新功能
+
+- HTTP error handler（Express 與 Fastify）對 envelope `INTERNAL` 與 HTTP 5xx 寫 structured Pino `logger.error({ err, requestId, code, status })`。預期 4xx `AppError` 與 Zod 422 不打 ERROR。Job 失敗也 `logger.error` 再 rethrow。
+- 有限 cardinality 的 Prometheus 計數 `ysk_http_errors_total{code,status}`（只有既有 `ErrorCode` + status）。Grafana dashboard `ysk-api` 加 5xx 速率與按 code 的錯誤面板。
+- 可選 `LOG_LEVEL`（預設不變：生產 `info`，其餘 `debug`）。SDK 從 envelope 複製 `AppError.requestId`；登入 `ErrorBanner` 可顯示它。
+- `ysk-kit check errors`（靜態：`application/` 的 `throw new Error`、API `console.log`、`JSON.stringify(process.env)`）。`ysk-kit check logs` 驗證捕捉到的 JSONL（密鑰字面量、ERROR `requestId`）。Doctor 對靜態發現給警告。CI 跑 `check errors`。
+- Skill [error-log-review](docs/skills/error-log-review.zh.md)、操作手冊 [檢查錯誤日誌](docs/recipes/review-error-logs.zh.md)、指南 [觀測](docs/guides/observability.zh.md)。secrets-logging 已更正：kit Pino **已經** redact。
+
+### 修正
+
+- Express／Fastify error middleware 不再只回 `{ ok: false }` 而不打 ERROR log。SDK 不再丟掉 envelope `requestId`。
+
 ## v1.6.1
 
 ### 依賴升級

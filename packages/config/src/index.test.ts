@@ -14,6 +14,16 @@ describe('config', () => {
     expect(env.LLM_QUOTA_MAX).toBe(60);
     expect(env.LLM_QUOTA_WINDOW_MS).toBe(3_600_000);
     expect(env.LLM_SYSTEM_PROMPT.length).toBeGreaterThan(0);
+    expect(env.LOG_LEVEL).toBeUndefined();
+  });
+
+  it('loads LOG_LEVEL when set', () => {
+    const env = loadServerEnv({
+      DATABASE_URL: 'mysql://ysk:ysk@localhost:3306/ysk_kit',
+      JWT_SECRET: 'change-me-in-dev-only',
+      LOG_LEVEL: 'warn',
+    });
+    expect(env.LOG_LEVEL).toBe('warn');
   });
 
   it('disables the LLM quota when LLM_QUOTA_MAX is 0', () => {

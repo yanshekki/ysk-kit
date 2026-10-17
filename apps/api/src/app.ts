@@ -1,6 +1,6 @@
 import {
   type ApiKeyLookup,
-  errorHandler,
+  createErrorHandler,
   httpLogger,
   mountContract,
   optionalAuth,
@@ -13,6 +13,7 @@ import {
   buildOpenApiDocument,
   clientIp,
   createRateLimit,
+  type HttpErrorRecorder,
   type RateLimitRedis,
   scalarDocsHtml,
 } from '@ysk-kit/api-http';
@@ -71,6 +72,7 @@ export type CreateAppInput = {
   stripeWebhookSecret?: string;
   production?: boolean;
   rateLimit?: { windowMs: number; max: number; redis?: RateLimitRedis };
+  recordHttpError?: HttpErrorRecorder;
 };
 
 export const createApp = (input: CreateAppInput): Express => {
@@ -179,6 +181,10 @@ export const createApp = (input: CreateAppInput): Express => {
     );
   }
 
+  const errorHandler = createErrorHandler({
+    logger: input.logger,
+    ...(input.recordHttpError ? { recordHttpError: input.recordHttpError } : {}),
+  });
   if (input.metrics) mountMetrics(app, input.metrics);
   app.use(errorHandler);
   return app;

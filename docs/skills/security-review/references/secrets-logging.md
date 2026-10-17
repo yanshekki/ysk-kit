@@ -8,30 +8,11 @@ Parent: [security-review](../../security-review.md). Also getsentry `secret-seri
 
 OTP codes, JWT access/refresh tokens, `JWT_SECRET`, Stripe `sk_` / `rk_`, `STRIPE_WEBHOOK_SECRET` (`whsec_`), webhook payloads that embed PANs or secrets, `CRYPTO_MASTER_KEY`, FCM private keys, SMTP passwords, `S3_SECRET_KEY`.
 
-AGENTS.md hard rule 4 (clients) and “Do not log secrets” apply even when the logger has no redact list.
+AGENTS.md “Do not log secrets” still applies: redaction is a backstop, not permission to pass OTP, `sk_`, or `whsec_` into a log.
 
 ## Right pattern
 
-`packages/logger` should pass pino `redact` paths, for example:
-
-```ts
-redact: {
-  paths: [
-    'req.headers.authorization',
-    'password',
-    'passwordHash',
-    'token',
-    'refreshToken',
-    'otp',
-    'secret',
-    '*.secretKey',
-    '*.webhookSecret',
-  ],
-  censor: '[Redacted]',
-}
-```
-
-The kit logger does **not** ship this yet. New log sites must still omit those fields. Do not `JSON.stringify` an env object or a Stripe event into a span.
+`@ysk-kit/logger` already passes pino `redact` paths (`LOG_REDACT_PATHS`): authorization, cookies, tokens, passwords, OTP, webhook secrets, and common API-key env names, with `censor: '[Redacted]'`. New log sites must still omit those fields. Do not `JSON.stringify` an env object or a Stripe event into a span. `ysk-kit check logs` fails on `sk_live` / `sk_test` / `whsec_` / OTP literals.
 
 `assertProductionSecrets` in `@ysk-kit/config` refuses `change-me-in-dev-only` and short JWT secrets when `NODE_ENV=production`. Do not weaken it.
 
@@ -46,6 +27,8 @@ Secrets live in `.env` (gitignored). `.env.example` lists keys, not live values.
 ## Checks
 
 ```bash
+pnpm ysk-kit check errors
+pnpm ysk-kit check logs --file <jsonl>
 rg -n "console\\.log|logger\\.(info|debug)\\(" apps/api/src packages/logger packages/observability
 ```
 

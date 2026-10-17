@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { type JobName, type JobPayload, RealtimeEvent } from '@ysk-kit/contracts';
 import type { IJobQueue } from '@ysk-kit/jobs';
+import type { Logger } from '@ysk-kit/logger';
 import type { IMailPort } from '@ysk-kit/mail';
 import { withJobSpan } from '@ysk-kit/observability';
 import type { IPushPort } from '@ysk-kit/push';
@@ -14,14 +15,6 @@ type PushDeviceStore = {
 
 const hashDeviceToken = (token: string): string => createHash('sha256').update(token).digest('hex');
 
-const processJob = <K extends JobName>(
-  queue: IJobQueue,
-  name: K,
-  handler: (payload: JobPayload[K]) => Promise<void>,
-): void => {
-  queue.process(name, (payload) => withJobSpan(name, () => handler(payload)));
-};
-
 export const registerWorkers = (opts: {
   queue: IJobQueue;
   mail: IMailPort;
@@ -29,9 +22,27 @@ export const registerWorkers = (opts: {
   realtime: IRealtimePort;
   devices?: PushDeviceStore;
   push?: IPushPort;
+  logger?: Logger;
 }): void => {
   const devices = opts.devices;
   const push = opts.push;
+  const logger = opts.logger;
+  const processJob = <K extends JobName>(
+    queue: IJobQueue,
+    name: K,
+    handler: (payload: JobPayload[K]) => Promise<void>,
+  ): void => {
+    queue.process(name, (payload) =>
+      withJobSpan(name, async () => {
+        try {
+          await handler(payload);
+        } catch (error) {
+          logger?.error({ err: error, job: name }, 'job failed');
+          throw error;
+        }
+      }),
+    );
+  };
   processJob(opts.queue, 'email.send', async (payload) => {
     await opts.mail.send(payload);
   });

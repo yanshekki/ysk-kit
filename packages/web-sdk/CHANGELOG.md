@@ -1,5 +1,14 @@
 # @ysk-kit/web-sdk
 
+## 1.6.2
+
+### Patch Changes
+
+- 1d9ca64: Log INTERNAL/5xx as structured Pino ERROR with requestId, add bounded ysk_http_errors_total, copy envelope requestId onto AppError/SDK/ErrorBanner, and ship ysk-kit check errors / check logs plus the error-log-review skill.
+- Updated dependencies [1d9ca64]
+  - @ysk-kit/contracts@1.6.2
+  - @ysk-kit/sdk@1.6.2
+
 ## 1.6.1
 
 ### Patch Changes

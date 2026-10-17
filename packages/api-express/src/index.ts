@@ -6,7 +6,7 @@ export {
   requireAuth,
   requirePermission,
 } from './auth-guard.js';
-export { errorHandler } from './error-handler.js';
+export { type CreateErrorHandlerOpts, createErrorHandler, errorHandler } from './error-handler.js';
 export {
   type ContractRouter,
   flattenContract,

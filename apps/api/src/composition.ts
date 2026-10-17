@@ -92,7 +92,12 @@ export const createComposition = async (opts?: {
   realtime?: IRealtimePort;
 }): Promise<Composition> => {
   const env = loadServerEnv(opts?.source);
-  const logger = createLogger({ name: 'api', env: env.NODE_ENV, mixin: pinoOtelMixin });
+  const logger = createLogger({
+    name: 'api',
+    env: env.NODE_ENV,
+    mixin: pinoOtelMixin,
+    ...(env.LOG_LEVEL ? { level: env.LOG_LEVEL } : {}),
+  });
   const prisma = createPrisma(env.DATABASE_URL);
   const users = createPrismaUserRepository(prisma);
   const sessions = createPrismaSessionRepository(prisma);

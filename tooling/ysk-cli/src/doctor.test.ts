@@ -131,7 +131,15 @@ describe('ysk-kit doctor', () => {
     const report = run(dirs);
     expect(report.ok).toBe(true);
     expect(report.errors).toBe(0);
-    expect(report.checks.map((item) => item.status)).toEqual(['ok', 'ok', 'ok', 'ok', 'ok', 'ok']);
+    expect(report.checks.map((item) => item.status)).toEqual([
+      'ok',
+      'ok',
+      'ok',
+      'ok',
+      'ok',
+      'ok',
+      'ok',
+    ]);
     expect(JSON.stringify(report)).not.toContain(secret);
     expect(formatDoctorReport(report)).toContain('ysk-kit doctor: ok');
   });
@@ -309,6 +317,21 @@ describe('ysk-kit doctor', () => {
     const agent = report.checks.find((item) => item.id === 'agent');
     expect(agent?.status).toBe('error');
     expect(agent?.message).toContain('no-ts-enum');
+  });
+
+  it('warns when check errors finds throw new Error in application/', () => {
+    const dirs = healthy(
+      'DATABASE_URL=file:/tmp/x.db\nJWT_SECRET=abcdefghijklmnopqrstuvwxyz012345\n',
+    );
+    writeTree(dirs.product, {
+      'apps/api/src/modules/notes/application/notes-service.ts':
+        'export const boom = () => { throw new Error("nope"); };\n',
+    });
+    const report = run(dirs);
+    expect(report.ok).toBe(true);
+    const errors = report.checks.find((item) => item.id === 'errors');
+    expect(errors?.status).toBe('warn');
+    expect(errors?.message).toContain('application-throw-plain-error');
   });
 
   it('skips the database for static-web3 and php-bridge', () => {

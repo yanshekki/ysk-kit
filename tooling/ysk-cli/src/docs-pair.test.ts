@@ -26,6 +26,7 @@ const SKILLS = [
   'debug-issue',
   'review-change',
   'llm-feature',
+  'error-log-review',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

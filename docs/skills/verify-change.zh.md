@@ -1,9 +1,9 @@
 ---
 name: verify-change
 description: >
-  每個功能之後跑 YSK Kit 驗證鏈（layers、typecheck、test、OpenAPI、check agent）。
+  每個功能之後跑 YSK Kit 驗證鏈（layers、typecheck、test、OpenAPI、check agent、check errors）。
   完成改動、加模組／能力之後，或 /verify-change 時使用。
-  中文：驗證、layers、typecheck、OpenAPI、check agent。
+  中文：驗證、layers、typecheck、OpenAPI、check agent、check errors。
   不要用於略過命令卻聲稱完成，或在單元測試啟動 Redis／Stripe。
 ---
 
@@ -28,10 +28,10 @@ Language: [English](verify-change.md) · 中文
 
 ## 步驟
 
-未經本回合印出**這五條命令的新鮮成功輸出**，永遠不要聲稱改動已完成。上一回合的輸出、快取的 CI job，或「昨天過了」都不算。貼不出成功行，改動就未完成。
+未經本回合印出**這條驗證鏈的新鮮成功輸出**，永遠不要聲稱改動已完成。上一回合的輸出、快取的 CI job，或「昨天過了」都不算。貼不出成功行，改動就未完成。
 
 ```bash
-pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
+pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors
 ```
 
 然後：
@@ -51,8 +51,9 @@ git diff --exit-code docs/openapi.yaml
 | `pnpm test` | Vitest 檔通過 | 紅色 `it()` — 保留它，跟隨 [debug-issue](debug-issue.zh.md) |
 | `pnpm gen:openapi` | `wrote …/docs/openapi.yaml` | contract import／flatten 錯誤 |
 | `pnpm ysk-kit check agent` | `ysk-kit check agent: ok` | `rule  file:line`（enum、Prisma、fetch、skill-drift、budget） |
+| `pnpm ysk-kit check errors` | `ysk-kit check errors: ok` | `rule  file:line`（`application/` 的 `throw new Error`、API `console.log`、`JSON.stringify(process.env)`） |
 
-`pnpm layers` 捉到客戶端 → Prisma import 代表改動失敗，不是警告。`pnpm ysk-kit check agent` 捉到 TypeScript `enum`、客戶端 Prisma import、web/admin/mobile/desktop 的 raw `fetch`、指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB，同樣代表改動失敗。
+`pnpm layers` 捉到客戶端 → Prisma import 代表改動失敗，不是警告。`pnpm ysk-kit check agent` 捉到 TypeScript `enum`、客戶端 Prisma import、web/admin/mobile/desktop 的 raw `fetch`、指針不再提及 `AGENTS.md`、skill 副本漂移，或根目錄加巢狀 `AGENTS.md` 超過 24 KiB，同樣代表改動失敗。`pnpm ysk-kit check errors` 捉到 `application/` 拋普通 `Error`，同樣代表改動失敗。
 
 ### 失敗 → 修復
 
@@ -60,6 +61,7 @@ git diff --exit-code docs/openapi.yaml
 |---|---|
 | `clients-no-server-infra`／`domain-no-infra` | [修復分層](fix-layers.zh.md) |
 | `no-ts-enum`／客戶端 Prisma／raw `fetch` | 把型別移到 contracts；呼叫 `@ysk-kit/sdk` |
+| `application-throw-plain-error`／`console-in-api` | 拋 `AppError`；不要在 `apps/api` `console.log`（seed 除外） |
 | `skill-drift`／`agents-md-budget` | 從 `tooling/ysk-cli/templates/agent` 還原 wrapper；縮短巢狀 `AGENTS.md` |
 | DTO 改了之後 OpenAPI 仍 dirty | 提交 `docs/openapi.yaml` |
 | 沒改 contracts 但 OpenAPI dirty | 確認沒有路徑變更後 `git checkout -- docs/openapi.yaml` |
@@ -76,6 +78,7 @@ git diff --exit-code docs/openapi.yaml
 | 可發佈套件有變 | changeset 列出**全部 26** 個公開套件，同一 bump |
 | 登入／shell 路徑有變且 3001／5173 空閒 | `pnpm e2e` |
 | 加了 HTTP 路徑 | 打開 `GET /docs` |
+| 已捕捉 JSONL 日誌 | `pnpm ysk-kit check logs --file <jsonl>`（[error-log-review](error-log-review.zh.md)） |
 | Grok Build | `grok inspect` |
 | UI | [ui-review](ui-review.zh.md) |
 | 新測試 | 先 [test-plan](test-plan.zh.md)，再 [write-tests](write-tests.zh.md) |
@@ -83,11 +86,11 @@ git diff --exit-code docs/openapi.yaml
 
 不要為了讓單元測試通過而啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 
-範圍內再跟：[security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[webhook-handling](webhook-handling.zh.md)、[desktop-electron](desktop-electron.zh.md)、[contract-change](contract-change.zh.md)、[review-change](review-change.zh.md)。
+範圍內再跟：[security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[webhook-handling](webhook-handling.zh.md)、[desktop-electron](desktop-electron.zh.md)、[contract-change](contract-change.zh.md)、[review-change](review-change.zh.md)、[error-log-review](error-log-review.zh.md)。
 
 ## 驗證
 
-- [ ] 本回合五條命令都印出成功（新鮮輸出；不是憑記憶）
+- [ ] 本回合驗證命令都印出成功（新鮮輸出；不是憑記憶）
 - [ ] 行為改動：至少一條新增或更新的 Vitest（或明確 n/a：只改文件）
 - [ ] `git diff --exit-code docs/openapi.yaml` 與「HTTP 有沒有變」的答案一致
 - [ ] 適用的條件性額外都是綠色
@@ -103,22 +106,25 @@ test: ok | FAIL (<file>)
 gen:openapi: wrote yaml
 openapi diff: clean | committed | unexpected
 check agent: ok | FAIL (<rule>)
+check errors: ok | FAIL (<rule>)
+check logs: ok | findings | skipped (no JSONL)
 extras: lint | check:links | changeset | zh pair | e2e | skipped (<why>)
 Done: no | yes (DoD)
 ```
 
 ## 完成條件
 
-只有本回合五條命令印出成功、OpenAPI 與合約改動一致、行為改動有新增或更新的 Vitest，而且 `AGENTS.zh.md` 的[完成定義](../../AGENTS.zh.md#完成定義)成立，才可把改動標為完成。
+只有本回合驗證命令印出成功、OpenAPI 與合約改動一致、行為改動有新增或更新的 Vitest，而且 `AGENTS.zh.md` 的[完成定義](../../AGENTS.zh.md#完成定義)成立，才可把改動標為完成。
 
 ## 反模式
 
 | 症狀 | 改為 |
 |---|---|
-| 沒跑就說「應該沒問題」 | 跑五條命令 |
-| 用上一回合的 log 宣稱完成 | 現在重跑五條命令 |
+| 沒跑就說「應該沒問題」 | 跑驗證命令 |
+| 用上一回合的 log 宣稱完成 | 現在重跑驗證命令 |
 | 功能落地卻沒有新 Vitest | 加一條 `it()`（write-tests），或聲明只改文件 |
 | 因為只改文件就略過 `check agent` | 仍然要跑（budget + drift） |
+| 因為只改文件就略過 `check errors` | 仍然要跑 |
 | 留下 dirty 的 OpenAPI | 提交或還原 |
 | 為了單元測試通過而啟動 Redis | 記憶體 port |
 

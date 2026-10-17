@@ -81,9 +81,11 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk-kit plan <slug>` | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` from the template |
 | `pnpm ysk-kit plan --check <file>` | Fail if a plan is missing headings or still placeholders |
 | `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift |
+| `pnpm ysk-kit check errors` | Flag plain `Error` in `application/`, API `console.log`, `process.env` logs |
+| `pnpm ysk-kit check logs --file <jsonl>` | Validate captured Pino JSON (secrets, ERROR `requestId`) |
 | `pnpm create @ysk-kit/app <name>` / `npm create @ysk-kit/app <name>` | Scaffold a product from npm |
 | `pnpm --filter @ysk-kit/create-app start <name>` | Scaffold a product from this checkout |
-| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` | Verify a change |
+| `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` | Verify a change |
 
 Full tables: [CLI](docs/cli/index.md), [workspace scripts](docs/cli/workspace-scripts.md), [environment](docs/cli/env.md).
 
@@ -114,6 +116,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.2
+
+#### New features
+
+- HTTP adapters log INTERNAL / 5xx as structured Pino ERROR (`requestId` + `error.code`). Bounded `ysk_http_errors_total`. `ysk-kit check errors` / `check logs`. Skill [error-log-review](docs/skills/error-log-review.md).
+
+#### Fixes
+
+- Error middleware no longer skips `logger.error`. The SDK copies envelope `requestId` onto `AppError`.
+
 ### v1.6.1
 
 #### Dependency upgrades
@@ -125,13 +137,6 @@ The latest three versions. Older versions are in the full changelog.
 #### New features
 
 - Interactive `create-ysk-app` uses a numbered guided wizard (best-for / avoid-when / confirm-before-write). Flavor input accepts `1`–`6` and slugs. TTY copy is English. `--yes` / non-TTY never prompt.
-
-### v1.5.2
-
-#### Improvements
-
-- Worked developer recipes (English + Hong Kong Traditional Chinese): admin dual-pane layout, PHP OpenAPI client (ADR 0002 / `php-bridge`), vertical TDD slice, debug tenancy isolation. Index: [docs/recipes/](docs/recipes/README.md).
-- Living testing guide adds Vertical TDD. Architecture and flavors point at the PHP walkthrough.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

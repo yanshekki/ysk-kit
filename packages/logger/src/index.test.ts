@@ -65,4 +65,20 @@ describe('createLogger', () => {
     expect(req.headers.authorization).toBe('[Redacted]');
     expect(req.headers.cookie).toBe('[Redacted]');
   });
+
+  it('defaults production to info and honours LOG_LEVEL override', () => {
+    const chunks: Buffer[] = [];
+    const destination = new Writable({
+      write(chunk, _enc, cb) {
+        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk)));
+        cb();
+      },
+    });
+    const logger = createLogger({ env: 'production', destination });
+    logger.debug('hidden');
+    expect(Buffer.concat(chunks).toString()).not.toContain('hidden');
+    const loud = createLogger({ env: 'production', level: 'debug', destination });
+    loud.debug('shown');
+    expect(Buffer.concat(chunks).toString()).toContain('shown');
+  });
 });

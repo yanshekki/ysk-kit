@@ -5,8 +5,8 @@ description: >
   tests, then HTTP on Express AND Fastify, then SDK, then e2e, then git bisect.
   Use when a test, CI job, or user report is red; a flake; or /debug-issue.
   中文：除錯、紅燈迴圈、回歸測試、bisect、日誌遮罩。
-  Do not use for green-field features (plan-feature) or a security audit
-  (security-review).
+  Do not use for green-field features (plan-feature), a JSON INTERNAL dump
+  (error-log-review), or a security audit (security-review).
 ---
 
 # Skill: debug an issue
@@ -21,7 +21,7 @@ Reproduce, then fix, then keep the failing test. Law: [AGENTS.md](../../AGENTS.m
 - A user report (login, billing, LLM, webhook, desktop token).
 - A flake.
 
-Do not use to design a new resource ([plan-feature](plan-feature.md)) or to audit a clean diff ([review-change](review-change.md)).
+Do not use to design a new resource ([plan-feature](plan-feature.md)), to triage a JSON INTERNAL / 5xx dump ([error-log-review](error-log-review.md)), or to audit a clean diff ([review-change](review-change.md)).
 
 ## Inputs
 
@@ -41,6 +41,7 @@ Do not use to design a new resource ([plan-feature](plan-feature.md)) or to audi
 | `NOT_FOUND` / empty list | Tenant / `authorId` scope | Return another org’s row |
 | `RATE_LIMITED` / 429 | IP limiter or `LLM_QUOTA_*` | Set `RATE_LIMIT_MAX=0` in production |
 | Envelope exception / SSE | [envelope-api](envelope-api.md) | Wrap SSE in `{ ok: true }` |
+| `INTERNAL` / 5xx JSON logs | [error-log-review](error-log-review.md) | `console.log` or a Prisma `ErrorLog` |
 | Prisma vs memory mismatch | Both repositories | Fix only Prisma |
 | CI only (local green) | Frozen lockfile, `db:generate`, timezone | Skip the job |
 | Desktop token lost | `safeStorage` unavailable | Write plaintext |

@@ -29,6 +29,7 @@ jobs:
       - run: pnpm audit --audit-level=low
       - run: pnpm layers
       - run: pnpm ysk-kit check agent
+      - run: pnpm ysk-kit check errors
       - run: pnpm typecheck
       - run: pnpm test
 
@@ -79,6 +80,7 @@ jobs:
           test -f .agents/skills/debug-issue/SKILL.md
           test -f .agents/skills/review-change/SKILL.md
           test -f .agents/skills/llm-feature/SKILL.md
+          test -f .agents/skills/error-log-review/SKILL.md
           test -f .cursor/rules/security.mdc
           test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md
@@ -95,6 +97,7 @@ jobs:
           pnpm db:generate
           pnpm layers
           pnpm ysk-kit check agent
+          pnpm ysk-kit check errors
           pnpm typecheck
           pnpm test
           pnpm gen:openapi

@@ -12,3 +12,4 @@ Copy-paste how-to for humans and agents. Law: [AGENTS.md](../../AGENTS.md). Proc
 | Call the Kit API from PHP (or another HTTP client) | [PHP OpenAPI client](php-openapi-client.md) | [ADR 0002](../adr/0002-polyglot-clients.md) |
 | Implement one feature seam with vertical TDD | [Vertical TDD slice](vertical-tdd-slice.md) | [write-tests](../skills/write-tests.md), [test-plan](../skills/test-plan.md) |
 | Debug a cross-tenant leak | [Debug tenancy isolation](debug-tenancy-isolation.md) | [debug-issue](../skills/debug-issue.md), [security-review](../skills/security-review.md) |
+| Turn an INTERNAL log into a red test | [Review error logs](review-error-logs.md) | [error-log-review](../skills/error-log-review.md) |

@@ -96,10 +96,10 @@ Follow this order for any feature that is not a typo, a one-line docs fix, or a 
 6. **Verify.**
 
    ```bash
-   pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
+   pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors
    ```
 
-   `pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK). `pnpm ysk-kit check agent` must stay green (no TypeScript `enum`, no Prisma or raw `fetch` in clients, pointers still name `AGENTS.md`, skill copies match, root + nested `AGENTS.md` stay under 24 KiB). On Grok Build, `grok inspect` lists the rule files that were loaded.
+   `pnpm layers` must stay green (clients off Express / Prisma / jobs / mail / push / AWS SDK). `pnpm ysk-kit check agent` must stay green (no TypeScript `enum`, no Prisma or raw `fetch` in clients, pointers still name `AGENTS.md`, skill copies match, root + nested `AGENTS.md` stay under 24 KiB). `pnpm ysk-kit check errors` must stay green. On Grok Build, `grok inspect` lists the rule files that were loaded.
 7. **Docs / changelog / changeset.** Pair every human-readable Markdown (`name.md` + `name.zh.md`, Hong Kong Traditional Chinese). Update [CHANGELOG.md](CHANGELOG.md) / [CHANGELOG.zh.md](CHANGELOG.zh.md) and the README “latest three versions” window per [contributing](docs/contributing.md). Add a changeset when a publishable package changed.
 
 ## Planning protocol
@@ -144,7 +144,7 @@ A change is done only when all of the following hold:
 - [ ] Clients use `@ysk-kit/sdk` / `@ysk-kit/web-sdk` only
 - [ ] JSON stays on the envelope; no new exception without an explicit decision
 - [ ] Tests use in-memory ports
-- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` is green
+- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` is green
 - [ ] English and Chinese docs match in depth; changelog / README window / changeset updated when required
 - [ ] No secrets, OTP codes, Stripe `sk_`, or webhook secrets in logs or commits
 
@@ -202,6 +202,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Envelope / SSE / PDF | [envelope-api](docs/skills/envelope-api.md), [envelope guide](docs/guides/envelope.md) |
 | DTO / path / OpenAPI | [contract-change](docs/skills/contract-change.md) |
 | Red test or user report | [debug-issue](docs/skills/debug-issue.md) |
+| INTERNAL / 5xx JSON logs | [error-log-review](docs/skills/error-log-review.md) |
 | Review a PR / branch | [review-change](docs/skills/review-change.md) |
 | Product LLM prompt | [llm-feature](docs/skills/llm-feature.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |

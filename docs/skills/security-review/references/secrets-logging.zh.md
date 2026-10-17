@@ -8,30 +8,11 @@ Language: [English](secrets-logging.md) · 中文
 
 OTP 代碼、JWT access／refresh token、`JWT_SECRET`、Stripe `sk_`／`rk_`、`STRIPE_WEBHOOK_SECRET`（`whsec_`）、內含 PAN 或密鑰的 webhook payload、`CRYPTO_MASTER_KEY`、FCM private key、SMTP 密碼、`S3_SECRET_KEY`。
 
-即使 logger 沒有 redact 清單，AGENTS.md 的「不要 log 密鑰」仍然適用。
+AGENTS.md 的「不要 log 密鑰」仍然適用：redact 是後備，不是允許把 OTP、`sk_` 或 `whsec_` 傳進日誌。
 
 ## 正確模式
 
-`packages/logger` 應該傳入 pino `redact` paths，例如：
-
-```ts
-redact: {
-  paths: [
-    'req.headers.authorization',
-    'password',
-    'passwordHash',
-    'token',
-    'refreshToken',
-    'otp',
-    'secret',
-    '*.secretKey',
-    '*.webhookSecret',
-  ],
-  censor: '[Redacted]',
-}
-```
-
-Kit logger **尚未**內建這份清單。新的 log 點仍須省略那些欄位。不要把 env 物件或 Stripe event `JSON.stringify` 進 span。
+`@ysk-kit/logger` **已經**傳入 pino `redact` paths（`LOG_REDACT_PATHS`）：authorization、cookies、token、password、OTP、webhook 密鑰，以及常見 API key 環境變數名稱，`censor: '[Redacted]'`。新的 log 點仍須省略那些欄位。不要把 env 物件或 Stripe event `JSON.stringify` 進 span。`ysk-kit check logs` 會對 `sk_live`／`sk_test`／`whsec_`／OTP 字面量失敗。
 
 `@ysk-kit/config` 的 `assertProductionSecrets` 在 `NODE_ENV=production` 時拒絕 `change-me-in-dev-only` 與過短的 JWT secret。不要削弱它。
 
@@ -46,6 +27,8 @@ Kit logger **尚未**內建這份清單。新的 log 點仍須省略那些欄位
 ## 檢查
 
 ```bash
+pnpm ysk-kit check errors
+pnpm ysk-kit check logs --file <jsonl>
 rg -n "console\\.log|logger\\.(info|debug)\\(" apps/api/src packages/logger packages/observability
 ```
 

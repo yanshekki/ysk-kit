@@ -96,10 +96,10 @@ ysk-kit/
 6. **驗證。**
 
    ```bash
-   pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent
+   pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors
    ```
 
-   `pnpm layers` 必須保持綠色（客戶端不碰 Express／Prisma／jobs／mail／push／AWS SDK）。`pnpm ysk-kit check agent` 必須保持綠色（沒有 TypeScript `enum`、客戶端沒有 Prisma 或 raw `fetch`、指針仍提及 `AGENTS.md`、skill 副本一致、根目錄加巢狀 `AGENTS.md` 低於 24 KiB）。在 Grok Build 可用 `grok inspect` 列出已載入的規則檔。
+   `pnpm layers` 必須保持綠色（客戶端不碰 Express／Prisma／jobs／mail／push／AWS SDK）。`pnpm ysk-kit check agent` 必須保持綠色（沒有 TypeScript `enum`、客戶端沒有 Prisma 或 raw `fetch`、指針仍提及 `AGENTS.md`、skill 副本一致、根目錄加巢狀 `AGENTS.md` 低於 24 KiB）。`pnpm ysk-kit check errors` 必須保持綠色。在 Grok Build 可用 `grok inspect` 列出已載入的規則檔。
 7. **文件／變更紀錄／changeset。** 每份給人讀的 Markdown 成對（`name.md` + `name.zh.md`，香港繁體書面語）。按 [貢獻指引](docs/contributing.zh.md) 更新 [CHANGELOG.md](CHANGELOG.md)／[CHANGELOG.zh.md](CHANGELOG.zh.md) 與 README「最近三個版本」窗口。公開套件有改就加 changeset。
 
 ## 計劃協議
@@ -144,7 +144,7 @@ ysk-kit/
 - [ ] 客戶端只用 `@ysk-kit/sdk`／`@ysk-kit/web-sdk`
 - [ ] JSON 維持 envelope；沒有未經明確決定的新例外
 - [ ] 測試使用記憶體 port
-- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent` 全綠
+- [ ] `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` 全綠
 - [ ] 中英文件深度一致；需要時已更新變更紀錄／README 窗口／changeset
 - [ ] 日誌與提交沒有密鑰、OTP 代碼、Stripe `sk_` 或 webhook 密鑰
 
@@ -202,6 +202,7 @@ ysk-kit/
 | Envelope／SSE／PDF | [envelope-api](docs/skills/envelope-api.zh.md)、[envelope 指南](docs/guides/envelope.zh.md) |
 | DTO／路徑／OpenAPI | [contract-change](docs/skills/contract-change.zh.md) |
 | 紅燈測試或使用者回報 | [debug-issue](docs/skills/debug-issue.zh.md) |
+| INTERNAL／5xx JSON 日誌 | [error-log-review](docs/skills/error-log-review.zh.md) |
 | 審查 PR／分支 | [review-change](docs/skills/review-change.zh.md) |
 | 產品 LLM prompt | [llm-feature](docs/skills/llm-feature.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |

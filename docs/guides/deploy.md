@@ -14,7 +14,7 @@ Language: [中文](deploy.zh.md) · English
 | prometheus | `prom/prometheus:v3.15.0` | 9090 |
 | grafana | `grafana/grafana:13.2.4` | 3000 (`admin` / `admin`) |
 
-Start only what you need. `docker compose up -d mysql` is enough for the API. Redis is required for multi-process Socket.IO, durable BullMQ, and a shared IP rate-limit window. Without `REDIS_URL` the rate limit is in-memory per API process. Jaeger / Prometheus / Grafana are opt-in UIs.
+Start only what you need. `docker compose up -d mysql` is enough for the API. Redis is required for multi-process Socket.IO, durable BullMQ, and a shared IP rate-limit window. Without `REDIS_URL` the rate limit is in-memory per API process. Jaeger / Prometheus / Grafana are opt-in UIs. Grafana dashboard `ysk-api` (`deploy/grafana/dashboards/ysk-api.json`) includes 5xx rate and errors by envelope `code` once Prometheus scrapes `GET /metrics`.
 
 Generated products with `--db postgresql` get `postgres:18-alpine`. `--db sqlite` does not start a database container. `static-web3` writes a comment Compose file.
 

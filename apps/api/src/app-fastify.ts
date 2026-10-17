@@ -47,19 +47,21 @@ export const createFastifyApp = async (input: CreateAppInput): Promise<FastifyIn
     }
   });
   app.addHook('onResponse', async (req, reply) => {
-    input.logger.info(
-      {
-        reqId: String(req.headers[REQUEST_ID_HEADER] ?? ''),
-        method: req.method,
-        url: req.url,
-        statusCode: reply.statusCode,
-        responseTime: reply.elapsedTime,
-      },
-      'request',
-    );
+    const payload = {
+      reqId: String(req.headers[REQUEST_ID_HEADER] ?? ''),
+      method: req.method,
+      url: req.url,
+      statusCode: reply.statusCode,
+      responseTime: reply.elapsedTime,
+    };
+    if (reply.statusCode >= 500) input.logger.error(payload, 'request');
+    else input.logger.info(payload, 'request');
   });
   registerOptionalJwt(app, input.jwtSecret, input.resolveApiKey);
-  registerErrorHandler(app);
+  registerErrorHandler(app, {
+    logger: input.logger,
+    ...(input.recordHttpError ? { recordHttpError: input.recordHttpError } : {}),
+  });
   app.get('/openapi.json', async (_req, reply) => reply.send(buildOpenApiDocument(appContract)));
   app.get('/docs', async (_req, reply) => reply.type('text/html').send(scalarDocsHtml()));
 

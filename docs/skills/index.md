@@ -19,7 +19,8 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [fix-layers](fix-layers.md) | `pnpm layers` failed | Editing `.dependency-cruiser.cjs` without approval | — |
 | [envelope-api](envelope-api.md) | New route, SSE, PDF, or error shape | Parallel error JSON | — |
 | [contract-change](contract-change.md) | DTOs, paths, error codes, OpenAPI | Application-only rules; Prisma SQL | oasdiff (optional) |
-| [debug-issue](debug-issue.md) | Red test, CI, or user report | Green-field design | `git bisect` |
+| [debug-issue](debug-issue.md) | Red test, CI, or user report | Green-field design; JSON INTERNAL dump (error-log-review) | `git bisect` |
+| [error-log-review](error-log-review.md) | INTERNAL / 5xx JSON logs, secret-in-log | Green-field design; already-red Vitest | — |
 | [review-change](review-change.md) | Review a PR / branch vs law + plan | Implementing the change | getsentry `security-review` (diff scope) |
 | [llm-feature](llm-feature.md) | Product LLM prompt, `/v1/llm`, evals | Client-only copy; non-LLM audit | OWASP LLM Top 10 |
 | [security-review](security-review.md) | Authz, tenancy, secrets, tokens, webhooks, LLM input | Docs typos, no new trust boundary | getsentry `security-review`; openai threat-model |

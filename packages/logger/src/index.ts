@@ -2,6 +2,9 @@ import pino, { type DestinationStream, type Logger, type LoggerOptions } from 'p
 
 export type { Logger };
 
+export const LOG_LEVELS = ['fatal', 'error', 'warn', 'info', 'debug', 'trace'] as const;
+export type LogLevel = (typeof LOG_LEVELS)[number];
+
 export const LOG_REDACT_PATHS = [
   'authorization',
   'cookie',
@@ -45,13 +48,14 @@ export const LOG_REDACT_PATHS = [
 export function createLogger(opts: {
   name?: string;
   env: string;
+  level?: LogLevel;
   mixin?: LoggerOptions['mixin'];
   destination?: DestinationStream;
 }): Logger {
   const production = opts.env === 'production';
   const options: LoggerOptions = {
     name: opts.name ?? 'ysk',
-    level: production ? 'info' : 'debug',
+    level: opts.level ?? (production ? 'info' : 'debug'),
     redact: {
       paths: [...LOG_REDACT_PATHS],
       censor: '[Redacted]',

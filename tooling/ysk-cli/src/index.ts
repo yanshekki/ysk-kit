@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { addCapability } from './add-capability.js';
 import { addModule } from './add-module.js';
 import { checkAgent, formatAgentFindings } from './check-agent.js';
+import { checkErrors, formatErrorFindings } from './check-errors.js';
+import { checkLogs, formatLogReport } from './check-logs.js';
 import { doctor, formatDoctorReport } from './doctor.js';
 import { generateOpenApi } from './generate-openapi.js';
 import { HELP } from './help.js';
@@ -64,6 +66,30 @@ const main = (): void => {
       const findings = checkAgent(root);
       console.log(formatAgentFindings(findings));
       process.exit(findings.length === 0 ? 0 : 1);
+    }
+
+    if (args[0] === 'check' && args[1] === 'errors') {
+      const findings = checkErrors(root);
+      console.log(formatErrorFindings(findings));
+      process.exit(findings.length === 0 ? 0 : 1);
+    }
+
+    if (args[0] === 'check' && args[1] === 'logs') {
+      const fileFlag = args.indexOf('--file');
+      let text: string;
+      if (fileFlag >= 0) {
+        const fileArg = args[fileFlag + 1];
+        if (!fileArg || fileArg.startsWith('-')) {
+          throw new Error('check logs --file requires a path');
+        }
+        const resolved = existsSync(resolve(fileArg)) ? resolve(fileArg) : resolve(root, fileArg);
+        text = readFileSync(resolved, 'utf8');
+      } else {
+        text = readFileSync(0, 'utf8');
+      }
+      const report = checkLogs(text);
+      console.log(formatLogReport(report));
+      process.exit(report.findings.length === 0 ? 0 : 1);
     }
 
     if (args[0] === 'doctor') {

@@ -4,7 +4,7 @@ description: >
   以紅燈迴圈除錯 YSK Kit 失敗：先記憶體 port 測試，再 Express 與 Fastify 的 HTTP，再 SDK，再 e2e，再 git bisect。
   測試、CI job 或使用者回報是紅燈、flake，或 /debug-issue 時使用。
   中文：除錯、紅燈迴圈、回歸測試、bisect、日誌遮罩。
-  不要用於從零開始的功能（plan-feature）或安全稽核（security-review）。
+  不要用於從零開始的功能（plan-feature）、JSON INTERNAL dump（error-log-review），或安全稽核（security-review）。
 ---
 
 # Skill：除錯問題
@@ -19,7 +19,7 @@ Language: [English](debug-issue.md) · 中文
 - 使用者回報（登入、billing、LLM、webhook、desktop token）。
 - flake。
 
-不要用來設計新資源（[plan-feature](plan-feature.zh.md)），或審查乾淨 diff（[review-change](review-change.zh.md)）。
+不要用來設計新資源（[plan-feature](plan-feature.zh.md)）、分流 JSON INTERNAL／5xx dump（[error-log-review](error-log-review.zh.md)），或審查乾淨 diff（[review-change](review-change.zh.md)）。
 
 ## 輸入
 
@@ -39,6 +39,7 @@ Language: [English](debug-issue.md) · 中文
 | `NOT_FOUND`／空清單 | 租戶／`authorId` 範圍 | 回另一個 org 的列 |
 | `RATE_LIMITED`／429 | IP 限制器或 `LLM_QUOTA_*` | 生產設 `RATE_LIMIT_MAX=0` |
 | Envelope 例外／SSE | [envelope-api](envelope-api.zh.md) | 把 SSE 包進 `{ ok: true }` |
+| `INTERNAL`／5xx JSON 日誌 | [error-log-review](error-log-review.zh.md) | `console.log` 或 Prisma `ErrorLog` |
 | Prisma 與記憶體不一致 | 兩邊 repository | 只修 Prisma |
 | 只有 CI（本機綠） | 凍結 lockfile、`db:generate`、時區 | 跳過該 job |
 | Desktop token 遺失 | `safeStorage` 不可用 | 寫明文 |

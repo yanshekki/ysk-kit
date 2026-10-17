@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { LoginPasswordCommandSchema, VerifyAdminOtpCommandSchema } from '@ysk-kit/contracts';
-import { Button, Input } from '@ysk-kit/ui';
+import { Button, ErrorBanner, Input } from '@ysk-kit/ui';
 import { type FormEvent, useState } from 'react';
 import { userHooks } from '../../lib/client';
 
@@ -12,7 +12,19 @@ export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
-  const [formError, setFormError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<{ message: string; requestId?: string } | null>(null);
+
+  const setError = (error: { message: string } | string) => {
+    if (typeof error === 'string') {
+      setFormError({ message: error });
+      return;
+    }
+    const requestId =
+      'requestId' in error && typeof error.requestId === 'string' && error.requestId.length > 0
+        ? error.requestId
+        : undefined;
+    setFormError(requestId ? { message: error.message, requestId } : { message: error.message });
+  };
 
   const goUsers = () => {
     void navigate({ to: '/users' });
@@ -22,25 +34,25 @@ export function LoginPage() {
     event.preventDefault();
     const parsed = LoginPasswordCommandSchema.safeParse({ email, password });
     if (!parsed.success) {
-      setFormError(parsed.error.issues[0]?.message ?? 'Invalid');
+      setError(parsed.error.issues[0]?.message ?? 'Invalid');
       return;
     }
     login.mutate(parsed.data, {
       onSuccess: goUsers,
-      onError: (error) => setFormError(error.message),
+      onError: (error) => setError(error),
     });
   };
 
   const onSendCode = () => {
     if (!email.includes('@')) {
-      setFormError('Enter an email first');
+      setError('Enter an email first');
       return;
     }
     setFormError(null);
     requestOtp.mutate(
       { email },
       {
-        onError: (error) => setFormError(error.message),
+        onError: (error) => setError(error),
       },
     );
   };
@@ -49,12 +61,12 @@ export function LoginPage() {
     event.preventDefault();
     const parsed = VerifyAdminOtpCommandSchema.safeParse({ email, code });
     if (!parsed.success) {
-      setFormError(parsed.error.issues[0]?.message ?? 'Invalid');
+      setError(parsed.error.issues[0]?.message ?? 'Invalid');
       return;
     }
     verifyOtp.mutate(parsed.data, {
       onSuccess: goUsers,
-      onError: (error) => setFormError(error.message),
+      onError: (error) => setError(error),
     });
   };
 
@@ -111,7 +123,12 @@ export function LoginPage() {
           </Button>
         </div>
       </form>
-      {formError ? <p className="text-sm text-red-600">{formError}</p> : null}
+      {formError ? (
+        <ErrorBanner
+          message={formError.message}
+          {...(formError.requestId ? { requestId: formError.requestId } : {})}
+        />
+      ) : null}
     </section>
   );
 }

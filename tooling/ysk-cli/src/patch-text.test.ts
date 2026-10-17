@@ -1,5 +1,9 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
+  EXPRESS_ERROR_HANDLER,
   ensureEnvKey,
   ensureJsonDep,
   ensureMarkerBlock,
@@ -7,6 +11,8 @@ import {
   expressRouteInsertBefore,
   insertAfterLastImport,
 } from './patch-text.js';
+
+const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
 describe('patch-text', () => {
   it('appends an env key once', () => {
@@ -44,6 +50,9 @@ describe('patch-text', () => {
       '  app.use(errorHandler);',
     );
     expect(expressRouteInsertBefore('  return app;\n')).toBe('  return app;');
+    expect(
+      expressRouteInsertBefore(readFileSync(join(kitRoot, 'apps/api/src/app.ts'), 'utf8')),
+    ).toBe(EXPRESS_ERROR_HANDLER);
   });
 
   it('adds named specifiers to an existing import', () => {

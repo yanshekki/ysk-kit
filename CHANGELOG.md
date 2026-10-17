@@ -37,6 +37,20 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.2
+
+### New features
+
+- HTTP error handlers (Express and Fastify) write structured Pino `logger.error({ err, requestId, code, status })` for envelope `INTERNAL` and HTTP 5xx. Expected 4xx `AppError` and Zod 422 stay off ERROR. Jobs also `logger.error` then rethrow.
+- Bounded Prometheus counter `ysk_http_errors_total{code,status}` (existing `ErrorCode` + status only). Grafana dashboard `ysk-api` adds 5xx rate and errors-by-code panels.
+- Optional `LOG_LEVEL` (defaults unchanged: production `info`, otherwise `debug`). `AppError.requestId` is copied from the envelope by the SDK; login `ErrorBanner` may show it.
+- `ysk-kit check errors` (static: `application/` `throw new Error`, API `console.log`, `JSON.stringify(process.env)`). `ysk-kit check logs` validates captured JSONL (secret literals, ERROR `requestId`). Doctor warns on static findings. CI runs `check errors`.
+- Skill [error-log-review](docs/skills/error-log-review.md), recipe [review-error-logs](docs/recipes/review-error-logs.md), guide [observability](docs/guides/observability.md). Secrets-logging now records that kit Pino already redacts.
+
+### Fixes
+
+- Express / Fastify error middleware no longer return `{ ok: false }` without an ERROR log. The SDK no longer drops envelope `requestId`.
+
 ## v1.6.1
 
 ### Dependency upgrades

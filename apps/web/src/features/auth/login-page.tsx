@@ -9,20 +9,32 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [formError, setFormError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<{ message: string; requestId?: string } | null>(null);
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     const parsed = LoginPasswordCommandSchema.safeParse({ email, password });
     if (!parsed.success) {
-      setFormError(parsed.error.issues[0]?.message ?? 'Invalid');
+      setFormError({ message: parsed.error.issues[0]?.message ?? 'Invalid' });
       return;
     }
     login.mutate(parsed.data, {
       onSuccess: () => {
         void navigate({ to: '/users' });
       },
-      onError: (error) => setFormError(error.message),
+      onError: (error) => {
+        const requestId =
+          typeof error === 'object' &&
+          error !== null &&
+          'requestId' in error &&
+          typeof error.requestId === 'string' &&
+          error.requestId.length > 0
+            ? error.requestId
+            : undefined;
+        setFormError(
+          requestId ? { message: error.message, requestId } : { message: error.message },
+        );
+      },
     });
   };
 
@@ -52,7 +64,12 @@ export function LoginPage() {
           Sign in
         </Button>
       </form>
-      {formError ? <ErrorBanner message={formError} /> : null}
+      {formError ? (
+        <ErrorBanner
+          message={formError.message}
+          {...(formError.requestId ? { requestId: formError.requestId } : {})}
+        />
+      ) : null}
       <p className="text-sm text-zinc-600">
         No account?{' '}
         <Link to="/register" className="underline">

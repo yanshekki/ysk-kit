@@ -10,6 +10,8 @@ pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
+pnpm ysk-kit check errors
+pnpm ysk-kit check logs [--file <jsonl>]
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 pnpm ysk-kit plan --check <file>
@@ -138,6 +140,35 @@ Allowlisted raw `fetch`: `apps/admin/src/features/queues/queues-page.tsx` (Bull 
 
 Testing: [testing guide](../guides/testing.md).
 
+## `ysk-kit check errors`
+
+Scans source for high-signal error-handling mistakes. Text scan only.
+
+```text
+pnpm ysk-kit check errors
+```
+
+Exit 0 prints `ysk-kit check errors: ok`. Exit 1 prints one line per finding: `rule  file:line`.
+
+| Rule | Where | What it flags |
+|---|---|---|
+| `application-throw-plain-error` | `**/application/**` (`.ts` / `.tsx`) | `throw new Error(` — throw `AppError` instead |
+| `console-in-api` | `apps/api/**` | `console.log` / `console.error` / `console.warn` / `console.debug` / `console.info` |
+| `log-process-env` | `apps/**`, `packages/**` | `JSON.stringify(process.env)` or `logger.*(… process.env` |
+
+Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `generated`, `coverage`. Allowlisted console: `apps/api/src/infra/seed.ts`. CI runs this scan. Doctor reports findings as **warnings**. Procedure: [error-log-review](../skills/error-log-review.md).
+
+## `ysk-kit check logs`
+
+Validates captured **Pino JSON lines** (stdin or `--file`). Not for pino-pretty / development colour logs.
+
+```text
+pnpm ysk-kit check logs --file /tmp/api.jsonl
+NODE_ENV=production pnpm --filter @ysk-kit/api start | pnpm ysk-kit check logs
+```
+
+Exit 1 on a secret literal (`sk_live` / `sk_test` / `rk_` / `whsec_` / `"otp":` not `[Redacted]`) or an ERROR line missing `requestId` / `reqId`. Prints a summary with ERROR and INTERNAL counts. Not part of the default verify chain — run it when you have JSONL. Recipe: [review error logs](../recipes/review-error-logs.md).
+
 ## `ysk-kit plan`
 
 Writes a bilingual feature plan from [docs/plans/_template.md](../plans/_template.md).
@@ -176,6 +207,7 @@ Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--
 | `database` | The server is unreachable, the SQLite file is missing, or Prisma migrations are not applied | — | `pnpm db:migrate` in development, or `pnpm --filter @ysk-kit/api prisma:migrate:deploy` in production. Skipped when `apps/api/prisma/schema.prisma` is absent (`static-web3`, `php-bridge`) |
 | `rules` | Allowlisted guardrail files differ from this kit | Files match and `.ysk-kit.json` is missing or its `version` is behind this kit | `pnpm ysk-kit upgrade` |
 | `agent` | `check agent` reported a finding | — | Same rules as [`ysk-kit check agent`](#ysk-kit-check-agent) |
+| `errors` | — | `check errors` reported a finding | Throw `AppError` from `application/`, do not `console.log` in `apps/api` (except seed), and do not log `process.env`. See [`ysk-kit check errors`](#ysk-kit-check-errors) |
 
 SQLite is opened with Node's `node:sqlite` (`_prisma_migrations` where `finished_at` is set and `rolled_back_at` is null). MySQL and PostgreSQL run `prisma migrate status` in `apps/api`. Connection strings are redacted in the report.
 

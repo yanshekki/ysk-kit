@@ -1,6 +1,10 @@
 import type { Server as HttpServer } from 'node:http';
 import { rateLimitFromEnv } from '@ysk-kit/config';
-import { createMetricsRegistry, startOtelFromEnv } from '@ysk-kit/observability';
+import {
+  createHttpErrorCounter,
+  createMetricsRegistry,
+  startOtelFromEnv,
+} from '@ysk-kit/observability';
 import { attachSocketIoRealtime } from '@ysk-kit/realtime';
 import { createApp } from './app';
 import { createFastifyApp } from './app-fastify';
@@ -16,6 +20,7 @@ const start = async () => {
     const { default: IORedis } = await import('ioredis');
     return new IORedis(composition.env.REDIS_URL, { maxRetriesPerRequest: 1 });
   })();
+  const metrics = createMetricsRegistry();
   const input = {
     authService: composition.authService,
     userService: composition.userService,
@@ -33,7 +38,8 @@ const start = async () => {
     jwtSecret: composition.env.JWT_SECRET,
     resolveApiKey: (token: string) => composition.apiKeyService.resolveToken(token),
     pingReady: composition.pingReady,
-    metrics: createMetricsRegistry(),
+    metrics,
+    recordHttpError: createHttpErrorCounter(metrics),
     allowLocalUpload: composition.env.NODE_ENV !== 'production',
     ...(composition.env.STRIPE_WEBHOOK_SECRET
       ? { stripeWebhookSecret: composition.env.STRIPE_WEBHOOK_SECRET }
@@ -74,6 +80,7 @@ const start = async () => {
       realtime,
       devices: composition.devices,
       push: composition.push,
+      logger: composition.logger,
     });
     composition.logger.info('in-process workers started');
   }

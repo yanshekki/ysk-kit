@@ -14,7 +14,7 @@ Language: [English](deploy.md) · 中文
 | prometheus | `prom/prometheus:v3.15.0` | 9090 |
 | grafana | `grafana/grafana:13.2.4` | 3000（`admin` / `admin`） |
 
-只啟動你需要的服務。API 只需 `docker compose up -d mysql`。多行程 Socket.IO、持久 BullMQ，以及共用的 IP 速率視窗需要 Redis。未設 `REDIS_URL` 時，速率限制是每個 API 行程自己的記憶體。Jaeger／Prometheus／Grafana 是可選介面。
+只啟動你需要的服務。API 只需 `docker compose up -d mysql`。多行程 Socket.IO、持久 BullMQ，以及共用的 IP 速率視窗需要 Redis。未設 `REDIS_URL` 時，速率限制是每個 API 行程自己的記憶體。Jaeger／Prometheus／Grafana 是可選介面。Grafana dashboard `ysk-api`（`deploy/grafana/dashboards/ysk-api.json`）在 Prometheus 刮取 `GET /metrics` 後顯示 5xx 速率與按 envelope `code` 的錯誤。
 
 `--db postgresql` 產生的產品會用 `postgres:18-alpine`。`--db sqlite` 不啟動資料庫容器。`static-web3` 寫出註解式 Compose 檔。
 

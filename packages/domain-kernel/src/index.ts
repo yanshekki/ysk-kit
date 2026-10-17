@@ -11,6 +11,8 @@ const HTTP_STATUS: Record<ErrorCode, number> = {
 };
 
 export class AppError extends Error {
+  public readonly requestId?: string;
+
   constructor(
     public readonly code: ErrorCode,
     message?: string,
@@ -21,6 +23,9 @@ export class AppError extends Error {
     this.name = 'AppError';
   }
 }
+
+export const attachRequestId = (error: AppError, requestId: string): AppError =>
+  Object.assign(error, { requestId });
 
 export class DomainError extends AppError {
   constructor(code: ErrorCode, message?: string, details?: unknown) {

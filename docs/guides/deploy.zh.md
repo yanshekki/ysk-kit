@@ -8,7 +8,7 @@ Language: [English](deploy.md) · 中文
 
 | 服務 | 映像 | 埠 |
 |---|---|---|
-| mysql | `mysql:8.4` | 3306 |
+| mysql | `mysql:8.4.11` | 3306 |
 | redis | `redis:8.10.2-alpine` | 6379 |
 | jaeger | `jaegertracing/jaeger:2.22.0` | 16686 UI、4318 OTLP HTTP |
 | prometheus | `prom/prometheus:v3.15.0` | 9090 |

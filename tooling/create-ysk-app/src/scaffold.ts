@@ -254,7 +254,7 @@ const jaegerService = `  jaeger:
 
 const mysqlCompose = `services:
   mysql:
-    image: mysql:8.4
+    image: mysql:8.4.11
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root

@@ -37,6 +37,25 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.3
+
+### New features
+
+- Agent skill [i18n-localize](docs/skills/i18n-localize.md): wire `@ysk-kit/i18n` (`zh-HK` | `en`), keep product copy on keys, map envelope codes to localized `ERROR_MESSAGE`, format with `Intl`, verify both locales. Wrappers, create-app / upgrade templates, and skill-drift copies included. Feature-sized app wiring stays out of this release.
+
+### Improvements
+
+- `AGENTS.md` / `AGENTS.zh.md` coding-tools table: Codex cumulative 32 KiB cap; OpenCode `CLAUDE.md` fallback when `AGENTS.md` is absent; Grok / Cursor / Copilot / Gemini skill discovery (including Gemini Agent Skills via `.agents/skills/`). One progressive-disclosure row for `i18n-localize`.
+
+### Dependency upgrades
+
+- Stable-only bumps (2026-10-18): pnpm **12.11.2 → 12.14.0** (`packageManager` + CI `pnpm/action-setup`), Turborepo **2.11.9**, React / react-dom **19.3.1**, Prisma stack **7.10.1** (`prev`; not npm `latest` 8.0.0-rc), BullMQ **6.3.16**, happy-dom **21.0.3**, Electron **44.9.0** (stay on 44.x), Expo **58.0.14**, nodemailer **10.1.2**, TanStack Query **5.104.4** / Router **1.170.45**, `shell-quote` override **1.12.0**.
+- Compose / CI / create-app MySQL pin **8.4.11**. `.nvmrc` **22 → 26** to match `engines.node` / CI.
+
+### Internal/CI
+
+- Held: TypeScript **6.0.3** (not 7.0.2), Prisma **7.10.1** (CLI `latest` is still `8.0.0-rc.*`), Electron 45 beta, turbo canary, ioredis 6.1 beta, Playwright alpha.
+
 ## v1.6.2
 
 ### New features

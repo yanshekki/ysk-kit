@@ -133,3 +133,7 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 **v1.6.0：** 互動式 `create-ysk-app` 編號引導式精靈（適用於／避免何時／寫入前確認）。Flavor 輸入接受 1–6 與 slug。TTY 只用英文。`--yes`／非 TTY 沉默。Tauri／Flutter／KMP 仍延後（ADR 0002）。
 
 **v1.6.1：** 2026-10-15 重新檢查穩定版本。electron-vite 6.0.0（`latest`；先前 beta.8）。React Native 0.88.0（`latest`；先前 rc.4）。Expo 58.0.10 仍是 `next`。pnpm 12.11.2、Vite 8.3.4、Vitest 5.0.5、OTEL 2.12.0／0.223.0、Jaeger 2.22.0、Grafana 13.2.4。暫緩：TypeScript 6.0.3、Prisma 7.10.0、`@ts-rest/core` 3.53.0-rc.1、Node 26 Current、Expo `latest` 57。
+
+**v1.6.2：** INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）、有限 `ysk_http_errors_total`、`ysk-kit check errors`／`check logs`、skill `error-log-review`。
+
+**v1.6.3：** 只升穩定版的週期 bump（2026-10-18）：pnpm 12.14.0、turbo 2.11.9、React 19.3.1、Prisma 7.10.1（不是 8 RC）、BullMQ 6.3.16、Electron 44.9.0、Expo 58.0.14。Skill `i18n-localize`。AGENTS 程式工具表微調。`.nvmrc` 26。MySQL 8.4.11。暫緩：TypeScript 6.0.3、Prisma 8 RC、Electron 45 beta。

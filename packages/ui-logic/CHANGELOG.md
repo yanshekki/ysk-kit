@@ -1,5 +1,13 @@
 # @ysk-kit/ui-logic
 
+## 1.6.3
+
+### Patch Changes
+
+- f1d7bb1: Lockstep patch for stable-only weekly bumps (pnpm 12.14.0, turbo 2.11.9, React 19.3.1, Prisma 7.10.1 not 8 RC, BullMQ 6.3.16, Electron 44.9.0, Expo 58.0.14) plus the i18n-localize skill and AGENTS coding-tools table polish. Held: TypeScript 7, Prisma 8 RC.
+- Updated dependencies [f1d7bb1]
+  - @ysk-kit/contracts@1.6.3
+
 ## 1.6.2
 
 ### Patch Changes

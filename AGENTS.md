@@ -180,13 +180,13 @@ Official loading rules (do not invent extra convention files):
 
 | Tool | What it reads | This repo |
 |---|---|---|
-| Codex | `AGENTS.override.md` then `AGENTS.md`, one file per directory from git root to cwd; closer wins; combined cap 32 KiB (`project_doc_max_bytes`) | Root + short nested `AGENTS.md` stay well under. Skills: `.agents/skills/<name>/SKILL.md`. |
-| OpenCode | `AGENTS.md` (root + nested as explored). No `CLAUDE.md` fallback. `opencode.json` `instructions` is not reliably loaded | Rely on `AGENTS.md` only. |
-| Grok Build | Every matching `AGENTS.md` / `AGENT.md` / `CLAUDE.md` / `GEMINI.md` from root to cwd, plus `*.md` in `.grok/rules/`, `.claude/rules/`, `.cursor/rules/`. No size cap. Gitignored files are skipped | Pointers stay tiny. Cursor rules use `.mdc` so they are not extra Grok `*.md`. Verify with `grok inspect`. |
-| Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc` (`alwaysApply` / `description` / `globs`). Skills in `.agents/skills/` or `.cursor/skills/` | Scoped `.mdc` files are reminders + links, not copies of this file. |
-| Claude Code | `CLAUDE.md` (`@AGENTS.md` plus Claude-only notes). Skills: `.claude/skills/<name>/SKILL.md` | `.claude/skills/` matches `.agents/skills/` (drift-checked). |
-| Copilot | `AGENTS.md` natively. `.github/copilot-instructions.md` and `.github/instructions/*.instructions.md` (`applyTo`) | Those files are short pointers. |
-| Gemini CLI | Context filenames from `.gemini/settings.json` | `{"context":{"fileName":["AGENTS.md"]}}`. `GEMINI.md` is a pointer only. |
+| Codex | `AGENTS.override.md` then `AGENTS.md`, one file per directory from git root to cwd; closer wins; **cumulative** cap 32 KiB (`project_doc_max_bytes`) | Root + short nested `AGENTS.md` stay well under. Skills: `.agents/skills/<name>/SKILL.md`. |
+| OpenCode | Project `AGENTS.md` (root + nested as explored). **Fallback:** project `CLAUDE.md` only if no `AGENTS.md`; when both exist, **only AGENTS.md**. Global: `~/.config/opencode/AGENTS.md` else `~/.claude/CLAUDE.md`. `opencode.json` `instructions` merges with AGENTS (do not rely on it alone) | Rely on `AGENTS.md` (already present). Skills: `.agents/skills/` (+ `.opencode/skills/` / `.claude/skills/` if added). |
+| Grok Build | Every matching `AGENTS.md` / `AGENT.md` / `CLAUDE.md` / `GEMINI.md` from root to cwd, plus `*.md` in `.grok/rules/`, `.claude/rules/`, `.cursor/rules/`. No size cap. Gitignored files are skipped. Skills: `.grok/skills/`, `~/.grok/skills/`, plus compat `.agents` / `.claude` / `.cursor` skills | Pointers stay tiny. Cursor rules use `.mdc` so they are not extra Grok `*.md`. Templates write `.grok/skills/`. Verify with `grok inspect`. |
+| Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc` (`alwaysApply` / `description` / `globs`). Skills: `.agents/skills/` or `.cursor/skills/` (also loads `.claude/skills/`, `.codex/skills/` for compat) | Scoped `.mdc` files are reminders + links, not copies of this file. |
+| Claude Code | `CLAUDE.md` (`@AGENTS.md` plus Claude-only notes). Can read `AGENTS.md` natively when no project CLAUDE files exist (configurable). Skills: `.claude/skills/<name>/SKILL.md` | Keep `@AGENTS.md` in `CLAUDE.md`. `.claude/skills/` matches `.agents/skills/` (drift-checked). |
+| Copilot | `AGENTS.md` natively. `.github/copilot-instructions.md` and `.github/instructions/*.instructions.md` (`applyTo`). CLI skills: `.github/skills/`, `.claude/skills/`, `.agents/skills/` (or `~/.copilot/skills`) | Pointers stay short. Prefer shared `.agents/skills/` over duplicating into `.github/skills/`. |
+| Gemini CLI | Context filenames from `.gemini/settings.json`. Skills: `.agents/skills/` or `.gemini/skills/` (Agent Skills; progressive disclosure via `activate_skill`) | `{"context":{"fileName":["AGENTS.md"]}}`. `GEMINI.md` is a pointer only. Kit mirrors already satisfy skills discovery. |
 
 Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 
@@ -212,6 +212,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Layout structure (shell, grid, reading order) | [layout-system](docs/skills/layout-system.md) |
 | Add or change a screen | [ui-design](docs/skills/ui-design.md) |
 | Finish UI | [ui-review](docs/skills/ui-review.md) |
+| Localize UI / envelope strings | [i18n-localize](docs/skills/i18n-localize.md) |
 | Security review | [security-review](docs/skills/security-review.md) |
 | Prisma migration | [db-migration](docs/skills/db-migration.md) |
 | Inbound webhook | [webhook-handling](docs/skills/webhook-handling.md) |

@@ -15,6 +15,7 @@ Language: [English](index.md) · 中文
 | [layout-system](layout-system.zh.md) | 殼、分欄、導航、清單+詳情、響應式結構 | 改色盤／第二套元件庫；只改 API | jakubkrehel `better-layout`（改寫使用，不 vendor） |
 | [ui-design](ui-design.zh.md) | web／admin／mobile／desktop 畫面 | 只改 API；複雜版面須先 layout-system | Anthropic frontend-design（留在 kit token） |
 | [ui-review](ui-review.zh.md) | UI 標為完成之前的 QA 清單 | 設計畫面（ui-design）；新殼跳過 layout-system | Vercel Web Interface Guidelines |
+| [i18n-localize](i18n-localize.zh.md) | 使用者可見文案、ErrorBanner、電郵／push、語言切換 | 第二套 UI 庫；RTL；無監督機器翻譯術語 | `@ysk-kit/i18n`；Vercel Locale |
 | [verify-change](verify-change.zh.md) | 任何功能之後 | 沒跑命令就宣稱完成 | — |
 | [fix-layers](fix-layers.zh.md) | `pnpm layers` 失敗 | 未經批准改 `.dependency-cruiser.cjs` | — |
 | [envelope-api](envelope-api.zh.md) | 新路由、SSE、PDF 或錯誤形狀 | 另發明錯誤 JSON | — |

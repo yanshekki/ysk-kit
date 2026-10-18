@@ -15,6 +15,7 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [layout-system](layout-system.md) | Shell, columns, nav, list+detail, responsive structure | Palette / second component library; API-only | jakubkrehel `better-layout` (adapt, don’t vendor) |
 | [ui-design](ui-design.md) | Screens in web / admin / mobile / desktop | API-only changes; complex layout first (layout-system) | Anthropic frontend-design (stay on kit tokens) |
 | [ui-review](ui-review.md) | QA checklist before UI work is done | Designing the screen (ui-design); skipping layout-system on a new shell | Vercel Web Interface Guidelines |
+| [i18n-localize](i18n-localize.md) | User-visible copy, ErrorBanner, email/push, locale switch | Second UI library; RTL; unsupervised jargon MT | `@ysk-kit/i18n`; Vercel Locale |
 | [verify-change](verify-change.md) | After any feature | Claiming done without running it | — |
 | [fix-layers](fix-layers.md) | `pnpm layers` failed | Editing `.dependency-cruiser.cjs` without approval | — |
 | [envelope-api](envelope-api.md) | New route, SSE, PDF, or error shape | Parallel error JSON | — |

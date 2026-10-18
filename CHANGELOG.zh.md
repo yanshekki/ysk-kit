@@ -37,6 +37,25 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.3
+
+### 新功能
+
+- Agent skill [i18n-localize](docs/skills/i18n-localize.zh.md)：接上 `@ysk-kit/i18n`（`zh-HK` | `en`）、產品文案只留鍵、把 envelope 代碼 map 成本地化 `ERROR_MESSAGE`、用 `Intl` 格式化、兩個 locale 都驗證。含 wrappers、create-app／upgrade 模板與 skill-drift 副本。功能規模的 app 接線不在本版。
+
+### 改進
+
+- `AGENTS.md`／`AGENTS.zh.md` 程式工具表：Codex **合計** 32 KiB 上限；OpenCode 在沒有 `AGENTS.md` 時回退 `CLAUDE.md`；Grok／Cursor／Copilot／Gemini 的 skill 發現（包括 Gemini Agent Skills 經 `.agents/skills/`）。漸進披露加一列 `i18n-localize`。
+
+### 依賴升級
+
+- 只升穩定版（2026-10-18）：pnpm **12.11.2 → 12.14.0**（`packageManager` + CI `pnpm/action-setup`）、Turborepo **2.11.9**、React／react-dom **19.3.1**、Prisma 棧 **7.10.1**（`prev`；不是 npm `latest` 的 8.0.0-rc）、BullMQ **6.3.16**、happy-dom **21.0.3**、Electron **44.9.0**（留在 44.x）、Expo **58.0.14**、nodemailer **10.1.2**、TanStack Query **5.104.4**／Router **1.170.45**、`shell-quote` override **1.12.0**。
+- Compose／CI／create-app MySQL 釘 **8.4.11**。`.nvmrc` **22 → 26**，對齊 `engines.node`／CI。
+
+### 內部／CI
+
+- 暫緩：TypeScript **6.0.3**（不是 7.0.2）、Prisma **7.10.1**（CLI `latest` 仍是 `8.0.0-rc.*`）、Electron 45 beta、turbo canary、ioredis 6.1 beta、Playwright alpha。
+
 ## v1.6.2
 
 ### 新功能

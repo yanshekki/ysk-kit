@@ -4,10 +4,10 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.3.15"
-  react: "19.3.0"
-  react-dom: "19.3.0"
-  # Expo 58.0.10 still depends on these at 0.88.0-rc.4; npm latest is 0.88.0.
+  bullmq: "6.3.16"
+  react: "19.3.1"
+  react-dom: "19.3.1"
+  # Expo 58 still depends on these at 0.88.0-rc.4; npm latest is 0.88.0.
   "@react-native/asset-utils": "0.88.0"
   "@react-native/babel-plugin-codegen": "0.88.0"
   "@react-native/codegen": "0.88.0"
@@ -29,8 +29,8 @@ overrides:
   pg: "8.23.1"
   # GHSA-68fv-2mgg-jv7q / CVE-2026-93749: indexed source-map offset DoS. Patched in 1.2.2.
   source-map-js: "1.2.2"
-  # GHSA-pqg4-j6r4-53mv / CVE-2026-102422: quote() injection after a comment token. Patched in 1.11.0.
-  shell-quote: "1.11.0"
+  # GHSA-pqg4-j6r4-53mv / CVE-2026-102422: quote() injection after a comment token. Patched in 1.11.0; 1.12.0 is current stable.
+  shell-quote: "1.12.0"
 
 allowBuilds:
   argon2: true
@@ -73,17 +73,17 @@ minimumReleaseAgeExclude:
   - source-map-js@1.2.2
   - "@aws-sdk/client-s3@3.1152.0"
   - "@aws-sdk/s3-request-presigner@3.1152.0"
-  - "@expo/cli@58.1.8"
+  - "@expo/cli@58.1.11"
   - "@expo/config-plugins@58.0.9"
   - "@expo/config@58.0.6"
   - "@expo/image-utils@0.12.5"
   - "@expo/inline-modules@0.2.6"
   - "@expo/local-build-cache-provider@58.0.6"
-  - "@expo/metro-config@58.0.13"
+  - "@expo/metro-config@58.0.14"
   - "@expo/metro-file-map@58.0.5"
-  - "@expo/prebuild-config@58.0.13"
+  - "@expo/prebuild-config@58.0.14"
   - "@expo/require-utils@58.0.4"
-  - "@expo/router-server@58.0.13"
+  - "@expo/router-server@58.0.14"
   - "@react-native/asset-utils@0.88.0"
   - "@react-native/codegen@0.88.0"
   - "@react-native/community-cli-plugin@0.88.0"
@@ -93,18 +93,20 @@ minimumReleaseAgeExclude:
   - "@react-native/gradle-plugin@0.88.0"
   - "@react-native/normalize-colors@0.88.0"
   - "@react-native/virtualized-lists@0.88.0"
-  - "@tanstack/query-core@5.104.3"
-  - "@tanstack/react-query@5.104.3"
+  - "@tanstack/query-core@5.104.4"
+  - "@tanstack/react-query@5.104.4"
   - "@vitest/coverage-v8@5.0.5"
   - "@vitest/mocker@5.0.5"
   - "@vitest/spy@5.0.5"
-  - babel-preset-expo@58.0.14
-  - expo-asset@58.0.15
+  - babel-preset-expo@58.0.17
+  - expo-asset@58.0.16
   - expo-constants@58.0.12
   - expo-modules-autolinking@58.0.13
-  - expo-modules-core@58.0.18
-  - expo-modules-jsi@58.0.13
-  - expo@58.0.10
+  - expo-modules-core@58.0.22
+  - expo-modules-jsi@58.0.15
+  - expo@58.0.14
   - vitest@5.0.5
   - "@react-native/babel-plugin-codegen@0.88.0"
   - "@react-native/js-polyfills@0.88.0"
+  - bullmq@6.3.16
+  - electron@44.9.0

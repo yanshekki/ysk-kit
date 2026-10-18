@@ -133,3 +133,7 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 **v1.6.0:** Interactive `create-ysk-app` numbered guided wizard (best-for / avoid-when / confirm-before-write). Flavor input accepts 1–6 and slugs. TTY English only. `--yes` / non-TTY silent. Tauri/Flutter/KMP remain deferred (ADR 0002).
 
 **v1.6.1:** Re-check of stable versions (2026-10-15). electron-vite 6.0.0 (`latest`; was beta.8). React Native 0.88.0 (`latest`; was rc.4). Expo 58.0.10 still `next`. pnpm 12.11.2, Vite 8.3.4, Vitest 5.0.5, OTEL 2.12.0 / 0.223.0, Jaeger 2.22.0, Grafana 13.2.4. Held: TypeScript 6.0.3, Prisma 7.10.0, `@ts-rest/core` 3.53.0-rc.1, Node 26 Current, Expo `latest` 57.
+
+**v1.6.2:** Structured Pino ERROR for INTERNAL/5xx (`requestId` + `error.code`), bounded `ysk_http_errors_total`, `ysk-kit check errors` / `check logs`, skill `error-log-review`.
+
+**v1.6.3:** Stable-only weekly bumps (2026-10-18): pnpm 12.14.0, turbo 2.11.9, React 19.3.1, Prisma 7.10.1 (not 8 RC), BullMQ 6.3.16, Electron 44.9.0, Expo 58.0.14. Skill `i18n-localize`. AGENTS coding-tools table polish. `.nvmrc` 26. MySQL 8.4.11. Held: TypeScript 6.0.3, Prisma 8 RC, Electron 45 beta.

@@ -116,6 +116,24 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.3
+
+#### 新功能
+
+- Skill [i18n-localize](docs/skills/i18n-localize.zh.md)：`@ysk-kit/i18n`（`zh-HK` | `en`）、envelope 代碼維持英文穩定、`Intl` 格式化。App 接線不在本版。
+
+#### 改進
+
+- `AGENTS.md` 程式工具表：OpenCode 的 Claude 回退、Gemini Agent Skills、Copilot／Grok skill 路徑。
+
+#### 依賴升級
+
+- pnpm **12.14.0**、turbo **2.11.9**、React **19.3.1**、Prisma **7.10.1**（不是 8 RC）、BullMQ **6.3.16**、Electron **44.9.0**、Expo **58.0.14**。暫緩：TypeScript 6、Prisma 8 RC、Electron 45 beta。
+
+#### 內部／CI
+
+- `.nvmrc` **26**。Compose／CI MySQL **8.4.11**。
+
 ### v1.6.2
 
 #### 新功能
@@ -131,12 +149,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 依賴升級
 
 - electron-vite **6.0.0**（`latest`；先前 6.0.0-beta.8）。React Native **0.88.0**（`latest`；先前 0.88.0-rc.4）。Expo 58.0.10 仍是 npm `next`。pnpm 12.11.2、Vite 8.3.4、Vitest 5.0.5、OTEL 2.12.0／0.223.0。暫緩：TypeScript 6、Prisma 7.10、`@ts-rest/core` 3.53.0-rc.1、Node 26 Current。
-
-### v1.6.0
-
-#### 新功能
-
-- 互動式 `create-ysk-app` 改用編號引導式精靈（適用於／避免何時／寫入前確認）。Flavor 輸入接受 `1`–`6` 與 slug。TTY 文案只用英文。`--yes`／非 TTY 永不提問。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

@@ -116,6 +116,24 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.3
+
+#### New features
+
+- Skill [i18n-localize](docs/skills/i18n-localize.md): `@ysk-kit/i18n` (`zh-HK` | `en`), envelope codes stay English-stable, `Intl` formats. App wiring is out of this release.
+
+#### Improvements
+
+- `AGENTS.md` coding-tools table: OpenCode Claude fallback, Gemini Agent Skills, Copilot/Grok skill paths.
+
+#### Dependency upgrades
+
+- pnpm **12.14.0**, turbo **2.11.9**, React **19.3.1**, Prisma **7.10.1** (not 8 RC), BullMQ **6.3.16**, Electron **44.9.0**, Expo **58.0.14**. Held: TypeScript 6, Prisma 8 RC, Electron 45 beta.
+
+#### Internal/CI
+
+- `.nvmrc` **26**. Compose/CI MySQL **8.4.11**.
+
 ### v1.6.2
 
 #### New features
@@ -131,12 +149,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Dependency upgrades
 
 - electron-vite **6.0.0** (`latest`; was 6.0.0-beta.8). React Native **0.88.0** (`latest`; was 0.88.0-rc.4). Expo 58.0.10 still npm `next`. pnpm 12.11.2, Vite 8.3.4, Vitest 5.0.5, OTEL 2.12.0 / 0.223.0. Held: TypeScript 6, Prisma 7.10, `@ts-rest/core` 3.53.0-rc.1, Node 26 Current.
-
-### v1.6.0
-
-#### New features
-
-- Interactive `create-ysk-app` uses a numbered guided wizard (best-for / avoid-when / confirm-before-write). Flavor input accepts `1`–`6` and slugs. TTY copy is English. `--yes` / non-TTY never prompt.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

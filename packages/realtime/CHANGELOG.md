@@ -1,5 +1,13 @@
 # @ysk-kit/realtime
 
+## 1.6.4
+
+### Patch Changes
+
+- 66b78bf: Add ysk-kit check supply and the supply-scan skill, and raise Node/PHP floors for the October 2026 runtime advisories.
+- Updated dependencies [66b78bf]
+  - @ysk-kit/auth@1.6.4
+
 ## 1.6.3
 
 ### Patch Changes

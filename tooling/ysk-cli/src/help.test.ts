@@ -15,6 +15,7 @@ describe('ysk help', () => {
     expect(HELP).toContain('upgrade');
     expect(HELP).toContain('--dry-run');
     expect(HELP).toContain('check agent');
+    expect(HELP).toContain('check supply');
     expect(HELP).toContain('doctor [--json]');
     expect(HELP).toContain('plan <kebab-slug>');
     expect(HELP).toContain('plan --check <file>');

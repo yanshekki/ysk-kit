@@ -5,7 +5,7 @@ description: >
   tests, then HTTP on Express AND Fastify, then SDK, then e2e, then git bisect.
   Use when a test, CI job, or user report is red; a flake; or /debug-issue.
   中文：除錯、紅燈迴圈、回歸測試、bisect、日誌遮罩。
-  Do not use for green-field features (plan-feature), a JSON INTERNAL dump (error-log-review), or a security audit (security-review).
+  Do not use for green-field features (plan-feature), a JSON INTERNAL dump (error-log-review), a security audit (security-review), or CVE inventory (supply-scan).
 ---
 
 Read `docs/skills/debug-issue.md`. Law: `AGENTS.md`.

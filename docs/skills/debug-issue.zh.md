@@ -4,7 +4,7 @@ description: >
   以紅燈迴圈除錯 YSK Kit 失敗：先記憶體 port 測試，再 Express 與 Fastify 的 HTTP，再 SDK，再 e2e，再 git bisect。
   測試、CI job 或使用者回報是紅燈、flake，或 /debug-issue 時使用。
   中文：除錯、紅燈迴圈、回歸測試、bisect、日誌遮罩。
-  不要用於從零開始的功能（plan-feature）、JSON INTERNAL dump（error-log-review），或安全稽核（security-review）。
+  不要用於從零開始的功能（plan-feature）、JSON INTERNAL dump（error-log-review）、安全稽核（security-review），或 CVE／runtime 盤點（supply-scan）。
 ---
 
 # Skill：除錯問題
@@ -19,7 +19,7 @@ Language: [English](debug-issue.md) · 中文
 - 使用者回報（登入、billing、LLM、webhook、desktop token）。
 - flake。
 
-不要用來設計新資源（[plan-feature](plan-feature.zh.md)）、分流 JSON INTERNAL／5xx dump（[error-log-review](error-log-review.zh.md)），或審查乾淨 diff（[review-change](review-change.zh.md)）。
+不要用來設計新資源（[plan-feature](plan-feature.zh.md)）、分流 JSON INTERNAL／5xx dump（[error-log-review](error-log-review.zh.md)）、審查乾淨 diff（[review-change](review-change.zh.md)），或盤點 CVE 與 runtime（[supply-scan](supply-scan.zh.md)）。
 
 ## 輸入
 

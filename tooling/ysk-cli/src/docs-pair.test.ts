@@ -28,6 +28,7 @@ const SKILLS = [
   'llm-feature',
   'error-log-review',
   'i18n-localize',
+  'supply-scan',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

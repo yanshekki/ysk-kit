@@ -20,6 +20,7 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 | Agent 掃描 | `ysk-kit check agent` 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch`。Biome `noEnum` 為 error。CI 會跑此掃描 |
 | 錯誤日誌 | INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）與 `ysk_http_errors_total`。`ysk-kit check errors`／`check logs`。程序：[error-log-review](skills/error-log-review.zh.md) |
 | 本地化 UI | 程序：[i18n-localize](skills/i18n-localize.zh.md)。套件 `@ysk-kit/i18n`（`zh-HK` \| `en`）。Envelope 代碼維持英文穩定 |
+| 供應鏈掃描 | `ysk-kit check supply` 盤點 Node／PHP／kernel／lockfile／Actions pin，對照內建目錄。程序：[supply-scan](skills/supply-scan.zh.md) |
 
 十五分鐘路徑：
 

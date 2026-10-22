@@ -79,6 +79,7 @@ If HTTP paths or DTOs changed, the YAML **must** differ from `HEAD` until you co
 | Login / shell path changed and ports 3001/5173 free | `pnpm e2e` |
 | HTTP paths added | open `GET /docs` |
 | Captured JSONL logs | `pnpm ysk-kit check logs --file <jsonl>` ([error-log-review](error-log-review.md)) |
+| CVE / runtime / lockfile / before a release | `pnpm ysk-kit check supply --repo-only` ([supply-scan](supply-scan.md)); add `--online` when the registry is allowed |
 | Grok Build | `grok inspect` |
 | UI | [ui-review](ui-review.md) |
 | New tests | [write-tests](write-tests.md) after [test-plan](test-plan.md) |
@@ -86,7 +87,7 @@ If HTTP paths or DTOs changed, the YAML **must** differ from `HEAD` until you co
 
 Do not start Redis, Stripe, Twilio, FCM, Jaeger, or Grafana to make unit tests pass.
 
-Related when in scope: [security-review](security-review.md), [db-migration](db-migration.md), [webhook-handling](webhook-handling.md), [desktop-electron](desktop-electron.md), [contract-change](contract-change.md), [review-change](review-change.md), [error-log-review](error-log-review.md).
+Related when in scope: [security-review](security-review.md), [db-migration](db-migration.md), [webhook-handling](webhook-handling.md), [desktop-electron](desktop-electron.md), [contract-change](contract-change.md), [review-change](review-change.md), [error-log-review](error-log-review.md), [supply-scan](supply-scan.md).
 
 ## Verification
 
@@ -108,6 +109,7 @@ openapi diff: clean | committed | unexpected
 check agent: ok | FAIL (<rule>)
 check errors: ok | FAIL (<rule>)
 check logs: ok | findings | skipped (no JSONL)
+check supply: ok | FAIL | skipped
 extras: lint | check:links | changeset | zh pair | e2e | skipped (<why>)
 Done: no | yes (DoD)
 ```

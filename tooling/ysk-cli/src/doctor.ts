@@ -5,7 +5,11 @@ import { join } from 'node:path';
 import { AGENT_SKILL_TREES, agentTemplatesDir, listAgentRuleFiles } from './agent-stubs.js';
 import { checkAgent, formatAgentFindings } from './check-agent.js';
 import { checkErrors, formatErrorFindings } from './check-errors.js';
+import { checkSupply, formatSupplyReport } from './check-supply.js';
+import { satisfiesRange } from './semver-range.js';
 import { readKitVersion, UPGRADE_PATHS } from './upgrade.js';
+
+export { satisfiesRange } from './semver-range.js';
 
 type SqliteDatabase = {
   prepare(sql: string): { all(): unknown[] };
@@ -30,7 +34,8 @@ export type DoctorCheckId =
   | 'database'
   | 'rules'
   | 'agent'
-  | 'errors';
+  | 'errors'
+  | 'supply';
 
 export type DoctorCheck = {
   id: DoctorCheckId;
@@ -63,8 +68,6 @@ export type DoctorOptions = {
   probeDatabase?: (input: { databaseUrl: string; productRoot: string }) => DbProbe;
 };
 
-type Ver = { major: number; minor: number; patch: number };
-
 const JWT_DEFAULTS = new Set([
   'change-me-in-dev-only',
   'change-me',
@@ -89,48 +92,6 @@ const check = (
 ): DoctorCheck => {
   if (fix === undefined) return { id, status, message };
   return { id, status, message, fix };
-};
-
-const parseVer = (raw: string): Ver | undefined => {
-  const match = raw.trim().match(/v?(\d+)(?:\.(\d+))?(?:\.(\d+))?/);
-  if (!match?.[1]) return undefined;
-  return {
-    major: Number(match[1]),
-    minor: Number(match[2] ?? 0),
-    patch: Number(match[3] ?? 0),
-  };
-};
-
-const cmpVer = (a: Ver, b: Ver): number =>
-  a.major - b.major || a.minor - b.minor || a.patch - b.patch;
-
-/** Satisfies a small engines range: comparisons, exact versions, space-separated AND, and `||`. */
-export const satisfiesRange = (version: string, range: string): boolean => {
-  const ver = parseVer(version);
-  if (!ver) return false;
-  const parts = range
-    .split('||')
-    .map((part) => part.trim())
-    .filter((part) => part.length > 0);
-  if (parts.length === 0) return false;
-  return parts.some((part) => {
-    if (part === '*' || part === 'x') return true;
-    const clauses = part.match(/(>=|<=|>|<|=)?\s*v?\d+(?:\.\d+){0,2}/g);
-    if (!clauses || clauses.length === 0) return false;
-    return clauses.every((clause) => {
-      const match = clause.trim().match(/^(>=|<=|>|<|=)?\s*(v?\d+(?:\.\d+){0,2})$/);
-      if (!match?.[2]) return false;
-      const bound = parseVer(match[2]);
-      if (!bound) return false;
-      const op = match[1] ?? '=';
-      const order = cmpVer(ver, bound);
-      if (op === '>=') return order >= 0;
-      if (op === '<=') return order <= 0;
-      if (op === '>') return order > 0;
-      if (op === '<') return order < 0;
-      return order === 0;
-    });
-  });
 };
 
 export const parseEnvFile = (text: string): Record<string, string> => {
@@ -324,7 +285,7 @@ const enginesCheck = (
       warnings.join('; '),
       pinned
         ? `Run \`corepack prepare pnpm@${pinned} --activate\` so the packageManager pin matches.`
-        : 'Add engines.node >=26.0.0 and engines.pnpm >=12.0.0 to package.json.',
+        : 'Add engines.node >=26.12.1 and engines.pnpm >=12.0.0 to package.json.',
     );
   }
   const nodeMsg = nodeRange ? `Node ${nodeVersion} satisfies ${nodeRange}` : `Node ${nodeVersion}`;
@@ -750,6 +711,24 @@ const errorsCheck = (productRoot: string): DoctorCheck => {
   );
 };
 
+const supplyCheck = (productRoot: string, nodeVersion: string): DoctorCheck => {
+  const report = checkSupply(productRoot, { repoOnly: true, nodeVersion });
+  const runtime = report.findings.filter(
+    (item) =>
+      item.component === 'node' &&
+      (item.rule === 'runtime-below-floor' || item.rule === 'runtime-eol'),
+  );
+  if (runtime.length > 0) {
+    return check(
+      'supply',
+      'error',
+      formatSupplyReport({ ...report, findings: runtime, ok: false }),
+      'Install Node 26.12.1 or later (CVE-2026-111497). Run `pnpm ysk-kit check supply` (skill supply-scan).',
+    );
+  }
+  return check('supply', 'ok', 'ysk-kit check supply: node runtime floor ok');
+};
+
 export const doctor = (opts: DoctorOptions): DoctorReport => {
   const nodeVersion = opts.nodeVersion ?? process.versions.node;
   const pnpmVersion = opts.pnpmVersion === undefined ? pnpmOnPath() : opts.pnpmVersion;
@@ -771,6 +750,7 @@ export const doctor = (opts: DoctorOptions): DoctorReport => {
     rulesCheck(opts.productRoot, opts.kitRoot),
     agentCheck(opts.productRoot),
     errorsCheck(opts.productRoot),
+    supplyCheck(opts.productRoot, nodeVersion),
   ];
   const errors = checks.filter((item) => item.status === 'error').length;
   const warnings = checks.filter((item) => item.status === 'warn').length;

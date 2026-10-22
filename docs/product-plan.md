@@ -20,6 +20,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | Agent scan | `ysk-kit check agent` flags TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop. Biome `noEnum` is error. CI runs the scan |
 | Error logs | INTERNAL / 5xx write structured Pino ERROR (`requestId` + `error.code`) and `ysk_http_errors_total`. `ysk-kit check errors` / `check logs`. Procedure: [error-log-review](skills/error-log-review.md) |
 | Localize UI | Procedure: [i18n-localize](skills/i18n-localize.md). Package `@ysk-kit/i18n` (`zh-HK` \| `en`). Envelope codes stay English-stable |
+| Supply scan | `ysk-kit check supply` inventories Node / PHP / kernel / lockfile / Actions pins against a vendored catalog. Procedure: [supply-scan](skills/supply-scan.md) |
 
 Fifteen-minute path:
 

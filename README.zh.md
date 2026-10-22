@@ -83,6 +83,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
 | `pnpm ysk-kit check errors` | 標記 `application/` 普通 `Error`、API `console.log`、`process.env` 日誌 |
 | `pnpm ysk-kit check logs --file <jsonl>` | 驗證捕捉到的 Pino JSON（密鑰、ERROR `requestId`） |
+| `pnpm ysk-kit check supply [--json] [--repo-only] [--online]` | 盤點 Node、PHP、lockfile 與 Actions pin，對照內建目錄 |
 | `pnpm create @ysk-kit/app <name>`／`npm create @ysk-kit/app <name>` | 從 npm 產生一個產品 |
 | `pnpm --filter @ysk-kit/create-app start <name>` | 從本倉產生一個產品 |
 | `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` | 驗證一次改動 |
@@ -116,6 +117,17 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.4
+
+#### 安全
+
+- `ysk-kit check supply` 盤點 Node、PHP、kernel、lockfile IOC、GitHub Actions SHA 與 compose 標籤，對照內建目錄（2026 年 10 月 php2shell 與 Node Brotli 下限）。Skill [supply-scan](docs/skills/supply-scan.zh.md)。沒有 Trivy。
+- `engines.node` 為 `>=26.12.1`。php-bridge `require.php` 為 `>=8.2.35`。Override `launch-editor` 2.14.2。
+
+#### 內部／CI
+
+- CI `check` 跑 `pnpm ysk-kit check supply --repo-only --online`，不再直接跑 `pnpm audit`。Doctor 檢查 id `supply`。
+
 ### v1.6.3
 
 #### 新功能
@@ -143,12 +155,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 修正
 
 - Error middleware 不再略過 `logger.error`。SDK 把 envelope `requestId` 複製到 `AppError`。
-
-### v1.6.1
-
-#### 依賴升級
-
-- electron-vite **6.0.0**（`latest`；先前 6.0.0-beta.8）。React Native **0.88.0**（`latest`；先前 0.88.0-rc.4）。Expo 58.0.10 仍是 npm `next`。pnpm 12.11.2、Vite 8.3.4、Vitest 5.0.5、OTEL 2.12.0／0.223.0。暫緩：TypeScript 6、Prisma 7.10、`@ts-rest/core` 3.53.0-rc.1、Node 26 Current。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

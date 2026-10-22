@@ -12,6 +12,7 @@ pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit check errors
 pnpm ysk-kit check logs [--file <jsonl>]
+pnpm ysk-kit check supply [--json] [--repo-only] [--online]
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 pnpm ysk-kit plan --check <file>
@@ -169,6 +170,38 @@ NODE_ENV=production pnpm --filter @ysk-kit/api start | pnpm ysk-kit check logs
 
 出現密鑰字面量（`sk_live`／`sk_test`／`rk_`／`whsec_`／`"otp":` 不是 `[Redacted]`），或 ERROR 行缺少 `requestId`／`reqId` 時退出 1。摘要含 ERROR 與 INTERNAL 計數。不進入預設驗證鏈——有 JSONL 才跑。操作手冊：[檢查錯誤日誌](../recipes/review-error-logs.zh.md)。
 
+## `ysk-kit check supply`
+
+盤點第三方程式與 pin，再對照 `@ysk-kit/cli` 內建目錄。文字掃描加上可選的 `pnpm audit --json`。沒有 Trivy。
+
+```text
+pnpm ysk-kit check supply
+pnpm ysk-kit check supply --repo-only
+pnpm ysk-kit check supply --repo-only --online
+pnpm ysk-kit check supply --json
+```
+
+退出 0 時印 `ysk-kit check supply: ok`（kernel 提醒可先以警告印出）。退出 1 時每個失敗 finding 一行。`--json` 印 `{ ok, catalogUpdated, inventory, findings }`。
+
+| 旗標 | 作用 |
+|---|---|
+| `--json` | 給 agent 的機器可讀報告 |
+| `--repo-only` | 跳過主機 PHP 與 kernel；仍檢查執行 CLI 的 Node 與倉內 pin。CI 用此旗標 |
+| `--online` | spawn `pnpm audit --json` 並尊重 `auditConfig.ignoreGhsas`。預設關閉，讓 Vitest 保持離線 |
+
+| 規則 | 標記什麼 |
+|---|---|
+| `runtime-below-floor` | 主機／CLI 的 Node 或 PHP 低於目錄該線下限（CVE-2026-111497、php2shell） |
+| `constraint-below-floor` | `engines.node` 或 composer `require.php` 仍允許易受攻擊的 patch |
+| `runtime-eol` | PHP ≤8.1（上游沒有修補） |
+| `compromised-package` | lockfile 名稱@version 在目錄 IOC 種子內 |
+| `audit-advisory` | `--online` GHSA 未被忽略 |
+| `action-unpinned` | GitHub Action `uses:` 沒有 40 字元 SHA |
+| `image-unpinned` | compose image 標籤缺失或 `latest`（`mysql:8.4` 可以） |
+| `kernel-advisory` | Linux 主機提醒（只 warn；不失敗） |
+
+Doctor 把 Node runtime 下限未過列為**錯誤**。CI 跑 `--repo-only --online`，不再直接跑 `pnpm audit`。程序：[supply-scan](../skills/supply-scan.zh.md)。操作手冊：[掃描供應鏈](../recipes/scan-supply.zh.md)。
+
 ## `ysk-kit plan`
 
 按 [docs/plans/_template.md](../plans/_template.md) 寫出雙語功能計劃。
@@ -208,6 +241,7 @@ pnpm ysk-kit doctor --json
 | `rules` | 允許清單上的護欄檔與本 kit 不同 | 檔案相符，但 `.ysk-kit.json` 缺失或其 `version` 落後本 kit | `pnpm ysk-kit upgrade` |
 | `agent` | `check agent` 有發現 | — | 規則與 [`ysk-kit check agent`](#ysk-kit-check-agent) 相同 |
 | `errors` | — | `check errors` 有發現 | 在 `application/` 拋 `AppError`，不要在 `apps/api` `console.log`（seed 除外），不要 log `process.env`。見 [`ysk-kit check errors`](#ysk-kit-check-errors) |
+| `supply` | 執行中的 Node 低於目錄下限 | — | 安裝 Node ≥26.12.1。見 [`ysk-kit check supply`](#ysk-kit-check-supply) |
 
 SQLite 用 Node 的 `node:sqlite` 開啟（`_prisma_migrations` 中 `finished_at` 有值且 `rolled_back_at` 為 null）。MySQL 與 PostgreSQL 在 `apps/api` 執行 `prisma migrate status`。報告會遮蓋連線字串。
 

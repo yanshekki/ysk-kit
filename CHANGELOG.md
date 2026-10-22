@@ -37,6 +37,18 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.4
+
+### Security
+
+- `ysk-kit check supply` inventories Node, PHP, kernel, lockfile IOCs, GitHub Actions SHAs, and compose tags against a vendored catalog dated 2026-10-21 (CVE-2026-111497 Node Brotli RCE floors 22.23.4 / 24.22.1 / 26.12.1; php2shell CVE-2026-109618 / CVE-2026-109619 floors 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12; Shai-Hulud IOC seed; Linux Dirty Frag / ptrace reminders are warn-only). Flags `--json`, `--repo-only`, `--online` (wraps `pnpm audit --json`, honors `ignoreGhsas`). Skill [supply-scan](docs/skills/supply-scan.md), recipe [scan-supply](docs/recipes/scan-supply.md). Do not add Trivy or OSV-Scanner as a default.
+- Kit `engines.node` is `>=26.12.1`. php-bridge `composer.json` `require.php` is `>=8.2.35`.
+- Workspace override `launch-editor` **2.14.2** (GHSA-587h-7wmj-h5pm / GHSA-698v-4r3x-3vcv / GHSA-r825-w8mm-5pxw).
+
+### Internal/CI
+
+- CI `check` runs `pnpm ysk-kit check supply --repo-only --online` instead of `pnpm audit --audit-level=low`. Doctor check id `supply` errors when the running Node is below the catalog floor.
+
 ## v1.6.3
 
 ### New features

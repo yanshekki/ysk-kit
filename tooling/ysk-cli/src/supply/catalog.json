@@ -1,0 +1,47 @@
+{
+  "updated": "2026-10-21",
+  "runtimes": {
+    "node": {
+      "lines": {
+        "22": { "min": "22.23.4" },
+        "24": { "min": "24.22.1" },
+        "26": { "min": "26.12.1" }
+      },
+      "advisories": ["CVE-2026-111497"]
+    },
+    "php": {
+      "lines": {
+        "8.2": { "min": "8.2.35" },
+        "8.3": { "min": "8.3.36" },
+        "8.4": { "min": "8.4.27" },
+        "8.5": { "min": "8.5.12" }
+      },
+      "eolMax": "8.1",
+      "advisories": ["CVE-2026-109618", "CVE-2026-109619"]
+    },
+    "linux": {
+      "advisories": [
+        {
+          "id": "CVE-2026-43284",
+          "name": "Dirty Frag",
+          "mitigations": "Apply the distro kernel; disable unused rxrpc/esp modules; restrict local shell"
+        },
+        {
+          "id": "CVE-2026-46333",
+          "name": "ptrace LPE",
+          "mitigations": "Apply the distro kernel; kernel.yama.ptrace_scope=2 until patched"
+        }
+      ]
+    }
+  },
+  "packages": {
+    "npm": [
+      {
+        "name": "@ctrl/tinycolor",
+        "bad": ["4.1.1", "4.1.2"],
+        "id": "SHAI-HULUD",
+        "reason": "Shai-Hulud npm worm (CISA 2025-09)"
+      }
+    ]
+  }
+}

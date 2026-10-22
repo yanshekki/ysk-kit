@@ -12,6 +12,7 @@ pnpm ysk-kit upgrade [--dry-run]
 pnpm ysk-kit check agent
 pnpm ysk-kit check errors
 pnpm ysk-kit check logs [--file <jsonl>]
+pnpm ysk-kit check supply [--json] [--repo-only] [--online]
 pnpm ysk-kit doctor [--json]
 pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
 pnpm ysk-kit plan --check <file>
@@ -169,6 +170,38 @@ NODE_ENV=production pnpm --filter @ysk-kit/api start | pnpm ysk-kit check logs
 
 Exit 1 on a secret literal (`sk_live` / `sk_test` / `rk_` / `whsec_` / `"otp":` not `[Redacted]`) or an ERROR line missing `requestId` / `reqId`. Prints a summary with ERROR and INTERNAL counts. Not part of the default verify chain — run it when you have JSONL. Recipe: [review error logs](../recipes/review-error-logs.md).
 
+## `ysk-kit check supply`
+
+Inventories third-party runtimes and pins, then matches them against the vendored catalog in `@ysk-kit/cli`. Text scan plus optional `pnpm audit --json`. No Trivy.
+
+```text
+pnpm ysk-kit check supply
+pnpm ysk-kit check supply --repo-only
+pnpm ysk-kit check supply --repo-only --online
+pnpm ysk-kit check supply --json
+```
+
+Exit 0 prints `ysk-kit check supply: ok` (kernel reminders may print first as warnings). Exit 1 prints one line per failing finding. `--json` prints `{ ok, catalogUpdated, inventory, findings }`.
+
+| Flag | Effect |
+|---|---|
+| `--json` | Machine-readable report for agents |
+| `--repo-only` | Skip host PHP and kernel; still check the Node running the CLI plus repo pins. CI uses this |
+| `--online` | Spawn `pnpm audit --json` and honor `auditConfig.ignoreGhsas`. Off by default so Vitest stays offline |
+
+| Rule | What it flags |
+|---|---|
+| `runtime-below-floor` | Host/CLI Node or PHP below the catalog line min (CVE-2026-111497, php2shell) |
+| `constraint-below-floor` | `engines.node` or composer `require.php` still allows a vulnerable patch |
+| `runtime-eol` | PHP ≤8.1 (no upstream fix) |
+| `compromised-package` | Lockfile name@version in the catalog IOC seed |
+| `audit-advisory` | `--online` GHSA not ignored |
+| `action-unpinned` | GitHub Action `uses:` without a 40-character SHA |
+| `image-unpinned` | Compose image tag missing or `latest` (`mysql:8.4` is fine) |
+| `kernel-advisory` | Linux host reminder (warn-only; not a fail) |
+
+Doctor reports a Node runtime floor miss as an **error**. CI runs `--repo-only --online` instead of raw `pnpm audit`. Procedure: [supply-scan](../skills/supply-scan.md). Recipe: [scan supply](../recipes/scan-supply.md).
+
 ## `ysk-kit plan`
 
 Writes a bilingual feature plan from [docs/plans/_template.md](../plans/_template.md).
@@ -208,6 +241,7 @@ Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--
 | `rules` | Allowlisted guardrail files differ from this kit | Files match and `.ysk-kit.json` is missing or its `version` is behind this kit | `pnpm ysk-kit upgrade` |
 | `agent` | `check agent` reported a finding | — | Same rules as [`ysk-kit check agent`](#ysk-kit-check-agent) |
 | `errors` | — | `check errors` reported a finding | Throw `AppError` from `application/`, do not `console.log` in `apps/api` (except seed), and do not log `process.env`. See [`ysk-kit check errors`](#ysk-kit-check-errors) |
+| `supply` | Running Node is below the catalog floor | — | Install Node ≥26.12.1. See [`ysk-kit check supply`](#ysk-kit-check-supply) |
 
 SQLite is opened with Node's `node:sqlite` (`_prisma_migrations` where `finished_at` is set and `rolled_back_at` is null). MySQL and PostgreSQL run `prisma migrate status` in `apps/api`. Connection strings are redacted in the report.
 

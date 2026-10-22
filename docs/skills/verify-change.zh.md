@@ -79,6 +79,7 @@ git diff --exit-code docs/openapi.yaml
 | 登入／shell 路徑有變且 3001／5173 空閒 | `pnpm e2e` |
 | 加了 HTTP 路徑 | 打開 `GET /docs` |
 | 已捕捉 JSONL 日誌 | `pnpm ysk-kit check logs --file <jsonl>`（[error-log-review](error-log-review.zh.md)） |
+| CVE／runtime／lockfile／發佈前 | `pnpm ysk-kit check supply --repo-only`（[supply-scan](supply-scan.zh.md)）；允許 registry 時加 `--online` |
 | Grok Build | `grok inspect` |
 | UI | [ui-review](ui-review.zh.md) |
 | 新測試 | 先 [test-plan](test-plan.zh.md)，再 [write-tests](write-tests.zh.md) |
@@ -86,7 +87,7 @@ git diff --exit-code docs/openapi.yaml
 
 不要為了讓單元測試通過而啟動 Redis、Stripe、Twilio、FCM、Jaeger 或 Grafana。
 
-範圍內再跟：[security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[webhook-handling](webhook-handling.zh.md)、[desktop-electron](desktop-electron.zh.md)、[contract-change](contract-change.zh.md)、[review-change](review-change.zh.md)、[error-log-review](error-log-review.zh.md)。
+範圍內再跟：[security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[webhook-handling](webhook-handling.zh.md)、[desktop-electron](desktop-electron.zh.md)、[contract-change](contract-change.zh.md)、[review-change](review-change.zh.md)、[error-log-review](error-log-review.zh.md)、[supply-scan](supply-scan.zh.md)。
 
 ## 驗證
 
@@ -108,6 +109,7 @@ openapi diff: clean | committed | unexpected
 check agent: ok | FAIL (<rule>)
 check errors: ok | FAIL (<rule>)
 check logs: ok | findings | skipped (no JSONL)
+check supply: ok | FAIL | skipped
 extras: lint | check:links | changeset | zh pair | e2e | skipped (<why>)
 Done: no | yes (DoD)
 ```

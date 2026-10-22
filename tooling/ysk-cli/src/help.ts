@@ -10,6 +10,7 @@ Usage:
   pnpm ysk-kit check agent
   pnpm ysk-kit check errors
   pnpm ysk-kit check logs [--file <jsonl>]
+  pnpm ysk-kit check supply [--json] [--repo-only] [--online]
   pnpm ysk-kit doctor [--json]
   pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
   pnpm ysk-kit plan --check <file>
@@ -60,6 +61,15 @@ Commands:
       literals, ERROR lines missing requestId/reqId, INTERNAL counts.
       Exit 1 on secret leak or missing requestId. Not for pretty/dev logs.
 
+  check supply [--json] [--repo-only] [--online]
+      Inventory third-party runtimes and pins (Node, PHP, kernel,
+      engines, composer, lockfile IOCs, Actions SHA, compose tags)
+      against the vendored advisory catalog. Exit 1 on high/critical
+      findings. Kernel reminders are warnings and do not fail.
+      --json        Print { ok, catalogUpdated, inventory, findings }
+      --repo-only   Skip host PHP and kernel; still check CLI Node
+      --online      Run pnpm audit --json and honor ignoreGhsas
+
   plan <slug> [--date YYYY-MM-DD] [--force]
       Write docs/plans/<date>-<slug>.md and the Chinese pair from the
       bilingual template, plus a gitignored root plan.md pointer.
@@ -73,8 +83,9 @@ Commands:
       Check a generated product: Node and pnpm versus engines, required
       env vars, insecure defaults (JWT_SECRET placeholder or shorter than
       32 characters), database reachability and applied Prisma migrations,
-      guardrail files versus \`ysk-kit upgrade\`, \`check agent\`, and
-      \`check errors\` (warnings).
+      guardrail files versus \`ysk-kit upgrade\`, \`check agent\`,
+      \`check errors\` (warnings), and Node versus the supply catalog
+      runtime floor.
       Warnings stay on exit 0. Exit 1 when any check is an error.
       --json   Print { ok, errors, warnings, checks } and no secret values.
 

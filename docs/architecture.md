@@ -171,7 +171,8 @@ Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /
 | `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
 | `ysk-kit check errors` | Flag `throw new Error` in `application/`, `console.log` in `apps/api`, and `JSON.stringify(process.env)` |
 | `ysk-kit check logs` | Validate captured Pino JSON (secret literals, ERROR `requestId`) |
-| `ysk-kit doctor` | Engines, required env, insecure defaults, database migrations, guardrail drift, `check agent`, and a `check errors` warning |
+| `ysk-kit check supply` | Inventory Node/PHP/kernel and repo pins against a vendored catalog (optional `pnpm audit`) |
+| `ysk-kit doctor` | Engines, required env, insecure defaults, database migrations, guardrail drift, `check agent`, a `check errors` warning, and a `supply` runtime-floor check |
 
 `--preset thin` (default) copies then strips llm, billing, organizations, and devices. `--preset full` keeps the living demonstration. `php-bridge` and `static-web3` ignore preset. Products refresh kit guardrails with `ysk-kit upgrade`; they do not install `@ysk-kit/*` from a registry in the daily path. Manuals: [CLI](cli/index.md), [flavors](guides/flavors.md), [capabilities](guides/capabilities.md), [upgrade](guides/upgrade.md).
 

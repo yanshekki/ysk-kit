@@ -82,6 +82,7 @@ Do not treat “it compiled” as a security review of new code you did not writ
 | Transitive bumps | Diff-scoped; a bump with no new trust boundary is not this skill. A new native addon, installer, or HTTP client is |
 | Agent skills | Do not `npx skills add` (or equivalent) from an unknown source into this kit. Pin and read `SKILL.md` before copying. Vendor skills are pointers in `docs/skills/index.md`, not extra trees |
 | GitHub Actions | Workflows are supply chain: pin actions by SHA when changing `.github/`; do not add a third-party action that posts secrets to an unknown endpoint |
+| Runtime / lockfile CVEs | [supply-scan](supply-scan.md) (`pnpm ysk-kit check supply`). Do not `npx` an unknown scanner. Do not add Trivy as a default |
 
 Optional research (not a second kit skill): getsentry/cisco **skill-scanner** for auditing an *external* skill you might vendor; it is not a scan of product HTTP.
 

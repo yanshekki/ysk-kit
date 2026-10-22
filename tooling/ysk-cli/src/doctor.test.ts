@@ -14,6 +14,7 @@ import {
   satisfiesRange,
 } from './doctor.js';
 import { HELP } from './help.js';
+import { cmpVer, parseVer } from './semver-range.js';
 import { upgrade } from './upgrade.js';
 
 const require = createRequire(import.meta.url);
@@ -98,7 +99,7 @@ const run = (
     productRoot: dirs.product,
     kitRoot: dirs.kit,
     env: extra?.env ?? {},
-    nodeVersion: extra?.nodeVersion ?? '26.9.0',
+    nodeVersion: extra?.nodeVersion ?? '26.12.1',
     pnpmVersion: extra?.pnpmVersion === undefined ? '12.8.1' : extra.pnpmVersion,
     probeDatabase: extra?.probeDatabase ?? (() => upToDate()),
   });
@@ -113,6 +114,8 @@ describe('ysk-kit doctor', () => {
     expect(satisfiesRange('24.11.0', '>=24.0.0')).toBe(true);
     expect(satisfiesRange('22.14.0', '>=24.0.0')).toBe(false);
     expect(satisfiesRange('26.9.0', '>=26.0.0')).toBe(true);
+    expect(satisfiesRange('26.12.1', '>=26.12.1')).toBe(true);
+    expect(satisfiesRange('26.12.0', '>=26.12.1')).toBe(false);
     expect(satisfiesRange('24.11.0', '>=26.0.0')).toBe(false);
     expect(satisfiesRange('12.8.1', '>=12.0.0')).toBe(true);
     expect(satisfiesRange('12.0.0', '>=12.0.0 <13')).toBe(true);
@@ -139,9 +142,23 @@ describe('ysk-kit doctor', () => {
       'ok',
       'ok',
       'ok',
+      'ok',
     ]);
+    expect(report.checks.map((item) => item.id)).toContain('supply');
     expect(JSON.stringify(report)).not.toContain(secret);
     expect(formatDoctorReport(report)).toContain('ysk-kit doctor: ok');
+  });
+
+  it('errors supply when Node is below the catalog floor', () => {
+    const dirs = healthy(
+      'DATABASE_URL=file:/tmp/unused.db\nJWT_SECRET=abcdefghijklmnopqrstuvwxyz012345\n',
+    );
+    const report = run(dirs, { nodeVersion: '26.12.0' });
+    const supply = report.checks.find((item) => item.id === 'supply');
+    expect(supply?.status).toBe('error');
+    expect(supply?.message).toContain('runtime-below-floor');
+    expect(supply?.fix).toContain('26.12.1');
+    expect(report.ok).toBe(false);
   });
 
   it('errors when Node or pnpm misses engines', () => {
@@ -360,7 +377,7 @@ describe('ysk-kit doctor', () => {
       productRoot: bridge,
       kitRoot: kit,
       env: {},
-      nodeVersion: '26.9.0',
+      nodeVersion: '26.12.1',
       pnpmVersion: '12.8.1',
     });
     expect(bridgeReport.checks.find((item) => item.id === 'database')?.status).toBe('ok');
@@ -439,10 +456,21 @@ describe('ysk-kit doctor', () => {
       env: childEnv,
       encoding: 'utf8',
     });
-    expect(ok.status, ok.stderr).toBe(0);
-    const okJson = JSON.parse(ok.stdout) as { ok: boolean };
-    expect(okJson.ok).toBe(true);
+    const have = parseVer(process.versions.node);
+    const need = parseVer('26.12.1');
+    const nodePatched = Boolean(have && need && cmpVer(have, need) >= 0);
+    const okJson = JSON.parse(ok.stdout) as {
+      ok: boolean;
+      checks: { id: string; status: string }[];
+    };
     expect(ok.stdout).not.toContain(secret);
+    if (nodePatched) {
+      expect(ok.status, ok.stderr).toBe(0);
+      expect(okJson.ok).toBe(true);
+    } else {
+      expect(ok.status, ok.stderr).toBe(1);
+      expect(okJson.checks.find((item) => item.id === 'supply')?.status).toBe('error');
+    }
 
     writeFileSync(join(dest, '.env'), 'NODE_ENV=development\n');
     const broken = spawnSync(process.execPath, [tsxCli, yskCli, 'doctor', '--json'], {

@@ -6,7 +6,8 @@ description: >
   Use when a test, CI job, or user report is red; a flake; or /debug-issue.
   中文：除錯、紅燈迴圈、回歸測試、bisect、日誌遮罩。
   Do not use for green-field features (plan-feature), a JSON INTERNAL dump
-  (error-log-review), or a security audit (security-review).
+  (error-log-review), a security audit (security-review), or CVE / runtime
+  inventory (supply-scan).
 ---
 
 # Skill: debug an issue
@@ -21,7 +22,7 @@ Reproduce, then fix, then keep the failing test. Law: [AGENTS.md](../../AGENTS.m
 - A user report (login, billing, LLM, webhook, desktop token).
 - A flake.
 
-Do not use to design a new resource ([plan-feature](plan-feature.md)), to triage a JSON INTERNAL / 5xx dump ([error-log-review](error-log-review.md)), or to audit a clean diff ([review-change](review-change.md)).
+Do not use to design a new resource ([plan-feature](plan-feature.md)), to triage a JSON INTERNAL / 5xx dump ([error-log-review](error-log-review.md)), to audit a clean diff ([review-change](review-change.md)), or to inventory CVEs and runtimes ([supply-scan](supply-scan.md)).
 
 ## Inputs
 

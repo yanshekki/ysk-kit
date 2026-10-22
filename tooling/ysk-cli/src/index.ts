@@ -7,6 +7,7 @@ import { addModule } from './add-module.js';
 import { checkAgent, formatAgentFindings } from './check-agent.js';
 import { checkErrors, formatErrorFindings } from './check-errors.js';
 import { checkLogs, formatLogReport } from './check-logs.js';
+import { checkSupply, formatSupplyReport } from './check-supply.js';
 import { doctor, formatDoctorReport } from './doctor.js';
 import { generateOpenApi } from './generate-openapi.js';
 import { HELP } from './help.js';
@@ -72,6 +73,16 @@ const main = (): void => {
       const findings = checkErrors(root);
       console.log(formatErrorFindings(findings));
       process.exit(findings.length === 0 ? 0 : 1);
+    }
+
+    if (args[0] === 'check' && args[1] === 'supply') {
+      const report = checkSupply(root, {
+        repoOnly: args.includes('--repo-only'),
+        online: args.includes('--online'),
+      });
+      if (args.includes('--json')) console.log(JSON.stringify(report, null, 2));
+      else console.log(formatSupplyReport(report));
+      process.exit(report.ok ? 0 : 1);
     }
 
     if (args[0] === 'check' && args[1] === 'logs') {

@@ -203,6 +203,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | DTO / path / OpenAPI | [contract-change](docs/skills/contract-change.md) |
 | Red test or user report | [debug-issue](docs/skills/debug-issue.md) |
 | INTERNAL / 5xx JSON logs | [error-log-review](docs/skills/error-log-review.md) |
+| CVE / third-party versions | [supply-scan](docs/skills/supply-scan.md) |
 | Review a PR / branch | [review-change](docs/skills/review-change.md) |
 | Product LLM prompt | [llm-feature](docs/skills/llm-feature.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |

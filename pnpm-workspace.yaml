@@ -31,6 +31,8 @@ overrides:
   source-map-js: "1.2.2"
   # GHSA-pqg4-j6r4-53mv / CVE-2026-102422: quote() injection after a comment token. Patched in 1.11.0; 1.12.0 is current stable.
   shell-quote: "1.12.0"
+  # GHSA-587h-7wmj-h5pm, GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw: Vite launch-editor Windows injection. Patched in 2.14.2.
+  launch-editor: "2.14.2"
 
 allowBuilds:
   argon2: true

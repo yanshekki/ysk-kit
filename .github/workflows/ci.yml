@@ -26,7 +26,7 @@ jobs:
       - run: pnpm install
       - run: pnpm lint
       - run: pnpm check:links
-      - run: pnpm audit --audit-level=low
+      - run: pnpm ysk-kit check supply --repo-only --online
       - run: pnpm layers
       - run: pnpm ysk-kit check agent
       - run: pnpm ysk-kit check errors
@@ -81,6 +81,7 @@ jobs:
           test -f .agents/skills/review-change/SKILL.md
           test -f .agents/skills/llm-feature/SKILL.md
           test -f .agents/skills/error-log-review/SKILL.md
+          test -f .agents/skills/supply-scan/SKILL.md
           test -f .cursor/rules/security.mdc
           test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md

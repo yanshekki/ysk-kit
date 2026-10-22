@@ -20,8 +20,9 @@ Language: [English](index.md) · 中文
 | [fix-layers](fix-layers.zh.md) | `pnpm layers` 失敗 | 未經批准改 `.dependency-cruiser.cjs` | — |
 | [envelope-api](envelope-api.zh.md) | 新路由、SSE、PDF 或錯誤形狀 | 另發明錯誤 JSON | — |
 | [contract-change](contract-change.zh.md) | DTO、路徑、錯誤碼、OpenAPI | 只改 application 規則；Prisma SQL | oasdiff（可選） |
-| [debug-issue](debug-issue.zh.md) | 紅燈測試、CI 或使用者回報 | 從零設計功能；JSON INTERNAL dump（error-log-review） | `git bisect` |
+| [debug-issue](debug-issue.zh.md) | 紅燈測試、CI 或使用者回報 | 從零設計功能；JSON INTERNAL dump（error-log-review）；CVE 盤點（supply-scan） | `git bisect` |
 | [error-log-review](error-log-review.zh.md) | INTERNAL／5xx JSON 日誌、日誌洩密 | 從零設計功能；已有紅燈 Vitest | — |
+| [supply-scan](supply-scan.zh.md) | CVE／runtime 版本／lockfile／Actions pin | 以 diff 為範圍的授權（security-review）；exploit PoC | — |
 | [review-change](review-change.zh.md) | 對照法律 + 計劃審查 PR／分支 | 實作該改動 | getsentry `security-review`（diff 範圍） |
 | [llm-feature](llm-feature.zh.md) | 產品 LLM prompt、`/v1/llm`、評測 | 只改客戶端文案；非 LLM 稽核 | OWASP LLM Top 10 |
 | [security-review](security-review.zh.md) | 授權、租戶、密鑰、token、webhook、LLM 輸入 | 文件錯字、沒有新信任邊界 | getsentry `security-review`；openai threat-model |

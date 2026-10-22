@@ -78,6 +78,7 @@ Language: [English](security-review.md) · 中文
 | 傳遞依賴 bump | 以 diff 為範圍；沒有新信任邊界的 bump 不是本 skill。新的 native addon、安裝程式或 HTTP 客戶端才是 |
 | Agent skills | 不要從未知來源對本 kit 執行 `npx skills add`（或同等命令）。複製前先釘選並讀 `SKILL.md`。外部 skill 只在 `docs/skills/index.zh.md` 當指針，不要另開一棵樹 |
 | GitHub Actions | workflow 也是供應鏈：改 `.github/` 時以 SHA 釘選 action；不要加會把密鑰 POST 到未知端點的第三方 action |
+| Runtime／lockfile CVE | [supply-scan](supply-scan.zh.md)（`pnpm ysk-kit check supply`）。不要 `npx` 不明掃描器。不要把 Trivy 設為預設 |
 
 可選研究（不是第二條 kit skill）：getsentry／cisco **skill-scanner** 用來審核你可能引入的*外部* skill；它不是掃產品 HTTP。
 

@@ -203,6 +203,7 @@ ysk-kit/
 | DTO／路徑／OpenAPI | [contract-change](docs/skills/contract-change.zh.md) |
 | 紅燈測試或使用者回報 | [debug-issue](docs/skills/debug-issue.zh.md) |
 | INTERNAL／5xx JSON 日誌 | [error-log-review](docs/skills/error-log-review.zh.md) |
+| CVE／第三方程式版本 | [supply-scan](docs/skills/supply-scan.zh.md) |
 | 審查 PR／分支 | [review-change](docs/skills/review-change.zh.md) |
 | 產品 LLM prompt | [llm-feature](docs/skills/llm-feature.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |

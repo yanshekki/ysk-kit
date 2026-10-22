@@ -37,6 +37,18 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.4
+
+### 安全
+
+- `ysk-kit check supply` 盤點 Node、PHP、kernel、lockfile IOC、GitHub Actions SHA 與 compose 標籤，對照日期為 2026-10-21 的內建目錄（CVE-2026-111497 Node Brotli RCE 下限 22.23.4／24.22.1／26.12.1；php2shell CVE-2026-109618／CVE-2026-109619 下限 8.2.35／8.3.36／8.4.27／8.5.12；Shai-Hulud IOC 種子；Linux Dirty Frag／ptrace 提醒只 warn）。旗標 `--json`、`--repo-only`、`--online`（包裝 `pnpm audit --json`，尊重 `ignoreGhsas`）。Skill [supply-scan](docs/skills/supply-scan.zh.md)、操作手冊 [掃描供應鏈](docs/recipes/scan-supply.zh.md)。不要把 Trivy 或 OSV-Scanner 設為預設。
+- Kit `engines.node` 為 `>=26.12.1`。php-bridge `composer.json` 的 `require.php` 為 `>=8.2.35`。
+- 工作區 override `launch-editor` **2.14.2**（GHSA-587h-7wmj-h5pm／GHSA-698v-4r3x-3vcv／GHSA-r825-w8mm-5pxw）。
+
+### 內部／CI
+
+- CI `check` 跑 `pnpm ysk-kit check supply --repo-only --online`，取代 `pnpm audit --audit-level=low`。Doctor 檢查 id `supply` 在執行中的 Node 低於目錄下限時報 error。
+
 ## v1.6.3
 
 ### 新功能

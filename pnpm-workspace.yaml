@@ -4,7 +4,7 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.3.16"
+  bullmq: "6.3.17"
   react: "19.3.1"
   react-dom: "19.3.1"
   # Expo 58 still depends on these at 0.88.0-rc.4; npm latest is 0.88.0.
@@ -110,5 +110,5 @@ minimumReleaseAgeExclude:
   - vitest@5.0.5
   - "@react-native/babel-plugin-codegen@0.88.0"
   - "@react-native/js-polyfills@0.88.0"
-  - bullmq@6.3.16
+  - bullmq@6.3.17
   - electron@44.9.0

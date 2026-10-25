@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/cli",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "type": "module",
   "bin": {
     "ysk-kit": "./src/index.ts",

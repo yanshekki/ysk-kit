@@ -1,5 +1,13 @@
 # @ysk-kit/llm
 
+## 1.6.5
+
+### Patch Changes
+
+- ac3c2b4: Lockstep patch for stable-only weekly bumps (pnpm 12.15.0, turbo 2.11.10, BullMQ 6.4.2, nodemailer 10.2.1, Electron 44.9.3 not 45, Expo 58.0.19) plus the upgrade-kit skill, AGENTS Claude/Cursor Cloud polish, and advisory overrides (body-parser 2.4.0, undici 7.30.1, fast-uri 3.1.9/4.2.3). Held: Electron 45 (stable major), TypeScript 7, Prisma 8 RC. Expo CLI zod 3 ignored (no patched 3.x).
+- Updated dependencies [ac3c2b4]
+  - @ysk-kit/contracts@1.6.5
+
 ## 1.6.4
 
 ### Patch Changes

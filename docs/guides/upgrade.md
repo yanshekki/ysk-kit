@@ -6,6 +6,8 @@ A product created with `create-ysk-app` starts as a copy of this repository (or,
 
 Daily path: **copy-tree, then `ysk-kit upgrade`**.
 
+This guide refreshes a **generated product**. Kit-repo dependency bumps, Dependabot, and weekly stables: [upgrade-kit](../skills/upgrade-kit.md).
+
 ## Two consumption paths
 
 | Path | When to use |

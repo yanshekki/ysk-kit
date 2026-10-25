@@ -4,10 +4,10 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.3.17"
+  bullmq: "6.4.2"
   react: "19.3.1"
   react-dom: "19.3.1"
-  # Expo 58 still depends on these at 0.88.0-rc.4; npm latest is 0.88.0.
+  # Expo 58 + React Native 0.88.0 (keep @react-native/* on the same line).
   "@react-native/asset-utils": "0.88.0"
   "@react-native/babel-plugin-codegen": "0.88.0"
   "@react-native/codegen": "0.88.0"
@@ -33,6 +33,13 @@ overrides:
   shell-quote: "1.12.0"
   # GHSA-587h-7wmj-h5pm, GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw: Vite launch-editor Windows injection. Patched in 2.14.2.
   launch-editor: "2.14.2"
+  # GHSA-27r3-jxmh-p828: Express body-parser 2.3.0 DoS via trailing bytes after a compressed body. Patched in 2.4.0.
+  body-parser: "2.4.0"
+  # GHSA-xjj6-f33q-929c, GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472: Electron @electron/get pulls undici 7.30.0. Patched in 7.30.1 (not undici 8).
+  undici: "7.30.1"
+  # GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr, GHSA-xhq7-xmqj-769h, GHSA-333x-w4r6-6crp: Fastify pulls both 3.x (ajv) and 4.x (fast-json-stringify).
+  "fast-uri@3": "3.1.9"
+  "fast-uri@4": "4.2.3"
 
 allowBuilds:
   argon2: true
@@ -50,11 +57,13 @@ allowBuilds:
 # Expo CLI uses it for code-signing certificates. Kit JWT and crypto do not import node-forge.
 # braces <=3.0.3 (GHSA-vfj7-8cjw-p6xm / CVE-2026-93687): no patched release.
 # Metro's file map uses it while bundling the Expo app. The API does not pass request input to braces.
+# GHSA-mrhx-c7xc-m3w5 (zod <4.6.6 memory exhaustion): kit HTTP surface is zod 4.6.7. Expo CLI still requires zod 3; no patched 3.x. Do not override zod 3 → 4 (breaks Expo CLI).
 auditConfig:
   ignoreGhsas:
     - GHSA-w5hq-g745-h8pq
     - GHSA-86w9-cpqp-85rv
     - GHSA-vfj7-8cjw-p6xm
+    - GHSA-mrhx-c7xc-m3w5
 
 minimumReleaseAgeExclude:
   - "@biomejs/biome@2.5.15"
@@ -73,19 +82,19 @@ minimumReleaseAgeExclude:
   - electron-vite@6.0.0
   - react-native@0.88.0
   - source-map-js@1.2.2
-  - "@aws-sdk/client-s3@3.1152.0"
-  - "@aws-sdk/s3-request-presigner@3.1152.0"
-  - "@expo/cli@58.1.11"
-  - "@expo/config-plugins@58.0.9"
-  - "@expo/config@58.0.6"
+  - "@aws-sdk/client-s3@3.1156.0"
+  - "@aws-sdk/s3-request-presigner@3.1156.0"
+  - "@expo/cli@58.1.15"
+  - "@expo/config-plugins@58.0.10"
+  - "@expo/config@58.0.8"
   - "@expo/image-utils@0.12.5"
-  - "@expo/inline-modules@0.2.6"
-  - "@expo/local-build-cache-provider@58.0.6"
-  - "@expo/metro-config@58.0.14"
+  - "@expo/inline-modules@0.2.7"
+  - "@expo/local-build-cache-provider@58.0.8"
+  - "@expo/metro-config@58.0.17"
   - "@expo/metro-file-map@58.0.5"
-  - "@expo/prebuild-config@58.0.14"
+  - "@expo/prebuild-config@58.0.16"
   - "@expo/require-utils@58.0.4"
-  - "@expo/router-server@58.0.14"
+  - "@expo/router-server@58.0.17"
   - "@react-native/asset-utils@0.88.0"
   - "@react-native/codegen@0.88.0"
   - "@react-native/community-cli-plugin@0.88.0"
@@ -95,20 +104,24 @@ minimumReleaseAgeExclude:
   - "@react-native/gradle-plugin@0.88.0"
   - "@react-native/normalize-colors@0.88.0"
   - "@react-native/virtualized-lists@0.88.0"
-  - "@tanstack/query-core@5.104.4"
-  - "@tanstack/react-query@5.104.4"
+  - "@tanstack/query-core@5.104.5"
+  - "@tanstack/react-query@5.104.5"
   - "@vitest/coverage-v8@5.0.5"
   - "@vitest/mocker@5.0.5"
   - "@vitest/spy@5.0.5"
-  - babel-preset-expo@58.0.17
-  - expo-asset@58.0.16
-  - expo-constants@58.0.12
-  - expo-modules-autolinking@58.0.13
-  - expo-modules-core@58.0.22
-  - expo-modules-jsi@58.0.15
-  - expo@58.0.14
+  - babel-preset-expo@58.0.20
+  - expo-asset@58.0.18
+  - expo-constants@58.0.13
+  - expo-modules-autolinking@58.0.15
+  - expo-modules-core@58.0.26
+  - expo-modules-jsi@58.0.19
+  - expo@58.0.19
   - vitest@5.0.5
   - "@react-native/babel-plugin-codegen@0.88.0"
   - "@react-native/js-polyfills@0.88.0"
-  - bullmq@6.3.17
-  - electron@44.9.0
+  - bullmq@6.4.2
+  - electron@44.9.3
+  - body-parser@2.4.0
+  - undici@7.30.1
+  - fast-uri@3.1.9
+  - fast-uri@4.2.3

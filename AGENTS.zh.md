@@ -183,10 +183,12 @@ ysk-kit/
 | Codex | 每個目錄先 `AGENTS.override.md` 再 `AGENTS.md`，由 git 根走到 cwd，較近者勝出；**合計**上限 32 KiB（`project_doc_max_bytes`） | 根目錄加短巢狀 `AGENTS.md` 遠低於此。Skills：`.agents/skills/<name>/SKILL.md`。 |
 | OpenCode | 專案 `AGENTS.md`（根目錄 + 探索時的巢狀）。**回退：** 僅在沒有 `AGENTS.md` 時讀 `CLAUDE.md`；兩者皆在時**只讀 AGENTS.md**。全域：`~/.config/opencode/AGENTS.md`，否則 `~/.claude/CLAUDE.md`。`opencode.json` 的 `instructions` 會與 AGENTS 合併（不要單靠它） | 只依賴現有 `AGENTS.md`。Skills：`.agents/skills/`（若有亦可讀 `.opencode/skills/`／`.claude/skills/`）。 |
 | Grok Build | 由根走到 cwd，載入每個符合的 `AGENTS.md`／`AGENT.md`／`CLAUDE.md`／`GEMINI.md`，外加 `.grok/rules/`、`.claude/rules/`、`.cursor/rules/` 內每個 `*.md`。沒有大小上限。被 gitignore 的檔會略過。Skills：`.grok/skills/`、`~/.grok/skills/`，以及相容的 `.agents`／`.claude`／`.cursor` skills | 指針保持極短。Cursor 規則用 `.mdc`，避免變成額外的 Grok `*.md`。模板會寫 `.grok/skills/`。用 `grok inspect` 核對。 |
-| Cursor | 根目錄與巢狀 `AGENTS.md`、`CLAUDE.md`。`.cursor/rules/*.mdc`（`alwaysApply`／`description`／`globs`）。Skills：`.agents/skills/` 或 `.cursor/skills/`（亦相容載入 `.claude/skills/`、`.codex/skills/`） | 範圍限定的 `.mdc` 只做提醒與連結，不複製本檔。 |
-| Claude Code | `CLAUDE.md`（`@AGENTS.md` 加 Claude 專用備註）。無專案 CLAUDE 檔時可原生讀 `AGENTS.md`（可設定）。Skills：`.claude/skills/<name>/SKILL.md` | 維持 `CLAUDE.md` 的 `@AGENTS.md`。`.claude/skills/` 與 `.agents/skills/` 相同（有漂移檢查）。 |
+| Cursor | 根目錄與巢狀 `AGENTS.md`、`CLAUDE.md`。`.cursor/rules/*.mdc`（`alwaysApply`／`description`／`globs`）。Skills：`.agents/skills/` 或 `.cursor/skills/`（亦相容載入 `.claude/skills/`、`.codex/skills/`） | 範圍限定的 `.mdc` 只做提醒與連結，不複製本檔。Cloud Agents：把專案 skills 提交到 `.agents/skills/` 或 `.cursor/skills/`；個人 `~/.agents/skills/` 不會同步（只有 `~/.cursor/skills/` 的 Sync Skills）。 |
+| Claude Code | `CLAUDE.md`（`@AGENTS.md` 加 Claude 專用備註）。預設：有專案 `CLAUDE.md` 時略過 `AGENTS.md`（可設定）。Skills：**只**讀 `.claude/skills/`（加個人／plugins）——**不**載入 `.agents/skills/` | 維持 `CLAUDE.md` 的 `@AGENTS.md`。Kit 把 `.claude/skills/` 從 `.agents/skills/` 鏡像（有漂移檢查）。 |
 | Copilot | 原生讀 `AGENTS.md`。`.github/copilot-instructions.md` 與 `.github/instructions/*.instructions.md`（`applyTo`）。CLI skills：`.github/skills/`、`.claude/skills/`、`.agents/skills/`（或 `~/.copilot/skills`） | 指針保持短。優先共用 `.agents/skills/`，不要複製到 `.github/skills/`。 |
 | Gemini CLI | `.gemini/settings.json` 的 context 檔名。Skills：`.agents/skills/` 或 `.gemini/skills/`（Agent Skills；經 `activate_skill` 漸進披露） | `{"context":{"fileName":["AGENTS.md"]}}`。`GEMINI.md` 只做指針。既有 skill 鏡像已滿足發現。 |
+
+2026 年底現況：Cascade 已於 2026-09-05 從 Devin Desktop 移除（改為 Devin Local）。跨工具 skills 仍放 `.agents/skills/`（Claude Code 仍需要 `.claude/skills/` 鏡像）。MCP 依宿主不同（Cursor `.cursor/mcp.json`、Claude `.mcp.json`、Gemini `.gemini/settings.json`）。不要發明 kit MCP 檔。
 
 共用 skills 在 `.agents/skills/`。完整步驟在 `docs/skills/`。
 
@@ -204,6 +206,7 @@ ysk-kit/
 | 紅燈測試或使用者回報 | [debug-issue](docs/skills/debug-issue.zh.md) |
 | INTERNAL／5xx JSON 日誌 | [error-log-review](docs/skills/error-log-review.zh.md) |
 | CVE／第三方程式版本 | [supply-scan](docs/skills/supply-scan.zh.md) |
+| Kit 依賴／Dependabot／本機 smoke | [upgrade-kit](docs/skills/upgrade-kit.zh.md) |
 | 審查 PR／分支 | [review-change](docs/skills/review-change.zh.md) |
 | 產品 LLM prompt | [llm-feature](docs/skills/llm-feature.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |

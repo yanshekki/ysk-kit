@@ -4,7 +4,7 @@
   "private": true,
   "description": "YSK Kit — shared TypeScript monorepo starter for YSK products",
   "license": "MIT",
-  "packageManager": "pnpm@12.14.0",
+  "packageManager": "pnpm@12.15.0",
   "engines": {
     "node": ">=26.12.1",
     "pnpm": ">=12.0.0"
@@ -42,12 +42,12 @@
     "@testing-library/user-event": "^14.6.8",
     "@vitest/coverage-v8": "^5.0.5",
     "@vitejs/plugin-react": "^6.1.2",
-    "happy-dom": "^21.0.3",
+    "happy-dom": "^21.0.4",
     "vitest": "^5.0.5",
     "@types/node": "^26.6.5",
     "@ysk-kit/biome": "workspace:*",
-    "dependency-cruiser": "^18.6.0",
-    "turbo": "^2.11.9",
+    "dependency-cruiser": "^18.7.0",
+    "turbo": "^2.11.10",
     "typescript": "^6.0.3"
   },
   "homepage": "https://ysk.hk/products/ysk-kit",

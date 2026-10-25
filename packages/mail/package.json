@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@ysk-kit/contracts": "workspace:*",
-    "nodemailer": "^10.1.7"
+    "nodemailer": "^10.2.1"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

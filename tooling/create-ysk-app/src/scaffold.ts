@@ -230,7 +230,7 @@ const jaegerService = `  jaeger:
       - "16686:16686"
       - "4318:4318"
   prometheus:
-    image: prom/prometheus:v3.15.0
+    image: prom/prometheus:v3.15.1
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -254,7 +254,7 @@ const jaegerService = `  jaeger:
 
 const mysqlCompose = `services:
   mysql:
-    image: mysql:8.4.11
+    image: mysql:8.4.13
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root

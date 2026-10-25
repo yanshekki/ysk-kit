@@ -23,6 +23,7 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [debug-issue](debug-issue.md) | Red test, CI, or user report | Green-field design; JSON INTERNAL dump (error-log-review); CVE inventory (supply-scan) | `git bisect` |
 | [error-log-review](error-log-review.md) | INTERNAL / 5xx JSON logs, secret-in-log | Green-field design; already-red Vitest | — |
 | [supply-scan](supply-scan.md) | CVE / runtime versions / lockfile / Actions pins | Diff-scoped authz (security-review); exploit PoCs | — |
+| [upgrade-kit](upgrade-kit.md) | Kit deps, Dependabot, weekly stables, local smoke when Actions cannot run | Dest-product refresh (`ysk-kit upgrade`) | — |
 | [review-change](review-change.md) | Review a PR / branch vs law + plan | Implementing the change | getsentry `security-review` (diff scope) |
 | [llm-feature](llm-feature.md) | Product LLM prompt, `/v1/llm`, evals | Client-only copy; non-LLM audit | OWASP LLM Top 10 |
 | [security-review](security-review.md) | Authz, tenancy, secrets, tokens, webhooks, LLM input | Docs typos, no new trust boundary | getsentry `security-review`; openai threat-model |

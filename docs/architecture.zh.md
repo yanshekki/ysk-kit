@@ -19,11 +19,11 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 
 | 層 | 預設 | 備選 |
 |---|---|---|
-| Monorepo | pnpm 12.14.0 workspaces + Turborepo 2.11.9 | — |
+| Monorepo | pnpm 12.15.0 workspaces + Turborepo 2.11.10 | — |
 | 語言 | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 要等 dependency-cruiser 支援該 compiler API |
 | Web / admin | Vite 8.3 + React 19.3 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
 | 桌面 | Electron 44 + electron-vite 6.0.0 + Vite 8 | electron-vite 6 是 npm `latest`；回滾是 Vite 7 + electron-vite 5 |
-| 流動應用 | Expo 58.0.14 / React Native 0.88.0 / React 19.3 | Expo 58 仍是 npm `next`（`latest` 是 57.0.30）；RN 0.88.0 是 npm `latest` |
+| 流動應用 | Expo 58.0.19 / React Native 0.88.0 / React 19.3 | Expo 58 仍是 npm `next`（`latest` 是 57.0.30）；RN 0.88.0 是 npm `latest` |
 | HTTP API | Express 5 adapter（預設） | `HTTP_ADAPTER=fastify` 切 Fastify 5 |
 | 合約 | ts-rest + Zod 4 | — |
 | 資料庫 | Prisma 7.10（`prisma-client` generator、MariaDB adapter、客戶端在 `apps/api/src/generated/prisma`） | `--db` 可改 PostgreSQL 或 SQLite adapter |

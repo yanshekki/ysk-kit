@@ -29,6 +29,7 @@ const SKILLS = [
   'error-log-review',
   'i18n-localize',
   'supply-scan',
+  'upgrade-kit',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);

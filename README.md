@@ -117,6 +117,24 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.5
+
+#### New features
+
+- Skill [upgrade-kit](docs/skills/upgrade-kit.md): kit deps, Dependabot, weekly stables, local smoke when Actions cannot run. Dest-product refresh stays [upgrade](docs/guides/upgrade.md).
+
+#### Improvements
+
+- `AGENTS.md`: Claude Code does not load `.agents/skills/` (only `.claude/skills/`); Cursor Cloud Agents commit project skills; landscape footnote (Devin Local, host-specific MCP).
+
+#### Dependency upgrades
+
+- pnpm **12.15.0**, turbo **2.11.10**, BullMQ **6.4.2**, nodemailer **10.2.1**, Electron **44.9.3**, Expo **58.0.19**, Vite **8.3.5**. Held: TypeScript 6, Prisma 8 RC, Electron 45 (stable; major hold).
+
+#### Internal/CI
+
+- Compose/CI MySQL **8.4.13**. Prometheus **v3.15.1**. Overrides: `body-parser` 2.4.0, `undici` 7.30.1, `fast-uri` 3.1.9 / 4.2.3. Ignore Expo CLI zod 3 (GHSA-mrhx-c7xc-m3w5).
+
 ### v1.6.4
 
 #### Security
@@ -145,16 +163,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - `.nvmrc` **26**. Compose/CI MySQL **8.4.11**.
-
-### v1.6.2
-
-#### New features
-
-- HTTP adapters log INTERNAL / 5xx as structured Pino ERROR (`requestId` + `error.code`). Bounded `ysk_http_errors_total`. `ysk-kit check errors` / `check logs`. Skill [error-log-review](docs/skills/error-log-review.md).
-
-#### Fixes
-
-- Error middleware no longer skips `logger.error`. The SDK copies envelope `requestId` onto `AppError`.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

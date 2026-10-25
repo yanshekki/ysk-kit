@@ -23,6 +23,7 @@ Language: [English](index.md) · 中文
 | [debug-issue](debug-issue.zh.md) | 紅燈測試、CI 或使用者回報 | 從零設計功能；JSON INTERNAL dump（error-log-review）；CVE 盤點（supply-scan） | `git bisect` |
 | [error-log-review](error-log-review.zh.md) | INTERNAL／5xx JSON 日誌、日誌洩密 | 從零設計功能；已有紅燈 Vitest | — |
 | [supply-scan](supply-scan.zh.md) | CVE／runtime 版本／lockfile／Actions pin | 以 diff 為範圍的授權（security-review）；exploit PoC | — |
+| [upgrade-kit](upgrade-kit.zh.md) | Kit 依賴、Dependabot、每週穩定版、Actions 跑不了時的本機 smoke | Dest 產品更新（`ysk-kit upgrade`） | — |
 | [review-change](review-change.zh.md) | 對照法律 + 計劃審查 PR／分支 | 實作該改動 | getsentry `security-review`（diff 範圍） |
 | [llm-feature](llm-feature.zh.md) | 產品 LLM prompt、`/v1/llm`、評測 | 只改客戶端文案；非 LLM 稽核 | OWASP LLM Top 10 |
 | [security-review](security-review.zh.md) | 授權、租戶、密鑰、token、webhook、LLM 輸入 | 文件錯字、沒有新信任邊界 | getsentry `security-review`；openai threat-model |

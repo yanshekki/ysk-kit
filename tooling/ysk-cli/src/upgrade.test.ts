@@ -72,6 +72,7 @@ describe('ysk upgrade', () => {
     expect(existsSync(join(dest, '.agents/skills/error-log-review/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/i18n-localize/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/supply-scan/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/upgrade-kit/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(

@@ -117,6 +117,24 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.5
+
+#### 新功能
+
+- Skill [upgrade-kit](docs/skills/upgrade-kit.zh.md)：kit 依賴、Dependabot、每週穩定版，以及 Actions 跑不了時的本機 smoke。Dest 產品更新仍用 [upgrade](docs/guides/upgrade.zh.md)。
+
+#### 改進
+
+- `AGENTS.md`：Claude Code **不**載入 `.agents/skills/`（只載入 `.claude/skills/`）；Cursor Cloud Agents 提交專案 skills；現況腳註（Devin Local、宿主 MCP）。
+
+#### 依賴升級
+
+- pnpm **12.15.0**、turbo **2.11.10**、BullMQ **6.4.2**、nodemailer **10.2.1**、Electron **44.9.3**、Expo **58.0.19**、Vite **8.3.5**。暫緩：TypeScript 6、Prisma 8 RC、Electron 45（已是穩定版；major 暫緩）。
+
+#### 內部／CI
+
+- Compose／CI MySQL **8.4.13**。Prometheus **v3.15.1**。Override：`body-parser` 2.4.0、`undici` 7.30.1、`fast-uri` 3.1.9／4.2.3。忽略 Expo CLI 的 zod 3（GHSA-mrhx-c7xc-m3w5）。
+
 ### v1.6.4
 
 #### 安全
@@ -145,16 +163,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - `.nvmrc` **26**。Compose／CI MySQL **8.4.11**。
-
-### v1.6.2
-
-#### 新功能
-
-- HTTP adapter 對 INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）。有限 `ysk_http_errors_total`。`ysk-kit check errors`／`check logs`。Skill [error-log-review](docs/skills/error-log-review.zh.md)。
-
-#### 修正
-
-- Error middleware 不再略過 `logger.error`。SDK 把 envelope `requestId` 複製到 `AppError`。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

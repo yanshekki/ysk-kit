@@ -18,9 +18,9 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@bull-board/api": "9.10.4",
-    "@bull-board/express": "9.10.4",
-    "@bull-board/fastify": "9.10.4",
+    "@bull-board/api": "9.10.5",
+    "@bull-board/express": "9.10.5",
+    "@bull-board/fastify": "9.10.5",
     "@fastify/cors": "^11.3.1",
     "@prisma/adapter-better-sqlite3": "7.10.1",
     "@prisma/adapter-mariadb": "7.10.1",

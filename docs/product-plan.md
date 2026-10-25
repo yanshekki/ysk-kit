@@ -21,6 +21,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | Error logs | INTERNAL / 5xx write structured Pino ERROR (`requestId` + `error.code`) and `ysk_http_errors_total`. `ysk-kit check errors` / `check logs`. Procedure: [error-log-review](skills/error-log-review.md) |
 | Localize UI | Procedure: [i18n-localize](skills/i18n-localize.md). Package `@ysk-kit/i18n` (`zh-HK` \| `en`). Envelope codes stay English-stable |
 | Supply scan | `ysk-kit check supply` inventories Node / PHP / kernel / lockfile / Actions pins against a vendored catalog. Procedure: [supply-scan](skills/supply-scan.md) |
+| Kit upgrades | Procedure: [upgrade-kit](skills/upgrade-kit.md). Dest-product refresh stays [upgrade](guides/upgrade.md) |
 
 Fifteen-minute path:
 

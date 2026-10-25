@@ -6,6 +6,8 @@ Language: [English](upgrade.md) · 中文
 
 日常路徑：**複製，然後 `ysk-kit upgrade`**。
 
+本指南更新的是**已產生產品**。Kit 倉的依賴 bump、Dependabot 與每週穩定版：[upgrade-kit](../skills/upgrade-kit.zh.md)。
+
 ## 兩種使用方式
 
 | 路徑 | 何時使用 |

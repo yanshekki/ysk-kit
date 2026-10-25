@@ -37,6 +37,27 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.5
+
+### 新功能
+
+- Agent skill [upgrade-kit](docs/skills/upgrade-kit.zh.md)：kit 倉依賴 bump、Dependabot、只升穩定版的每週維護、major 暫緩清單，以及 GitHub Actions 配額用盡時在 ki-mac-mini 跑本機 smoke。含 wrappers、create-app／upgrade 模板與 skill 漂移副本。Dest 產品更新仍用 [upgrade](docs/guides/upgrade.zh.md)（`pnpm ysk-kit upgrade`）。
+
+### 改進
+
+- `AGENTS.md`／`AGENTS.zh.md`：Claude Code skills **只**載入 `.claude/skills/`（不載入 `.agents/skills/`；kit 鏡像與漂移檢查仍強制；`CLAUDE.md` 維持 `@AGENTS.md`）。Cursor Cloud Agents：把專案 skills 提交到 `.agents/skills/` 或 `.cursor/skills/`（`~/.agents/skills/` 不會同步）。現況腳註：Cascade 已於 2026-09-05 從 Devin Desktop 移除（改為 Devin Local）；MCP 依宿主。24 KiB AGENTS 上限不變。新增 `upgrade-kit` 漸進披露列。
+
+### 依賴升級
+
+- 只升穩定版（2026-10-25）：pnpm **12.14.0 → 12.15.0**（`packageManager` + CI `pnpm/action-setup`）、Turborepo **2.11.10**、BullMQ **6.4.2**（工作區 override）、nodemailer **10.2.1**、happy-dom **21.0.4**、Electron **44.9.3**（留在 44.x）、Expo **58.0.19**、Vite **8.3.5**、jose **6.2.13**、AWS SDK S3 **3.1156.0**、TanStack Query **5.104.5**／Router **1.170.46**、`@bull-board/*` **9.10.5**、dependency-cruiser **18.7.0**。
+- Compose／CI／create-app MySQL 釘 **8.4.13**。Prometheus **v3.15.1**。
+- 工作區 override：`body-parser` **2.4.0**（GHSA-27r3-jxmh-p828）、`undici` **7.30.1**（GHSA-xjj6-f33q-929c／GHSA-4qv8-2p9j-2685／GHSA-f72v-6w45-q472；不是 undici 8）、`fast-uri@3` **3.1.9** 與 `fast-uri@4` **4.2.3**（GHSA-w74x-v6f9-j3xg／GHSA-wjr9-j795-jxcr／GHSA-xhq7-xmqj-769h／GHSA-333x-w4r6-6crp）。
+- `auditConfig.ignoreGhsas` 新增 **GHSA-mrhx-c7xc-m3w5**（zod 低於 4.6.6）。Kit HTTP 面是 zod **4.6.7**。Expo CLI 仍要 zod 3；3.x 沒有修補。不要把 zod 3 override 成 4。
+
+### 內部／CI
+
+- 暫緩：Electron **45.0.0**（2026-10-20 起已是穩定版；major ——未批准前留在 44.x）、TypeScript **6.0.3**（不是 7.0.2）、Prisma **7.10.1**（CLI `latest` 仍是 `8.0.0-rc.*`）、Biome **2.5.15**（不是 2.6.3；lint 噪音）、OTEL 0.300／3.0、ioredis 6.1 beta、Playwright alpha、Fastify 6 alpha、既有 `@ts-rest/core` `3.53.0-rc.1`。
+
 ## v1.6.4
 
 ### 安全

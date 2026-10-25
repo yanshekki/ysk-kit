@@ -137,3 +137,7 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 **v1.6.2：** INTERNAL／5xx 寫 structured Pino ERROR（`requestId` + `error.code`）、有限 `ysk_http_errors_total`、`ysk-kit check errors`／`check logs`、skill `error-log-review`。
 
 **v1.6.3：** 只升穩定版的週期 bump（2026-10-18）：pnpm 12.14.0、turbo 2.11.9、React 19.3.1、Prisma 7.10.1（不是 8 RC）、BullMQ 6.3.16、Electron 44.9.0、Expo 58.0.14。Skill `i18n-localize`。AGENTS 程式工具表微調。`.nvmrc` 26。MySQL 8.4.11。暫緩：TypeScript 6.0.3、Prisma 8 RC、Electron 45 beta。
+
+**v1.6.4：** `ysk-kit check supply`（內建目錄 2026-10-21）、`engines.node` `>=26.12.1`、php-bridge `>=8.2.35`、override `launch-editor` 2.14.2。Skill `supply-scan`。
+
+**v1.6.5：** 只升穩定版的週期 bump（2026-10-25）：pnpm 12.15.0、turbo 2.11.10、BullMQ 6.4.2、nodemailer 10.2.1、Electron 44.9.3、Expo 58.0.19、Vite 8.3.5。Skill `upgrade-kit`。AGENTS Claude／Cursor Cloud／現況微調。MySQL 8.4.13。Prometheus v3.15.1。Override：body-parser 2.4.0、undici 7.30.1、fast-uri 3.1.9／4.2.3。忽略 Expo CLI 的 zod 3（GHSA-mrhx-c7xc-m3w5）。暫緩：Electron 45.0.0（已是穩定版；major）、TypeScript 6.0.3、Prisma 8 RC。

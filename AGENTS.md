@@ -183,10 +183,12 @@ Official loading rules (do not invent extra convention files):
 | Codex | `AGENTS.override.md` then `AGENTS.md`, one file per directory from git root to cwd; closer wins; **cumulative** cap 32 KiB (`project_doc_max_bytes`) | Root + short nested `AGENTS.md` stay well under. Skills: `.agents/skills/<name>/SKILL.md`. |
 | OpenCode | Project `AGENTS.md` (root + nested as explored). **Fallback:** project `CLAUDE.md` only if no `AGENTS.md`; when both exist, **only AGENTS.md**. Global: `~/.config/opencode/AGENTS.md` else `~/.claude/CLAUDE.md`. `opencode.json` `instructions` merges with AGENTS (do not rely on it alone) | Rely on `AGENTS.md` (already present). Skills: `.agents/skills/` (+ `.opencode/skills/` / `.claude/skills/` if added). |
 | Grok Build | Every matching `AGENTS.md` / `AGENT.md` / `CLAUDE.md` / `GEMINI.md` from root to cwd, plus `*.md` in `.grok/rules/`, `.claude/rules/`, `.cursor/rules/`. No size cap. Gitignored files are skipped. Skills: `.grok/skills/`, `~/.grok/skills/`, plus compat `.agents` / `.claude` / `.cursor` skills | Pointers stay tiny. Cursor rules use `.mdc` so they are not extra Grok `*.md`. Templates write `.grok/skills/`. Verify with `grok inspect`. |
-| Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc` (`alwaysApply` / `description` / `globs`). Skills: `.agents/skills/` or `.cursor/skills/` (also loads `.claude/skills/`, `.codex/skills/` for compat) | Scoped `.mdc` files are reminders + links, not copies of this file. |
-| Claude Code | `CLAUDE.md` (`@AGENTS.md` plus Claude-only notes). Can read `AGENTS.md` natively when no project CLAUDE files exist (configurable). Skills: `.claude/skills/<name>/SKILL.md` | Keep `@AGENTS.md` in `CLAUDE.md`. `.claude/skills/` matches `.agents/skills/` (drift-checked). |
+| Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc` (`alwaysApply` / `description` / `globs`). Skills: `.agents/skills/` or `.cursor/skills/` (also loads `.claude/skills/`, `.codex/skills/` for compat) | Scoped `.mdc` files are reminders + links, not copies of this file. Cloud Agents: commit project skills under `.agents/skills/` or `.cursor/skills/`; personal `~/.agents/skills/` is not synced (only `~/.cursor/skills/` Sync Skills). |
+| Claude Code | `CLAUDE.md` (`@AGENTS.md` plus Claude-only notes). Default skips `AGENTS.md` when a project `CLAUDE.md` exists (configurable). Skills: **only** `.claude/skills/` (+ personal/plugins); does **not** load `.agents/skills/` | Keep `@AGENTS.md` in `CLAUDE.md`. Kit mirrors `.claude/skills/` from `.agents/skills/` (drift-checked). |
 | Copilot | `AGENTS.md` natively. `.github/copilot-instructions.md` and `.github/instructions/*.instructions.md` (`applyTo`). CLI skills: `.github/skills/`, `.claude/skills/`, `.agents/skills/` (or `~/.copilot/skills`) | Pointers stay short. Prefer shared `.agents/skills/` over duplicating into `.github/skills/`. |
 | Gemini CLI | Context filenames from `.gemini/settings.json`. Skills: `.agents/skills/` or `.gemini/skills/` (Agent Skills; progressive disclosure via `activate_skill`) | `{"context":{"fileName":["AGENTS.md"]}}`. `GEMINI.md` is a pointer only. Kit mirrors already satisfy skills discovery. |
+
+Late-2026 landscape: Cascade was removed from Devin Desktop on 2026-09-05 (now Devin Local). Cross-agent skills stay in `.agents/skills/` (Claude Code still needs the `.claude/skills/` mirror). MCP is host-specific (Cursor `.cursor/mcp.json`, Claude `.mcp.json`, Gemini `.gemini/settings.json`). Do not invent a kit MCP file.
 
 Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 
@@ -204,6 +206,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Red test or user report | [debug-issue](docs/skills/debug-issue.md) |
 | INTERNAL / 5xx JSON logs | [error-log-review](docs/skills/error-log-review.md) |
 | CVE / third-party versions | [supply-scan](docs/skills/supply-scan.md) |
+| Kit deps / Dependabot / local smoke | [upgrade-kit](docs/skills/upgrade-kit.md) |
 | Review a PR / branch | [review-change](docs/skills/review-change.md) |
 | Product LLM prompt | [llm-feature](docs/skills/llm-feature.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |

@@ -22,6 +22,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | Localize UI | Procedure: [i18n-localize](skills/i18n-localize.md). Package `@ysk-kit/i18n` (`zh-HK` \| `en`). Envelope codes stay English-stable |
 | Supply scan | `ysk-kit check supply` inventories Node / PHP / kernel / lockfile / Actions pins against a vendored catalog. Procedure: [supply-scan](skills/supply-scan.md) |
 | Kit upgrades | Procedure: [upgrade-kit](skills/upgrade-kit.md). Dest-product refresh stays [upgrade](guides/upgrade.md) |
+| Slice audit | Procedure: [audit-slice](skills/audit-slice.md). Scoped Staff / QA review of a git diff or named module. Not a whole-tree kit saas audit. |
 
 Fifteen-minute path:
 

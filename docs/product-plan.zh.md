@@ -22,6 +22,7 @@ YSK Kit 的目的，是讓新產品把第一天花在業務規則，而不是重
 | 本地化 UI | 程序：[i18n-localize](skills/i18n-localize.zh.md)。套件 `@ysk-kit/i18n`（`zh-HK` \| `en`）。Envelope 代碼維持英文穩定 |
 | 供應鏈掃描 | `ysk-kit check supply` 盤點 Node／PHP／kernel／lockfile／Actions pin，對照內建目錄。程序：[supply-scan](skills/supply-scan.zh.md) |
 | Kit 升級 | 程序：[upgrade-kit](skills/upgrade-kit.zh.md)。Dest 產品更新仍用 [upgrade](guides/upgrade.zh.md) |
+| 切片審計 | 程序：[audit-slice](skills/audit-slice.zh.md)。對 git diff 或具名模組做有範圍的 Staff／QA 審查。不是整樹 kit saas 審計。 |
 
 十五分鐘路徑：
 

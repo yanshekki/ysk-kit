@@ -208,6 +208,7 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | CVE / third-party versions | [supply-scan](docs/skills/supply-scan.md) |
 | Kit deps / Dependabot / local smoke | [upgrade-kit](docs/skills/upgrade-kit.md) |
 | Review a PR / branch | [review-change](docs/skills/review-change.md) |
+| Staff / QA slice audit | [audit-slice](docs/skills/audit-slice.md) |
 | Product LLM prompt | [llm-feature](docs/skills/llm-feature.md) |
 | `pnpm layers` failed | [fix-layers](docs/skills/fix-layers.md), [hexagonal](docs/guides/hexagonal.md) |
 | After any feature | [verify-change](docs/skills/verify-change.md) |

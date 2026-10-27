@@ -35,6 +35,7 @@ if [[ "$FLAVOR" != "php-bridge" ]]; then
     .agents/skills/llm-feature/SKILL.md \
     .agents/skills/error-log-review/SKILL.md \
     .agents/skills/supply-scan/SKILL.md \
+    .agents/skills/audit-slice/SKILL.md \
     .cursor/rules/security.mdc \
     .cursor/rules/desktop.mdc \
     docs/plans/_template.md \

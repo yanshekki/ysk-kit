@@ -6,8 +6,9 @@ description: >
   high-risk items for a human. Use when asked to review a PR, a branch vs
   main, or uncommitted work; or /review-change.
   中文：審查、法律軸、計劃軸、高風險人工、合理化表。
-  Do not use for implementing the change (plan-feature) or a dedicated
-  security/Prisma deep dive (security-review, db-migration).
+  Do not use for implementing the change (plan-feature), a combined Staff/QA
+  audit (audit-slice), or a dedicated security/Prisma deep dive
+  (security-review, db-migration).
 ---
 
 # Skill: review a change
@@ -21,7 +22,7 @@ Review the **diff**, using the repo as research. Law: [AGENTS.md](../../AGENTS.m
 - The user asks for a review of a PR, a branch vs `main`, or the working tree.
 - A plan’s checklist is about to be marked done.
 
-Do not use this skill to implement the feature ([plan-feature](plan-feature.md)). For authz/secrets/webhooks/LLM input run [security-review](security-review.md). For generated SQL run [db-migration](db-migration.md).
+Do not use this skill to implement the feature ([plan-feature](plan-feature.md)). For a combined Staff / Security / QA slice audit run [audit-slice](audit-slice.md). For authz/secrets/webhooks/LLM input run [security-review](security-review.md). For generated SQL run [db-migration](db-migration.md).
 
 ## Inputs
 

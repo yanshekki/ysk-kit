@@ -30,6 +30,7 @@ const SKILLS = [
   'i18n-localize',
   'supply-scan',
   'upgrade-kit',
+  'audit-slice',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);
@@ -92,5 +93,19 @@ describe('public docs language pairs', () => {
       expect(readFileSync(agents, 'utf8')).toBe(body);
       expect(readFileSync(claude, 'utf8')).toBe(body);
     }
+  });
+
+  it('audit-slice rejects Cypress/Jest/USB installs and deletion during review', () => {
+    const en = readFileSync(join(kitRoot, 'docs/skills/audit-slice.md'), 'utf8');
+    const zh = readFileSync(join(kitRoot, 'docs/skills/audit-slice.zh.md'), 'utf8');
+    for (const body of [en, zh]) {
+      expect(body).toContain('Cypress');
+      expect(body).toContain('Jest');
+      expect(body).toContain('USB');
+    }
+    expect(en).toMatch(/out of stack/i);
+    expect(en).toMatch(/do not delete/i);
+    expect(zh).toContain('不在此棧');
+    expect(zh).toMatch(/不刪/);
   });
 });

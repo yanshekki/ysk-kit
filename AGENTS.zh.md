@@ -208,6 +208,7 @@ ysk-kit/
 | CVE／第三方程式版本 | [supply-scan](docs/skills/supply-scan.zh.md) |
 | Kit 依賴／Dependabot／本機 smoke | [upgrade-kit](docs/skills/upgrade-kit.zh.md) |
 | 審查 PR／分支 | [review-change](docs/skills/review-change.zh.md) |
+| Staff／QA 切片審計 | [audit-slice](docs/skills/audit-slice.zh.md) |
 | 產品 LLM prompt | [llm-feature](docs/skills/llm-feature.zh.md) |
 | `pnpm layers` 失敗 | [fix-layers](docs/skills/fix-layers.zh.md)、[hexagonal](docs/guides/hexagonal.zh.md) |
 | 任何功能之後 | [verify-change](docs/skills/verify-change.zh.md) |

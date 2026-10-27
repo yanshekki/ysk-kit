@@ -2,9 +2,9 @@
 name: security-review
 description: >
   審查 YSK Kit 的授權、租戶隔離、密鑰、日誌遮罩、token 儲存、webhook 簽名與 LLM 輸入，對照 hexagonal 模組與 {ok,data}/{ok,error} envelope。可選輕量威脅模型模式。
-  使用者要求安全審查或稽核；diff 碰到 auth、apikey、organizations、billing、files、crypto、webhook、環境密鑰或新 capability；或計劃的安全段不是「沒有」時使用。
+  使用者要求安全審查或威脅模型；diff 碰到 auth、apikey、organizations、billing、files、crypto、webhook、環境密鑰或新 capability；或計劃的安全段不是「沒有」時使用。
   中文：安全審查、權限、跨租戶、密鑰、日誌遮罩、webhook 簽名。
-  不要用於純 UI 樣式、文件錯字或沒有新信任邊界的依賴升級。
+  不要用於 Staff／QA 組合切片審計（audit-slice）、純 UI 樣式、文件錯字或沒有新信任邊界的依賴升級。
 ---
 
 # Skill：安全審查
@@ -15,11 +15,11 @@ Language: [English](security-review.md) · 中文
 
 ## 觸發
 
-- 使用者要求安全審查、稽核或威脅模型。
+- 使用者要求安全審查或威脅模型（授權、租戶、密鑰、webhook、LLM 輸入）。
 - diff 碰到 `auth`、`apikey`、`organizations`、`billing`、`files`、`crypto`、`/v1/*/webhook`、環境密鑰，或新 capability。
 - 日期計劃的**安全與私隱**段不是「沒有」。
 
-純 UI 樣式、文件錯字，或沒有新信任邊界的依賴升級，不要觸發。
+Staff／QA 組合切片審計（[audit-slice](audit-slice.zh.md)）、純 UI 樣式、文件錯字，或沒有新信任邊界的依賴升級，不要觸發。
 
 ## 輸入
 

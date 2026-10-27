@@ -121,6 +121,7 @@ Omit this subsection only when there is no UI, HTTP, or authz change. Otherwise 
 - [ ] UI flow:
 - [ ] Envelope shape `{ ok: true, data }` / `{ ok: false, error }`
 - [ ] Auth roles:
+- [ ] If the user asked for a staff/QA audit of this slice, follow [audit-slice](../skills/audit-slice.md)
 
 ## Docs / changelog / changeset
 

@@ -6,7 +6,7 @@ Language: Chinese pair `2026-10-27-audit-slice.zh.md` · English `2026-10-27-aud
 |---|---|
 | **Slug** | `audit-slice` |
 | **Date** | 2026-10-27 |
-| **Status** | draft — waiting for user approval (research only; do not implement the skill in this PR) |
+| **Status** | approved — skill shipped in follow-up PR (this file remains the research record) |
 | **Canonical file** | `docs/plans/2026-10-27-audit-slice.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
 
@@ -20,7 +20,7 @@ The kit already teaches the same *intent* in pieces: hexagonal layers, `review-c
 
 Outcome this plan records: **verdict yes-with-edits**. Do not paste the candidate prompt into `AGENTS.md`. After approval, add one bilingual orchestrator skill `audit-slice` that keeps the high-value 9-part report, rewrites environment/tests/dead-code to kit gates, and hands off to existing skills instead of duplicating them.
 
-This PR ships **the dated plan only**. It does not merge, does not release, and does not add skill files until the user accepts the rewritten contract below.
+This file is the research record. The user accepted the rewritten contract (name `audit-slice`, default scope = git diff, plan tests unless asked to write them, never delete during review). Skill files ship in the implementation PR; that PR does not merge and does not release.
 
 ## Scope
 
@@ -322,7 +322,7 @@ Rollback: revert the plan commit (this PR). After a later skill PR: revert skill
 
 ## Task checklist
 
-Ordered. This PR stops after step 0. Remaining steps wait for approval.
+Ordered. Research landed in the plan PR; remaining steps are the skill implementation.
 
 0. [x] Research record (this file)
    - **Files:** `docs/plans/2026-10-27-audit-slice.md`, `docs/plans/2026-10-27-audit-slice.zh.md`
@@ -331,42 +331,42 @@ Ordered. This PR stops after step 0. Remaining steps wait for approval.
    - **Rollback:** revert commit
    - **Acceptance:** both `--check` print ok; status **draft — waiting for user approval**; no skill wrappers; no changeset
 
-1. [ ] Contracts (skill YAML + output headings) — after approval
+1. [x] Contracts (skill YAML + output headings) — after approval
    - **Files:** `docs/skills/audit-slice.md`, `docs/skills/audit-slice.zh.md`
    - **Interface / contract / data:** none (no DTO)
    - **Risk:** duplicating security-review; too long
    - **Rollback:** delete the pair
    - **Acceptance:** trigger/do-not/inputs/9-part output/anti-patterns present; Cypress/Jest/USB marked out of stack; no TypeScript `enum`
 
-2. [ ] Scaffold wrappers — after approval
+2. [x] Scaffold wrappers — after approval
    - **Files:** `tooling/ysk-cli/templates/agent/skills/audit-slice/SKILL.md`, `.agents/skills/audit-slice/SKILL.md`, `.claude/skills/audit-slice/SKILL.md`; `SKILLS` in `docs-pair.test.ts`; thin-smoke; `flavor-smoke.sh`; create-app tests
    - **Interface / contract / data:** none
    - **Risk:** skill-drift
    - **Rollback:** remove name from lists
    - **Acceptance:** `pnpm ysk-kit check agent` ok; dest thin has the wrapper; php-bridge still skipped
 
-3. [ ] Application rules
+3. [x] Application rules
    - **Files:** none
    - **Interface / contract / data:** none
    - **Risk:** none
    - **Rollback:** n/a
    - **Acceptance:** n/a — no `application/` code. Do not mkdir a module.
 
-4. [ ] Clients
-   - **Files:** none
+4. [x] Clients
+   - **Files:** none (SDK/UI). Pointer sentences on `review-change` / `security-review` Do-not.
    - **Interface / contract / data:** none
    - **Risk:** none
    - **Rollback:** n/a
-   - **Acceptance:** n/a — no SDK/UI. Optional later: one line on `review-change` / `security-review` Do-not.
+   - **Acceptance:** no SDK/UI. Do-not pointers landed.
 
-5. [ ] Verify — after skill PR
+5. [x] Verify — after skill PR
    - **Files:** none extra
    - **Interface / contract / data:** none
    - **Risk:** smoke list miss
    - **Rollback:** revert skill PR
    - **Acceptance:** `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` green; OpenAPI unchanged
 
-6. [ ] Docs — after skill PR
+6. [x] Docs — after skill PR
    - **Files:** `docs/skills/index.md` pair, `AGENTS.md` pair (one row), optional plan-template sentence, changelog/README, lockstep changeset
    - **Interface / contract / data:** none
    - **Risk:** 24 KiB budget (keep the AGENTS row to one line)
@@ -377,8 +377,8 @@ Ordered. This PR stops after step 0. Remaining steps wait for approval.
 
 Unresolved items stay here. Do not fill them with guesses.
 
-- Confirm skill **name** `audit-slice` vs `deep-review` vs `qa-audit`. Recommendation: `audit-slice` (scope is a slice, not the whole tree).
-- Confirm **default scope** is the git diff. Alternative: dest-product `apps/api/src/modules/*` excluding kit packages. Whole kit tree should stay an explicit user override.
-- Should v1 of the skill **ever** write test files, or only ever emit a test-plan? Recommendation: plan-only unless the user says “write the tests”.
-- Optional later (not v1): a `check agent` rule for TypeScript `any` in `apps/` — separate plan; do not bundle with this skill.
-- Whether to add a Cursor `.mdc` with `alwaysApply: false` and globs off (description-only). Recommendation: **no** extra rule file; the skill wrapper is enough. Always-on would nibble tokens.
+- Skill **name:** `audit-slice` (user approved 2026-10-27). Not `deep-review` / `qa-audit`.
+- **Default scope:** git diff or a named module. Whole kit tree stays an explicit user override.
+- **Write tests:** plan-only unless the user says “write the tests”.
+- Optional later (not v1): a `check agent` rule for TypeScript `any` in `apps/` — separate plan; not bundled.
+- No extra Cursor `.mdc`. The skill wrapper is enough.

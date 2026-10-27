@@ -24,9 +24,10 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [error-log-review](error-log-review.md) | INTERNAL / 5xx JSON logs, secret-in-log | Green-field design; already-red Vitest | — |
 | [supply-scan](supply-scan.md) | CVE / runtime versions / lockfile / Actions pins | Diff-scoped authz (security-review); exploit PoCs | — |
 | [upgrade-kit](upgrade-kit.md) | Kit deps, Dependabot, weekly stables, local smoke when Actions cannot run | Dest-product refresh (`ysk-kit upgrade`) | — |
-| [review-change](review-change.md) | Review a PR / branch vs law + plan | Implementing the change | getsentry `security-review` (diff scope) |
+| [review-change](review-change.md) | Review a PR / branch vs law + plan | Implementing the change; combined Staff/QA slice audit (audit-slice) | getsentry `security-review` (diff scope) |
+| [audit-slice](audit-slice.md) | Staff / QA combined review of a diff or named module | Implementing a feature; ordinary PR review; authz-only; post-scaffold; deleting files | — |
 | [llm-feature](llm-feature.md) | Product LLM prompt, `/v1/llm`, evals | Client-only copy; non-LLM audit | OWASP LLM Top 10 |
-| [security-review](security-review.md) | Authz, tenancy, secrets, tokens, webhooks, LLM input | Docs typos, no new trust boundary | getsentry `security-review`; openai threat-model |
+| [security-review](security-review.md) | Authz, tenancy, secrets, tokens, webhooks, LLM input | Combined Staff/QA slice audit (audit-slice); docs typos; no new trust boundary | getsentry `security-review`; openai threat-model |
 | [db-migration](db-migration.md) | Prisma 7.10 SQL review, expand/contract, no silent reset | Prisma 8 CLI; no schema change | prisma/skills `prisma-cli` |
 | [webhook-handling](webhook-handling.md) | Inbound webhooks (Stripe first): signature, ack, idempotency | Outbound Stripe SDK | Stripe webhooks / stripe/ai |
 | [desktop-electron](desktop-electron.md) | Electron isolation, CSP, IPC, safeStorage | Renderer-only UI | Electron security tutorial |

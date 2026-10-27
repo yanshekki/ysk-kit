@@ -140,4 +140,6 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 
 **v1.6.4:** `ysk-kit check supply` (vendored catalog 2026-10-21), `engines.node` `>=26.12.1`, php-bridge `>=8.2.35`, override `launch-editor` 2.14.2. Skill `supply-scan`.
 
+**v1.6.6:** Skill `audit-slice`: scoped Staff / Security / QA orchestrator for a git diff or named module. Doctor + engines (not USB/Cypress/Jest); dead-code candidates (do not delete during review); security delegates; test-plan headings, Vitest only if asked. Review ≠ merge.
+
 **v1.6.5:** Stable-only weekly bumps (2026-10-25): pnpm 12.15.0, turbo 2.11.10, BullMQ 6.4.2, nodemailer 10.2.1, Electron 44.9.3, Expo 58.0.19, Vite 8.3.5. Skill `upgrade-kit`. AGENTS Claude / Cursor Cloud / landscape polish. MySQL 8.4.13. Prometheus v3.15.1. Overrides: body-parser 2.4.0, undici 7.30.1, fast-uri 3.1.9/4.2.3. Ignore Expo CLI zod 3 (GHSA-mrhx-c7xc-m3w5). Held: Electron 45.0.0 (stable; major), TypeScript 6.0.3, Prisma 8 RC.

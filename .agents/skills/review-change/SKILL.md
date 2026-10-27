@@ -6,8 +6,9 @@ description: >
   high-risk items for a human.
   Use when asked to review a PR, a branch vs main, or uncommitted work; or /review-change.
   中文：審查、法律軸、計劃軸、高風險人工、合理化表。
-  Do not use for implementing the change (plan-feature) or a dedicated
-  security/Prisma deep dive (security-review, db-migration).
+  Do not use for implementing the change (plan-feature), a combined Staff/QA
+  audit (audit-slice), or a dedicated security/Prisma deep dive
+  (security-review, db-migration).
 ---
 
 Read `docs/skills/review-change.md`. Law: `AGENTS.md`.

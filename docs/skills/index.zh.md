@@ -24,9 +24,10 @@ Language: [English](index.md) · 中文
 | [error-log-review](error-log-review.zh.md) | INTERNAL／5xx JSON 日誌、日誌洩密 | 從零設計功能；已有紅燈 Vitest | — |
 | [supply-scan](supply-scan.zh.md) | CVE／runtime 版本／lockfile／Actions pin | 以 diff 為範圍的授權（security-review）；exploit PoC | — |
 | [upgrade-kit](upgrade-kit.zh.md) | Kit 依賴、Dependabot、每週穩定版、Actions 跑不了時的本機 smoke | Dest 產品更新（`ysk-kit upgrade`） | — |
-| [review-change](review-change.zh.md) | 對照法律 + 計劃審查 PR／分支 | 實作該改動 | getsentry `security-review`（diff 範圍） |
+| [review-change](review-change.zh.md) | 對照法律 + 計劃審查 PR／分支 | 實作該改動；Staff／QA 組合切片審計（audit-slice） | getsentry `security-review`（diff 範圍） |
+| [audit-slice](audit-slice.zh.md) | 對 diff 或具名模組的 Staff／QA 組合審查 | 實作功能；普通 PR 審查；只改授權；剛搭完骨架；刪檔 | — |
 | [llm-feature](llm-feature.zh.md) | 產品 LLM prompt、`/v1/llm`、評測 | 只改客戶端文案；非 LLM 稽核 | OWASP LLM Top 10 |
-| [security-review](security-review.zh.md) | 授權、租戶、密鑰、token、webhook、LLM 輸入 | 文件錯字、沒有新信任邊界 | getsentry `security-review`；openai threat-model |
+| [security-review](security-review.zh.md) | 授權、租戶、密鑰、token、webhook、LLM 輸入 | Staff／QA 組合切片審計（audit-slice）；文件錯字；沒有新信任邊界 | getsentry `security-review`；openai threat-model |
 | [db-migration](db-migration.zh.md) | Prisma 7.10 SQL 審查、expand/contract、禁止默默 reset | Prisma 8 CLI；沒改 schema | prisma/skills `prisma-cli` |
 | [webhook-handling](webhook-handling.zh.md) | 入站 webhook（先 Stripe）：驗簽、確認、冪等 | 出站 Stripe SDK | Stripe webhooks／stripe/ai |
 | [desktop-electron](desktop-electron.zh.md) | Electron isolation、CSP、IPC、safeStorage | 只改 renderer UI | Electron security tutorial |

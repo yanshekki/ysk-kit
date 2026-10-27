@@ -121,6 +121,7 @@ Model、欄位、關聯。Prisma 留在 `apps/api/src/modules/*/infra`。註明�
 - [ ] UI 流程：
 - [ ] Envelope 形狀 `{ ok: true, data }`／`{ ok: false, error }`
 - [ ] 授權角色：
+- [ ] 若使用者要求對此切片做 Staff／QA 審計，跟隨 [audit-slice](../skills/audit-slice.zh.md)
 
 ## 文件／變更紀錄／changeset
 

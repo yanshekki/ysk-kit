@@ -46,6 +46,7 @@ describe('writeAgentStubs', () => {
     expect(existsSync(join(dest, '.agents/skills/i18n-localize/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/supply-scan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/upgrade-kit/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/audit-slice/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/security.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/desktop.mdc'))).toBe(true);
     expect(AGENT_SKILL_TREES).toContain('.agents/skills');

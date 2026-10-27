@@ -6,7 +6,7 @@ Language: 英文配對 `2026-10-27-audit-slice.md` · 中文 `2026-10-27-audit-s
 |---|---|
 | **Slug** | `audit-slice` |
 | **日期** | 2026-10-27 |
-| **狀態** | draft — 等待使用者批准（只做研究；本 PR 不實作 skill） |
+| **狀態** | approved — skill 已在後續 PR 送出（本檔仍是研究紀錄） |
 | **正規檔** | `docs/plans/2026-10-27-audit-slice.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
 
@@ -20,7 +20,7 @@ Kit 其實已用多份 skill 教同一意圖：hexagonal 分層、`review-change
 
 本計劃記錄的結果：**判詞為 yes-with-edits（要改過才加）**。不要把候選提示詞整段貼進 `AGENTS.md`。獲准之後，新增一份雙語編排 skill `audit-slice`：保留高價值的九段報告，把環境／測試／死碼改寫成 kit 閘門，並交回既有 skill，而不是再寫一套。
 
-本 PR **只提交日期計劃**。不合併、不發佈、在使用者接受下列改寫合約之前不新增 skill 檔。
+本檔是研究紀錄。使用者已接受改寫合約（名稱 `audit-slice`、預設範圍 = git diff、除非要求否則只計劃測試、審查期間不刪檔）。Skill 檔在實作 PR 送出；該 PR 不合併、不發佈。
 
 ## 範圍
 
@@ -322,7 +322,7 @@ P2 死碼／效能瑣事。
 
 ## 任務清單
 
-按順序。本 PR 停在步驟 0。其餘等批准。
+按順序。研究已在計劃 PR 落地；其餘步驟是 skill 實作。
 
 0. [x] 研究紀錄（本檔）
    - **檔案：** `docs/plans/2026-10-27-audit-slice.md`、`docs/plans/2026-10-27-audit-slice.zh.md`
@@ -331,42 +331,42 @@ P2 死碼／效能瑣事。
    - **回滾：** 還原 commit
    - **驗收：** 兩份 `--check` 印 ok；狀態 **draft — 等待使用者批准**；沒有 skill 包裝；沒有 changeset
 
-1. [ ] 合約（skill YAML + 輸出標題）— 批准後
+1. [x] 合約（skill YAML + 輸出標題）— 批准後
    - **檔案：** `docs/skills/audit-slice.md`、`docs/skills/audit-slice.zh.md`
    - **介面／合約／資料：** 沒有（無 DTO）
    - **風險：** 複製 security-review；過長
    - **回滾：** 刪配對
    - **驗收：** 有觸發／不要用於／輸入／九段輸出／反模式；Cypress／Jest／USB 標成不在此棧；沒有 TypeScript `enum`
 
-2. [ ] 骨架包裝 — 批准後
+2. [x] 骨架包裝 — 批准後
    - **檔案：** `tooling/ysk-cli/templates/agent/skills/audit-slice/SKILL.md`、`.agents/skills/audit-slice/SKILL.md`、`.claude/skills/audit-slice/SKILL.md`；`docs-pair.test.ts` 的 `SKILLS`；thin-smoke；`flavor-smoke.sh`；create-app 測試
    - **介面／合約／資料：** 沒有
    - **風險：** skill 漂移
    - **回滾：** 從清單移除名稱
    - **驗收：** `pnpm ysk-kit check agent` ok；thin dest 有包裝；php-bridge 仍略過
 
-3. [ ] Application 規則
+3. [x] Application 規則
    - **檔案：** 沒有
    - **介面／合約／資料：** 沒有
    - **風險：** 沒有
    - **回滾：** 不適用
    - **驗收：** 不適用 — 無 `application/` 程式。不要手開模組資料夾。
 
-4. [ ] 客戶端
-   - **檔案：** 沒有
+4. [x] 客戶端
+   - **檔案：** 沒有（SDK／UI）。`review-change`／`security-review`「不要」已加指針句。
    - **介面／合約／資料：** 沒有
    - **風險：** 沒有
    - **回滾：** 不適用
-   - **驗收：** 不適用 — 無 SDK／UI。之後可選：在 `review-change`／`security-review` 的「不要」加一句。
+   - **驗收：** 無 SDK／UI。不要用於指針已落地。
 
-5. [ ] 驗證 — skill PR 之後
+5. [x] 驗證 — skill PR 之後
    - **檔案：** 無額外
    - **介面／合約／資料：** 沒有
    - **風險：** smoke 清單漏列
    - **回滾：** 還原 skill PR
    - **驗收：** `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` 綠；OpenAPI 不變
 
-6. [ ] 文件 — skill PR 之後
+6. [x] 文件 — skill PR 之後
    - **檔案：** `docs/skills/index.md` 配對、`AGENTS.md` 配對（一列）、可選計劃模板一句、changelog／README、鎖定 changeset
    - **介面／合約／資料：** 沒有
    - **風險：** 24 KiB 預算（AGENTS 列保持一行）
@@ -377,8 +377,8 @@ P2 死碼／效能瑣事。
 
 未解決的項目留在這裏。不要用猜測填滿。
 
-- 確認 skill **名稱**用 `audit-slice`、`deep-review` 還是 `qa-audit`。建議：`audit-slice`（範圍是切片，不是整棵樹）。
-- 確認**預設範圍**是 git diff。替代：目標產品 `apps/api/src/modules/*`，排除 kit 套件。整棵 kit 樹應保持為使用者顯式覆寫。
-- 第一版 skill **應否**寫測試檔，還是永遠只出 test-plan？建議：只出計劃，除非使用者說「寫測試」。
-- 之後可選（不是第一版）：`check agent` 掃 `apps/` 的 TypeScript `any` — 另開計劃；不要綁進本 skill。
-- 是否加一條 Cursor `.mdc`（`alwaysApply: false`、不設 globs、只靠 description）。建議：**不要**額外規則檔；skill 包裝已夠。永遠開啟會消耗 token。
+- Skill **名稱：** `audit-slice`（使用者於 2026-10-27 批准）。不是 `deep-review`／`qa-audit`。
+- **預設範圍：** git diff 或具名模組。整棵 kit 樹仍須使用者顯式覆寫。
+- **寫測試：** 只出計劃，除非使用者說「寫測試」。
+- 之後可選（不是第一版）：`check agent` 掃 `apps/` 的 TypeScript `any` — 另開計劃；未綁進本 skill。
+- 不加額外 Cursor `.mdc`。skill 包裝已夠。

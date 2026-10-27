@@ -117,6 +117,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.6
+
+#### 新功能
+
+- Skill [audit-slice](docs/skills/audit-slice.zh.md)：對 git diff 或具名模組做有範圍的 Staff／QA 審查。doctor + engines（不是 USB／Cypress／Jest）；死碼候選（不刪）；安全委派；除非被要求寫 Vitest，否則只出 test-plan。審查 ≠ 合併。
+
 ### v1.6.5
 
 #### 新功能
@@ -145,24 +151,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - CI `check` 跑 `pnpm ysk-kit check supply --repo-only --online`，不再直接跑 `pnpm audit`。Doctor 檢查 id `supply`。
-
-### v1.6.3
-
-#### 新功能
-
-- Skill [i18n-localize](docs/skills/i18n-localize.zh.md)：`@ysk-kit/i18n`（`zh-HK` | `en`）、envelope 代碼維持英文穩定、`Intl` 格式化。App 接線不在本版。
-
-#### 改進
-
-- `AGENTS.md` 程式工具表：OpenCode 的 Claude 回退、Gemini Agent Skills、Copilot／Grok skill 路徑。
-
-#### 依賴升級
-
-- pnpm **12.14.0**、turbo **2.11.9**、React **19.3.1**、Prisma **7.10.1**（不是 8 RC）、BullMQ **6.3.16**、Electron **44.9.0**、Expo **58.0.14**。暫緩：TypeScript 6、Prisma 8 RC、Electron 45 beta。
-
-#### 內部／CI
-
-- `.nvmrc` **26**。Compose／CI MySQL **8.4.11**。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

@@ -83,6 +83,7 @@ jobs:
           test -f .agents/skills/error-log-review/SKILL.md
           test -f .agents/skills/supply-scan/SKILL.md
           test -f .agents/skills/upgrade-kit/SKILL.md
+          test -f .agents/skills/audit-slice/SKILL.md
           test -f .cursor/rules/security.mdc
           test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md

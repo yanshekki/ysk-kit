@@ -37,6 +37,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.6
+
+### 新功能
+
+- Agent skill [audit-slice](docs/skills/audit-slice.zh.md)：對 git diff 或具名模組做有範圍的 Staff／安全／QA 編排。九段報告；環境走 `ysk-kit doctor` + engines（不是 USB／Cypress／Jest）；死碼是帶風險的候選（審查期間不刪）；安全委派 [security-review](docs/skills/security-review.zh.md) 與 [supply-scan](docs/skills/supply-scan.zh.md)；對抗性案例用 given／when／then 對應 kit error code（沒有攻擊 PoC）；測試只出 [test-plan](docs/skills/test-plan.zh.md) 標題，只有被要求才寫 Vitest。含 wrappers、create-app／upgrade 模板與 skill 漂移副本。`AGENTS.md` 一列漸進披露。
+
 ## v1.6.5
 
 ### 新功能

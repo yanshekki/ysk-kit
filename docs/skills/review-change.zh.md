@@ -4,7 +4,7 @@ description: >
   沿兩軸審查 YSK Kit diff：法律（AGENTS.md 硬規則、完成定義、「不要」清單）與計劃（日期計劃的範圍與清單）。高風險項目標給人類。
   被要求審查 PR、相對 main 的分支，或未提交的工作時使用；或 /review-change。
   中文：審查、法律軸、計劃軸、高風險人工、合理化表。
-  不要用於實作改動（plan-feature），或專門的安全／Prisma 深挖（security-review、db-migration）。
+  不要用於實作改動（plan-feature）、Staff／QA 組合審計（audit-slice），或專門的安全／Prisma 深挖（security-review、db-migration）。
 ---
 
 # Skill：審查改動
@@ -18,7 +18,7 @@ Language: [English](review-change.md) · 中文
 - 使用者要求審查 PR、相對 `main` 的分支，或工作樹。
 - 計劃的清單即將標為完成。
 
-不要用本 skill 實作功能（[plan-feature](plan-feature.zh.md)）。授權／密鑰／webhook／LLM 輸入走 [security-review](security-review.zh.md)。產生的 SQL 走 [db-migration](db-migration.zh.md)。
+不要用本 skill 實作功能（[plan-feature](plan-feature.zh.md)）。Staff／QA 組合切片審計走 [audit-slice](audit-slice.zh.md)。授權／密鑰／webhook／LLM 輸入走 [security-review](security-review.zh.md)。產生的 SQL 走 [db-migration](db-migration.zh.md)。
 
 ## 輸入
 

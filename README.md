@@ -117,6 +117,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.6
+
+#### New features
+
+- Skill [audit-slice](docs/skills/audit-slice.md): scoped Staff / QA review of a git diff or named module. Doctor + engines (not USB/Cypress/Jest); dead-code candidates (do not delete); security delegates; test-plan only unless asked to write Vitest. Review ≠ merge.
+
 ### v1.6.5
 
 #### New features
@@ -145,24 +151,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - CI `check` runs `pnpm ysk-kit check supply --repo-only --online` instead of raw `pnpm audit`. Doctor check id `supply`.
-
-### v1.6.3
-
-#### New features
-
-- Skill [i18n-localize](docs/skills/i18n-localize.md): `@ysk-kit/i18n` (`zh-HK` | `en`), envelope codes stay English-stable, `Intl` formats. App wiring is out of this release.
-
-#### Improvements
-
-- `AGENTS.md` coding-tools table: OpenCode Claude fallback, Gemini Agent Skills, Copilot/Grok skill paths.
-
-#### Dependency upgrades
-
-- pnpm **12.14.0**, turbo **2.11.9**, React **19.3.1**, Prisma **7.10.1** (not 8 RC), BullMQ **6.3.16**, Electron **44.9.0**, Expo **58.0.14**. Held: TypeScript 6, Prisma 8 RC, Electron 45 beta.
-
-#### Internal/CI
-
-- `.nvmrc` **26**. Compose/CI MySQL **8.4.11**.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

@@ -37,6 +37,12 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.6
+
+### New features
+
+- Agent skill [audit-slice](docs/skills/audit-slice.md): scoped Staff / Security / QA orchestrator for a git diff or named module. Nine-part report; environment via `ysk-kit doctor` + engines (not USB/Cypress/Jest); dead-code candidates with risk (do not delete during review); security delegates to [security-review](docs/skills/security-review.md) and [supply-scan](docs/skills/supply-scan.md); adversarial cases as given/when/then mapped to kit error codes (no exploit PoCs); tests emit [test-plan](docs/skills/test-plan.md) headings and write Vitest only if asked. Wrappers, create-app / upgrade templates, and skill-drift copies included. One `AGENTS.md` progressive-disclosure row.
+
 ## v1.6.5
 
 ### New features

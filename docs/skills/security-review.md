@@ -4,11 +4,12 @@ description: >
   Review YSK Kit authz, tenant isolation, secrets, logging redaction, token
   storage, webhook signatures, and LLM input against hexagonal modules and
   the {ok,data}/{ok,error} envelope. Optional lightweight threat-model mode.
-  Use when the user asks for a security review or audit; the diff touches
+  Use when the user asks for a security review or threat model; the diff touches
   auth, apikey, organizations, billing, files, crypto, webhooks, env/secrets,
   or a new capability; or the plan's security section is not "none".
   中文：安全審查、權限、跨租戶、密鑰、日誌遮罩、webhook 簽名。
-  Do not use for pure UI styling, docs typos, or generic dependency bumps.
+  Do not use for a Staff/QA combined slice audit (audit-slice), pure UI styling,
+  docs typos, or generic dependency bumps.
 ---
 
 # Skill: security review
@@ -19,11 +20,11 @@ Review authz, secrets, and trust boundaries in this kit. Law: [AGENTS.md](../../
 
 ## Trigger
 
-- The user asks for a security review, audit, or threat model.
+- The user asks for a security review or threat model (authz, tenancy, secrets, webhooks, LLM input).
 - The diff touches `auth`, `apikey`, `organizations`, `billing`, `files`, `crypto`, a `/v1/*/webhook` route, env/secret handling, or a new capability.
 - The dated plan’s **Security and privacy** section is not “none”.
 
-Do not trigger for pure UI styling, docs typos, or a dependency bump with no new trust boundary.
+Do not trigger for a combined Staff / QA slice audit ([audit-slice](audit-slice.md)), pure UI styling, docs typos, or a dependency bump with no new trust boundary.
 
 ## Inputs
 

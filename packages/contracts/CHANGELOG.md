@@ -1,5 +1,11 @@
 # @ysk-kit/contracts
 
+## 1.6.6
+
+### Patch Changes
+
+- ae7bc50: Add the audit-slice staff/QA orchestrator skill (scoped diff or named module; plan tests; do not delete during review).
+
 ## 1.6.5
 
 ### Patch Changes

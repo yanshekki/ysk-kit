@@ -6,7 +6,7 @@ Language: [中文](README.zh.md) · English
 
 | | |
 |---|---|
-| **Version** | 1.6.7 |
+| **Version** | 1.6.8 |
 | **License** | MIT |
 | **Company** | [YSK Limited](https://ysk.hk/) |
 | **Contact** | email@ysk.hk |
@@ -117,6 +117,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.8
+
+#### New features
+
+- Skill [clarify-feature](docs/skills/clarify-feature.md): at most five questions (authz, tenancy, envelope, flavor/preset, UI surfaces) before plan approval when Open questions are non-empty. Answers fold into the dated plan pair. Path card [sdd-path](docs/plans/sdd-path.md): lean is plan-feature → implement skills → verify-change → review-change; full inserts clarify-feature first. No Spec Kit CLI and no `.specify/`.
+
 ### v1.6.7
 
 #### Dependency upgrades
@@ -132,24 +138,6 @@ The latest three versions. Older versions are in the full changelog.
 #### New features
 
 - Skill [audit-slice](docs/skills/audit-slice.md): scoped Staff / QA review of a git diff or named module. Doctor + engines (not USB/Cypress/Jest); dead-code candidates (do not delete); security delegates; test-plan only unless asked to write Vitest. Review ≠ merge.
-
-### v1.6.5
-
-#### New features
-
-- Skill [upgrade-kit](docs/skills/upgrade-kit.md): kit deps, Dependabot, weekly stables, local smoke when Actions cannot run. Dest-product refresh stays [upgrade](docs/guides/upgrade.md).
-
-#### Improvements
-
-- `AGENTS.md`: Claude Code does not load `.agents/skills/` (only `.claude/skills/`); Cursor Cloud Agents commit project skills; landscape footnote (Devin Local, host-specific MCP).
-
-#### Dependency upgrades
-
-- pnpm **12.15.0**, turbo **2.11.10**, BullMQ **6.4.2**, nodemailer **10.2.1**, Electron **44.9.3**, Expo **58.0.19**, Vite **8.3.5**. Held: TypeScript 6, Prisma 8 RC, Electron 45 (stable; major hold).
-
-#### Internal/CI
-
-- Compose/CI MySQL **8.4.13**. Prometheus **v3.15.1**. Overrides: `body-parser` 2.4.0, `undici` 7.30.1, `fast-uri` 3.1.9 / 4.2.3. Ignore Expo CLI zod 3 (GHSA-mrhx-c7xc-m3w5).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

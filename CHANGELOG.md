@@ -37,6 +37,12 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.8
+
+### New features
+
+- Agent skill [clarify-feature](docs/skills/clarify-feature.md): before plan approval, ask at most five kit-native questions (authz, tenancy, envelope, flavor/preset, UI surfaces) when Open questions are non-empty or the user asks to clarify. Fold answers into the dated plan pair (Assumptions, Scope, Open questions) in both languages. Thin wrappers, create-app / upgrade templates, and skill-drift copies included. Path card [sdd-path](docs/plans/sdd-path.md): lean is plan-feature → the implement skill the plan names → verify-change → review-change; full inserts clarify-feature first. converge-feature is not shipped. No Spec Kit CLI and no `.specify/`. Two `AGENTS.md` progressive-disclosure rows and one Planning protocol sentence.
+
 ## v1.6.7
 
 ### Dependency upgrades

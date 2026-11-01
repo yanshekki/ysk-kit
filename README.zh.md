@@ -6,7 +6,7 @@ Language: [English](README.md) · 中文
 
 | | |
 |---|---|
-| **版本** | 1.6.7 |
+| **版本** | 1.6.8 |
 | **授權** | MIT |
 | **公司** | [YSK Limited](https://ysk.hk/) |
 | **聯絡** | email@ysk.hk |
@@ -117,6 +117,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.8
+
+#### 新功能
+
+- Skill [clarify-feature](docs/skills/clarify-feature.zh.md)：未決問題非空時，計劃批准前最多五題（授權、租戶、envelope、flavor／preset、UI 表面）。答案折進日期計劃配對。路徑卡 [sdd-path](docs/plans/sdd-path.zh.md)：精簡是 plan-feature → 實作 skill → verify-change → review-change；完整先插入 clarify-feature。沒有 Spec Kit CLI，也沒有 `.specify/`。
+
 ### v1.6.7
 
 #### 依賴升級
@@ -132,24 +138,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 新功能
 
 - Skill [audit-slice](docs/skills/audit-slice.zh.md)：對 git diff 或具名模組做有範圍的 Staff／QA 審查。doctor + engines（不是 USB／Cypress／Jest）；死碼候選（不刪）；安全委派；除非被要求寫 Vitest，否則只出 test-plan。審查 ≠ 合併。
-
-### v1.6.5
-
-#### 新功能
-
-- Skill [upgrade-kit](docs/skills/upgrade-kit.zh.md)：kit 依賴、Dependabot、每週穩定版，以及 Actions 跑不了時的本機 smoke。Dest 產品更新仍用 [upgrade](docs/guides/upgrade.zh.md)。
-
-#### 改進
-
-- `AGENTS.md`：Claude Code **不**載入 `.agents/skills/`（只載入 `.claude/skills/`）；Cursor Cloud Agents 提交專案 skills；現況腳註（Devin Local、宿主 MCP）。
-
-#### 依賴升級
-
-- pnpm **12.15.0**、turbo **2.11.10**、BullMQ **6.4.2**、nodemailer **10.2.1**、Electron **44.9.3**、Expo **58.0.19**、Vite **8.3.5**。暫緩：TypeScript 6、Prisma 8 RC、Electron 45（已是穩定版；major 暫緩）。
-
-#### 內部／CI
-
-- Compose／CI MySQL **8.4.13**。Prometheus **v3.15.1**。Override：`body-parser` 2.4.0、`undici` 7.30.1、`fast-uri` 3.1.9／4.2.3。忽略 Expo CLI 的 zod 3（GHSA-mrhx-c7xc-m3w5）。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

@@ -37,6 +37,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.8
+
+### 新功能
+
+- Agent skill [clarify-feature](docs/skills/clarify-feature.zh.md)：計劃批准前，未決問題非空或使用者要求澄清時，最多問五題 kit 原生問題（授權、租戶、envelope、flavor／preset、UI 表面）。把答案折進日期計劃配對的假設、範圍與未決問題（中英都改）。含薄包裝、create-app／upgrade 模板與 skill 漂移副本。路徑卡 [sdd-path](docs/plans/sdd-path.zh.md)：精簡是 plan-feature → 計劃點名的實作 skill → verify-change → review-change；完整先插入 clarify-feature。converge-feature 尚未送出。沒有 Spec Kit CLI，也沒有 `.specify/`。`AGENTS.md` 兩列漸進披露，加計劃協議一句。
+
 ## v1.6.7
 
 ### 依賴升級

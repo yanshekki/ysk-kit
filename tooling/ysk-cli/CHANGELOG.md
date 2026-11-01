@@ -1,5 +1,14 @@
 # @ysk-kit/cli
 
+## 1.6.8
+
+### Patch Changes
+
+- 5325ab9: Add the clarify-feature skill (at most five questions before plan approval) and the lean/full SDD path card. No Spec Kit CLI and no .specify/.
+- Updated dependencies [5325ab9]
+  - @ysk-kit/api-http@1.6.8
+  - @ysk-kit/contracts@1.6.8
+
 ## 1.6.7
 
 ### Patch Changes

@@ -117,6 +117,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.7
+
+#### Dependency upgrades
+
+- pnpm **12.16.1**. `engines.node` **>=26.13.0** (supply floor stays 26.12.1). Expo **58.0.22**. Electron **44.10.1**. React Native **0.88.1**. BullMQ **6.5.3**. nodemailer **10.3.1**. AWS SDK S3 **3.1161.0**. jose **6.2.14**. TanStack Query **5.105.0**. `@types/node` **26.6.6**. OpenTelemetry semantic-conventions **1.44.0**.
+
+#### Internal/CI
+
+- Compose Redis **8.10.3-alpine**. Grafana **13.2.5**. Audit overrides: `node-forge` 1.4.2, `seroval` 1.6.12, `qs` 6.17.1. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors.
+
 ### v1.6.6
 
 #### New features
@@ -140,17 +150,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - Compose/CI MySQL **8.4.13**. Prometheus **v3.15.1**. Overrides: `body-parser` 2.4.0, `undici` 7.30.1, `fast-uri` 3.1.9 / 4.2.3. Ignore Expo CLI zod 3 (GHSA-mrhx-c7xc-m3w5).
-
-### v1.6.4
-
-#### Security
-
-- `ysk-kit check supply` inventories Node, PHP, kernel, lockfile IOCs, GitHub Actions SHAs, and compose tags against a vendored catalog (Oct 2026 php2shell + Node Brotli floors). Skill [supply-scan](docs/skills/supply-scan.md). No Trivy.
-- `engines.node` is `>=26.12.1`. php-bridge `require.php` is `>=8.2.35`. Override `launch-editor` 2.14.2.
-
-#### Internal/CI
-
-- CI `check` runs `pnpm ysk-kit check supply --repo-only --online` instead of raw `pnpm audit`. Doctor check id `supply`.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

@@ -37,6 +37,19 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.7
+
+### 依賴升級
+
+- 只升穩定版（2026-11-01）。`engines.node` 為 `>=26.13.0`（Node 26.13.0 LTS Lithium）。供應鏈目錄下限維持 26.12.1（CVE-2026-111497）。
+- pnpm **12.16.1**（`latest`；12.17.0 是 `next-12`）。Electron **44.10.1**（45 暫緩）。Expo **58.0.22**。React Native **0.88.1**。BullMQ **6.5.3**。nodemailer **10.3.1**。AWS SDK S3 **3.1161.0**。jose **6.2.14**。TanStack Query **5.105.0**。`@types/node` **26.6.6**。OpenTelemetry semantic-conventions **1.44.0**。
+- 審計 override：node-forge **1.4.2**、seroval **1.6.12**、qs **6.17.1**。
+- Compose Redis **8.10.3-alpine** 與 Grafana **13.2.5**。
+
+### 內部／CI
+
+- 暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC，以及 OpenTelemetry major（#80–#86）。glob 13、minimatch 10、deepmerge 4.3.1 沒有相容修補。
+
 ## v1.6.6
 
 ### 新功能

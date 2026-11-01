@@ -117,6 +117,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.7
+
+#### 依賴升級
+
+- pnpm **12.16.1**。`engines.node` **>=26.13.0**（供應鏈下限維持 26.12.1）。Expo **58.0.22**。Electron **44.10.1**。React Native **0.88.1**。BullMQ **6.5.3**。nodemailer **10.3.1**。AWS SDK S3 **3.1161.0**。jose **6.2.14**。TanStack Query **5.105.0**。`@types/node` **26.6.6**。OpenTelemetry semantic-conventions **1.44.0**。
+
+#### 內部／CI
+
+- Compose Redis **8.10.3-alpine**。Grafana **13.2.5**。審計 override：`node-forge` 1.4.2、`seroval` 1.6.12、`qs` 6.17.1。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
+
 ### v1.6.6
 
 #### 新功能
@@ -140,17 +150,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - Compose／CI MySQL **8.4.13**。Prometheus **v3.15.1**。Override：`body-parser` 2.4.0、`undici` 7.30.1、`fast-uri` 3.1.9／4.2.3。忽略 Expo CLI 的 zod 3（GHSA-mrhx-c7xc-m3w5）。
-
-### v1.6.4
-
-#### 安全
-
-- `ysk-kit check supply` 盤點 Node、PHP、kernel、lockfile IOC、GitHub Actions SHA 與 compose 標籤，對照內建目錄（2026 年 10 月 php2shell 與 Node Brotli 下限）。Skill [supply-scan](docs/skills/supply-scan.zh.md)。沒有 Trivy。
-- `engines.node` 為 `>=26.12.1`。php-bridge `require.php` 為 `>=8.2.35`。Override `launch-editor` 2.14.2。
-
-#### 內部／CI
-
-- CI `check` 跑 `pnpm ysk-kit check supply --repo-only --online`，不再直接跑 `pnpm audit`。Doctor 檢查 id `supply`。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

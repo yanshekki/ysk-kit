@@ -37,6 +37,19 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.7
+
+### Dependency upgrades
+
+- Stable-only weekly for 2026-11-01. `engines.node` is `>=26.13.0` (Node 26.13.0 LTS Lithium). The supply catalog floor stays 26.12.1 (CVE-2026-111497).
+- pnpm **12.16.1** (`latest`; 12.17.0 is `next-12`). Electron **44.10.1** (45 stays held). Expo **58.0.22**. React Native **0.88.1**. BullMQ **6.5.3**. nodemailer **10.3.1**. AWS SDK S3 **3.1161.0**. jose **6.2.14**. TanStack Query **5.105.0**. `@types/node` **26.6.6**. OpenTelemetry semantic-conventions **1.44.0**.
+- Audit overrides: node-forge **1.4.2**, seroval **1.6.12**, qs **6.17.1**.
+- Compose Redis **8.10.3-alpine** and Grafana **13.2.5**.
+
+### Internal/CI
+
+- Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, and OpenTelemetry majors (#80–#86). No compatible patch for glob 13, minimatch 10, or deepmerge 4.3.1.
+
 ## v1.6.6
 
 ### New features

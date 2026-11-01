@@ -6,13 +6,13 @@ Language: 英文配對 `2026-11-01-clarify-feature-sdd-path.md` · 中文 `2026-
 |---|---|
 | **Slug** | `clarify-feature-sdd-path` |
 | **日期** | 2026-11-01 |
-| **狀態** | draft — 等待使用者批准 |
+| **狀態** | approved — 已在本分支實作 |
 | **正規檔** | `docs/plans/2026-11-01-clarify-feature-sdd-path.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
 
 法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。檢查：`pnpm ysk-kit plan --check docs/plans/2026-11-01-clarify-feature-sdd-path.zh.md`。
 
-本檔是已批准的 Spec Kit 對齊切片（只含提案 1 與 5）的研究紀錄。Skill 檔與 `docs/plans/sdd-path.md` 在之後的 PR 送出。本 PR 不合併、不實作。
+本檔是已批准的 Spec Kit 對齊切片（只含提案 1 與 5）的合約。Skill、路徑卡與包裝在批准後落在本分支。不要從本 PR 做 npm 發佈。
 
 ## 目標與使用者問題
 
@@ -55,7 +55,7 @@ Spec Kit（GitHub 的 specify 覆層：constitution → specify → clarify → 
 - Spec Kit 公開文件（https://github.github.com/spec-kit/）描述該覆層順序。本計劃不 vendor 該倉，也不把那些文件當成 kit 法律。
 - 在本樹 ripgrep：沒有 `specify`、`clarify-feature`、`sdd-path`、`spec-kit` 或 `Spec Kit`。
 - `writeAgentStubs`（`tooling/ysk-cli/src/agent-stubs.ts`）會把每個 `templates/agent/skills/<name>/SKILL.md` 複製到 `.agents`、`.claude`、`.cursor`、`.grok`。多一個模板目錄就夠 dest 產品使用。本倉仍要提交 `.agents` 與 `.claude` 副本，因為 `docs-pair` 與 `check agent` 會拿它們跟模板比。
-- 下一次發佈是每個公開套件的 **patch**（套件清單與 `ae7bc50` 的 `.changeset/audit-slice.md` 相同），所以 Version Packages 會把 1.6.6 推到 1.6.7，除非先有另一份 changeset。Skill PR 不要把 1.6.7 寫進 `package.json`。
+- 下一次發佈是每個公開套件的 **patch**（套件清單與 `ae7bc50` 的 `.changeset/audit-slice.md` 相同）。v1.6.7 已經出貨（週期 bump，`60b6724`），所以 Version Packages 會把 1.6.7 推到 1.6.8。Skill PR 不要把版本寫進 `package.json`。
 - 香港繁體中文配對保持同等深度。任何 `docs/**/*.md` 沒有 `.zh.md` 兄弟檔，`docs-pair` 會失敗，包括 `sdd-path.md`。
 
 ## 受影響的 flavor／preset／capability
@@ -405,42 +405,42 @@ Do not add converge-feature, analyze-plan, or a requirements checklist.
    - **回滾：** 還原 commit
    - **驗收：** 兩條 `--check` 都印出 ok；狀態為 draft — 等待使用者批准；沒有 skill 檔；沒有 changeset
 
-1. [ ] Skill 合約
+1. [x] Skill 合約
    - **檔案：** `docs/skills/clarify-feature.md`、`docs/skills/clarify-feature.zh.md`
    - **介面／合約／資料：** 沒有（沒有 DTO）。觸發、不要用於、五條幹、折入規則、輸出塊按「合約先行」所寫
    - **風險：** 訪談太寬；貼上 Spec Kit
    - **回滾：** 刪掉這對檔
    - **驗收：** 最多五題；幹是授權、租戶、envelope、flavor／preset、UI 表面；禁止 `.specify/`；沒有 TypeScript `enum`
 
-2. [ ] 包裝與接線
+2. [x] 包裝與接線
    - **檔案：** `tooling/ysk-cli/templates/agent/skills/clarify-feature/SKILL.md`；`.agents/skills/clarify-feature/SKILL.md`；`.claude/skills/clarify-feature/SKILL.md`；`plan-feature` 包裝一行改動的同樣三棵樹；`docs-pair.test.ts` 的 `SKILLS`；`agent-stubs.test.ts`；`upgrade.test.ts`；`tooling/create-ysk-app/src/index.test.ts`（full 與 thin 為 true，php-bridge 為 false）；`.github/workflows/ci.yml`；`.github/scripts/flavor-smoke.sh`
    - **介面／合約／資料：** 沒有
    - **風險：** skill-drift；description 超過 1024 或缺少 `Use when`／`Do not`
    - **回滾：** 從清單移除名稱並刪除目錄
    - **驗收：** 三份已提交副本逐位元組相同；`skill-triggers` 通過；thin dest 有包裝；php-bridge 沒有；不提交 `.cursor/skills` 或 `.grok/skills`
 
-3. [ ] 路徑卡與 AGENTS 以外的指針
+3. [x] 路徑卡與 AGENTS 以外的指針
    - **檔案：** `docs/plans/sdd-path.md`、`docs/plans/sdd-path.zh.md`；`docs/plans/README.md`、`docs/plans/README.zh.md`（位置表一列）；`docs/skills/index.md`、`docs/skills/index.zh.md`；`docs/skills/plan-feature.md`、`docs/skills/plan-feature.zh.md`；`docs/product-plan.md`、`docs/product-plan.zh.md`
    - **介面／合約／資料：** 沒有
    - **風險：** 三份提示漂掉；把 `sdd-path` 寫成假的功能計劃
    - **回滾：** 刪掉路徑卡並還原那些列
    - **驗收：** 一份共用提示加三行工具說明；精簡與完整序列與本計劃一致；converge 標成尚未送出；不要把該檔傳給 `plan --check`
 
-4. [ ] AGENTS 列
+4. [x] AGENTS 列
    - **檔案：** `AGENTS.md`、`AGENTS.zh.md`
    - **介面／合約／資料：** 沒有
    - **風險：** 24 KiB 預算（規定 246 位元組；先重測）
    - **回滾：** 還原三處英文插入與中文配對
    - **驗收：** 使用「現況與重用」的英文字串，或更短但仍連結兩份文件的裁剪；`pnpm ysk-kit check agent` ok；沒有新硬規則，也沒有貼 Spec Kit
 
-5. [ ] 驗證
+5. [x] 驗證
    - **檔案：** 沒有額外檔案
    - **介面／合約／資料：** 沒有
    - **風險：** smoke 清單漏了某個 `audit-slice` 鄰項
    - **回滾：** 還原實作 PR
    - **驗收：** `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` 全綠；OpenAPI 不變；上面四個文件案例通過
 
-6. [ ] 文件／變更紀錄／changeset
+6. [x] 文件／變更紀錄／changeset
    - **檔案：** `CHANGELOG.md`、`CHANGELOG.zh.md`、`README.md`、`README.zh.md`、`docs/history.md`、`docs/history.zh.md`、`.changeset/clarify-feature-sdd-path.md`
    - **介面／合約／資料：** 沒有
    - **風險：** 人手改版本號；README 窗口從完整變更紀錄刪掉一個版本
@@ -451,6 +451,6 @@ Do not add converge-feature, analyze-plan, or a requirements checklist.
 
 這裡沒有會擋住方案 C 的項目。不要用猜測填滿。
 
-- 本計劃的批准就是閘。在使用者接受方案 C、五條問題幹、規定的 AGENTS 位元組，以及延後 `plan --check` TBD 警告之前，不要加 skill 檔。
+- 2026-11-01 已批准：方案 C、五條問題幹、規定的 AGENTS 位元組，以及延後 `plan --check` TBD 警告。本分支的實作 commit 就是該接受。
 - 後續，不是實作 PR 的問題：`converge-feature`、`analyze-plan`、需求清單，以及 `plan --check` 對 `TBD`／`待定` 的軟警告。
 - 若 main 上之後的 `AGENTS.md` 編輯把餘額壓到 246 位元組以下，使用「現況與重用」裡的 Tool plan modes 裁剪。除非那句已經不在，否則不要另發明一種裁法。

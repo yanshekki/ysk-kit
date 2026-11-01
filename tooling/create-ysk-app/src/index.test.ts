@@ -172,6 +172,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/supply-scan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/upgrade-kit/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/audit-slice/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/clarify-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/security.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/desktop.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
@@ -229,6 +230,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.cursor'))).toBe(false);
     expect(existsSync(join(dest, '.grok'))).toBe(false);
     expect(existsSync(join(dest, '.agents/skills/audit-slice/SKILL.md'))).toBe(false);
+    expect(existsSync(join(dest, '.agents/skills/clarify-feature/SKILL.md'))).toBe(false);
   });
 
   it('copies static-web3 flavor with web only', () => {
@@ -358,6 +360,7 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, '.agents/skills/supply-scan/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/upgrade-kit/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, '.agents/skills/audit-slice/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/clarify-feature/SKILL.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
       '## Current state and reuse',

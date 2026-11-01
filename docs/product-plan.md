@@ -23,6 +23,7 @@ YSK Kit exists so a new product spends its first day on business rules, not on r
 | Supply scan | `ysk-kit check supply` inventories Node / PHP / kernel / lockfile / Actions pins against a vendored catalog. Procedure: [supply-scan](skills/supply-scan.md) |
 | Kit upgrades | Procedure: [upgrade-kit](skills/upgrade-kit.md). Dest-product refresh stays [upgrade](guides/upgrade.md) |
 | Slice audit | Procedure: [audit-slice](skills/audit-slice.md). Scoped Staff / QA review of a git diff or named module. Not a whole-tree kit saas audit. |
+| Clarify and path | Procedure: [clarify-feature](skills/clarify-feature.md) (at most five questions before plan approval). Lean and full sequences: [sdd-path](plans/sdd-path.md). |
 
 Fifteen-minute path:
 

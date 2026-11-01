@@ -6,7 +6,8 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 
 | Skill | When | Do not use when | Related vendor skill |
 |---|---|---|---|
-| [plan-feature](plan-feature.md) | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` before contracts and code | Typo / one-file rename | Tool native plan modes (copy into the dated file) |
+| [plan-feature](plan-feature.md) | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` before contracts and code | Typo / one-file rename; unresolved Open questions (clarify-feature first) | Tool native plan modes (copy into the dated file) |
+| [clarify-feature](clarify-feature.md) | Open questions are non-empty, or the user asks to clarify, before plan approval | Implementing; empty Open questions; Spec Kit / `.specify/` | — |
 | [test-plan](test-plan.md) | Rank risks and list given/when/then cases before writing tests | Comment-only edits | Cloudflare Agents `test-plan` |
 | [write-tests](write-tests.md) | Vitest / Testing Library / Playwright in this repo | Planning tests (use test-plan first) | Cloudflare sandbox-sdk testing |
 | [new-product](new-product.md) | Scaffold a product with `create-ysk-app` | Adding a module inside this kit | — |

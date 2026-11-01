@@ -12,6 +12,7 @@ YSK Kit 工作的可保存計劃。Agent 法律：[AGENTS.zh.md](../../AGENTS.zh
 | `<yyyy-mm-dd>-<slug>.md` | 正規英文計劃（ISO 日期，kebab slug）。 |
 | `<yyyy-mm-dd>-<slug>.zh.md` | 中文配對，深度相同。 |
 | `/plan.md`（倉根） | 可選工作階段指針。已 gitignore。`pnpm ysk-kit plan <slug>` 會寫入。 |
+| `sdd-path.md`／`sdd-path.zh.md` | 精簡與完整路徑卡。不是日期功能計劃。不要傳給 `plan --check`。 |
 
 協議要求計劃時，在合約與實作**之前**寫好日期檔。請改日期檔，不要只改工作階段指針。
 

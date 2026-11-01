@@ -12,6 +12,7 @@ Durable plans for YSK Kit work. Agent law: [AGENTS.md](../../AGENTS.md). Procedu
 | `<yyyy-mm-dd>-<slug>.md` | Canonical English plan (ISO date, kebab slug). |
 | `<yyyy-mm-dd>-<slug>.zh.md` | Chinese pair, same depth. |
 | `/plan.md` (repo root) | Optional session pointer. Gitignored. `pnpm ysk-kit plan <slug>` writes it. |
+| `sdd-path.md` / `sdd-path.zh.md` | Lean and full path card. Not a dated feature plan. Do not pass it to `plan --check`. |
 
 When a plan is required, write the dated file **before** contracts and implementation. Edit the dated file, not only the session pointer.
 

@@ -6,13 +6,13 @@ Language: Chinese pair `2026-11-01-clarify-feature-sdd-path.zh.md` · English `2
 |---|---|
 | **Slug** | `clarify-feature-sdd-path` |
 | **Date** | 2026-11-01 |
-| **Status** | draft — waiting for user approval |
+| **Status** | approved — implemented on this branch |
 | **Canonical file** | `docs/plans/2026-11-01-clarify-feature-sdd-path.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
 
 Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md). Check: `pnpm ysk-kit plan --check docs/plans/2026-11-01-clarify-feature-sdd-path.md`.
 
-This file is the research record for the approved Spec Kit alignment slice (proposals 1 and 5 only). Skill files and `docs/plans/sdd-path.md` ship in a later PR. This PR does not merge and does not implement.
+This file is the contract for the approved Spec Kit alignment slice (proposals 1 and 5 only). The skill, path card, and wrappers landed on this branch after approval. Do not npm-publish from this PR.
 
 ## Goal and user problem
 
@@ -55,7 +55,7 @@ Outcome after approval: one bilingual skill `clarify-feature`, one bilingual pat
 - Spec Kit’s public docs (https://github.github.com/spec-kit/) describe the overlay sequence. This plan does not vendor that repo and does not treat those docs as kit law.
 - Ripgrep on this tree found no `specify`, `clarify-feature`, `sdd-path`, `spec-kit`, or `Spec Kit`.
 - `writeAgentStubs` (`tooling/ysk-cli/src/agent-stubs.ts`) copies every `templates/agent/skills/<name>/SKILL.md` into `.agents`, `.claude`, `.cursor`, and `.grok`. Adding a template folder is enough for dest products. The kit repo still commits `.agents` and `.claude` copies because `docs-pair` and `check agent` compare those trees to the template.
-- Next publish is a **patch** on every public package (same changeset list as `.changeset/audit-slice.md` at `ae7bc50`), so Version Packages will move 1.6.6 → 1.6.7 unless another changeset lands first. Do not hard-code 1.6.7 into `package.json` in the skill PR.
+- Next publish is a **patch** on every public package (same changeset list as `.changeset/audit-slice.md` at `ae7bc50`). v1.6.7 already shipped (weekly, `60b6724`), so Version Packages moves 1.6.7 → 1.6.8. Do not hard-code the version into `package.json` in the skill PR.
 - Hong Kong Traditional Chinese pairs stay the same depth. `docs-pair` fails if any `docs/**/*.md` lacks a `.zh.md` sibling, including `sdd-path.md`.
 
 ## Affected flavors / presets / capabilities
@@ -405,42 +405,42 @@ Ordered. Step 0 is this plan PR. Steps 1–6 are the implement PR after approval
    - **Rollback:** revert the commit
    - **Acceptance:** both `--check` commands print ok; status is draft — waiting for user approval; no skill files; no changeset
 
-1. [ ] Skill contract
+1. [x] Skill contract
    - **Files:** `docs/skills/clarify-feature.md`, `docs/skills/clarify-feature.zh.md`
    - **Interface / contract / data:** none (no DTO). Trigger, do-not, five stems, fold rules, output block as written under Contracts first
    - **Risk:** interview too wide; Spec Kit paste
    - **Rollback:** delete the pair
    - **Acceptance:** at most five; stems are authz, tenancy, envelope, flavor/preset, UI surfaces; forbids `.specify/`; no TypeScript `enum`
 
-2. [ ] Wrappers and wiring
+2. [x] Wrappers and wiring
    - **Files:** `tooling/ysk-cli/templates/agent/skills/clarify-feature/SKILL.md`; `.agents/skills/clarify-feature/SKILL.md`; `.claude/skills/clarify-feature/SKILL.md`; the same three trees for the one-line `plan-feature` wrapper edit; `SKILLS` in `docs-pair.test.ts`; `agent-stubs.test.ts`; `upgrade.test.ts`; `tooling/create-ysk-app/src/index.test.ts` (full and thin true, php-bridge false); `.github/workflows/ci.yml`; `.github/scripts/flavor-smoke.sh`
    - **Interface / contract / data:** none
    - **Risk:** skill-drift; description over 1024 or missing `Use when` / `Do not`
    - **Rollback:** remove the name from the lists and delete the folders
    - **Acceptance:** three committed copies are byte-identical; `skill-triggers` passes; thin dest has the wrapper; php-bridge does not; no committed `.cursor/skills` or `.grok/skills`
 
-3. [ ] Path card and pointers that are not AGENTS
+3. [x] Path card and pointers that are not AGENTS
    - **Files:** `docs/plans/sdd-path.md`, `docs/plans/sdd-path.zh.md`; `docs/plans/README.md`, `docs/plans/README.zh.md` (one location row); `docs/skills/index.md`, `docs/skills/index.zh.md`; `docs/skills/plan-feature.md`, `docs/skills/plan-feature.zh.md`; `docs/product-plan.md`, `docs/product-plan.zh.md`
    - **Interface / contract / data:** none
    - **Risk:** three diverging prompts; `sdd-path` written as a fake feature plan
    - **Rollback:** delete the card and revert the rows
    - **Acceptance:** one shared prompt plus three tool lines; lean and full sequences match this plan; converge named as not shipped; file is not passed to `plan --check`
 
-4. [ ] AGENTS rows
+4. [x] AGENTS rows
    - **Files:** `AGENTS.md`, `AGENTS.zh.md`
    - **Interface / contract / data:** none
    - **Risk:** 24 KiB budget (246 bytes prescribed; remeasure first)
    - **Rollback:** revert the three English insertions and the Chinese pair
    - **Acceptance:** exact English strings from Current state, or a shorter cut that still links both docs; `pnpm ysk-kit check agent` ok; no new hard rule and no Spec Kit paste
 
-5. [ ] Verify
+5. [x] Verify
    - **Files:** none extra
    - **Interface / contract / data:** none
    - **Risk:** a smoke list missed one `audit-slice` neighbour
    - **Rollback:** revert the implement PR
    - **Acceptance:** `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` green; OpenAPI unchanged; the four docs cases above pass
 
-6. [ ] Docs / changelog / changeset
+6. [x] Docs / changelog / changeset
    - **Files:** `CHANGELOG.md`, `CHANGELOG.zh.md`, `README.md`, `README.zh.md`, `docs/history.md`, `docs/history.zh.md`, `.changeset/clarify-feature-sdd-path.md`
    - **Interface / contract / data:** none
    - **Risk:** version number edited by hand; README window drops a version from the full changelog
@@ -451,6 +451,6 @@ Ordered. Step 0 is this plan PR. Steps 1–6 are the implement PR after approval
 
 Nothing here blocks option C. Do not fill these with guesses.
 
-- Approval of this plan is the gate. Skill files stay out until the user accepts option C, the five stems, the prescribed AGENTS bytes, and the decision to defer a `plan --check` TBD warning.
+- Approved 2026-11-01: option C, the five stems, the prescribed AGENTS bytes, and deferring the `plan --check` TBD warning. The implement commit on this branch is that acceptance.
 - Follow-ups, not questions for the implement PR: `converge-feature`, `analyze-plan`, a requirements checklist, and a `plan --check` soft warning for `TBD` / `待定`.
 - If a later `AGENTS.md` edit on main shrinks headroom below 246 bytes, use the Tool plan modes cut in Current state. Do not invent a different cut unless that one is no longer present.

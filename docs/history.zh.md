@@ -140,6 +140,10 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 
 **v1.6.4：** `ysk-kit check supply`（內建目錄 2026-10-21）、`engines.node` `>=26.12.1`、php-bridge `>=8.2.35`、override `launch-editor` 2.14.2。Skill `supply-scan`。
 
+**v1.6.8：** Skill `clarify-feature`：計劃批准前最多五題 kit 原生問題；答案折進日期計劃配對。路徑卡 `docs/plans/sdd-path.md`（精簡／完整）。沒有 Spec Kit CLI，也沒有 `.specify/`。
+
+**v1.6.7：** 只升穩定版的週期 bump（2026-11-01）。`engines.node` `>=26.13.0`（供應鏈下限維持 26.12.1）。pnpm 12.16.1、Expo 58.0.22、Electron 44.10.1、React Native 0.88.1、BullMQ 6.5.3、nodemailer 10.3.1。Compose Redis 8.10.3、Grafana 13.2.5。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
+
 **v1.6.6：** Skill `audit-slice`：對 git diff 或具名模組做有範圍的 Staff／安全／QA 編排。doctor + engines（不是 USB／Cypress／Jest）；死碼候選（審查期間不刪）；安全委派；只出 test-plan 標題，只有被要求才寫 Vitest。審查 ≠ 合併。
 
 **v1.6.5：** 只升穩定版的週期 bump（2026-10-25）：pnpm 12.15.0、turbo 2.11.10、BullMQ 6.4.2、nodemailer 10.2.1、Electron 44.9.3、Expo 58.0.19、Vite 8.3.5。Skill `upgrade-kit`。AGENTS Claude／Cursor Cloud／現況微調。MySQL 8.4.13。Prometheus v3.15.1。Override：body-parser 2.4.0、undici 7.30.1、fast-uri 3.1.9／4.2.3。忽略 Expo CLI 的 zod 3（GHSA-mrhx-c7xc-m3w5）。暫緩：Electron 45.0.0（已是穩定版；major）、TypeScript 6.0.3、Prisma 8 RC。

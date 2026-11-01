@@ -19,11 +19,11 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 
 | Layer | Default | Alternative |
 |---|---|---|
-| Monorepo | pnpm 12.15.0 workspaces + Turborepo 2.11.10 | — |
+| Monorepo | pnpm 12.16.1 workspaces + Turborepo 2.11.10 | — |
 | Language | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 when dependency-cruiser supports that compiler API |
 | Web / admin | Vite 8.3 + React 19.3 + TanStack Router + TanStack Query + Tailwind CSS 4 | Next.js only if a product needs SSR |
 | Desktop | Electron 44 + electron-vite 6.0.0 + Vite 8 | electron-vite 6 is npm `latest`; rollback is Vite 7 + electron-vite 5 |
-| Mobile | Expo 58.0.19 / React Native 0.88.0 / React 19.3 | Expo 58 is still npm `next` (`latest` is 57.0.30); RN 0.88.0 is npm `latest` |
+| Mobile | Expo 58.0.22 / React Native 0.88.1 / React 19.3 | Expo 58.0.22 and React Native 0.88.1 are npm `latest` |
 | HTTP API | Express 5 adapter (default) | Fastify 5 via `HTTP_ADAPTER=fastify` |
 | Contract | ts-rest + Zod 4 | — |
 | Database | Prisma 7.10 (`prisma-client` generator, MariaDB adapter, client at `apps/api/src/generated/prisma`) | PostgreSQL or SQLite adapters via `--db` |
@@ -34,7 +34,7 @@ Agent law: [AGENTS.md](../AGENTS.md). Guides expand the topics summarised here. 
 | Lint | Biome 2.5 | — |
 | Test | Vitest 5.0, Testing Library, one Playwright Chromium smoke | — |
 | Docs | ts-rest → OpenAPI → Scalar at `GET /docs` | — |
-| Runtime | Node 26 Current | — |
+| Runtime | Node 26.13 LTS (Lithium), `engines.node` `>=26.13.0` | Catalog floor stays 26.12.1 (CVE-2026-111497) |
 | Observability | Prometheus `GET /metrics`; optional OTLP traces/metrics; optional Jaeger / Grafana in Compose | — |
 
 Prisma is the default ORM because of migrations, Studio, nested writes, and hiring. Domain still talks to an `IRepository` port — never `import { prisma }` from application code. Drizzle is not shipped. tRPC is not the default; public HTTP, webhooks, and non-TypeScript clients need REST.

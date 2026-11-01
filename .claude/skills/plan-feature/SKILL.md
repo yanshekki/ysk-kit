@@ -11,7 +11,7 @@ Read `docs/skills/plan-feature.md`. Law: `AGENTS.md`.
 
 1. Confirm a plan is required. Explore the tree (modules, contracts, SDK) first.
 2. `pnpm ysk-kit plan <slug>` and fill every template heading.
-3. `pnpm ysk-kit plan --check` both language files. Wait for approval.
+3. If Open questions are non-empty, follow clarify-feature (at most five) before asking for approval. Then `pnpm ysk-kit plan --check` both language files. Wait for approval.
 Gotcha: do not implement first and backfill. If rejected as too short, expand.
 Verify: `pnpm ysk-kit plan --check docs/plans/<date>-<slug>.md`
 Full steps: `docs/skills/plan-feature.md`.

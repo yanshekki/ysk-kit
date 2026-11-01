@@ -125,7 +125,7 @@ Create a plan with `pnpm ysk-kit plan <slug>` or by copying [docs/plans/_templat
 
 **Options.** When a real alternative exists, list at least two approaches with tradeoffs (complexity, layers, migration, clients), then the chosen option and why. Trivial work may say `single obvious approach — reason`.
 
-**Approval gate.** Do not edit project files until the plan is approved, unless the user waived it. Do not exit plan mode or hand over a sketch. A plan missing any template section is incomplete. If the user rejects it or says it is too short, expand the missing sections — never shorten. After `/compact` or a long session, re-read the dated plan file before continuing. `pnpm ysk-kit plan --check <file>` fails on missing or placeholder-only headings.
+**Approval gate.** Do not edit project files until the plan is approved, unless the user waived it. Do not exit plan mode or hand over a sketch. A plan missing any template section is incomplete. If the user rejects it or says it is too short, expand the missing sections — never shorten. After `/compact` or a long session, re-read the dated plan file before continuing. `pnpm ysk-kit plan --check <file>` fails on missing or placeholder-only headings. Unresolved Open questions: [clarify-feature](docs/skills/clarify-feature.md) (at most five) before approval.
 
 Template sections (do not drop them): goal and user problem; scope / non-goals; assumptions; affected flavors / presets / capabilities; current state and reuse; options considered; contracts first (DTOs, error codes, ts-rest paths); data model / Prisma and migrations; module slices and layers; SDK / web-sdk / client surfaces; jobs / mail / realtime / notifications; security and privacy; test plan (in-memory ports); verification commands with expected results and manual checks; docs / changelog / changeset; risks and rollback; ordered task checklist (files, interface/contract/data, risk, rollback, acceptance); open questions.
 
@@ -197,6 +197,8 @@ Shared skills live in `.agents/skills/`. Full steps live in `docs/skills/`.
 | Task | Read |
 |---|---|
 | Plan a feature | [plan-feature](docs/skills/plan-feature.md), [docs/plans/_template.md](docs/plans/_template.md) |
+| Clarify open questions | [clarify-feature](docs/skills/clarify-feature.md) |
+| Lean / full path | [sdd-path](docs/plans/sdd-path.md) |
 | Scaffold a product | [new-product](docs/skills/new-product.md), [create-ysk-app](docs/cli/create-ysk-app.md) |
 | Add a resource | [add-module](docs/skills/add-module.md), [recipe](docs/recipes/add-module.md) |
 | Developer how-to (layout, PHP client, TDD, tenancy) | [docs/recipes/](docs/recipes/README.md) |

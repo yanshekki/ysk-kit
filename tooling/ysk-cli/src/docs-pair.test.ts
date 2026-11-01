@@ -31,6 +31,7 @@ const SKILLS = [
   'supply-scan',
   'upgrade-kit',
   'audit-slice',
+  'clarify-feature',
 ] as const;
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);
@@ -107,5 +108,25 @@ describe('public docs language pairs', () => {
     expect(en).toMatch(/do not delete/i);
     expect(zh).toContain('不在此棧');
     expect(zh).toMatch(/不刪/);
+  });
+
+  it('clarify-feature caps questions and forbids a Spec Kit tree', () => {
+    const en = readFileSync(join(kitRoot, 'docs/skills/clarify-feature.md'), 'utf8');
+    const zh = readFileSync(join(kitRoot, 'docs/skills/clarify-feature.zh.md'), 'utf8');
+    expect(en).toMatch(/at most five/i);
+    expect(en).toMatch(/do not create `\.specify\/`/i);
+    expect(zh).toContain('最多五');
+    expect(zh).toMatch(/不要建立 `\.specify\/`/);
+    const pathEn = readFileSync(join(kitRoot, 'docs/plans/sdd-path.md'), 'utf8');
+    const pathZh = readFileSync(join(kitRoot, 'docs/plans/sdd-path.zh.md'), 'utf8');
+    for (const body of [pathEn, pathZh]) {
+      expect(body).toContain('plan-feature');
+      expect(body).toContain('verify-change');
+      expect(body).toContain('review-change');
+      expect(body).toContain('clarify-feature');
+      expect(body).toContain('.specify/');
+    }
+    expect(pathEn).toMatch(/not shipped/i);
+    expect(pathZh).toContain('尚未送出');
   });
 });

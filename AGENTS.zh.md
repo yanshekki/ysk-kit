@@ -125,7 +125,7 @@ ysk-kit/
 
 **方案。** 有真正替代時，至少列兩個做法並寫權衡（複雜度、分層、遷移、客戶端），再寫選定與原因。瑣碎工作可寫 `單一明顯做法 — 原因`。
 
-**批准閘。** 計劃獲准之前不要改專案檔（除非使用者豁免）。不要退出 plan mode 或交出草稿。缺任何模板章節都不算完整。若使用者拒絕或說太短，補上缺的章節，不要縮短。`/compact` 或長工作階段之後，繼續之前先重讀日期計劃檔。`pnpm ysk-kit plan --check <file>` 會在缺標題或仍是佔位內容時失敗。
+**批准閘。** 計劃獲准之前不要改專案檔（除非使用者豁免）。不要退出 plan mode 或交出草稿。缺任何模板章節都不算完整。若使用者拒絕或說太短，補上缺的章節，不要縮短。`/compact` 或長工作階段之後，繼續之前先重讀日期計劃檔。`pnpm ysk-kit plan --check <file>` 會在缺標題或仍是佔位內容時失敗。 未決問題仍有未解決項目時，批准前先跟隨 [clarify-feature](docs/skills/clarify-feature.zh.md)（最多五題）。
 
 模板章節（不要刪）：目標與使用者問題；範圍／非目標；假設；受影響的 flavor／preset／capability；現況與重用；考慮過的方案；合約先行（DTO、error code、ts-rest 路徑）；資料模型／Prisma 與遷移；模組切片與分層；SDK／web-sdk／客戶端表面；jobs／mail／realtime／notifications；安全與私隱；測試計劃（記憶體 port）；帶預期結果與人手檢查的驗證命令；文件／變更紀錄／changeset；風險與回滾；有序任務清單（檔案、介面／合約／資料、風險、回滾、驗收）；未決問題。
 
@@ -197,6 +197,8 @@ ysk-kit/
 | 工作 | 閱讀 |
 |---|---|
 | 計劃功能 | [plan-feature](docs/skills/plan-feature.zh.md)、[docs/plans/_template.zh.md](docs/plans/_template.zh.md) |
+| 澄清未決問題 | [clarify-feature](docs/skills/clarify-feature.zh.md) |
+| 精簡／完整路徑 | [sdd-path](docs/plans/sdd-path.zh.md) |
 | 產生產品 | [new-product](docs/skills/new-product.zh.md)、[create-ysk-app](docs/cli/create-ysk-app.zh.md) |
 | 加資源 | [add-module](docs/skills/add-module.zh.md)、[操作手冊](docs/recipes/add-module.zh.md) |
 | 開發者逐步操作（版面、PHP 客戶端、TDD、租戶） | [docs/recipes/](docs/recipes/README.zh.md) |

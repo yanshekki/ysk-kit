@@ -6,7 +6,8 @@ Language: [English](index.md) · 中文
 
 | Skill | 何時 | 不要用於 | 相關外部 skill |
 |---|---|---|---|
-| [plan-feature](plan-feature.zh.md) | 在合約與程式之前寫 `docs/plans/<yyyy-mm-dd>-<slug>.md` | 錯字／單檔重新命名 | 工具原生 plan mode（抄進日期檔） |
+| [plan-feature](plan-feature.zh.md) | 在合約與程式之前寫 `docs/plans/<yyyy-mm-dd>-<slug>.md` | 錯字／單檔重新命名；未決問題仍未解決（先 clarify-feature） | 工具原生 plan mode（抄進日期檔） |
+| [clarify-feature](clarify-feature.zh.md) | 未決問題非空，或使用者在計劃批准前要求澄清 | 實作；未決問題已空；Spec Kit／`.specify/` | — |
 | [test-plan](test-plan.zh.md) | 寫測試之前先排風險並列出 given/when/then 案例 | 只改註解 | Cloudflare Agents `test-plan` |
 | [write-tests](write-tests.zh.md) | 本倉的 Vitest／Testing Library／Playwright | 規劃案例（先 test-plan） | Cloudflare sandbox-sdk testing |
 | [new-product](new-product.zh.md) | 用 `create-ysk-app` 產生產品 | 在本 kit 加模組 | — |

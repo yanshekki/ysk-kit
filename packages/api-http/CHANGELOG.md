@@ -1,5 +1,15 @@
 # @ysk-kit/api-http
 
+## 1.6.10
+
+### Patch Changes
+
+- 5c08b5a: Opt-in `create-ysk-app --with-rust-sidecar` copies a dest-only `ICryptoPort` crate (private stdio, not a flavor). `@ysk-kit/crypto` exports `createStdioCryptoPort` and v1 blob constants. `doctor` / `check agent` detect `CRYPTO_ADAPTER=rust` and `rust-sidecar-boundary`.
+- Updated dependencies [5c08b5a]
+  - @ysk-kit/auth@1.6.10
+  - @ysk-kit/contracts@1.6.10
+  - @ysk-kit/domain-kernel@1.6.10
+
 ## 1.6.9
 
 ### Patch Changes

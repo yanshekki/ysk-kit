@@ -157,18 +157,18 @@ Web and admin use TanStack Router and `features/*`. Forms reuse command Zod sche
 
 Mobile is Expo (login, home, inbox, organisation list, invite, `DevicePort`, `FilePickerPort`). Desktop talks to the API through `@ysk-kit/sdk` with `platform: desktop`; tokens persist with Electron `safeStorage` when encryption is available, otherwise they stay in memory for the session. The main process sets a Content-Security-Policy, `sandbox: true`, and denies unexpected navigation, new windows, and untrusted IPC. Prisma never runs inside Electron.
 
-Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /openapi.json`) through generated, envelope-aware clients — `php-bridge` is the existing pattern. They must not copy domain or business rules, import Prisma, or talk to kit paths with ad-hoc HTTP. Decision: [ADR 0002](adr/0002-polyglot-clients.md). Language choice table: [flavors](guides/flavors.md#client-language-choice). Walkthrough: [PHP OpenAPI client](recipes/php-openapi-client.md).
+Non-TypeScript clients are optional. They consume `docs/openapi.yaml` (or `GET /openapi.json`) through generated, envelope-aware clients — `php-bridge` is the existing pattern. They must not copy domain or business rules, import Prisma, or talk to kit paths with ad-hoc HTTP. Decision: [ADR 0002](adr/0002-polyglot-clients.md). Language choice table: [flavors](guides/flavors.md#client-language-choice). Walkthrough: [PHP OpenAPI client](recipes/php-openapi-client.md). Optional dest-only Rust crate behind `ICryptoPort`: `create-ysk-app --with-rust-sidecar` ([recipe](recipes/rust-sidecar.md)).
 
 ## Generators
 
 | Command | Effect |
 |---|---|
-| `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. TTY runs a numbered guided wizard then confirms before write; `--yes` skips prompts |
+| `create-ysk-app` | Copy this tree (or php-bridge templates), apply flavor and `--preset`, write `.ysk-kit.json`. Optional `--with-rust-sidecar` copies dest `crates/ysk-sidecar` (not a flavor). TTY runs a numbered guided wizard then confirms before write; `--yes` skips prompts |
 | `ysk-kit add module` | One hexagonal HTTP slice |
 | `ysk-kit add <capability>` | Merge Prisma, env, deps; copy source for llm / team / billing / push when missing |
 | `ysk-kit generate openapi` | Write `docs/openapi.yaml` |
 | `ysk-kit upgrade` | Copy allowlisted guardrails (law, skills, TypeScript/Biome config, `pnpm layers`) from this kit into a product |
-| `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, and raw `fetch` in web/admin/mobile/desktop |
+| `ysk-kit check agent` | Flag TypeScript `enum`, Prisma in clients, raw `fetch` in web/admin/mobile/desktop, and (when present) a dest sidecar crate that is not an `ICryptoPort` adapter |
 | `ysk-kit check errors` | Flag `throw new Error` in `application/`, `console.log` in `apps/api`, and `JSON.stringify(process.env)` |
 | `ysk-kit check logs` | Validate captured Pino JSON (secret literals, ERROR `requestId`) |
 | `ysk-kit check supply` | Inventory Node/PHP/kernel and repo pins against a vendored catalog (optional `pnpm audit`) |

@@ -22,17 +22,18 @@ On a TTY, omitted choices are prompted with a numbered guided wizard (English co
 
 1. Product name.
 2. Product shape — flavor `1`–`6` **or** slug (`saas`, `desktop`, `gateway`, `php-bridge`, `trading`, `static-web3`), each with best-for / avoid-when / tradeoffs.
-3. Client language note: default TypeScript; `php-bridge` for OpenAPI + PHP/TS clients; Tauri / Flutter / KMP are deferred ([ADR 0002](../adr/0002-polyglot-clients.md)) — the wizard educates and does not scaffold those trees.
-4. Capability depth — `thin` \| `full` (number or slug). Skipped for `php-bridge` and `static-web3`.
-5. Database — `mysql` \| `postgresql` \| `sqlite` (number or slug). Skipped for the same flavors.
-6. Surfaces (saas only) — admin and mobile yes/no, with implications (`--no-admin` / `--no-mobile`).
-7. Confirm summary. Proceed `no` exits **without writing files**. Empty Enter on Proceed is yes.
+3. Client language note: default TypeScript; `php-bridge` for OpenAPI + PHP/TS clients; optional `--with-rust-sidecar` (not a flavor); Tauri / Flutter / KMP are deferred ([ADR 0002](../adr/0002-polyglot-clients.md)) — the wizard educates and does not scaffold those trees.
+4. Optional Rust sidecar — yes/no on API flavors only (`saas`, `desktop`, `gateway`, `trading`). Default **no**. Empty Enter is no. Skipped for `php-bridge` and `static-web3`.
+5. Capability depth — `thin` \| `full` (number or slug). Skipped for `php-bridge` and `static-web3`.
+6. Database — `mysql` \| `postgresql` \| `sqlite` (number or slug). Skipped for the same flavors.
+7. Surfaces (saas only) — admin and mobile yes/no, with implications (`--no-admin` / `--no-mobile`).
+8. Confirm summary (includes `Rust sidecar: yes|no|n/a`). Proceed `no` exits **without writing files**. Empty Enter on Proceed is yes.
 
 Empty input keeps the documented default. Flags already on the command line are not asked again; the language note still appears. TTY strings are English only.
 
 `--yes` / `-y` skips prompts (including confirm) and uses defaults plus any flags passed. CI and pipes are non-TTY and never prompt.
 
-`php-bridge` and `static-web3` are not asked for preset or database. Only `saas` is asked for admin and mobile.
+`php-bridge` and `static-web3` are not asked for preset, database, or the Rust sidecar. Only `saas` is asked for admin and mobile. API flavors are asked for the sidecar unless `--with-rust-sidecar` was already passed.
 
 ## Options
 
@@ -43,9 +44,10 @@ Empty input keeps the documented default. Flags already on the command line are 
 | `--flavor` | `saas` \| `desktop` \| `gateway` \| `php-bridge` \| `trading` \| `static-web3` | `saas` | Selects which apps are copied. |
 | `--no-admin` | flag | admin on | Skip `apps/admin`. Ignored when the flavor already omits admin. Gateway always includes admin. |
 | `--no-mobile` | flag | mobile on | Skip `apps/mobile`. Ignored when the flavor already omits mobile. |
-| `--yes` / `-y` | flag | off | Do not prompt. Use defaults and any other flags. |
+| `--with-rust-sidecar` | flag | off | Copy dest-only `crates/ysk-sidecar` + `rust-crypto-adapter.ts` on API flavors. Ignored by `php-bridge` and `static-web3`. Not a flavor. Not `pnpm worker`. Recipe: [Rust sidecar](../recipes/rust-sidecar.md). |
+| `--yes` / `-y` | flag | off | Do not prompt. Use defaults and any other flags. Sidecar stays off unless this flag is also passed. |
 
-Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, the kit-root `examples/` tutorials, `.runs`, `.cursor`, `.grok`, editor trees, any `.env*` file except `.env.example`, and kit-authoring tests under `tooling/` (`*.test.ts` / `*.test.tsx`). `tooling/examples` and `tooling/create-ysk-app` stay. After copy, skipped apps (mobile, admin, …) are dropped from dest `pnpm-lock.yaml` importers so `pnpm install` works with a frozen lockfile. Workspace flavors then write agent skill wrappers from `tooling/ysk-cli/templates/agent/` into `.agents/skills/`, `.claude/skills/`, `.cursor/skills/`, `.grok/skills/`, plus scoped `.cursor/rules/*.mdc` and nested `AGENTS.md` files when those apps exist. The copied `.gitignore` ignores `.env` and `.env.*` (keeps `.env.example`), sqlite `*.db` (including `apps/api/dev.db`), editor caches under `.cursor/`, `.claude/`, and `.grok/` (committed rule/skill trees are un-ignored), generated Prisma, `node_modules`, build output, Playwright reports, `.runs/`, and root `plan.md`.
+Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_Store`, `generated`, the kit-root `examples/` tutorials, `.runs`, `.cursor`, `.grok`, editor trees, any `.env*` file except `.env.example`, and kit-authoring tests under `tooling/` (`*.test.ts` / `*.test.tsx`). `tooling/examples` and `tooling/create-ysk-app` stay. After copy, skipped apps (mobile, admin, …) are dropped from dest `pnpm-lock.yaml` importers so `pnpm install` works with a frozen lockfile. Workspace flavors then write agent skill wrappers from `tooling/ysk-cli/templates/agent/` into `.agents/skills/`, `.claude/skills/`, `.cursor/skills/`, `.grok/skills/`, plus scoped `.cursor/rules/*.mdc` and nested `AGENTS.md` files when those apps exist. The copied `.gitignore` ignores `.env` and `.env.*` (keeps `.env.example`), sqlite `*.db` (including `apps/api/dev.db`), editor caches under `.cursor/`, `.claude/`, and `.grok/` (committed rule/skill trees are un-ignored), generated Prisma, `node_modules`, build output, Playwright reports, `.runs/`, `crates/**/target/`, and root `plan.md`.
 
 ## Flavors
 
@@ -58,7 +60,7 @@ Copy skips `node_modules`, `dist`, `.git`, `.turbo`, `coverage`, `.expo`, `.DS_S
 | `trading` | api, web | `TRADING.md` + `.zh.md` | applied |
 | `static-web3` | web | `WEB3.md` + `.zh.md` | ignored |
 
-Details: [flavors guide](../guides/flavors.md). `php-bridge` walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md).
+Details: [flavors guide](../guides/flavors.md). `php-bridge` walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md). Optional dest crate: [Rust sidecar](../recipes/rust-sidecar.md).
 
 ## Thin preset
 

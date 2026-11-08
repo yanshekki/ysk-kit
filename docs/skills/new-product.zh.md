@@ -42,8 +42,9 @@ Agent 請傳旗標，不要等 TTY 提問。人類在 TTY 會遇到編號引導�
 | 只做 PHP／TS envelope 客戶端 | `php-bridge` |
 | API + web，產品自有市場數據 | `trading` |
 | Vite web，沒有 Prisma | `static-web3` |
+| CPU 熱路徑 crypto sidecar（不是 flavor） | 帶 API 的 flavor + `--with-rust-sidecar`（[食譜](../recipes/rust-sidecar.zh.md)） |
 
-見 [flavors](../guides/flavors.zh.md)。Agent 傳 `--flavor`／`--preset`／`--db`；不要等 TTY。
+見 [flavors](../guides/flavors.zh.md)。Agent 傳 `--flavor`／`--preset`／`--db`；不要等 TTY。sidecar 預設關閉；產品需要時才傳旗標。
 
 ## 步驟
 

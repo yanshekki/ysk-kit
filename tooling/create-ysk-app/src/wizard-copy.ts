@@ -5,7 +5,11 @@ export type MenuItem = {
   tradeoff: string;
 };
 
-export const LANGUAGE_NOTE = `Client language: the default stack is TypeScript (Node API, Vite, Expo, Electron). php-bridge emits OpenAPI + envelope-aware PHP/TS clients against an existing Kit API. Tauri, Flutter, and Kotlin Multiplatform are deferred (ADR 0002) — this wizard does not scaffold them. Generate an OpenAPI client and point it at API_PUBLIC_URL instead. Do not copy application/ into another language.`;
+export const LANGUAGE_NOTE = `Client language: the default stack is TypeScript (Node API, Vite, Expo, Electron). php-bridge emits OpenAPI + envelope-aware PHP/TS clients against an existing Kit API. CPU-hot crypto may opt into --with-rust-sidecar (not a flavor; default no). Tauri, Flutter, and Kotlin Multiplatform are deferred (ADR 0002) — this wizard does not scaffold them. Generate an OpenAPI client and point it at API_PUBLIC_URL instead. Do not copy application/ into another language.`;
+
+export const SIDECAR_PROMPT = `Optional Rust sidecar (--with-rust-sidecar). Not a flavor and not pnpm worker. Copies crates/ysk-sidecar behind ICryptoPort (AES-256-GCM). TypeScript application/ stays the only domain. Tauri stays deferred.
+  yes — dest-only crate (build with rustc locally; default CI does not compile it).
+  no  — Node @ysk-kit/crypto only (default).`;
 
 export const FLAVOR_ITEMS: readonly MenuItem[] = [
   {

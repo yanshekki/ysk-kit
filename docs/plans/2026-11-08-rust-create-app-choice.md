@@ -6,13 +6,13 @@ Language: Chinese pair `2026-11-08-rust-create-app-choice.zh.md` · English `202
 |---|---|
 | **Slug** | `rust-create-app-choice` |
 | **Date** | 2026-11-08 |
-| **Status** | draft — waiting for owner approval. PLAN ONLY. Do not implement, merge, publish npm, or bump versions from this PR. |
+| **Status** | approved — v1 implemented (option A). Do not merge to main or publish npm from this PR. |
 | **Canonical file** | `docs/plans/2026-11-08-rust-create-app-choice.md` |
 | **Session pointer** | `/plan.md` (gitignored) |
 
 Law: [AGENTS.md](../../AGENTS.md). Procedure: [plan-feature](../skills/plan-feature.md). Check: `pnpm ysk-kit plan --check docs/plans/2026-11-08-rust-create-app-choice.md`. Clarify: [clarify-feature](../skills/clarify-feature.md) (at most five). Path: [sdd-path](sdd-path.md).
 
-**Recommendation (one paragraph):** Ship the user-facing Rust choice as an **opt-in `--with-rust-sidecar` overlay** on API-bearing flavors (`saas`, `desktop`, `gateway`, `trading`), not as a seventh flavor, not as a catalogue capability, and not as a second public API. v1 copies a dest-only crate that implements the existing `ICryptoPort` blob format behind composition; TypeScript `application/` stays the only domain. Default TTY and `--yes` stay **off**. Defer `desktop-tauri` and a Rust OpenAPI client. Reject a Rust rewrite of the kit, Axum as a sibling API, and “Rust as the app language”.
+**Recommendation (one paragraph):** Ship the user-facing Rust choice as an **opt-in `--with-rust-sidecar` overlay** on API-bearing flavors (`saas`, `desktop`, `gateway`, `trading`), not as a seventh flavor, not as a catalogue capability, and not as a second public API. v1 copies a dest-only crate that implements the existing `ICryptoPort` blob format behind composition; TypeScript `application/` stays the only domain. Default TTY and `--yes` stay **off**. Defer `desktop-tauri` and a Rust OpenAPI client. Reject a Rust rewrite of the kit, Axum as a sibling API, and “Rust as the app language”. **Owner approved option A on 2026-11-08** (stdio IPC, process-local, no client screen, template-only crate).
 
 ## Goal and user problem
 
@@ -406,7 +406,7 @@ Rollback of this PR: revert the plan commit. After a later implement PR: revert 
 
 ## Task checklist
 
-Ordered. Step 0 is this plan PR. Steps 1–7 are the implement PR **after approval**. Do not start 1–7 from this branch.
+Ordered. Step 0 was the plan PR. Steps 1–7 land in the same review PR (#98) after owner approval.
 
 0. [x] Research record (this file)
    - **Files:** `docs/plans/2026-11-08-rust-create-app-choice.md`, `docs/plans/2026-11-08-rust-create-app-choice.zh.md`
@@ -415,63 +415,63 @@ Ordered. Step 0 is this plan PR. Steps 1–7 are the implement PR **after approv
    - **Rollback:** revert the commit
    - **Acceptance:** both `--check` commands print ok; status is draft — waiting for owner; no flavor/runtime code; no changeset
 
-1. [ ] ADR + user docs (still no crate if the owner wants a docs-first split; default is same PR as 2–6)
+1. [x] ADR + user docs (still no crate if the owner wants a docs-first split; default is same PR as 2–6)
    - **Files:** `docs/adr/0002-polyglot-clients.md` + `.zh.md` (addendum); `docs/guides/flavors.md` pair; `docs/cli/create-ysk-app.md` pair; `docs/architecture.md` pair; `docs/skills/new-product.md` pair; `docs/product-plan.md` pair; recipe pair; optional skill pair + three wrapper copies
    - **Interface / contract / data:** none HTTP. ADR status becomes accepted only with owner
    - **Risk:** implying Tauri is ready; AGENTS.md bytes
    - **Rollback:** revert those docs
    - **Acceptance:** EN + zh same depth; no TypeScript `enum`; `docs-pair` green; AGENTS.md untouched unless trim+row approved
 
-2. [ ] create-app flag and wizard
+2. [x] create-app flag and wizard
    - **Files:** `tooling/create-ysk-app/src/scaffold.ts`, `prompt.ts`, `wizard-copy.ts`, `help.ts`, `index.ts`, `prompt.test.ts`, `index.test.ts`
    - **Interface / contract / data:** `--with-rust-sidecar`; summary line; `PRESET_SKIP`-style ignore for php-bridge / static-web3
    - **Risk:** `--yes` prompting; flavor 1–6 numbering unchanged
    - **Rollback:** revert those files
    - **Acceptance:** `--yes` silent default off; TTY Enter = no; unknown `--flavor rust` still `not in this phase`; tests cover on/off/ignore/cancel
 
-3. [ ] Sidecar template + dest adapter
+3. [x] Sidecar template + dest adapter
    - **Files:** `tooling/create-ysk-app/templates/rust-sidecar/**` (`Cargo.toml`, `rust-toolchain.toml` stable pin, `src/main.rs`, README pair, `.gitignore` `target/`); dest paths `crates/ysk-sidecar/`, `apps/api/src/infra/rust-crypto-adapter.ts`; root dest `.gitignore` `crates/**/target/`
    - **Interface / contract / data:** private stdio; `ICryptoPort`; no `/v1/` 
    - **Risk:** `unsafe`; extra crates.io deps; blob mismatch
    - **Rollback:** delete the template dir and copy hook
    - **Acceptance:** crate README says not a public API; no Axum/Actix; `unsafe` absent; Node golden vectors exist; adapter tests use a fake child
 
-4. [ ] Optional local smoke (not required CI)
+4. [x] Optional local smoke (not required CI)
    - **Files:** `.github/scripts/rust-sidecar-smoke.sh` (skip 0 if no rustc); **do not** add a matrix cell to `.github/workflows/ci.yml` while Actions quota is exhausted
    - **Interface / contract / data:** none
    - **Risk:** someone makes it required
    - **Rollback:** delete the script
    - **Acceptance:** default flavor-smoke script unchanged; local script `cargo test` + Node roundtrip when rustc exists
 
-5. [ ] Guardrails (doctor / check agent / supply) — keep tiny
+5. [x] Guardrails (doctor / check agent / supply) — keep tiny
    - **Files:** optional `check-agent.ts` rule `rust-sidecar-boundary` (Cargo.toml must not depend on axum/actix-web/warp; README mentions ICryptoPort); doctor warning if `CRYPTO_ADAPTER=rust` but crate missing; **no** catalog rustc floor required in v1
    - **Interface / contract / data:** none
    - **Risk:** false positives on unrelated future crates
    - **Rollback:** drop the rule
    - **Acceptance:** `pnpm layers` still the TS authority; check agent ok on kit (no `crates/` in kit itself)
 
-6. [ ] Verify
+6. [x] Verify
    - **Files:** none extra
    - **Interface / contract / data:** none
    - **Risk:** OpenAPI dirty; AGENTS budget
    - **Rollback:** revert the implement PR
    - **Acceptance:** `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` green locally; OpenAPI unchanged
 
-7. [ ] Changelog / changeset
+7. [x] Changelog / changeset
    - **Files:** `CHANGELOG.md` pair, README latest-three, `docs/history.md` pair, `.changeset/rust-sidecar.md`
    - **Interface / contract / data:** none
    - **Risk:** version edited by hand
    - **Rollback:** revert those files
-   - **Acceptance:** patch on create-app (and cli if scanned); `package.json` versions unchanged in the implement PR; no npm publish from that PR
+   - **Acceptance:** patch on create-app (and cli if scanned); `package.json` versions unchanged in the implement PR; no npm publish from that PR. README latest-three window waits for the next cut version (Unreleased in CHANGELOG). Optional skill wrappers skipped in v1 (no AGENTS.md row).
 
 ## Open questions
 
-Five kit-native questions for the owner (clarify-feature stems). Do not guess. Fold answers into Assumptions / Scope before any implement PR.
+Owner answered 2026-11-08. Folded into this implement slice.
 
-1. **Flavor / preset / capabilities.** Confirm **option A**: `--with-rust-sidecar` overlay on API-bearing flavors, **not** a seventh flavor and **not** a new `ysk-kit add` catalogue name (reuse `crypto`). Or say you want **B** (`desktop-tauri`) or **C** (Rust OpenAPI client) first instead.
-2. **Envelope.** Confirm v1 IPC is **child-process private stdio** (no public HTTP, no new envelope exception, no public gRPC, no napi-rs). A “yes, HTTP sidecar” does **not** approve an exception; it stays here.
-3. **Authz.** Confirm the sidecar is **process-local** (API spawns it); no new role/permission; `CRYPTO_MASTER_KEY` stays in env, never argv/logs. Or name a different trust boundary.
-4. **UI surfaces.** Confirm **no client screen** in v1 (wizard TTY only; web/admin/mobile/desktop unchanged), and TTY default is **no**.
-5. **Living kit vs dest-only.** Confirm the crate is **template-only** (php-bridge style) so this repo does not grow a living `crates/` that `pnpm test` must compile. Or require a living crate in-tree (then we need a rustc story that does not use exhausted Actions).
+1. **Flavor / preset / capabilities.** **A** — `--with-rust-sidecar` overlay; reuse `crypto`; not a seventh flavor; not a new `ysk-kit add` name.
+2. **Envelope.** v1 IPC is child-process **private stdio** (no public HTTP, no new envelope exception, no gRPC, no napi-rs).
+3. **Authz.** Sidecar is **process-local**; no new role; `CRYPTO_MASTER_KEY` stays in env, never argv/logs.
+4. **UI surfaces.** **No client screen** in v1; TTY default **no**; `--yes` stays off.
+5. **Living kit vs dest-only.** Crate is **template-only** (php-bridge style). This repo must not grow a living `crates/` that `pnpm test` must compile.
 
-Follow-ups, not this pass: rustc exact pin (measure at implement; this worker has 1.99.1 stable), `cargo audit` in supply-scan, phase-2 OpenAPI-Rust client, Tauri when a product pays.
+Follow-ups, not this pass: `cargo audit` in supply-scan, phase-2 OpenAPI-Rust client, Tauri when a product pays. rustc pin recorded as 1.99.1 in `rust-toolchain.toml`.

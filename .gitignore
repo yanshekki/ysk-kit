@@ -46,3 +46,6 @@ playwright-report
 blob-report
 
 .runs/
+
+# Dest-only Rust sidecar (`create-ysk-app --with-rust-sidecar`). This kit has no living crates/.
+crates/**/target/

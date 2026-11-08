@@ -228,6 +228,15 @@ describe('ysk-kit doctor', () => {
     expect(secrets?.message).toContain('at least 8');
   });
 
+  it('warns when CRYPTO_ADAPTER=rust but the dest crate is missing', () => {
+    const dirs = healthy(
+      'DATABASE_URL=file:/tmp/x.db\nJWT_SECRET=abcdefghijklmnopqrstuvwxyz012345\nCRYPTO_ADAPTER=rust\n',
+    );
+    const secrets = run(dirs).checks.find((item) => item.id === 'secrets');
+    expect(secrets?.status).toBe('warn');
+    expect(secrets?.message).toContain('crates/ysk-sidecar');
+  });
+
   it('errors when CRYPTO_MASTER_KEY is not 64 hex chars', () => {
     const dirs = healthy(
       'DATABASE_URL=file:/tmp/x.db\nJWT_SECRET=abcdefghijklmnopqrstuvwxyz012345\nCRYPTO_MASTER_KEY=abcd\n',

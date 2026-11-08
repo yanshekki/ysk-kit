@@ -34,6 +34,7 @@ export type CreateAppOptions = {
   admin: boolean;
   mobile: boolean;
   preset: Preset;
+  rustSidecar?: boolean;
 };
 
 const SKIP = new Set([
@@ -54,6 +55,7 @@ const SKIP = new Set([
   '.vscode',
   '.claude',
   '.codex',
+  'target',
 ]);
 
 const isEnoent = (err: unknown): boolean =>
@@ -182,6 +184,7 @@ export type ParsedArgs = {
   preset: Preset;
   admin: boolean;
   mobile: boolean;
+  rustSidecar: boolean;
   yes: boolean;
   explicit: {
     flavor: boolean;
@@ -189,8 +192,13 @@ export type ParsedArgs = {
     preset: boolean;
     noAdmin: boolean;
     noMobile: boolean;
+    rustSidecar: boolean;
   };
 };
+
+const RUST_SIDECAR_SKIP = new Set(['php-bridge', 'static-web3']);
+
+export const rustSidecarApplies = (flavor: string): boolean => !RUST_SIDECAR_SKIP.has(flavor);
 
 export const parseArgs = (argv: string[]): ParsedArgs => {
   const flavorFlag = argv.find((arg) => arg.startsWith('--flavor='))?.slice('--flavor='.length);
@@ -228,6 +236,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
     preset,
     admin: !argv.includes('--no-admin'),
     mobile: !argv.includes('--no-mobile'),
+    rustSidecar: argv.includes('--with-rust-sidecar'),
     yes: argv.includes('--yes') || argv.includes('-y'),
     explicit: {
       flavor: hasOpt(argv, 'flavor'),
@@ -235,6 +244,7 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
       preset: hasOpt(argv, 'preset'),
       noAdmin: argv.includes('--no-admin'),
       noMobile: argv.includes('--no-mobile'),
+      rustSidecar: hasOpt(argv, 'with-rust-sidecar'),
     },
   };
 };
@@ -343,6 +353,63 @@ export const createPrisma = (databaseUrl: string): PrismaClient => {
   return new PrismaClient({ adapter });
 };
 `;
+
+const copyDir = (from: string, to: string): void => {
+  mkdirSync(to, { recursive: true });
+  for (const entry of readdirSync(from)) {
+    if (entry === 'target') continue;
+    const source = join(from, entry);
+    const dest = join(to, entry);
+    if (statSync(source).isDirectory()) {
+      copyDir(source, dest);
+      continue;
+    }
+    cpSync(source, dest);
+  }
+};
+
+const rustSidecarTemplates = (kitRoot: string): string => {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const fromKit = join(kitRoot, 'tooling/create-ysk-app/templates/rust-sidecar');
+  const fromPkg = join(here, '../templates/rust-sidecar');
+  const templates = existsSync(fromKit) ? fromKit : fromPkg;
+  if (!existsSync(join(templates, 'crate'))) {
+    throw new Error('rust-sidecar templates missing');
+  }
+  return templates;
+};
+
+const ensureWorkspaceDep = (pkgPath: string, name: string): void => {
+  if (!existsSync(pkgPath)) return;
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
+    dependencies?: Record<string, string>;
+  };
+  const current = pkg.dependencies?.[name];
+  if (current) return;
+  pkg.dependencies = { ...pkg.dependencies, [name]: 'workspace:*' };
+  writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
+};
+
+const copyRustSidecar = (dest: string, kitRoot: string): void => {
+  const templates = rustSidecarTemplates(kitRoot);
+  copyDir(join(templates, 'crate'), join(dest, 'crates/ysk-sidecar'));
+  const adapterSrc = join(templates, 'rust-crypto-adapter.ts');
+  const adapterDest = join(dest, 'apps/api/src/infra/rust-crypto-adapter.ts');
+  if (existsSync(adapterSrc) && existsSync(dirname(adapterDest))) {
+    cpSync(adapterSrc, adapterDest);
+  }
+  ensureWorkspaceDep(join(dest, 'apps/api/package.json'), '@ysk-kit/crypto');
+  const envPath = join(dest, '.env.example');
+  if (existsSync(envPath)) {
+    const env = readFileSync(envPath, 'utf8');
+    if (!env.includes('CRYPTO_ADAPTER')) {
+      writeFileSync(
+        envPath,
+        `${env.replace(/\n*$/, '\n')}# CRYPTO_ADAPTER=rust  # after cargo build --release in crates/ysk-sidecar; omit for Node ICryptoPort\n`,
+      );
+    }
+  }
+};
 
 const rewritePrismaAdapter = (dest: string, db: Db): void => {
   const createPath = join(dest, 'apps/api/src/infra/create-prisma.ts');
@@ -461,6 +528,10 @@ export const createYskApp = (opts: CreateAppOptions): string => {
   const usesCopyTree = opts.flavor !== 'php-bridge';
   if (opts.preset === 'thin' && usesCopyTree && opts.flavor !== 'static-web3') {
     applyThinPreset(dest);
+  }
+
+  if (opts.rustSidecar && rustSidecarApplies(opts.flavor)) {
+    copyRustSidecar(dest, opts.kitRoot);
   }
 
   writeProductReadme(dest, opts, includeAdmin);

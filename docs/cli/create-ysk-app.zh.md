@@ -22,17 +22,18 @@ npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-ki
 
 1. 產品名稱。
 2. 產品形態 — flavor `1`–`6` **或** slug（`saas`、`desktop`、`gateway`、`php-bridge`、`trading`、`static-web3`），每項附適用於／避免何時／權衡。
-3. 客戶端語言說明：預設 TypeScript；`php-bridge` 用於 OpenAPI + PHP／TS 客戶端；Tauri／Flutter／KMP 已延後（[ADR 0002](../adr/0002-polyglot-clients.zh.md)）——精靈只教育，不搭那些樹。
-4. 能力深度 — `thin` \| `full`（編號或 slug）。`php-bridge` 與 `static-web3` 跳過。
-5. 資料庫 — `mysql` \| `postgresql` \| `sqlite`（編號或 slug）。同樣 flavor 跳過。
-6. 表面（只限 saas）— admin 與 mobile yes／no，並說明後果（`--no-admin`／`--no-mobile`）。
-7. 確認摘要。Proceed `no` **不寫檔**就退出。Proceed 空白 Enter 是 yes。
+3. 客戶端語言說明：預設 TypeScript；`php-bridge` 用於 OpenAPI + PHP／TS 客戶端；可選 `--with-rust-sidecar`（不是 flavor）；Tauri／Flutter／KMP 已延後（[ADR 0002](../adr/0002-polyglot-clients.zh.md)）——精靈只教育，不搭那些樹。
+4. 可選 Rust sidecar — 只在帶 API 的 flavor（`saas`、`desktop`、`gateway`、`trading`）問 yes／no。預設 **no**。空白 Enter 是 no。`php-bridge` 與 `static-web3` 跳過。
+5. 能力深度 — `thin` \| `full`（編號或 slug）。`php-bridge` 與 `static-web3` 跳過。
+6. 資料庫 — `mysql` \| `postgresql` \| `sqlite`（編號或 slug）。同樣 flavor 跳過。
+7. 表面（只限 saas）— admin 與 mobile yes／no，並說明後果（`--no-admin`／`--no-mobile`）。
+8. 確認摘要（含 `Rust sidecar: yes|no|n/a`）。Proceed `no` **不寫檔**就退出。Proceed 空白 Enter 是 yes。
 
 空輸入保留已記錄的預設。命令列已有的旗標不會再問；語言說明仍會出現。TTY 字串只用英文。
 
 `--yes` / `-y` 略過提問（包括確認），使用預設值加上已傳的旗標。CI 與 pipe 是非 TTY，永不提問。
 
-`php-bridge` 與 `static-web3` 不問 preset 或資料庫。只有 `saas` 會問 admin 與 mobile。
+`php-bridge` 與 `static-web3` 不問 preset、資料庫或 Rust sidecar。只有 `saas` 會問 admin 與 mobile。帶 API 的 flavor 會問 sidecar，除非命令列已傳 `--with-rust-sidecar`。
 
 ## 選項
 
@@ -43,9 +44,10 @@ npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-ki
 | `--flavor` | `saas` \| `desktop` \| `gateway` \| `php-bridge` \| `trading` \| `static-web3` | `saas` | 決定複製哪些 app。 |
 | `--no-admin` | 旗標 | 包含 admin | 略過 `apps/admin`。flavor 本身已不含 admin 時忽略。gateway 一律包含 admin。 |
 | `--no-mobile` | 旗標 | 包含 mobile | 略過 `apps/mobile`。flavor 本身已不含 mobile 時忽略。 |
-| `--yes` / `-y` | 旗標 | 關閉 | 不提問。使用預設值與其他已傳旗標。 |
+| `--with-rust-sidecar` | 旗標 | 關閉 | 在帶 API 的 flavor 複製 dest 專用 `crates/ysk-sidecar` + `rust-crypto-adapter.ts`。`php-bridge` 與 `static-web3` 忽略。不是 flavor。不是 `pnpm worker`。食譜：[Rust sidecar](../recipes/rust-sidecar.zh.md)。 |
+| `--yes` / `-y` | 旗標 | 關閉 | 不提問。使用預設值與其他已傳旗標。除非同時傳 sidecar 旗標，否則 sidecar 維持關閉。 |
 
-複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄、`.env.example` 以外的任何 `.env*` 檔，以及 `tooling/` 底下的 kit 編寫測試（`*.test.ts` / `*.test.tsx`）。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 agent skill 包裝到 `.agents/skills/`、`.claude/skills/`、`.cursor/skills/`、`.grok/skills/`，以及範圍限定的 `.cursor/rules/*.mdc`，並在那些 app 存在時寫入巢狀 `AGENTS.md`。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.claude/`、`.grok/` 底下的編輯器快取（已提交的規則／skill 樹會取消忽略）、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告、`.runs/`，以及根目錄 `plan.md`。
+複製會略過 `node_modules`、`dist`、`.git`、`.turbo`、`coverage`、`.expo`、`.DS_Store`、`generated`、kit 根目錄的 `examples/` 教程、`.runs`、`.cursor`、`.grok`、編輯器目錄、`.env.example` 以外的任何 `.env*` 檔，以及 `tooling/` 底下的 kit 編寫測試（`*.test.ts` / `*.test.tsx`）。`tooling/examples` 與 `tooling/create-ysk-app` 會保留。複製之後，略過的 app（mobile、admin 等）會從 dest `pnpm-lock.yaml` 的 importers 刪走，令 `pnpm install` 在 frozen lockfile 下能跑。工作區 flavor 再從 `tooling/ysk-cli/templates/agent/` 寫入 agent skill 包裝到 `.agents/skills/`、`.claude/skills/`、`.cursor/skills/`、`.grok/skills/`，以及範圍限定的 `.cursor/rules/*.mdc`，並在那些 app 存在時寫入巢狀 `AGENTS.md`。複製後的 `.gitignore` 會忽略 `.env` 與 `.env.*`（保留 `.env.example`）、sqlite `*.db`（包括 `apps/api/dev.db`）、`.cursor/`、`.claude/`、`.grok/` 底下的編輯器快取（已提交的規則／skill 樹會取消忽略）、已產生的 Prisma、`node_modules`、編譯產物、Playwright 報告、`.runs/`、`crates/**/target/`，以及根目錄 `plan.md`。
 
 ## Flavor
 
@@ -58,7 +60,7 @@ npm 上沒有無 scope 的 `create-ysk-app` 套件。發佈的套件是 `@ysk-ki
 | `trading` | api、web | `TRADING.md` + `.zh.md` | 套用 |
 | `static-web3` | web | `WEB3.md` + `.zh.md` | 忽略 |
 
-詳情：[flavors 指南](../guides/flavors.zh.md)。`php-bridge` 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。
+詳情：[flavors 指南](../guides/flavors.zh.md)。`php-bridge` 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。可選 dest crate：[Rust sidecar](../recipes/rust-sidecar.zh.md)。
 
 ## Thin preset
 

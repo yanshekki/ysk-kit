@@ -37,10 +37,10 @@ Language: [English](flavors.md) · 中文
 | PHP（或其他 HTTP 客戶端）對接現有 Kit API | **今天用 `php-bridge`**：OpenAPI + 明白 envelope 的產生客戶端 | 把 `apps/api` 或 Prisma 抄進 PHP |
 | 要像素級原生 iOS／Android，或團隊已是 Dart／Kotlin | 將來可選 `mobile-flutter` **或** `mobile-kmp`——有產品付費時擇一 | 同一產品無業務理由同時維 Flutter、KMP 與 Expo |
 | 更小的桌面安裝包／系統 WebView | 將來可選 `desktop-tauri`（仍消費 OpenAPI；不取代 Electron 作為 kit 預設） | 兩個桌面預設（Electron + Tauri） |
-| CPU 熱路徑的密碼學、編解碼或簽章 | **Rust sidecar**，放在 TS port 背後（規則仍由 `application/` 擁有）。C++ 只用來包既有函式庫 | 把會籍、帳單或租戶規則寫進 Rust／C++ |
+| CPU 熱路徑的密碼學、編解碼或簽章 | 在 `saas`／`desktop`／`gateway`／`trading` 上傳 **`create-ysk-app --with-rust-sidecar`**。Dest `crates/ysk-sidecar` 放在 `ICryptoPort` 背後。不是 flavor。不是 `pnpm worker`。C++ 只用來包既有函式庫 | 把會籍、帳單或租戶規則寫進 Rust／C++。第七種 flavor `rust`。napi-rs |
 | ML 推論 | Python 行程當**內部 sidecar**；產品 API 仍是 Node | 把 FastAPI 當兄弟公開 API |
 | 合作方／機器流量 | REST envelope + API key（`gateway`） | 公開 gRPC |
 
-`create-ysk-app` 尚未產生 Tauri、Flutter 或 KMP。那些 flavor 出現之前，產生 OpenAPI 客戶端並指向 `API_PUBLIC_URL`。不要用另一種語言另造一套 `application/`。可複製的 PHP 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。
+`create-ysk-app` 尚未產生 Tauri、Flutter 或 KMP。那些 flavor 出現之前，產生 OpenAPI 客戶端並指向 `API_PUBLIC_URL`。不要用另一種語言另造一套 `application/`。可複製的 PHP 逐步說明：[PHP OpenAPI 客戶端](../recipes/php-openapi-client.zh.md)。可選 dest crate：[Rust sidecar](../recipes/rust-sidecar.zh.md)。
 
 CLI 旗標：[create-ysk-app](../cli/create-ysk-app.zh.md)。互動式 `create-ysk-app` 用編號 TTY 精靈，文案轉述本頁；`--yes`／非 TTY 永不提問。

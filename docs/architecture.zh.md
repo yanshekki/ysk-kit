@@ -157,18 +157,18 @@ Web 與 admin 使用 TanStack Router 與 `features/*`。表單重用 command 的
 
 流動應用是 Expo（登入、主頁、收件箱、組織列表、邀請、`DevicePort`、`FilePickerPort`）。桌面經 `@ysk-kit/sdk` 呼叫 API，`platform: desktop`；權杖在加密可用時用 Electron `safeStorage` 持久化，否則只留在該次工作階段的記憶體。主行程會設 Content-Security-Policy、`sandbox: true`，並拒絕未預期的導航、新視窗與未信任的 IPC。Prisma 永不在 Electron 內運行。
 
-非 TypeScript 客戶端是可選的。它們經產生出來、明白 envelope 的客戶端消費 `docs/openapi.yaml`（或 `GET /openapi.json`）——既有模式是 `php-bridge`。它們不可複製 domain 或業務規則、不可 import Prisma，也不可對 kit 路徑發臨時 HTTP。決定：[ADR 0002](adr/0002-polyglot-clients.zh.md)。語言選擇表：[flavors](guides/flavors.zh.md#客戶端語言選擇)。逐步說明：[PHP OpenAPI 客戶端](recipes/php-openapi-client.zh.md)。
+非 TypeScript 客戶端是可選的。它們經產生出來、明白 envelope 的客戶端消費 `docs/openapi.yaml`（或 `GET /openapi.json`）——既有模式是 `php-bridge`。它們不可複製 domain 或業務規則、不可 import Prisma，也不可對 kit 路徑發臨時 HTTP。決定：[ADR 0002](adr/0002-polyglot-clients.zh.md)。語言選擇表：[flavors](guides/flavors.zh.md#客戶端語言選擇)。逐步說明：[PHP OpenAPI 客戶端](recipes/php-openapi-client.zh.md)。可選、只存在 dest 的 Rust crate 放在 `ICryptoPort` 背後：`create-ysk-app --with-rust-sidecar`（[食譜](recipes/rust-sidecar.zh.md)）。
 
 ## 產生器
 
 | 命令 | 作用 |
 |---|---|
-| `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。TTY 跑編號引導式精靈，寫入前確認；`--yes` 略過提問 |
+| `create-ysk-app` | 複製本樹（或 php-bridge 模板），套用 flavor 與 `--preset`，寫入 `.ysk-kit.json`。可選 `--with-rust-sidecar` 複製 dest `crates/ysk-sidecar`（不是 flavor）。TTY 跑編號引導式精靈，寫入前確認；`--yes` 略過提問 |
 | `ysk-kit add module` | 一條 hexagonal HTTP 切片 |
 | `ysk-kit add <capability>` | 合併 Prisma、環境變數、依賴；llm／team／billing／push 在缺失時複製源碼 |
 | `ysk-kit generate openapi` | 寫出 `docs/openapi.yaml` |
 | `ysk-kit upgrade` | 把允許清單上的護欄（法律、skills、TypeScript／Biome 設定、`pnpm layers`）從本 kit 複製到產品 |
-| `ysk-kit check agent` | 標記 TypeScript `enum`、客戶端 Prisma，以及 web/admin/mobile/desktop 的 raw `fetch` |
+| `ysk-kit check agent` | 標記 TypeScript `enum`、客戶端 Prisma、web/admin/mobile/desktop 的 raw `fetch`，以及（若存在）不是 `ICryptoPort` adapter 的 dest sidecar crate |
 | `ysk-kit check errors` | 標記 `application/` 的 `throw new Error`、`apps/api` 的 `console.log`，以及 `JSON.stringify(process.env)` |
 | `ysk-kit check logs` | 驗證捕捉到的 Pino JSON（密鑰字面量、ERROR `requestId`） |
 | `ysk-kit check supply` | 盤點 Node／PHP／kernel 與倉內 pin，對照內建目錄（可選 `pnpm audit`） |

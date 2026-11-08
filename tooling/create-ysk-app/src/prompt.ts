@@ -1,6 +1,14 @@
 import { stdin as input, stdout as output } from 'node:process';
 import { createInterface } from 'node:readline/promises';
-import { DBS, type Db, FLAVORS, type ParsedArgs, PRESETS, type Preset } from './scaffold.js';
+import {
+  DBS,
+  type Db,
+  FLAVORS,
+  type ParsedArgs,
+  PRESETS,
+  type Preset,
+  rustSidecarApplies,
+} from './scaffold.js';
 import {
   DB_ITEMS,
   FLAVOR_ITEMS,
@@ -8,6 +16,7 @@ import {
   LANGUAGE_NOTE,
   type MenuItem,
   PRESET_ITEMS,
+  SIDECAR_PROMPT,
 } from './wizard-copy.js';
 
 export type AskFn = (question: string) => Promise<string>;
@@ -19,6 +28,7 @@ export type ResolvedCreateOptions = {
   preset: Preset;
   admin: boolean;
   mobile: boolean;
+  rustSidecar: boolean;
 };
 
 export class CreateCancelledError extends Error {
@@ -145,6 +155,7 @@ const confirmCreate = async (
     `  Database: ${formatIgnored(resolved.flavor, skipPresetDb, resolved.db)}`,
     `  Admin:    ${formatSurface(resolved.flavor, resolved.admin)}`,
     `  Mobile:   ${formatSurface(resolved.flavor, resolved.mobile)}`,
+    `  Rust sidecar: ${rustSidecarApplies(resolved.flavor) ? (resolved.rustSidecar ? 'yes' : 'no') : 'n/a'}`,
     '',
     'Proceed and write files?',
   ].join('\n');
@@ -158,13 +169,15 @@ export const resolveCreateOptions = async (
   opts: { tty: boolean; ask: AskFn },
 ): Promise<ResolvedCreateOptions> => {
   if (!opts.tty || parsed.yes) {
+    const flavor = parsed.flavor;
     return {
       name: parsed.name ?? '',
-      flavor: parsed.flavor,
+      flavor,
       db: parsed.db,
       preset: parsed.preset,
       admin: parsed.admin,
       mobile: parsed.mobile,
+      rustSidecar: rustSidecarApplies(flavor) && parsed.rustSidecar,
     };
   }
 
@@ -177,6 +190,19 @@ export const resolveCreateOptions = async (
     languageNotePending = false;
     return LANGUAGE_NOTE;
   };
+
+  const rustSidecar = !rustSidecarApplies(flavor)
+    ? false
+    : parsed.explicit.rustSidecar
+      ? parsed.rustSidecar
+      : await pickYesNo(
+          opts.ask,
+          'Include Rust sidecar?',
+          false,
+          [takeLanguageNote(), SIDECAR_PROMPT]
+            .filter((line): line is string => Boolean(line))
+            .join('\n'),
+        );
 
   const preset = (
     parsed.explicit.preset || skipPresetDb
@@ -221,7 +247,7 @@ export const resolveCreateOptions = async (
             .join('\n'),
         );
 
-  const resolved: ResolvedCreateOptions = { name, flavor, db, preset, admin, mobile };
+  const resolved: ResolvedCreateOptions = { name, flavor, db, preset, admin, mobile, rustSidecar };
   await confirmCreate(opts.ask, resolved, skipPresetDb, takeLanguageNote());
   return resolved;
 };

@@ -6,13 +6,13 @@ Language: 英文配對 `2026-11-08-rust-create-app-choice.md` · 中文 `2026-11
 |---|---|
 | **Slug** | `rust-create-app-choice` |
 | **日期** | 2026-11-08 |
-| **狀態** | 草稿 — 等待擁有者批准。只做計劃。不要從此 PR 實作、合併、發佈 npm 或改版本號。 |
+| **狀態** | 已批准 — v1 已實作（方案 A）。不要從此 PR 合併到 main 或發佈 npm。 |
 | **正規檔** | `docs/plans/2026-11-08-rust-create-app-choice.md` |
 | **工作階段指針** | `/plan.md`（已 gitignore） |
 
 法律：[AGENTS.zh.md](../../AGENTS.zh.md)。程序：[plan-feature](../skills/plan-feature.zh.md)。檢查：`pnpm ysk-kit plan --check docs/plans/2026-11-08-rust-create-app-choice.zh.md`。澄清：[clarify-feature](../skills/clarify-feature.zh.md)（最多五題）。路徑：[sdd-path](sdd-path.zh.md)。
 
-**建議（一段）：** 把面向使用者的 Rust 選擇做成 API 類 flavor（`saas`、`desktop`、`gateway`、`trading`）上的**可選 `--with-rust-sidecar` 疊加**，不是第七種 flavor、不是目錄 capability、也不是第二個公開 API。v1 只複製 dest 專用 crate，在 composition 背後實作既有 `ICryptoPort` 密文格式；TypeScript `application/` 仍是唯一 domain。TTY 與 `--yes` 預設都是 **關**。暫緩 `desktop-tauri` 與 Rust OpenAPI 客戶端。否決用 Rust 重寫套件、Axum 當兄弟 API，以及「Rust 當應用程式語言」。
+**建議（一段）：** 把面向使用者的 Rust 選擇做成 API 類 flavor（`saas`、`desktop`、`gateway`、`trading`）上的**可選 `--with-rust-sidecar` 疊加**，不是第七種 flavor、不是目錄 capability、也不是第二個公開 API。v1 只複製 dest 專用 crate，在 composition 背後實作既有 `ICryptoPort` 密文格式；TypeScript `application/` 仍是唯一 domain。TTY 與 `--yes` 預設都是 **關**。暫緩 `desktop-tauri` 與 Rust OpenAPI 客戶端。否決用 Rust 重寫套件、Axum 當兄弟 API，以及「Rust 當應用程式語言」。「擁有者於 2026-11-08 批准方案 A」（stdio IPC、行程本機、沒有客戶端畫面、只有模板 crate）。
 
 ## 目標與使用者問題
 
@@ -403,7 +403,7 @@ Grok Build writes `~/.grok/sessions/<cwd>/<session-id>/plan.md`; Cursor, Claude 
 
 ## 任務清單
 
-按順序。步驟 0 是本計劃 PR。步驟 1–7 是**批准後**的實作 PR。不要從本分支開始 1–7。
+按順序。步驟 0 是計劃 PR。步驟 1–7 在擁有者批准後落在同一條審查 PR（#98）。
 
 0. [x] 研究紀錄（本檔）
    - **檔案：** `docs/plans/2026-11-08-rust-create-app-choice.md`、`docs/plans/2026-11-08-rust-create-app-choice.zh.md`
@@ -412,63 +412,63 @@ Grok Build writes `~/.grok/sessions/<cwd>/<session-id>/plan.md`; Cursor, Claude 
    - **回滾：** 還原該 commit
    - **驗收：** 兩條 `--check` 印出 ok；狀態是草稿 — 等擁有者；沒有 flavor／運行時代碼；沒有 changeset
 
-1. [ ] ADR + 使用者文件（若擁有者要先只出文件，仍可不含 crate；預設與 2–6 同一 PR）
+1. [x] ADR + 使用者文件（若擁有者要先只出文件，仍可不含 crate；預設與 2–6 同一 PR）
    - **檔案：** `docs/adr/0002-polyglot-clients.md` + `.zh.md`（補篇）；`docs/guides/flavors.md` 配對；`docs/cli/create-ysk-app.md` 配對；`docs/architecture.md` 配對；`docs/skills/new-product.md` 配對；`docs/product-plan.md` 配對；recipe 配對；可選 skill 配對 + 三份包裝副本
    - **介面／合約／資料：** 沒有 HTTP。ADR 狀態只在擁有者同意時變成已接受
    - **風險：** 暗示 Tauri 已就緒；AGENTS.md 位元組
    - **回滾：** 還原那些文件
    - **驗收：** 中英深度一致；沒有 TypeScript `enum`；`docs-pair` 綠；除非批准修剪+列，否則不碰 AGENTS.md
 
-2. [ ] create-app 旗標與精靈
+2. [x] create-app 旗標與精靈
    - **檔案：** `tooling/create-ysk-app/src/scaffold.ts`、`prompt.ts`、`wizard-copy.ts`、`help.ts`、`index.ts`、`prompt.test.ts`、`index.test.ts`
    - **介面／合約／資料：** `--with-rust-sidecar`；摘要行；php-bridge／static-web3 用 `PRESET_SKIP` 風格忽略
    - **風險：** `--yes` 仍去提問；flavor 1–6 編號不變
    - **回滾：** 還原那些檔
    - **驗收：** `--yes` 沉默且預設關；TTY Enter = no；未知 `--flavor rust` 仍是 `not in this phase`；測試覆蓋開／關／忽略／取消
 
-3. [ ] Sidecar 模板 + dest adapter
+3. [x] Sidecar 模板 + dest adapter
    - **檔案：** `tooling/create-ysk-app/templates/rust-sidecar/**`（`Cargo.toml`、穩定釘的 `rust-toolchain.toml`、`src/main.rs`、README 配對、`.gitignore` 的 `target/`）；dest 路徑 `crates/ysk-sidecar/`、`apps/api/src/infra/rust-crypto-adapter.ts`；dest 根 `.gitignore` 的 `crates/**/target/`
    - **介面／合約／資料：** 私有 stdio；`ICryptoPort`；沒有 `/v1/`
    - **風險：** `unsafe`；過多 crates.io 依賴；密文不匹配
    - **回滾：** 刪模板目錄與複製掛鉤
    - **驗收：** crate README 寫明不是公開 API；沒有 Axum／Actix；沒有 `unsafe`；Node golden 向量存在；adapter 測試用假子行程
 
-4. [ ] 可選本機 smoke（不是必跑 CI）
+4. [x] 可選本機 smoke（不是必跑 CI）
    - **檔案：** `.github/scripts/rust-sidecar-smoke.sh`（沒有 rustc 則 skip 0）；Actions 配額用盡期間 **不要** 在 `.github/workflows/ci.yml` 加 matrix 格
    - **介面／合約／資料：** 沒有
    - **風險：** 有人把它改成必跑
    - **回滾：** 刪該腳本
    - **驗收：** 預設 flavor-smoke 腳本不變；本機腳本在有 rustc 時跑 `cargo test` + Node 往返
 
-5. [ ] 護欄（doctor／check agent／supply）— 保持很小
+5. [x] 護欄（doctor／check agent／supply）— 保持很小
    - **檔案：** 可選 `check-agent.ts` 規則 `rust-sidecar-boundary`（Cargo.toml 不可依賴 axum／actix-web／warp；README 提到 ICryptoPort）；若 `CRYPTO_ADAPTER=rust` 但沒有 crate 則 doctor 警告；v1 **不**要求目錄 rustc 下限
    - **介面／合約／資料：** 沒有
    - **風險：** 對無關的未來 crate 誤報
    - **回滾：** 去掉該規則
    - **驗收：** `pnpm layers` 仍是 TS 權威；套件本身沒有 `crates/` 時 check agent 仍 ok
 
-6. [ ] 驗證
+6. [x] 驗證
    - **檔案：** 沒有額外
    - **介面／合約／資料：** 沒有
    - **風險：** OpenAPI dirty；AGENTS 預算
    - **回滾：** 還原實作 PR
    - **驗收：** 本機 `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors` 綠；OpenAPI 不變
 
-7. [ ] 變更紀錄／changeset
+7. [x] 變更紀錄／changeset
    - **檔案：** `CHANGELOG.md` 配對、README 最近三個版本、`docs/history.md` 配對、`.changeset/rust-sidecar.md`
    - **介面／合約／資料：** 沒有
    - **風險：** 手改版本號
    - **回滾：** 還原那些檔
-   - **驗收：** create-app（以及若有掃描則 cli）的 patch；實作 PR 不改 `package.json` 版本；該 PR 不發佈 npm
+   - **驗收：** create-app（以及若有掃描則 cli）的 patch；實作 PR 不改 `package.json` 版本；該 PR 不發佈 npm。README 最近三個版本視窗等到下一個切版（CHANGELOG 寫未發佈）。v1 略過可選 skill 包裝（不改 AGENTS.md）。
 
 ## 未決問題
 
-給擁有者的五條套件原生問題（clarify-feature 題幹）。不要猜測。任何實作 PR 之前，把答案折進假設／範圍。
+擁有者於 2026-11-08 作答。已折進本實作切片。
 
-1. **Flavor／preset／capabilities。** 確認 **方案 A**：在 API 類 flavor 上疊加 `--with-rust-sidecar`，**不是**第七種 flavor，也**不是**新的 `ysk-kit add` 目錄名稱（重用 `crypto`）。或者你其實要先做 **B**（`desktop-tauri`）或 **C**（Rust OpenAPI 客戶端）。
-2. **Envelope。** 確認 v1 IPC 是**子行程私有 stdio**（沒有公開 HTTP、沒有新 envelope 例外、沒有公開 gRPC、沒有 napi-rs）。若答「要 HTTP sidecar」，**並不**批准例外；它留在這裏。
-3. **授權。** 確認 sidecar 是**行程本機**（API spawn 它）；沒有新角色／權限；`CRYPTO_MASTER_KEY` 留在 env，永不進 argv／日誌。或者指出另一種信任邊界。
-4. **UI 表面。** 確認 v1 **沒有客戶端畫面**（只有精靈 TTY；web／admin／mobile／desktop 不變），且 TTY 預設是 **no**。
-5. **Living kit 對 dest-only。** 確認 crate 是**只有模板**（php-bridge 風格），因此本倉不會長出 `pnpm test` 必須編譯的 living `crates/`。或者要求倉內 living crate（那時需要不依賴已耗盡 Actions 的 rustc 故事）。
+1. **Flavor／preset／capabilities。** **A** — `--with-rust-sidecar` 疊加；重用 `crypto`；不是第七種 flavor；不是新的 `ysk-kit add` 名稱。
+2. **Envelope。** v1 IPC 是子行程**私有 stdio**（沒有公開 HTTP、沒有新 envelope 例外、沒有 gRPC、沒有 napi-rs）。
+3. **授權。** sidecar 是**行程本機**；沒有新角色；`CRYPTO_MASTER_KEY` 留在 env，永不進 argv／日誌。
+4. **UI 表面。** v1 **沒有客戶端畫面**；TTY 預設 **no**；`--yes` 維持關閉。
+5. **Living kit 對 dest-only。** crate 是**只有模板**（php-bridge 風格）。本倉不可長出 `pnpm test` 必須編譯的 living `crates/`。
 
-後續、不是本輪：rustc 精確釘選（實作時量；此 worker 有穩定版 1.99.1）、supply-scan 的 `cargo audit`、第 2 階段 OpenAPI-Rust 客戶端、有產品付錢時的 Tauri。
+後續、不是本輪：supply-scan 的 `cargo audit`、第 2 階段 OpenAPI-Rust 客戶端、有產品付錢時的 Tauri。rustc 釘選已寫進 `rust-toolchain.toml` 為 1.99.1。

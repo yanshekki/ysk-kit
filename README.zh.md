@@ -117,6 +117,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.9
+
+#### 依賴升級
+
+- pnpm **12.18.0**（`latest` = `latest-12` = `next-12`）。Expo **58.0.23**。Electron **44.10.2**。Vite **8.3.6**。jose **6.2.15**。`@bull-board/*` **9.11.0**。nodemailer **10.4.0**。AWS SDK S3 **3.1164.0**。TanStack Query **5.107.1**。BullMQ **6.7.2**。Vitest **5.1.0**。Playwright **1.65.0**。
+
+#### 內部／CI
+
+- Compose Jaeger **2.23.0**、Prometheus **v3.16.0**、Grafana **13.3.0**。Override：`node-forge` 1.4.3、`undici` 7.30.2、`mariadb` 3.5.5。審計忽略現只剩 glob 13 與 minimatch 10。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
+
 ### v1.6.8
 
 #### 新功能
@@ -132,12 +142,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - Compose Redis **8.10.3-alpine**。Grafana **13.2.5**。審計 override：`node-forge` 1.4.2、`seroval` 1.6.12、`qs` 6.17.1。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
-
-### v1.6.6
-
-#### 新功能
-
-- Skill [audit-slice](docs/skills/audit-slice.zh.md)：對 git diff 或具名模組做有範圍的 Staff／QA 審查。doctor + engines（不是 USB／Cypress／Jest）；死碼候選（不刪）；安全委派；除非被要求寫 Vitest，否則只出 test-plan。審查 ≠ 合併。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

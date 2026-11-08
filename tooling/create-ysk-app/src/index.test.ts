@@ -97,6 +97,7 @@ describe('create-ysk-app', () => {
     expect(shouldSkipCopyEntry('.grok')).toBe(true);
     expect(shouldSkipCopyEntry('.env.production')).toBe(true);
     expect(shouldSkipCopyEntry('.env.example')).toBe(false);
+    expect(shouldSkipCopyEntry('_tmp_7209_1c5478d0')).toBe(true);
   });
 
   it('parses flags', () => {

@@ -37,6 +37,18 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.9
+
+### 依賴升級
+
+- 只升穩定版（2026-11-08）。pnpm **12.18.0**（`latest` = `latest-12` = `next-12`）。Electron **44.10.2**（45 暫緩）。Expo **58.0.23**。Vite **8.3.6**。jose **6.2.15**。`@bull-board/*` **9.11.0**（整組一齊升；取代 Dependabot #93）。nodemailer **10.4.0**。AWS SDK S3 **3.1164.0**。TanStack Query **5.107.1**。BullMQ **6.7.2**。Vitest **5.1.0**。Playwright **1.65.0**。Fastify **5.12.8**。`@fastify/cors` **11.4.1**。OpenTelemetry semantic-conventions **1.45.0**。
+- 審計 override：node-forge **1.4.3**、undici **7.30.2**、mariadb **3.5.5**。`pnpm audit` 不再報告 GHSA-86w9（node-forge）、GHSA-w5hq（uuid 7）、GHSA-vfj7（braces）、GHSA-mrhx（zod 3）、GHSA-gcqx（deepmerge）。維持忽略：glob 13（GHSA-3g3m）與 minimatch 10（GHSA-g3hv）。
+- Compose Jaeger **2.23.0**、Prometheus **v3.16.0**、Grafana **13.3.0**。MySQL **8.4.13** 與 Redis **8.10.3-alpine** 維持現況。
+
+### 內部／CI
+
+- GitHub Actions `pnpm/action-setup` **v6.1.1**。`create-ysk-app` 複製時略過短暫 `_tmp_*` 檔（以及 `readdir` 之後的 ENOENT），避免平行 `pnpm test` 在 scaffold 時失敗。Playwright smoke 跟 `API_PUBLIC_URL`／`WEB_PUBLIC_URL`，3001／5173 已被佔用時仍可跑。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC，以及 OpenTelemetry major（#80–#86）。glob 13、minimatch 10 沒有相容修補。AGENTS／skill 本週不改（合併大小 24515／24576）。
+
 ## v1.6.8
 
 ### 新功能

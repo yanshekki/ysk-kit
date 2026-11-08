@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@ysk-kit/contracts": "workspace:*",
-    "bullmq": "^6.5.3",
+    "bullmq": "^6.7.2",
     "ioredis": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   },
   "files": [
     "dist"

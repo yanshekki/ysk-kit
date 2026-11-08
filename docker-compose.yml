@@ -18,13 +18,13 @@ services:
     ports:
       - "6379:6379"
   jaeger:
-    image: jaegertracing/jaeger:2.22.0
+    image: jaegertracing/jaeger:2.23.0
     restart: unless-stopped
     ports:
       - "16686:16686"
       - "4318:4318"
   prometheus:
-    image: prom/prometheus:v3.15.1
+    image: prom/prometheus:v3.16.0
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -33,7 +33,7 @@ services:
     volumes:
       - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   grafana:
-    image: grafana/grafana:13.2.5
+    image: grafana/grafana:13.3.0
     restart: unless-stopped
     ports:
       - "3000:3000"

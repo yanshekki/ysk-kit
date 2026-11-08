@@ -117,6 +117,12 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.10
+
+#### New features
+
+- `create-ysk-app --with-rust-sidecar` (TTY default **no**) copies a dest-only `crates/ysk-sidecar` crate behind `ICryptoPort` on API flavors. Private newline-JSON stdio. `@ysk-kit/crypto` `createStdioCryptoPort`. Recipe: [Rust sidecar](docs/recipes/rust-sidecar.md).
+
 ### v1.6.9
 
 #### Dependency upgrades
@@ -132,16 +138,6 @@ The latest three versions. Older versions are in the full changelog.
 #### New features
 
 - Skill [clarify-feature](docs/skills/clarify-feature.md): at most five questions (authz, tenancy, envelope, flavor/preset, UI surfaces) before plan approval when Open questions are non-empty. Answers fold into the dated plan pair. Path card [sdd-path](docs/plans/sdd-path.md): lean is plan-feature → implement skills → verify-change → review-change; full inserts clarify-feature first. No Spec Kit CLI and no `.specify/`.
-
-### v1.6.7
-
-#### Dependency upgrades
-
-- pnpm **12.16.1**. `engines.node` **>=26.13.0** (supply floor stays 26.12.1). Expo **58.0.22**. Electron **44.10.1**. React Native **0.88.1**. BullMQ **6.5.3**. nodemailer **10.3.1**. AWS SDK S3 **3.1161.0**. jose **6.2.14**. TanStack Query **5.105.0**. `@types/node` **26.6.6**. OpenTelemetry semantic-conventions **1.44.0**.
-
-#### Internal/CI
-
-- Compose Redis **8.10.3-alpine**. Grafana **13.2.5**. Audit overrides: `node-forge` 1.4.2, `seroval` 1.6.12, `qs` 6.17.1. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

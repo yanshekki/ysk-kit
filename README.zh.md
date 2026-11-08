@@ -117,6 +117,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.10
+
+#### 新功能
+
+- `create-ysk-app --with-rust-sidecar`（TTY 預設 **no**）在帶 API 的 flavor 複製 dest 專用 `crates/ysk-sidecar` crate，放在 `ICryptoPort` 背後。私有換行 JSON stdio。`@ysk-kit/crypto` `createStdioCryptoPort`。食譜：[Rust sidecar](docs/recipes/rust-sidecar.zh.md)。
+
 ### v1.6.9
 
 #### 依賴升級
@@ -132,16 +138,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 新功能
 
 - Skill [clarify-feature](docs/skills/clarify-feature.zh.md)：未決問題非空時，計劃批准前最多五題（授權、租戶、envelope、flavor／preset、UI 表面）。答案折進日期計劃配對。路徑卡 [sdd-path](docs/plans/sdd-path.zh.md)：精簡是 plan-feature → 實作 skill → verify-change → review-change；完整先插入 clarify-feature。沒有 Spec Kit CLI，也沒有 `.specify/`。
-
-### v1.6.7
-
-#### 依賴升級
-
-- pnpm **12.16.1**。`engines.node` **>=26.13.0**（供應鏈下限維持 26.12.1）。Expo **58.0.22**。Electron **44.10.1**。React Native **0.88.1**。BullMQ **6.5.3**。nodemailer **10.3.1**。AWS SDK S3 **3.1161.0**。jose **6.2.14**。TanStack Query **5.105.0**。`@types/node` **26.6.6**。OpenTelemetry semantic-conventions **1.44.0**。
-
-#### 內部／CI
-
-- Compose Redis **8.10.3-alpine**。Grafana **13.2.5**。審計 override：`node-forge` 1.4.2、`seroval` 1.6.12、`qs` 6.17.1。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

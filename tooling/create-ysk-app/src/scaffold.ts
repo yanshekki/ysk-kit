@@ -56,8 +56,13 @@ const SKIP = new Set([
   '.codex',
 ]);
 
+const isEnoent = (err: unknown): boolean =>
+  err instanceof Error && 'code' in err && (err as NodeJS.ErrnoException).code === 'ENOENT';
+
 export const shouldSkipCopyEntry = (entry: string): boolean =>
-  SKIP.has(entry) || (entry.startsWith('.env') && entry !== '.env.example');
+  SKIP.has(entry) ||
+  entry.startsWith('_tmp_') ||
+  (entry.startsWith('.env') && entry !== '.env.example');
 
 export const pruneLockfileImporters = (dest: string): void => {
   const lockPath = join(dest, 'pnpm-lock.yaml');
@@ -101,12 +106,23 @@ const copyTree = (from: string, to: string, kitRoot: string, skipApps: Set<strin
     if (isToolingTestFile(from, entry, kitRoot)) continue;
     const source = join(from, entry);
     const dest = join(to, entry);
-    const stat = statSync(source);
+    let stat: ReturnType<typeof statSync>;
+    try {
+      stat = statSync(source);
+    } catch (err) {
+      if (isEnoent(err)) continue;
+      throw err;
+    }
     if (stat.isDirectory()) {
       if (from === join(kitRoot, 'apps') && skipApps.has(entry)) continue;
       copyTree(source, dest, kitRoot, skipApps);
     } else {
-      cpSync(source, dest);
+      try {
+        cpSync(source, dest);
+      } catch (err) {
+        if (isEnoent(err)) continue;
+        throw err;
+      }
     }
   }
 };
@@ -224,13 +240,13 @@ export const parseArgs = (argv: string[]): ParsedArgs => {
 };
 
 const jaegerService = `  jaeger:
-    image: jaegertracing/jaeger:2.22.0
+    image: jaegertracing/jaeger:2.23.0
     restart: unless-stopped
     ports:
       - "16686:16686"
       - "4318:4318"
   prometheus:
-    image: prom/prometheus:v3.15.1
+    image: prom/prometheus:v3.16.0
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -239,7 +255,7 @@ const jaegerService = `  jaeger:
     volumes:
       - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   grafana:
-    image: grafana/grafana:13.2.5
+    image: grafana/grafana:13.3.0
     restart: unless-stopped
     ports:
       - "3000:3000"

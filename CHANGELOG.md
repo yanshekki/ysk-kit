@@ -37,6 +37,18 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.9
+
+### Dependency upgrades
+
+- Stable-only weekly for 2026-11-08. pnpm **12.18.0** (`latest` = `latest-12` = `next-12`). Electron **44.10.2** (45 stays held). Expo **58.0.23**. Vite **8.3.6**. jose **6.2.15**. `@bull-board/*` **9.11.0** (coordinated; supersedes Dependabot #93). nodemailer **10.4.0**. AWS SDK S3 **3.1164.0**. TanStack Query **5.107.1**. BullMQ **6.7.2**. Vitest **5.1.0**. Playwright **1.65.0**. Fastify **5.12.8**. `@fastify/cors` **11.4.1**. OpenTelemetry semantic-conventions **1.45.0**.
+- Audit overrides: node-forge **1.4.3**, undici **7.30.2**, mariadb **3.5.5**. `pnpm audit` no longer reports GHSA-86w9 (node-forge), GHSA-w5hq (uuid 7), GHSA-vfj7 (braces), GHSA-mrhx (zod 3), or GHSA-gcqx (deepmerge). Remaining ignores: glob 13 (GHSA-3g3m) and minimatch 10 (GHSA-g3hv).
+- Compose Jaeger **2.23.0**, Prometheus **v3.16.0**, Grafana **13.3.0**. MySQL **8.4.13** and Redis **8.10.3-alpine** stay current.
+
+### Internal/CI
+
+- GitHub Actions `pnpm/action-setup` **v6.1.1**. `create-ysk-app` copy skips ephemeral `_tmp_*` files (and ENOENT after `readdir`) so parallel `pnpm test` cannot fail while scaffolding. Playwright smoke honors `API_PUBLIC_URL` / `WEB_PUBLIC_URL` so it can run when 3001/5173 are already bound. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, and OpenTelemetry majors (#80–#86). No compatible patch for glob 13 or minimatch 10. No AGENTS or skill churn (combined AGENTS size 24515/24576).
+
 ## v1.6.8
 
 ### New features

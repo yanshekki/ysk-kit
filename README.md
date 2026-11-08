@@ -117,6 +117,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.9
+
+#### Dependency upgrades
+
+- pnpm **12.18.0** (`latest` = `latest-12` = `next-12`). Expo **58.0.23**. Electron **44.10.2**. Vite **8.3.6**. jose **6.2.15**. `@bull-board/*` **9.11.0**. nodemailer **10.4.0**. AWS SDK S3 **3.1164.0**. TanStack Query **5.107.1**. BullMQ **6.7.2**. Vitest **5.1.0**. Playwright **1.65.0**.
+
+#### Internal/CI
+
+- Compose Jaeger **2.23.0**, Prometheus **v3.16.0**, Grafana **13.3.0**. Overrides: `node-forge` 1.4.3, `undici` 7.30.2, `mariadb` 3.5.5. Audit ignores now only glob 13 and minimatch 10. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors.
+
 ### v1.6.8
 
 #### New features
@@ -132,12 +142,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - Compose Redis **8.10.3-alpine**. Grafana **13.2.5**. Audit overrides: `node-forge` 1.4.2, `seroval` 1.6.12, `qs` 6.17.1. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors.
-
-### v1.6.6
-
-#### New features
-
-- Skill [audit-slice](docs/skills/audit-slice.md): scoped Staff / QA review of a git diff or named module. Doctor + engines (not USB/Cypress/Jest); dead-code candidates (do not delete); security delegates; test-plan only unless asked to write Vitest. Review ≠ merge.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

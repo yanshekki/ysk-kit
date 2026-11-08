@@ -4,7 +4,7 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.5.3"
+  bullmq: "6.7.2"
   react: "19.3.1"
   react-dom: "19.3.1"
   # Expo 58 + React Native 0.88.1 (keep @react-native/* on the same line).
@@ -22,7 +22,7 @@ overrides:
   # GHSA-ggr8-5vv4-36mx: Prisma 7.10 pins deepmerge-ts 7.1.5. v8 fixes the advisory.
   deepmerge-ts: "8.0.2"
   # GHSA-cqhc-2h57-wpxf, GHSA-42r5-vhpq-m858, GHSA-g5xc-5w98-jfvm, GHSA-cx2f-j9fh-8g68
-  mariadb: "3.5.4"
+  mariadb: "3.5.5"
   # GHSA-3f6p-5ww8-9rcr, GHSA-rgwj-5xj2-c3m3: Prisma 7.10 pins mysql2 3.15.3.
   mysql2: "3.24.6"
   # One pg so bullmq's optional peer matches @bull-board (two copies break Queue types).
@@ -35,15 +35,15 @@ overrides:
   launch-editor: "2.14.2"
   # GHSA-27r3-jxmh-p828: Express body-parser 2.3.0 DoS via trailing bytes after a compressed body. Patched in 2.4.0.
   body-parser: "2.4.0"
-  # GHSA-xjj6-f33q-929c, GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472: Electron @electron/get pulls undici 7.30.0. Patched in 7.30.1 (not undici 8).
-  undici: "7.30.1"
+  # GHSA-xjj6-f33q-929c, GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472: Electron @electron/get pulls undici 7.30.0. Patched in 7.30.1; 7.30.2 is current 7.x (not undici 8).
+  undici: "7.30.2"
   # GHSA-f86p-h4j2-7qgj, GHSA-9wx9-5pv9-3349, GHSA-97r2-qh9m-474h, GHSA-wp97-x4hv-qvhp, GHSA-7rv5-mrxv-xcr9:
   # TanStack Router pulls seroval 1.6.7. Patched in 1.6.11. Stay on 1.6 (1.7 is a later minor).
   seroval: "1.6.12"
   # GHSA-6pq8-jhm2-2vcw: qs.stringify arrayFormat comma DoS. Patched in 6.16.1; 6.17.1 is current stable 6.x.
   qs: "6.17.1"
-  # Oct 2026 node-forge PEM/TLS advisories (GHSA-7wch-p9px-956x and siblings). Patched in 1.4.1; 1.4.2 is current.
-  node-forge: "1.4.2"
+  # Oct 2026 node-forge PEM/TLS advisories (GHSA-7wch-p9px-956x and siblings). Patched in 1.4.1; 1.4.3 is current.
+  node-forge: "1.4.3"
   # GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr, GHSA-xhq7-xmqj-769h, GHSA-333x-w4r6-6crp: Fastify pulls both 3.x (ajv) and 4.x (fast-json-stringify).
   "fast-uri@3": "3.1.9"
   "fast-uri@4": "4.2.3"
@@ -58,24 +58,14 @@ allowBuilds:
   "@prisma/client": true
   msgpackr-extract: true
 
-# uuid@7 is pulled by xcode (Expo config plugins) and has no patched 7.x release.
-# GHSA-w5hq-g745-h8pq is fixed from uuid 11.1.1, which is ESM-only and breaks xcode's CJS require.
-# GHSA-86w9-cpqp-85rv / CVE-2026-85393 (node-forge nested DigestAlgorithm): still no patched release. 1.4.2 does not fix it.
-# Expo CLI uses node-forge for code-signing certificates. Kit JWT and crypto do not import node-forge.
-# braces <=3.0.3 (GHSA-vfj7-8cjw-p6xm / CVE-2026-93687): no patched release.
-# Metro's file map uses it while bundling the Expo app. The API does not pass request input to braces.
-# GHSA-mrhx-c7xc-m3w5 (zod <4.6.6 memory exhaustion): kit HTTP surface is zod 4.6.7. Expo CLI still requires zod 3; no patched 3.x. Do not override zod 3 → 4 (breaks Expo CLI).
-# deepmerge <=4.3.1 (GHSA-gcqx-w48m-w2h4): npm latest is still 4.3.1. No patched release. Expo config uses it. Kit code does not import deepmerge.
+# node-forge 1.4.3: GHSA-86w9-cpqp-85rv no longer reported. Expo CLI still uses node-forge for code-signing certificates; kit JWT and crypto do not import it.
+# uuid@7 / GHSA-w5hq-g745-h8pq, zod 3 / GHSA-mrhx-c7xc-m3w5, and deepmerge / GHSA-gcqx-w48m-w2h4 are absent from this week's lockfile.
+# braces 3.0.3 is still pulled by micromatch; GHSA-vfj7-8cjw-p6xm is not reported by npm audit this week.
 # glob <=14.0.1 (GHSA-3g3m-2fjr-6pw4): patched only in 14.0.2+, which requires minimatch 11 and path-scurry 3.
-# @fastify/static and Expo CLI still depend on glob 13. No patched 13.x. Do not force glob 14.
+# Expo CLI still depends on glob 13. No patched 13.x. Do not force glob 14.
 # minimatch <11.0.1 (GHSA-g3hv-75wg-m249): no patched 10.x. glob 13 requires minimatch ^10. Do not force minimatch 11.
 auditConfig:
   ignoreGhsas:
-    - GHSA-w5hq-g745-h8pq
-    - GHSA-86w9-cpqp-85rv
-    - GHSA-vfj7-8cjw-p6xm
-    - GHSA-mrhx-c7xc-m3w5
-    - GHSA-gcqx-w48m-w2h4
     - GHSA-3g3m-2fjr-6pw4
     - GHSA-g3hv-75wg-m249
 
@@ -96,8 +86,8 @@ minimumReleaseAgeExclude:
   - electron-vite@6.0.0
   - react-native@0.88.1
   - source-map-js@1.2.2
-  - "@aws-sdk/client-s3@3.1161.0"
-  - "@aws-sdk/s3-request-presigner@3.1161.0"
+  - "@aws-sdk/client-s3@3.1164.0"
+  - "@aws-sdk/s3-request-presigner@3.1164.0"
   - "@expo/cli@58.1.15 || 58.1.18"
   - "@expo/config-plugins@58.0.10"
   - "@expo/config@58.0.8 || 58.0.10"
@@ -118,33 +108,34 @@ minimumReleaseAgeExclude:
   - "@react-native/gradle-plugin@0.88.1"
   - "@react-native/normalize-colors@0.88.1"
   - "@react-native/virtualized-lists@0.88.1"
-  - "@tanstack/query-core@5.105.0"
-  - "@tanstack/react-query@5.105.0"
-  - "@vitest/coverage-v8@5.0.5"
-  - "@vitest/mocker@5.0.5"
-  - "@vitest/spy@5.0.5"
+  - "@tanstack/query-core@5.107.1"
+  - "@tanstack/react-query@5.107.1"
+  - "@vitest/coverage-v8@5.1.0"
+  - "@vitest/mocker@5.1.0"
+  - "@vitest/spy@5.1.0"
   - babel-preset-expo@58.0.20 || 58.0.23
   - expo-asset@58.0.18
   - expo-constants@58.0.13
   - expo-modules-autolinking@58.0.15
   - expo-modules-core@58.0.26 || 58.0.29
   - expo-modules-jsi@58.0.19
-  - expo@58.0.22
-  - vitest@5.0.5
+  - expo@58.0.23
+  - vitest@5.1.0
   - "@react-native/babel-plugin-codegen@0.88.1"
   - "@react-native/js-polyfills@0.88.1"
-  - bullmq@6.5.3
-  - electron@44.10.1
+  - bullmq@6.7.2
+  - electron@44.10.2
   - body-parser@2.4.0
-  - undici@7.30.1
+  - undici@7.30.2
   - fast-uri@3.1.9 || 4.2.3
   - seroval@1.6.12
   - qs@6.17.1
-  - node-forge@1.4.2
-  - jose@6.2.14
-  - nodemailer@10.3.1
+  - node-forge@1.4.3
+  - jose@6.2.15
+  - nodemailer@10.4.0
   - "@types/node@26.6.6"
-  - "@opentelemetry/semantic-conventions@1.44.0"
+  - "@opentelemetry/semantic-conventions@1.45.0"
   - "@expo/fingerprint@0.21.8"
   - "@expo/log-box@58.0.14"
   - "@expo/schema-utils@58.0.3"
+  - supertest@7.3.2

@@ -3,6 +3,9 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, devices } from '@playwright/test';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const apiPublicUrl = process.env.API_PUBLIC_URL ?? 'http://localhost:3001';
+const webPublicUrl = process.env.WEB_PUBLIC_URL ?? 'http://localhost:5173';
+const webPort = new URL(webPublicUrl).port || '5173';
 
 export default defineConfig({
   testDir: './e2e',
@@ -12,7 +15,7 @@ export default defineConfig({
   workers: 1,
   reporter: 'list',
   use: {
-    baseURL: process.env.WEB_PUBLIC_URL ?? 'http://localhost:5173',
+    baseURL: webPublicUrl,
     trace: 'off',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
@@ -20,15 +23,14 @@ export default defineConfig({
     {
       command: 'pnpm --filter @ysk-kit/api exec tsx --env-file=../../.env src/main.ts',
       cwd: root,
-      url: 'http://localhost:3001/health',
+      url: `${apiPublicUrl}/health`,
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },
     {
-      command:
-        'pnpm --filter @ysk-kit/web exec vite preview --host localhost --port 5173 --strictPort',
+      command: `pnpm --filter @ysk-kit/web exec vite preview --host localhost --port ${webPort} --strictPort`,
       cwd: root,
-      url: 'http://localhost:5173',
+      url: webPublicUrl,
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },

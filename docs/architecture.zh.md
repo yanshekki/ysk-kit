@@ -19,11 +19,11 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 
 | 層 | 預設 | 備選 |
 |---|---|---|
-| Monorepo | pnpm 12.16.1 workspaces + Turborepo 2.11.10 | — |
+| Monorepo | pnpm 12.18.0 workspaces + Turborepo 2.11.10 | — |
 | 語言 | TypeScript 6.0.3 `strict` + `exactOptionalPropertyTypes` | TypeScript 7 要等 dependency-cruiser 支援該 compiler API |
 | Web / admin | Vite 8.3 + React 19.3 + TanStack Router + TanStack Query + Tailwind CSS 4 | 產品需要 SSR 才考慮 Next.js |
 | 桌面 | Electron 44 + electron-vite 6.0.0 + Vite 8 | electron-vite 6 是 npm `latest`；回滾是 Vite 7 + electron-vite 5 |
-| 流動應用 | Expo 58.0.22 / React Native 0.88.1 / React 19.3 | Expo 58.0.22 與 React Native 0.88.1 都是 npm `latest` |
+| 流動應用 | Expo 58.0.23 / React Native 0.88.1 / React 19.3 | Expo 58.0.23 與 React Native 0.88.1 都是 npm `latest` |
 | HTTP API | Express 5 adapter（預設） | `HTTP_ADAPTER=fastify` 切 Fastify 5 |
 | 合約 | ts-rest + Zod 4 | — |
 | 資料庫 | Prisma 7.10（`prisma-client` generator、MariaDB adapter、客戶端在 `apps/api/src/generated/prisma`） | `--db` 可改 PostgreSQL 或 SQLite adapter |
@@ -32,7 +32,7 @@ Agent 法律：[AGENTS.zh.md](../AGENTS.zh.md)。本檔摘要的主題，指南�
 | UI | `@ysk-kit/ui`（AppShell、PageHeader、EmptyState、ErrorBanner、FormField、Spinner、Can） | — |
 | 日誌 | Pino（生產環境 JSON） | — |
 | Lint | Biome 2.5 | — |
-| 測試 | Vitest 5.0、Testing Library、一條 Playwright Chromium smoke | — |
+| 測試 | Vitest 5.1、Testing Library、一條 Playwright Chromium smoke | — |
 | 文件 | ts-rest → OpenAPI → Scalar（`GET /docs`） | — |
 | 運行時 | Node 26.13 LTS（Lithium），`engines.node` `>=26.13.0` | 目錄安全下限仍是 26.12.1（CVE-2026-111497） |
 | 觀測 | Prometheus `GET /metrics`；可選 OTLP traces／metrics；Compose 可選 Jaeger／Grafana | — |

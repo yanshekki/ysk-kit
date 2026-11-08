@@ -47,11 +47,22 @@ Expo 與 Electron 仍是唯一客戶端故事。非 TS 呼叫者自己對 OpenAP
 - 暫緩把 FastAPI（或 Axum）當主 API。暫緩 Tauri、Flutter 與 Kotlin Multiplatform flavor，直到有真實產品提出。
 - 公開、webhook、流動應用與合作方流量維持 REST + envelope。不要為「多語言」加公開 gRPC API。
 
+## 補篇 — 可選 Rust sidecar（2026-11-08）
+
+狀態：**已接受**。面向使用者的選擇：在帶 API 的 flavor 上用 `create-ysk-app --with-rust-sidecar`（TTY yes／no，預設 no）。這不是 flavor、不是目錄 capability，也不是第二個公開 API。食譜：[Rust sidecar](../recipes/rust-sidecar.zh.md)。
+
+- Dest 產品可以收到 `crates/ysk-sidecar`，在 `apps/api` composition 背後實作 `ICryptoPort`（密碼學、編解碼、簽章）。
+- TypeScript `application/` 仍然是會籍、帳單、租戶與 envelope 規則的唯一位置。Rust 不可重寫那些。
+- v1 的 IPC 是帶私有 stdio 的子行程。沒有公開 HTTP、沒有公開 gRPC、發佈的 `@ysk-kit/crypto` tarball 也沒有 napi-rs。
+- TypeScript 圖仍以 `pnpm layers` 為準。dependency-cruiser 看不見 Cargo；當存在 `crates/` 時，`check agent` 可以加 rust-boundary grep。
+- `desktop-tauri`、Flutter、KMP、FastAPI／Axum 當主 API，以及 Rust OpenAPI 客戶端，仍留在本 ADR 第 1–3 階段路線。本補篇不授權它們。
+
 ### 分階段路線（本次只寫文件；運行時稍後）
 
 | 階段 | 工作 | 不在本次改動 |
 |---|---|---|
 | 0 — 文件 | 本 ADR、flavors 語言選擇表、架構指針 | 運行時 |
+| 1a — 可選 dest sidecar（本補篇） | `create-ysk-app --with-rust-sidecar`；dest `crates/ysk-sidecar` 放在 `ICryptoPort` 背後；私有 stdio | 必跑 CI 需要 rustc；napi-rs；公開 HTTP sidecar |
 | 1 — codegen | 額外 OpenAPI 客戶端目標（例如 Python + Swift 或 Kotlin）、golden envelope 夾具 | 第二個 API 伺服器 |
 | 2 — 可選 flavor | 有客戶付費時才做 `desktop-tauri`，以及 Flutter 或 KMP 擇一 | 同時維兩套原生 UI |
 | 3 — 只在有證據時 | 把 FastAPI 當兄弟主 API；把 hexagonal domain 搬去 Rust；C++ 當預設路徑 | 幾乎永不 |

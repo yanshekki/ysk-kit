@@ -48,7 +48,9 @@ Commands:
       Scan the product root for typical broken patches: TypeScript enum,
       Prisma imports in web/admin/mobile/desktop, raw fetch in those
       apps, pointer files that dropped AGENTS.md, drifted skill copies,
-      and root + nested AGENTS.md over 24 KiB. Prints rule id + file:line.
+      root + nested AGENTS.md over 24 KiB, and (when present) a dest
+      ysk-sidecar crate that is not an ICryptoPort adapter. Prints rule
+      id + file:line.
       Exit 1 when anything matches.
 
   check errors

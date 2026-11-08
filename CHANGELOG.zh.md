@@ -37,6 +37,12 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## 未發佈
+
+### 新功能
+
+- `create-ysk-app --with-rust-sidecar`（TTY yes／no，預設 **no**；`--yes` 維持關閉）在帶 API 的 flavor（`saas`、`desktop`、`gateway`、`trading`）複製 dest 專用 `crates/ysk-sidecar` crate，放在既有 `ICryptoPort` 背後。`php-bridge` 與 `static-web3` 忽略。不是第七種 flavor、不是 `ysk-kit add rust-sidecar`、不是 `pnpm worker`、不是公開 HTTP API。v1 IPC 是私有換行 JSON stdio。`@ysk-kit/crypto` 匯出 `createStdioCryptoPort` 與第 1 版密文常數。食譜：[Rust sidecar](docs/recipes/rust-sidecar.zh.md)。ADR 0002 補篇已接受。`ysk-kit check agent` 規則 `rust-sidecar-boundary`；若 `CRYPTO_ADAPTER=rust` 但沒有 crate，doctor 會警告。本倉沒有 `pnpm test` 必須編譯的 living `crates/`。可選本機 `.github/scripts/rust-sidecar-smoke.sh`（沒有 rustc 則 skip 0；不是必跑 Actions）。
+
 ## v1.6.9
 
 ### 依賴升級

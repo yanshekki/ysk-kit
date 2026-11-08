@@ -26,6 +26,11 @@ describe('wizard copy', () => {
   it('keeps flavor menu ids in FLAVORS order', () => {
     expect(FLAVOR_ITEMS.map((item) => item.id)).toEqual([...FLAVORS]);
   });
+
+  it('educates sidecar opt-in and keeps Tauri deferred', () => {
+    expect(LANGUAGE_NOTE).toContain('--with-rust-sidecar');
+    expect(LANGUAGE_NOTE).toContain('Tauri, Flutter, and Kotlin Multiplatform are deferred');
+  });
 });
 
 describe('parseArgs explicit flags', () => {
@@ -42,6 +47,14 @@ describe('parseArgs explicit flags', () => {
     expect(parseArgs(['app', '--yes']).yes).toBe(true);
     expect(parseArgs(['app', '-y']).yes).toBe(true);
     expect(parseArgs(['-y', 'app']).name).toBe('app');
+  });
+
+  it('detects --with-rust-sidecar', () => {
+    expect(parseArgs(['app']).rustSidecar).toBe(false);
+    expect(parseArgs(['app']).explicit.rustSidecar).toBe(false);
+    const parsed = parseArgs(['app', '--with-rust-sidecar']);
+    expect(parsed.rustSidecar).toBe(true);
+    expect(parsed.explicit.rustSidecar).toBe(true);
   });
 
   it('detects equals-form flags', () => {
@@ -65,6 +78,7 @@ describe('resolveCreateOptions', () => {
       preset: 'thin',
       admin: true,
       mobile: true,
+      rustSidecar: false,
     });
   });
 
@@ -81,10 +95,26 @@ describe('resolveCreateOptions', () => {
     expect(resolved.flavor).toBe('desktop');
     expect(resolved.db).toBe('mysql');
     expect(resolved.preset).toBe('thin');
+    expect(resolved.rustSidecar).toBe(false);
+  });
+
+  it('honours --yes --with-rust-sidecar on API flavors and ignores it on php-bridge', async () => {
+    const { ask, calls } = scriptedAsk(['should-not-run']);
+    const on = await resolveCreateOptions(
+      parseArgs(['clinic', '--yes', '--flavor', 'gateway', '--with-rust-sidecar']),
+      { tty: true, ask },
+    );
+    expect(calls).toEqual([]);
+    expect(on.rustSidecar).toBe(true);
+    const skipped = await resolveCreateOptions(
+      parseArgs(['bridge', '--yes', '--flavor', 'php-bridge', '--with-rust-sidecar']),
+      { tty: true, ask },
+    );
+    expect(skipped.rustSidecar).toBe(false);
   });
 
   it('asks flavor, preset, and db for gateway and skips admin/mobile', async () => {
-    const { ask, calls } = scriptedAsk(['gateway', 'full', 'sqlite', 'yes']);
+    const { ask, calls } = scriptedAsk(['gateway', '', 'full', 'sqlite', 'yes']);
     const resolved = await resolveCreateOptions(parseArgs(['clinic']), { tty: true, ask });
     expect(resolved).toEqual({
       name: 'clinic',
@@ -93,7 +123,10 @@ describe('resolveCreateOptions', () => {
       preset: 'full',
       admin: true,
       mobile: true,
+      rustSidecar: false,
     });
+    expect(asked(calls, 'Include Rust sidecar?')).toBe(true);
+    expect(asked(calls, 'Rust sidecar: no')).toBe(true);
     expect(asked(calls, 'Include admin?')).toBe(false);
     expect(asked(calls, 'Include mobile?')).toBe(false);
     expect(asked(calls, 'Proceed?')).toBe(true);
@@ -106,21 +139,24 @@ describe('resolveCreateOptions', () => {
     expect(resolved.flavor).toBe('php-bridge');
     expect(resolved.preset).toBe('thin');
     expect(resolved.db).toBe('mysql');
+    expect(resolved.rustSidecar).toBe(false);
     expect(calls).toHaveLength(2);
+    expect(asked(calls, 'Include Rust sidecar?')).toBe(false);
+    expect(asked(calls, 'Rust sidecar: n/a')).toBe(true);
     expect(asked(calls, 'Preset (1–2 or thin|full)')).toBe(false);
     expect(asked(calls, 'Database (1–3 or mysql|postgresql|sqlite)')).toBe(false);
     expect(hasLanguageNote(calls)).toBe(true);
   });
 
   it('asks admin and mobile for saas', async () => {
-    const { ask } = scriptedAsk(['saas', 'thin', 'mysql', 'n', 'yes', 'yes']);
+    const { ask } = scriptedAsk(['saas', '', 'thin', 'mysql', 'n', 'yes', 'yes']);
     const resolved = await resolveCreateOptions(parseArgs(['clinic']), { tty: true, ask });
     expect(resolved.admin).toBe(false);
     expect(resolved.mobile).toBe(true);
   });
 
   it('does not re-ask explicit flavor', async () => {
-    const { ask, calls } = scriptedAsk(['full', 'postgresql', '']);
+    const { ask, calls } = scriptedAsk(['', 'full', 'postgresql', '']);
     const resolved = await resolveCreateOptions(parseArgs(['clinic', '--flavor', 'desktop']), {
       tty: true,
       ask,
@@ -133,7 +169,7 @@ describe('resolveCreateOptions', () => {
   });
 
   it('prompts for a missing name on tty', async () => {
-    const { ask } = scriptedAsk(['my-clinic', 'saas', '', '', '', '', '']);
+    const { ask } = scriptedAsk(['my-clinic', 'saas', '', '', '', '', '', '']);
     const resolved = await resolveCreateOptions(parseArgs([]), { tty: true, ask });
     expect(resolved.name).toBe('my-clinic');
     expect(resolved.preset).toBe('thin');
@@ -143,7 +179,7 @@ describe('resolveCreateOptions', () => {
   });
 
   it('aborts without resolved options when Proceed is no', async () => {
-    const { ask, calls } = scriptedAsk(['saas', 'thin', 'mysql', 'yes', 'yes', 'no']);
+    const { ask, calls } = scriptedAsk(['saas', '', 'thin', 'mysql', 'yes', 'yes', 'no']);
     await expect(
       resolveCreateOptions(parseArgs(['clinic']), { tty: true, ask }),
     ).rejects.toBeInstanceOf(CreateCancelledError);
@@ -159,7 +195,7 @@ describe('resolveCreateOptions', () => {
   });
 
   it('maps flavor number 1 and preset/db numbers', async () => {
-    const { ask } = scriptedAsk(['1', '2', '3', 'yes', 'n', 'yes']);
+    const { ask } = scriptedAsk(['1', '', '2', '3', 'yes', 'n', 'yes']);
     const resolved = await resolveCreateOptions(parseArgs(['clinic']), { tty: true, ask });
     expect(resolved).toEqual({
       name: 'clinic',
@@ -168,11 +204,12 @@ describe('resolveCreateOptions', () => {
       db: 'sqlite',
       admin: true,
       mobile: false,
+      rustSidecar: false,
     });
   });
 
   it('accepts flavor slugs at the numbered menu', async () => {
-    const { ask } = scriptedAsk(['trading', 'thin', 'mysql', 'yes']);
+    const { ask } = scriptedAsk(['trading', '', 'thin', 'mysql', 'yes']);
     const resolved = await resolveCreateOptions(parseArgs(['venue']), { tty: true, ask });
     expect(resolved.flavor).toBe('trading');
     expect(resolved.preset).toBe('thin');
@@ -191,6 +228,24 @@ describe('resolveCreateOptions', () => {
     await expect(resolveCreateOptions(parseArgs(['clinic']), { tty: true, ask })).rejects.toThrow(
       'unknown flavor',
     );
+  });
+
+  it('opts into the sidecar on TTY yes and skips the question when the flag is explicit', async () => {
+    const opted = scriptedAsk(['gateway', 'yes', 'thin', 'mysql', 'yes']);
+    const resolved = await resolveCreateOptions(parseArgs(['clinic']), {
+      tty: true,
+      ask: opted.ask,
+    });
+    expect(resolved.rustSidecar).toBe(true);
+    expect(asked(opted.calls, 'Rust sidecar: yes')).toBe(true);
+
+    const flagged = scriptedAsk(['thin', 'mysql', 'yes']);
+    const withFlag = await resolveCreateOptions(
+      parseArgs(['clinic', '--flavor', 'desktop', '--with-rust-sidecar']),
+      { tty: true, ask: flagged.ask },
+    );
+    expect(withFlag.rustSidecar).toBe(true);
+    expect(asked(flagged.calls, 'Include Rust sidecar?')).toBe(false);
   });
 
   it('includes the language note even when --flavor is explicit', async () => {

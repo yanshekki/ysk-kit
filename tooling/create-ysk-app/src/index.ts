@@ -66,6 +66,7 @@ const main = async (): Promise<void> => {
     preset: resolved.preset,
     admin: resolved.admin,
     mobile: resolved.mobile,
+    ...(resolved.rustSidecar ? { rustSidecar: true } : {}),
   });
   const dbService =
     resolved.db === 'postgresql' ? 'postgres' : resolved.db === 'mysql' ? 'mysql' : '';

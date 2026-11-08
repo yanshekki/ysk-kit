@@ -1,8 +1,8 @@
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto';
 
-const VERSION = 1;
-const IV_LENGTH = 12;
-const TAG_LENGTH = 16;
+export const CRYPTO_BLOB_VERSION = 1;
+export const CRYPTO_IV_LENGTH = 12;
+export const CRYPTO_TAG_LENGTH = 16;
 const KEY_LENGTH = 32;
 
 export interface ICryptoPort {
@@ -24,19 +24,21 @@ export const createAes256Gcm = (masterKeyHex: string): ICryptoPort => {
   const key = parseKey(masterKeyHex);
   return {
     async encrypt(plain) {
-      const iv = randomBytes(IV_LENGTH);
+      const iv = randomBytes(CRYPTO_IV_LENGTH);
       const cipher = createCipheriv('aes-256-gcm', key, iv);
       const ciphertext = Buffer.concat([cipher.update(plain), cipher.final()]);
       const tag = cipher.getAuthTag();
-      return Buffer.concat([Buffer.from([VERSION]), iv, ciphertext, tag]);
+      return Buffer.concat([Buffer.from([CRYPTO_BLOB_VERSION]), iv, ciphertext, tag]);
     },
     async decrypt(blob) {
       const buf = Buffer.from(blob);
-      if (buf.length < 1 + IV_LENGTH + TAG_LENGTH) throw new Error('ciphertext too short');
-      if (buf[0] !== VERSION) throw new Error('unsupported crypto version');
-      const iv = buf.subarray(1, 1 + IV_LENGTH);
-      const tag = buf.subarray(buf.length - TAG_LENGTH);
-      const ciphertext = buf.subarray(1 + IV_LENGTH, buf.length - TAG_LENGTH);
+      if (buf.length < 1 + CRYPTO_IV_LENGTH + CRYPTO_TAG_LENGTH) {
+        throw new Error('ciphertext too short');
+      }
+      if (buf[0] !== CRYPTO_BLOB_VERSION) throw new Error('unsupported crypto version');
+      const iv = buf.subarray(1, 1 + CRYPTO_IV_LENGTH);
+      const tag = buf.subarray(buf.length - CRYPTO_TAG_LENGTH);
+      const ciphertext = buf.subarray(1 + CRYPTO_IV_LENGTH, buf.length - CRYPTO_TAG_LENGTH);
       const decipher = createDecipheriv('aes-256-gcm', key, iv);
       decipher.setAuthTag(tag);
       return Buffer.concat([decipher.update(ciphertext), decipher.final()]);
@@ -60,3 +62,5 @@ export const createCryptoFromEnv = (env: {
   }
   return createAes256Gcm(DEV_CRYPTO_KEY_HEX);
 };
+
+export { createStdioCryptoPort, type StdioCryptoChild } from './stdio.js';

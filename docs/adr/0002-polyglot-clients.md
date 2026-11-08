@@ -47,11 +47,22 @@ Default stack stays TypeScript. Optional non-TS clients are flavors or codegen t
 - Defer FastAPI (or Axum) as the main API. Defer Tauri, Flutter, and Kotlin Multiplatform flavors until a real product asks.
 - Public, webhook, mobile, and partner traffic stay REST + envelope. Do not add a public gRPC API for “polyglot”.
 
+## Addendum — optional Rust sidecar (2026-11-08)
+
+Status: **accepted**. User-facing choice: `create-ysk-app --with-rust-sidecar` (TTY yes/no, default no) on API-bearing flavors. This is not a flavor, not a catalogue capability, and not a second public API. Recipe: [Rust sidecar](../recipes/rust-sidecar.md).
+
+- Dest products may receive `crates/ysk-sidecar` implementing `ICryptoPort` (crypto, codecs, signing) behind `apps/api` composition.
+- TypeScript `application/` remains the only place for membership, billing, tenancy, and envelope rules. Rust must not reimplement those.
+- IPC for v1 is a child process with private stdio. No public HTTP, no public gRPC, no napi-rs in the published `@ysk-kit/crypto` tarball.
+- `pnpm layers` remains authoritative for the TypeScript graph. Cargo is invisible to dependency-cruiser; `check agent` may grow a rust-boundary grep when `crates/` exists.
+- `desktop-tauri`, Flutter, KMP, FastAPI/Axum as main API, and a Rust OpenAPI client stay on the phased roadmap (phases 1–3 of this ADR). This addendum does not authorise them.
+
 ### Phased roadmap (docs in this change; runtime later)
 
 | Phase | Work | Not in this change |
 |---|---|---|
 | 0 — docs | This ADR, flavors language-choice table, architecture pointer | Runtime |
+| 1a — optional dest sidecar (this addendum) | `create-ysk-app --with-rust-sidecar`; dest `crates/ysk-sidecar` behind `ICryptoPort`; private stdio | rustc in required CI; napi-rs; public HTTP sidecar |
 | 1 — codegen | Extra OpenAPI client targets (for example Python + Swift or Kotlin), golden envelope fixtures | Second API server |
 | 2 — optional flavors | `desktop-tauri` and one of Flutter or KMP when a customer pays for it | Two native UI stacks at once |
 | 3 — only with evidence | Sibling FastAPI as main API; hexagonal domain moved to Rust; C++ as a default path | Almost never |

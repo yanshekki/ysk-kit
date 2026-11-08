@@ -85,6 +85,7 @@ const HINTS: Record<Capability, string[]> = {
   crypto: [
     'AES-256-GCM ICryptoPort; env CRYPTO_MASTER_KEY (64 hex chars)',
     'dev uses a built-in key when NODE_ENV is not production',
+    'optional dest crate: create-ysk-app --with-rust-sidecar (recipe docs/recipes/rust-sidecar.md)',
   ],
   billing: [
     'requires ysk-kit add team first (Organization + Membership)',

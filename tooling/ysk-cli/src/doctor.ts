@@ -354,7 +354,11 @@ const envCheck = (
   );
 };
 
-const secretsCheck = (env: Record<string, string>, hasApi: boolean): DoctorCheck => {
+const secretsCheck = (
+  env: Record<string, string>,
+  hasApi: boolean,
+  productRoot: string,
+): DoctorCheck => {
   const production = env.NODE_ENV === 'production';
   const issues: { status: DoctorStatus; message: string }[] = [];
   const jwt = env.JWT_SECRET;
@@ -406,6 +410,16 @@ const secretsCheck = (env: Record<string, string>, hasApi: boolean): DoctorCheck
     issues.push({
       status: 'warn',
       message: 'CRYPTO_MASTER_KEY is empty in production',
+    });
+  }
+  if (
+    env.CRYPTO_ADAPTER === 'rust' &&
+    !existsSync(join(productRoot, 'crates/ysk-sidecar/Cargo.toml'))
+  ) {
+    issues.push({
+      status: 'warn',
+      message:
+        'CRYPTO_ADAPTER=rust but crates/ysk-sidecar is missing; create-ysk-app --with-rust-sidecar or omit CRYPTO_ADAPTER for Node',
     });
   }
   if (issues.length === 0) {
@@ -745,7 +759,11 @@ export const doctor = (opts: DoctorOptions): DoctorReport => {
   const checks: DoctorCheck[] = [
     enginesCheck(opts.productRoot, nodeVersion, pnpmVersion),
     envCheck(flavor, hasApi, env, hasFile),
-    secretsCheck(env, hasApi && flavor !== 'static-web3' && flavor !== 'php-bridge'),
+    secretsCheck(
+      env,
+      hasApi && flavor !== 'static-web3' && flavor !== 'php-bridge',
+      opts.productRoot,
+    ),
     databaseCheck(hasApi, flavor, env, opts.productRoot, probe),
     rulesCheck(opts.productRoot, opts.kitRoot),
     agentCheck(opts.productRoot),

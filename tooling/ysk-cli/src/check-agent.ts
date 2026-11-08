@@ -8,7 +8,8 @@ export type AgentRule =
   | 'clients-no-raw-fetch'
   | 'pointer-agents-md'
   | 'skill-drift'
-  | 'agents-md-budget';
+  | 'agents-md-budget'
+  | 'rust-sidecar-boundary';
 
 export type AgentFinding = {
   rule: AgentRule;
@@ -36,6 +37,11 @@ export const RAW_FETCH_ALLOWLIST = new Set(['apps/admin/src/features/queues/queu
 const ENUM_RE = /\b(?:const\s+)?enum\s+[A-Za-z_][\w]*\s*\{/;
 const PRISMA_RE = /@prisma\/client|@ysk-kit\/db-prisma|apps\/api\/src\/generated|generated\/prisma/;
 const FETCH_RE = /\bfetch\s*\(/;
+const FORBIDDEN_SIDECAR_CRATE = /^\s*(axum|actix-web|warp)\s*=/;
+const SIDECAR_CARGO = [
+  'crates/ysk-sidecar/Cargo.toml',
+  'tooling/create-ysk-app/templates/rust-sidecar/crate/Cargo.toml',
+] as const;
 
 const toPosix = (rel: string): string => rel.split(sep).join('/');
 
@@ -72,6 +78,39 @@ const walk = (dir: string, files: string[]): void => {
   }
 };
 
+const rustSidecarBoundary = (productRoot: string): AgentFinding[] => {
+  const findings: AgentFinding[] = [];
+  for (const cargoRel of SIDECAR_CARGO) {
+    const cargoAbs = join(productRoot, cargoRel);
+    if (!existsSync(cargoAbs)) continue;
+    const cargoLines = readFileSync(cargoAbs, 'utf8').split(/\r?\n/);
+    for (let i = 0; i < cargoLines.length; i += 1) {
+      if (FORBIDDEN_SIDECAR_CRATE.test(cargoLines[i] ?? '')) {
+        findings.push({ rule: 'rust-sidecar-boundary', file: cargoRel, line: i + 1 });
+      }
+    }
+    const crateDir = join(cargoAbs, '..');
+    const readmeRel = toPosix(relative(productRoot, join(crateDir, 'README.md')));
+    const readmeAbs = join(crateDir, 'README.md');
+    if (!existsSync(readmeAbs) || !readFileSync(readmeAbs, 'utf8').includes('ICryptoPort')) {
+      findings.push({ rule: 'rust-sidecar-boundary', file: readmeRel, line: 1 });
+    }
+    const mainAbs = join(crateDir, 'src/main.rs');
+    if (existsSync(mainAbs)) {
+      const mainRel = toPosix(relative(productRoot, mainAbs));
+      const mainLines = readFileSync(mainAbs, 'utf8').split(/\r?\n/);
+      for (let i = 0; i < mainLines.length; i += 1) {
+        const line = mainLines[i] ?? '';
+        if (line.trimStart().startsWith('//')) continue;
+        if (/\bunsafe\b/.test(line)) {
+          findings.push({ rule: 'rust-sidecar-boundary', file: mainRel, line: i + 1 });
+        }
+      }
+    }
+  }
+  return findings;
+};
+
 export const checkAgent = (productRoot: string): AgentFinding[] => {
   const files: string[] = [];
   for (const root of SCAN_ROOTS) {
@@ -99,6 +138,7 @@ export const checkAgent = (productRoot: string): AgentFinding[] => {
     }
   }
 
+  findings.push(...rustSidecarBoundary(productRoot));
   findings.push(...checkAgentGuidance(productRoot));
   findings.sort(
     (a, b) => a.file.localeCompare(b.file) || a.line - b.line || a.rule.localeCompare(b.rule),

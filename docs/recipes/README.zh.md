@@ -10,6 +10,7 @@ Language: [English](README.md) · 中文
 | 還原 llm／team／billing／push | [加能力](add-capability.zh.md) | [add-capability](../skills/add-capability.zh.md) |
 | 排一個 admin 清單+詳情儀表板 | [Admin 雙欄版面](admin-dual-pane-layout.zh.md) | [layout-system](../skills/layout-system.zh.md) |
 | 用 PHP（或其他 HTTP 客戶端）呼叫 Kit API | [PHP OpenAPI 客戶端](php-openapi-client.zh.md) | [ADR 0002](../adr/0002-polyglot-clients.zh.md) |
+| 可選 dest Rust crate 放在 `ICryptoPort` 背後 | [Rust sidecar](rust-sidecar.zh.md) | [ADR 0002](../adr/0002-polyglot-clients.zh.md)、[flavors](../guides/flavors.zh.md) |
 | 用垂直 TDD 實作一個功能接縫 | [垂直 TDD 切片](vertical-tdd-slice.zh.md) | [write-tests](../skills/write-tests.zh.md)、[test-plan](../skills/test-plan.zh.md) |
 | 除錯跨租戶洩漏 | [除錯租戶隔離](debug-tenancy-isolation.zh.md) | [debug-issue](../skills/debug-issue.zh.md)、[security-review](../skills/security-review.zh.md) |
 | 把 INTERNAL 日誌變成紅燈測試 | [檢查錯誤日誌](review-error-logs.zh.md) | [error-log-review](../skills/error-log-review.zh.md) |

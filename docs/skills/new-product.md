@@ -42,8 +42,9 @@ Agents pass flags. Do not wait for TTY prompts. Humans on a TTY get a numbered g
 | PHP/TS envelope client only | `php-bridge` |
 | API + web, product owns market data | `trading` |
 | Vite web, no Prisma | `static-web3` |
+| CPU-hot crypto sidecar (not a flavor) | API flavor + `--with-rust-sidecar` ([recipe](../recipes/rust-sidecar.md)) |
 
-See [flavors](../guides/flavors.md). Agents pass `--flavor` / `--preset` / `--db`; do not wait for TTY.
+See [flavors](../guides/flavors.md). Agents pass `--flavor` / `--preset` / `--db`; do not wait for TTY. Sidecar default is off; pass the flag when the product needs it.
 
 ## Steps
 

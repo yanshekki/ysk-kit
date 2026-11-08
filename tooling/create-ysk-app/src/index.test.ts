@@ -35,6 +35,7 @@ describe('create-ysk-app', () => {
     expect(HELP).toContain('--flavor');
     expect(HELP).toContain('thin');
     expect(HELP).toContain('--yes');
+    expect(HELP).toContain('--with-rust-sidecar');
     expect(HELP).toContain('TTY');
     expect(HELP).toContain('docs/cli/create-ysk-app.md');
     expect(HELP).toContain('npm create @ysk-kit/app');
@@ -98,6 +99,7 @@ describe('create-ysk-app', () => {
     expect(shouldSkipCopyEntry('.env.production')).toBe(true);
     expect(shouldSkipCopyEntry('.env.example')).toBe(false);
     expect(shouldSkipCopyEntry('_tmp_7209_1c5478d0')).toBe(true);
+    expect(shouldSkipCopyEntry('target')).toBe(true);
   });
 
   it('parses flags', () => {
@@ -105,6 +107,8 @@ describe('create-ysk-app', () => {
     expect(parseArgs(['acme', '--db', 'postgresql', '--no-mobile']).mobile).toBe(false);
     expect(parseArgs(['acme']).preset).toBe('thin');
     expect(parseArgs(['acme', '--preset', 'full']).preset).toBe('full');
+    expect(parseArgs(['acme']).rustSidecar).toBe(false);
+    expect(parseArgs(['acme', '--with-rust-sidecar']).rustSidecar).toBe(true);
   });
 
   it('copies saas flavor and rewrites db provider', () => {
@@ -303,6 +307,84 @@ describe('create-ysk-app', () => {
     expect(existsSync(join(dest, 'apps/web'))).toBe(false);
     expect(existsSync(join(dest, 'apps/mobile'))).toBe(false);
     expect(existsSync(join(dest, 'apps/desktop'))).toBe(false);
+    expect(existsSync(join(dest, 'crates/ysk-sidecar'))).toBe(false);
+  });
+
+  it('copies the dest-only rust sidecar on API flavors and ignores it elsewhere', () => {
+    const dest = join(mkdtempSync(join(tmpdir(), 'ysk-create-')), 'gw-rust');
+    createYskApp({
+      name: 'gw-rust',
+      dest,
+      kitRoot,
+      flavor: 'gateway',
+      db: 'sqlite',
+      preset: 'thin',
+      admin: true,
+      mobile: true,
+      rustSidecar: true,
+    });
+    expect(existsSync(join(dest, 'crates/ysk-sidecar/Cargo.toml'))).toBe(true);
+    expect(existsSync(join(dest, 'crates/ysk-sidecar/Cargo.lock'))).toBe(true);
+    expect(existsSync(join(dest, 'apps/api/src/infra/rust-crypto-adapter.ts'))).toBe(true);
+    const cargo = readFileSync(join(dest, 'crates/ysk-sidecar/Cargo.toml'), 'utf8');
+    expect(cargo).not.toMatch(/\baxum\b/);
+    expect(cargo).not.toMatch(/\bactix-web\b/);
+    expect(cargo).not.toMatch(/\bwarp\b/);
+    const readme = readFileSync(join(dest, 'crates/ysk-sidecar/README.md'), 'utf8');
+    expect(readme).toContain('not a public API');
+    expect(readme).toContain('ICryptoPort');
+    const adapter = readFileSync(join(dest, 'apps/api/src/infra/rust-crypto-adapter.ts'), 'utf8');
+    expect(adapter).toContain("spawn(bin, [], { stdio: ['pipe', 'pipe', 'pipe'] })");
+    expect(adapter).not.toContain('fetch(');
+    expect(adapter).not.toMatch(/spawn\([^)]*CRYPTO_MASTER_KEY/);
+    expect(readFileSync(join(dest, 'apps/api/package.json'), 'utf8')).toContain('@ysk-kit/crypto');
+    expect(readFileSync(join(dest, '.env.example'), 'utf8')).toContain('CRYPTO_ADAPTER=rust');
+    expect(readFileSync(join(dest, '.gitignore'), 'utf8')).toContain('crates/**/target/');
+    expect(readFileSync(join(dest, 'crates/ysk-sidecar/src/main.rs'), 'utf8')).not.toContain(
+      'unsafe',
+    );
+
+    const saasOff = join(mkdtempSync(join(tmpdir(), 'ysk-create-')), 'saas-off');
+    createYskApp({
+      name: 'saas-off',
+      dest: saasOff,
+      kitRoot,
+      flavor: 'saas',
+      db: 'sqlite',
+      preset: 'thin',
+      admin: false,
+      mobile: false,
+    });
+    expect(existsSync(join(saasOff, 'crates/ysk-sidecar'))).toBe(false);
+    expect(existsSync(join(saasOff, 'apps/api/src/infra/rust-crypto-adapter.ts'))).toBe(false);
+
+    const bridge = join(mkdtempSync(join(tmpdir(), 'ysk-create-')), 'bridge-rust');
+    createYskApp({
+      name: 'bridge-rust',
+      dest: bridge,
+      kitRoot,
+      flavor: 'php-bridge',
+      db: 'mysql',
+      preset: 'thin',
+      admin: true,
+      mobile: true,
+      rustSidecar: true,
+    });
+    expect(existsSync(join(bridge, 'crates'))).toBe(false);
+
+    const web3 = join(mkdtempSync(join(tmpdir(), 'ysk-create-')), 'web3-rust');
+    createYskApp({
+      name: 'web3-rust',
+      dest: web3,
+      kitRoot,
+      flavor: 'static-web3',
+      db: 'mysql',
+      preset: 'full',
+      admin: true,
+      mobile: true,
+      rustSidecar: true,
+    });
+    expect(existsSync(join(web3, 'crates'))).toBe(false);
   });
 
   it('copies desktop flavor without web/admin/mobile', () => {

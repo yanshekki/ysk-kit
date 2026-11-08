@@ -134,6 +134,7 @@ pnpm ysk-kit check agent
 | `pointer-agents-md` | `CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`.cursor/rules/*.mdc`、`.github/instructions/*.instructions.md`、skill 的 `SKILL.md` 副本 | 檔案存在但不含 `AGENTS.md` |
 | `skill-drift` | `.agents/skills`、`.claude/skills`、`.cursor/skills`、`.grok/skills`，以及（若存在）kit 模板 | 副本缺失或內容不同 |
 | `agents-md-budget` | 產品根底下每個 `AGENTS.md` | UTF-8 合計超過 24 KiB |
+| `rust-sidecar-boundary` | 若存在 `crates/ysk-sidecar/Cargo.toml` 與 create-app crate 模板 | 依賴 axum／actix-web／warp；README 沒提 `ICryptoPort`；`src/main.rs` 有 `unsafe` |
 
 略過：`*.test.ts` / `*.test.tsx`、註解行、`node_modules`、`dist`、`generated`、`coverage`。Prisma schema 的 `enum UserStatus` 在 `.prisma` 檔，不是 TypeScript，不會掃描。
 

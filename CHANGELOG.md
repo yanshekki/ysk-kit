@@ -37,6 +37,12 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## Unreleased
+
+### New features
+
+- `create-ysk-app --with-rust-sidecar` (TTY yes/no, default **no**; `--yes` stays off) copies a dest-only `crates/ysk-sidecar` crate behind existing `ICryptoPort` on API flavors (`saas`, `desktop`, `gateway`, `trading`). Ignored by `php-bridge` and `static-web3`. Not a seventh flavor, not `ysk-kit add rust-sidecar`, not `pnpm worker`, not a public HTTP API. v1 IPC is private newline-JSON stdio. `@ysk-kit/crypto` exports `createStdioCryptoPort` and version-1 blob constants. Recipe: [Rust sidecar](docs/recipes/rust-sidecar.md). ADR 0002 addendum accepted. `ysk-kit check agent` rule `rust-sidecar-boundary`; doctor warns if `CRYPTO_ADAPTER=rust` without the crate. This kit has no living `crates/` that `pnpm test` must compile. Optional local `.github/scripts/rust-sidecar-smoke.sh` (skip 0 without rustc; not required Actions).
+
 ## v1.6.9
 
 ### Dependency upgrades

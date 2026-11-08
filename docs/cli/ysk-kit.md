@@ -134,6 +134,7 @@ Exit 0 prints `ysk-kit check agent: ok`. Exit 1 prints one line per finding: `ru
 | `pointer-agents-md` | `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.gemini/settings.json`, `.cursor/rules/*.mdc`, `.github/instructions/*.instructions.md`, skill `SKILL.md` copies | File exists and does not contain `AGENTS.md` |
 | `skill-drift` | `.agents/skills`, `.claude/skills`, `.cursor/skills`, `.grok/skills`, and kit templates when present | A copy is missing or differs |
 | `agents-md-budget` | Every `AGENTS.md` under the product root | Combined UTF-8 size exceeds 24 KiB |
+| `rust-sidecar-boundary` | `crates/ysk-sidecar/Cargo.toml` and the create-app crate template when present | Depends on axum / actix-web / warp; README omits `ICryptoPort`; `unsafe` in `src/main.rs` |
 
 Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `generated`, `coverage`. Prisma schema `enum UserStatus` in `.prisma` files is not TypeScript and is not scanned.
 

@@ -129,6 +129,22 @@ describe('ysk-kit check agent', () => {
     expect(checkAgent(dest)).toEqual([{ rule: 'agents-md-budget', file: 'AGENTS.md', line: 1 }]);
   });
 
+  it('flags a rust sidecar crate that depends on axum', () => {
+    const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-rust-'));
+    writeTree(dest, {
+      'crates/ysk-sidecar/Cargo.toml':
+        '[package]\nname = "ysk-sidecar"\n\n[dependencies]\naxum = "0.8"\n',
+      'crates/ysk-sidecar/README.md': 'public HTTP server\n',
+      'crates/ysk-sidecar/src/main.rs': 'unsafe fn boom() {}\nfn main() {}\n',
+    });
+    const findings = checkAgent(dest).filter((item) => item.rule === 'rust-sidecar-boundary');
+    expect(findings).toEqual([
+      { rule: 'rust-sidecar-boundary', file: 'crates/ysk-sidecar/Cargo.toml', line: 5 },
+      { rule: 'rust-sidecar-boundary', file: 'crates/ysk-sidecar/README.md', line: 1 },
+      { rule: 'rust-sidecar-boundary', file: 'crates/ysk-sidecar/src/main.rs', line: 1 },
+    ]);
+  });
+
   it('allows the admin queues Bull Board probe fetch', () => {
     const dest = mkdtempSync(join(tmpdir(), 'ysk-agent-allow-'));
     writeTree(dest, {

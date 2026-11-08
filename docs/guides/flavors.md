@@ -37,10 +37,10 @@ The default stack is TypeScript. A different client language is a **flavor (or f
 | PHP (or another HTTP client) against an existing Kit API | **`php-bridge` today**: OpenAPI + envelope-aware generated clients | Copy `apps/api` or Prisma into PHP |
 | Pixel-native iOS/Android chrome, or a Dart/Kotlin team already in place | Optional future `mobile-flutter` **or** `mobile-kmp` — pick one when a product pays for it | Flutter and KMP and Expo in the same product without a business reason |
 | Smaller desktop binary / OS webview | Optional future `desktop-tauri` (still consumes OpenAPI; does not replace Electron as the kit default) | Two desktop defaults (Electron + Tauri) |
-| CPU-hot crypto, codecs, or signing | **Rust sidecar** behind a TS port (`application/` still owns rules). C++ only to wrap an existing lib | Membership, billing, or tenancy rules in Rust/C++ |
+| CPU-hot crypto, codecs, or signing | **`create-ysk-app --with-rust-sidecar`** on `saas` / `desktop` / `gateway` / `trading`. Dest `crates/ysk-sidecar` behind `ICryptoPort`. Not a flavor. Not `pnpm worker`. C++ only to wrap an existing lib | Membership, billing, or tenancy rules in Rust/C++. Seventh flavor `rust`. napi-rs |
 | ML infer | Python process as an **internal sidecar**; Node remains the product API | FastAPI as a sibling public API |
 | Partner / machine traffic | REST envelope + API keys (`gateway`) | Public gRPC |
 
-`create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language. Copy-paste PHP walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md).
+`create-ysk-app` does not yet scaffold Tauri, Flutter, or KMP. Until those flavors exist, generate an OpenAPI client and point it at `API_PUBLIC_URL`. Do not invent a parallel `application/` in another language. Copy-paste PHP walkthrough: [PHP OpenAPI client](../recipes/php-openapi-client.md). Optional dest crate: [Rust sidecar](../recipes/rust-sidecar.md).
 
 CLI flags: [create-ysk-app](../cli/create-ysk-app.md). Interactive `create-ysk-app` uses a numbered TTY wizard whose copy paraphrases this page; `--yes` / non-TTY never prompt.

@@ -140,7 +140,7 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 
 **v1.6.4:** `ysk-kit check supply` (vendored catalog 2026-10-21), `engines.node` `>=26.12.1`, php-bridge `>=8.2.35`, override `launch-editor` 2.14.2. Skill `supply-scan`.
 
-**Unreleased:** `create-ysk-app --with-rust-sidecar` dest-only `ICryptoPort` crate (private stdio). Not a flavor. ADR 0002 addendum. `@ysk-kit/crypto` `createStdioCryptoPort`. `check agent` `rust-sidecar-boundary`.
+**v1.6.10:** `create-ysk-app --with-rust-sidecar` dest-only `ICryptoPort` crate (private stdio). Not a flavor. ADR 0002 addendum. `@ysk-kit/crypto` `createStdioCryptoPort`. `check agent` `rust-sidecar-boundary`.
 
 **v1.6.9:** Stable-only weekly (2026-11-08). pnpm 12.18.0 (`latest` = `latest-12` = `next-12`). Expo 58.0.23, Electron 44.10.2, Vite 8.3.6, jose 6.2.15, `@bull-board/*` 9.11.0, nodemailer 10.4.0, AWS SDK 3.1164.0, TanStack Query 5.107.1, BullMQ 6.7.2, Vitest 5.1.0, Playwright 1.65.0. Compose Jaeger 2.23.0, Prometheus v3.16.0, Grafana 13.3.0. Overrides: node-forge 1.4.3, undici 7.30.2, mariadb 3.5.5. Audit ignores now only glob 13 and minimatch 10. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors. No AGENTS or skill churn.
 

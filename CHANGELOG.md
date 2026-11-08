@@ -37,7 +37,7 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
-## Unreleased
+## v1.6.10
 
 ### New features
 

@@ -37,7 +37,7 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
-## 未發佈
+## v1.6.10
 
 ### 新功能
 

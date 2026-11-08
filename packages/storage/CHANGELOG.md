@@ -1,5 +1,11 @@
 # @ysk-kit/storage
 
+## 1.6.9
+
+### Patch Changes
+
+- 60e66a0: Lockstep patch for the 2026-11-08 stable weekly. pnpm is 12.18.0 (`latest` = `latest-12` = `next-12`). Electron 44.10.2 (45 stays held), Expo 58.0.23, Vite 8.3.6, jose 6.2.15, `@bull-board/*` 9.11.0 (coordinated; supersedes Dependabot #93), nodemailer 10.4.0, AWS SDK 3.1164.0, TanStack Query 5.107.1, BullMQ 6.7.2, Vitest 5.1.0, Playwright 1.65.0, Fastify 5.12.8, `@fastify/cors` 11.4.1, OpenTelemetry semantic-conventions 1.45.0. Overrides: node-forge 1.4.3, undici 7.30.2, mariadb 3.5.5. Compose Jaeger 2.23.0, Prometheus v3.16.0, Grafana 13.3.0. CI `pnpm/action-setup` v6.1.1. `pnpm audit` no longer reports GHSA-86w9 / GHSA-w5hq / GHSA-vfj7 / GHSA-mrhx / GHSA-gcqx; remaining ignores are glob 13 and minimatch 10. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, and OpenTelemetry majors (#80–#86).
+
 ## 1.6.8
 
 ### Patch Changes

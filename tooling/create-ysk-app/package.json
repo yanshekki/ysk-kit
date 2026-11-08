@@ -1,6 +1,6 @@
 {
   "name": "@ysk-kit/create-app",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "type": "module",
   "bin": {
     "create-ysk-app": "./src/index.ts"

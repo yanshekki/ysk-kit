@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@bull-board/api": "9.11.0",
-    "@bull-board/express": "9.11.0",
+    "@bull-board/express": "9.12.0",
     "@bull-board/fastify": "9.11.0",
     "@fastify/cors": "^11.4.1",
     "@prisma/adapter-better-sqlite3": "7.10.1",

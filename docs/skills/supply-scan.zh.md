@@ -50,7 +50,7 @@ Language: [English](supply-scan.md) · 中文
    | 規則 | 意思 | 典型修法 |
    |---|---|---|
    | `runtime-below-floor` | 主機或 CLI 的 Node／PHP patch 低於該線下限 | 安裝已修補的直譯器 |
-   | `constraint-below-floor` | `engines.node` 或 `require.php` 仍允許易受攻擊的 patch | 提高範圍（kit：`>=26.12.1`，PHP `>=8.2.35`） |
+   | `constraint-below-floor` | `engines.node` 或 `require.php` 仍允許易受攻擊的 patch | 提高範圍（kit：`>=26.13.1`，PHP `>=8.2.35`） |
    | `runtime-eol` | PHP ≤8.1（上游沒有 php2shell 修補） | 遷到受支援的線 |
    | `compromised-package` | lockfile 命中目錄 IOC（Shai-Hulud 類） | 移除／釘已知安全版本；輪換憑證 |
    | `audit-advisory` | `--online` GHSA 不在 `ignoreGhsas` | override 已修補版本，或寫明 ignore |
@@ -64,9 +64,9 @@ Language: [English](supply-scan.md) · 中文
 
 ## 目錄
 
-`tooling/ysk-cli/src/supply/catalog.json` 隨 `@ysk-kit/cli` 發佈。初始下限（上游公告，2026-10-21）：
+`tooling/ysk-cli/src/supply/catalog.json` 隨 `@ysk-kit/cli` 發佈。現行下限（`updated` 2026-11-15）：
 
-- Node 22 ≥ 22.23.4、24 ≥ 24.22.1、26 ≥ 26.12.1（CVE-2026-111497）。
+- Node 22 ≥ 22.23.5、24 ≥ 24.22.3、26 ≥ 26.13.1（CVE-2026-111497，加上 Node 26.13.1 http2／tls：CVE-2026-123863、123864、123865、123866、123872、123874、126051 及同波次）。
 - PHP 8.2 ≥ 8.2.35、8.3 ≥ 8.3.36、8.4 ≥ 8.4.27、8.5 ≥ 8.5.12（CVE-2026-109618／CVE-2026-109619）。PHP ≤8.1 已 EOL。
 - Linux 提醒：Dirty Frag（CVE-2026-43284）、ptrace LPE（CVE-2026-46333）——只盤點。
 - npm 種子：`@ctrl/tinycolor` 4.1.1／4.1.2（Shai-Hulud）。完整度靠 `--online`。
@@ -95,7 +95,7 @@ repo: engines.node <range> composer.php <range|none>
 
 | Rule | Component | Have | Need | Advisories | Action |
 |---|---|---|---|---|---|
-| 1 | node | 26.12.0 | 26.12.1 | CVE-2026-111497 | install patched Node |
+| 1 | node | 26.13.0 | 26.13.1 | CVE-2026-123863 | install patched Node |
 
 Online: ran | skipped
 Done: no | yes

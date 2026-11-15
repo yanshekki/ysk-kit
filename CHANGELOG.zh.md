@@ -37,6 +37,17 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+## v1.6.11
+
+### 依賴升級
+
+- 只升穩定版（2026-11-15）。`engines.node` 為 `>=26.13.1`（Node 26.13.1 LTS Lithium 安全版：CVE-2026-123863、123864、123865、123866、123872、123874、126051 及同波次）。供應鏈目錄下限 **26.13.1／24.22.3／22.23.5**（`updated` 2026-11-15）；保留 CVE-2026-111497。pnpm **12.21.0**（`latest` = `latest-12` = `next-12`）。Electron **44.11.3**（45 暫緩）。Expo **58.0.25**。Vite **8.3.8**。`@vitejs/plugin-react` **6.3.0**。jose **6.2.17**。`@bull-board/*` **9.13.1**（整組一齊升；取代 Dependabot #104）。nodemailer **10.5.0**。AWS SDK S3 **3.1169.0**。BullMQ **6.7.6**。Playwright **1.65.1**。`@fastify/cors` **11.4.3**。turbo **2.11.11**。OpenTelemetry `sdk-trace-base`／`sdk-trace-node` **2.12.1**（`latest-2` 非棄用 patch；其餘 OTEL 暫緩）。
+- Compose Grafana **13.3.1**（CVE-2026-102589、107509、110992、111024、13721、14242）。MySQL **8.4.13**、Redis **8.10.3-alpine**、Jaeger **2.23.0**、Prometheus **v3.16.0** 維持現況。
+
+### 內部／CI
+
+- GitHub Actions `pnpm/action-setup` 維持 **v6.1.1**。`pnpm audit` 目前只報告一項已忽略的 moderate：minimatch 10（GHSA-g3hv）。lockfile 的 glob 已是 **14.0.4**，GHSA-3g3m 目前對不上；忽略條目仍保留。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major（#100–#107／#81）、undici 8、seroval 1.8。AGENTS／skill 本週不改（合併大小 24515／24576）。
+
 ## v1.6.10
 
 ### 新功能

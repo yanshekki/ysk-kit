@@ -17,8 +17,8 @@ pnpm ysk-kit check supply --repo-only --online
 ## finding 長這樣
 
 ```text
-runtime-below-floor  node  have=v26.12.0 need=26.12.1  CVE-2026-111497
-constraint-below-floor  engines.node  have=>=26.0.0 need=26.12.1  package.json  CVE-2026-111497
+runtime-below-floor  node  have=v26.13.0 need=26.13.1  CVE-2026-123863
+constraint-below-floor  engines.node  have=>=26.0.0 need=26.13.1  package.json  CVE-2026-123863
 ```
 
 `--json` 印出 `{ ok, catalogUpdated, inventory, findings }` 給 agent。
@@ -27,7 +27,7 @@ constraint-below-floor  engines.node  have=>=26.0.0 need=26.12.1  package.json  
 
 | Finding | 修法 |
 |---|---|
-| Node 低於下限 | 安裝 ≥26.12.1；把 `engines.node` 設成 `>=26.12.1` |
+| Node 低於下限 | 安裝 ≥26.13.1；把 `engines.node` 設成 `>=26.13.1` |
 | PHP 低於下限 | 安裝已修補線（8.2.35／8.3.36／8.4.27／8.5.12）；composer `>=8.2.35` |
 | GHSA | 工作區 override 到已修補版本，或有說明的 `ignoreGhsas` |
 | 未釘的 Action | `uses: owner/repo@<40 字元 sha>` |

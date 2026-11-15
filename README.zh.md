@@ -117,6 +117,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.11
+
+#### 依賴升級
+
+- `engines.node` **`>=26.13.1`**。pnpm **12.21.0**（`latest` = `latest-12` = `next-12`）。Expo **58.0.25**。Electron **44.11.3**。Vite **8.3.8**。`@vitejs/plugin-react` **6.3.0**。jose **6.2.17**。`@bull-board/*` **9.13.1**。nodemailer **10.5.0**。AWS SDK S3 **3.1169.0**。BullMQ **6.7.6**。Playwright **1.65.1**。turbo **2.11.11**。
+
+#### 內部／CI
+
+- 供應鏈目錄下限 **26.13.1／24.22.3／22.23.5**（Node 26.13.1 安全 CVE；保留 CVE-2026-111497）。Compose Grafana **13.3.1**。可選 OTEL `sdk-trace-*` **2.12.1**。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。AGENTS／skill 本週不改。
+
 ### v1.6.10
 
 #### 新功能
@@ -132,12 +142,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - Compose Jaeger **2.23.0**、Prometheus **v3.16.0**、Grafana **13.3.0**。Override：`node-forge` 1.4.3、`undici` 7.30.2、`mariadb` 3.5.5。審計忽略現只剩 glob 13 與 minimatch 10。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
-
-### v1.6.8
-
-#### 新功能
-
-- Skill [clarify-feature](docs/skills/clarify-feature.zh.md)：未決問題非空時，計劃批准前最多五題（授權、租戶、envelope、flavor／preset、UI 表面）。答案折進日期計劃配對。路徑卡 [sdd-path](docs/plans/sdd-path.zh.md)：精簡是 plan-feature → 實作 skill → verify-change → review-change；完整先插入 clarify-feature。沒有 Spec Kit CLI，也沒有 `.specify/`。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

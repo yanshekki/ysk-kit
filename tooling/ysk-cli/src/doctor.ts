@@ -285,7 +285,7 @@ const enginesCheck = (
       warnings.join('; '),
       pinned
         ? `Run \`corepack prepare pnpm@${pinned} --activate\` so the packageManager pin matches.`
-        : 'Add engines.node >=26.12.1 and engines.pnpm >=12.0.0 to package.json.',
+        : 'Add engines.node >=26.13.1 and engines.pnpm >=12.0.0 to package.json.',
     );
   }
   const nodeMsg = nodeRange ? `Node ${nodeVersion} satisfies ${nodeRange}` : `Node ${nodeVersion}`;
@@ -737,7 +737,7 @@ const supplyCheck = (productRoot: string, nodeVersion: string): DoctorCheck => {
       'supply',
       'error',
       formatSupplyReport({ ...report, findings: runtime, ok: false }),
-      'Install Node 26.12.1 or later (CVE-2026-111497). Run `pnpm ysk-kit check supply` (skill supply-scan).',
+      'Install Node 26.13.1 or later (CVE-2026-123863 / CVE-2026-111497). Run `pnpm ysk-kit check supply` (skill supply-scan).',
     );
   }
   return check('supply', 'ok', 'ysk-kit check supply: node runtime floor ok');

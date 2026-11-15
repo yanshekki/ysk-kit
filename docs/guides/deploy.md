@@ -12,7 +12,7 @@ Language: [中文](deploy.zh.md) · English
 | redis | `redis:8.10.3-alpine` | 6379 |
 | jaeger | `jaegertracing/jaeger:2.23.0` | 16686 UI, 4318 OTLP HTTP |
 | prometheus | `prom/prometheus:v3.16.0` | 9090 |
-| grafana | `grafana/grafana:13.3.0` | 3000 (`admin` / `admin`) |
+| grafana | `grafana/grafana:13.3.1` | 3000 (`admin` / `admin`) |
 
 Start only what you need. `docker compose up -d mysql` is enough for the API. Redis is required for multi-process Socket.IO, durable BullMQ, and a shared IP rate-limit window. Without `REDIS_URL` the rate limit is in-memory per API process. Jaeger / Prometheus / Grafana are opt-in UIs. Grafana dashboard `ysk-api` (`deploy/grafana/dashboards/ysk-api.json`) includes 5xx rate and errors by envelope `code` once Prometheus scrapes `GET /metrics`.
 

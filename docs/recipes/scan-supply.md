@@ -17,8 +17,8 @@ pnpm ysk-kit check supply --repo-only --online
 ## What a finding looks like
 
 ```text
-runtime-below-floor  node  have=v26.12.0 need=26.12.1  CVE-2026-111497
-constraint-below-floor  engines.node  have=>=26.0.0 need=26.12.1  package.json  CVE-2026-111497
+runtime-below-floor  node  have=v26.13.0 need=26.13.1  CVE-2026-123863
+constraint-below-floor  engines.node  have=>=26.0.0 need=26.13.1  package.json  CVE-2026-123863
 ```
 
 `--json` prints `{ ok, catalogUpdated, inventory, findings }` for agents.
@@ -27,7 +27,7 @@ constraint-below-floor  engines.node  have=>=26.0.0 need=26.12.1  package.json  
 
 | Finding | Fix |
 |---|---|
-| Node below floor | Install ≥26.12.1; set `engines.node` to `>=26.12.1` |
+| Node below floor | Install ≥26.13.1; set `engines.node` to `>=26.13.1` |
 | PHP below floor | Install the patched line (8.2.35 / 8.3.36 / 8.4.27 / 8.5.12); composer `>=8.2.35` |
 | GHSA | Workspace override to a patched release, or documented `ignoreGhsas` |
 | Unpinned Action | `uses: owner/repo@<40-char-sha>` |

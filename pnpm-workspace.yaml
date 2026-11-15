@@ -4,7 +4,7 @@ packages:
   - "tooling/*"
 
 overrides:
-  bullmq: "6.7.2"
+  bullmq: "6.7.6"
   react: "19.3.1"
   react-dom: "19.3.1"
   # Expo 58 + React Native 0.88.1 (keep @react-native/* on the same line).
@@ -86,15 +86,15 @@ minimumReleaseAgeExclude:
   - electron-vite@6.0.0
   - react-native@0.88.1
   - source-map-js@1.2.2
-  - "@aws-sdk/client-s3@3.1164.0"
-  - "@aws-sdk/s3-request-presigner@3.1164.0"
-  - "@expo/cli@58.1.15 || 58.1.18"
+  - "@aws-sdk/client-s3@3.1169.0"
+  - "@aws-sdk/s3-request-presigner@3.1169.0"
+  - "@expo/cli@58.1.15 || 58.1.18 || 58.1.20"
   - "@expo/config-plugins@58.0.10"
   - "@expo/config@58.0.8 || 58.0.10"
   - "@expo/image-utils@0.12.5"
   - "@expo/inline-modules@0.2.7"
   - "@expo/local-build-cache-provider@58.0.8 || 58.0.10"
-  - "@expo/metro-config@58.0.17 || 58.0.20"
+  - "@expo/metro-config@58.0.17 || 58.0.20 || 58.0.22"
   - "@expo/metro-file-map@58.0.5"
   - "@expo/prebuild-config@58.0.16 || 58.0.18"
   - "@expo/require-utils@58.0.4"
@@ -113,29 +113,40 @@ minimumReleaseAgeExclude:
   - "@vitest/coverage-v8@5.1.0"
   - "@vitest/mocker@5.1.0"
   - "@vitest/spy@5.1.0"
-  - babel-preset-expo@58.0.20 || 58.0.23
-  - expo-asset@58.0.18
-  - expo-constants@58.0.13
+  - babel-preset-expo@58.0.20 || 58.0.23 || 58.0.25
+  - expo-asset@58.0.18 || 58.0.21
+  - expo-constants@58.0.13 || 58.0.16
   - expo-modules-autolinking@58.0.15
-  - expo-modules-core@58.0.26 || 58.0.29
+  - expo-modules-core@58.0.26 || 58.0.29 || 58.1.0
   - expo-modules-jsi@58.0.19
-  - expo@58.0.23
+  - expo@58.0.25
   - vitest@5.1.0
   - "@react-native/babel-plugin-codegen@0.88.1"
   - "@react-native/js-polyfills@0.88.1"
-  - bullmq@6.7.2
-  - electron@44.10.2
+  - bullmq@6.7.6
+  - electron@44.11.3
   - body-parser@2.4.0
   - undici@7.30.2
   - fast-uri@3.1.9 || 4.2.3
   - seroval@1.6.12
   - qs@6.17.1
   - node-forge@1.4.3
-  - jose@6.2.15
-  - nodemailer@10.4.0
+  - jose@6.2.17
+  - nodemailer@10.5.0
   - "@types/node@26.6.6"
   - "@opentelemetry/semantic-conventions@1.45.0"
+  - "@opentelemetry/sdk-trace-base@2.12.1"
+  - "@opentelemetry/sdk-trace-node@2.12.1"
+  - turbo@2.11.11
+  - vite@8.3.8
+  - "@vitejs/plugin-react@6.3.0"
+  - "@playwright/test@1.65.1"
+  - playwright@1.65.1
+  - "@fastify/cors@11.4.3"
+  - "@bull-board/api@9.13.1"
+  - "@bull-board/express@9.13.1"
+  - "@bull-board/fastify@9.13.1"
   - "@expo/fingerprint@0.21.8"
-  - "@expo/log-box@58.0.14"
+  - "@expo/log-box@58.0.14 || 58.0.15"
   - "@expo/schema-utils@58.0.3"
   - supertest@7.3.2

@@ -37,6 +37,17 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+## v1.6.11
+
+### Dependency upgrades
+
+- Stable-only weekly for 2026-11-15. `engines.node` is `>=26.13.1` (Node 26.13.1 LTS Lithium security release: CVE-2026-123863, 123864, 123865, 123866, 123872, 123874, 126051 and siblings). Supply catalog floors **26.13.1 / 24.22.3 / 22.23.5** (`updated` 2026-11-15); keep CVE-2026-111497. pnpm **12.21.0** (`latest` = `latest-12` = `next-12`). Electron **44.11.3** (45 stays held). Expo **58.0.25**. Vite **8.3.8**. `@vitejs/plugin-react` **6.3.0**. jose **6.2.17**. `@bull-board/*` **9.13.1** (coordinated; supersedes Dependabot #104). nodemailer **10.5.0**. AWS SDK S3 **3.1169.0**. BullMQ **6.7.6**. Playwright **1.65.1**. `@fastify/cors` **11.4.3**. turbo **2.11.11**. OpenTelemetry `sdk-trace-base` / `sdk-trace-node` **2.12.1** (`latest-2` non-deprecated patch; other OTEL packages held).
+- Compose Grafana **13.3.1** (CVE-2026-102589, 107509, 110992, 111024, 13721, 14242). MySQL **8.4.13**, Redis **8.10.3-alpine**, Jaeger **2.23.0**, and Prometheus **v3.16.0** stay current.
+
+### Internal/CI
+
+- GitHub Actions `pnpm/action-setup` stays **v6.1.1**. `pnpm audit` currently reports one ignored moderate: minimatch 10 (GHSA-g3hv). glob in the lockfile is **14.0.4**, so GHSA-3g3m is not currently matching; the ignore entry stays. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors (#100–#107 / #81), undici 8, seroval 1.8. No AGENTS or skill churn (combined AGENTS size 24515/24576).
+
 ## v1.6.10
 
 ### New features

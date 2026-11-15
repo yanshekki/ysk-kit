@@ -99,7 +99,7 @@ const run = (
     productRoot: dirs.product,
     kitRoot: dirs.kit,
     env: extra?.env ?? {},
-    nodeVersion: extra?.nodeVersion ?? '26.12.1',
+    nodeVersion: extra?.nodeVersion ?? '26.13.1',
     pnpmVersion: extra?.pnpmVersion === undefined ? '12.8.1' : extra.pnpmVersion,
     probeDatabase: extra?.probeDatabase ?? (() => upToDate()),
   });
@@ -157,7 +157,7 @@ describe('ysk-kit doctor', () => {
     const supply = report.checks.find((item) => item.id === 'supply');
     expect(supply?.status).toBe('error');
     expect(supply?.message).toContain('runtime-below-floor');
-    expect(supply?.fix).toContain('26.12.1');
+    expect(supply?.fix).toContain('26.13.1');
     expect(report.ok).toBe(false);
   });
 
@@ -386,7 +386,7 @@ describe('ysk-kit doctor', () => {
       productRoot: bridge,
       kitRoot: kit,
       env: {},
-      nodeVersion: '26.12.1',
+      nodeVersion: '26.13.1',
       pnpmVersion: '12.8.1',
     });
     expect(bridgeReport.checks.find((item) => item.id === 'database')?.status).toBe('ok');
@@ -466,7 +466,7 @@ describe('ysk-kit doctor', () => {
       encoding: 'utf8',
     });
     const have = parseVer(process.versions.node);
-    const need = parseVer('26.12.1');
+    const need = parseVer('26.13.1');
     const nodePatched = Boolean(have && need && cmpVer(have, need) >= 0);
     const okJson = JSON.parse(ok.stdout) as {
       ok: boolean;

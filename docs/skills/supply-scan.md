@@ -50,7 +50,7 @@ Do not use for diff-scoped authz / tenancy / secrets ([security-review](security
    | Rule | Meaning | Typical fix |
    |---|---|---|
    | `runtime-below-floor` | Host or CLI Node/PHP patch is below the line min | Install the patched interpreter |
-   | `constraint-below-floor` | `engines.node` or `require.php` still allows a vulnerable patch | Raise the range (kit: `>=26.12.1`, PHP `>=8.2.35`) |
+   | `constraint-below-floor` | `engines.node` or `require.php` still allows a vulnerable patch | Raise the range (kit: `>=26.13.1`, PHP `>=8.2.35`) |
    | `runtime-eol` | PHP ≤8.1 (no upstream php2shell fix) | Migrate to a supported line |
    | `compromised-package` | Lockfile matches a catalog IOC (Shai-Hulud-class) | Remove / pin a known-good version; rotate credentials |
    | `audit-advisory` | `--online` GHSA not in `ignoreGhsas` | Override a patched release, or document an ignore |
@@ -64,9 +64,9 @@ Do not use for diff-scoped authz / tenancy / secrets ([security-review](security
 
 ## Catalog
 
-`tooling/ysk-cli/src/supply/catalog.json` ships inside `@ysk-kit/cli`. Initial floors (vendor advisories, 2026-10-21):
+`tooling/ysk-cli/src/supply/catalog.json` ships inside `@ysk-kit/cli`. Current floors (`updated` 2026-11-15):
 
-- Node 22 ≥ 22.23.4, 24 ≥ 24.22.1, 26 ≥ 26.12.1 (CVE-2026-111497).
+- Node 22 ≥ 22.23.5, 24 ≥ 24.22.3, 26 ≥ 26.13.1 (CVE-2026-111497 plus Node 26.13.1 http2/tls: CVE-2026-123863, 123864, 123865, 123866, 123872, 123874, 126051 and siblings).
 - PHP 8.2 ≥ 8.2.35, 8.3 ≥ 8.3.36, 8.4 ≥ 8.4.27, 8.5 ≥ 8.5.12 (CVE-2026-109618 / CVE-2026-109619). PHP ≤8.1 is EOL.
 - Linux reminders: Dirty Frag (CVE-2026-43284), ptrace LPE (CVE-2026-46333) — inventory only.
 - npm seed: `@ctrl/tinycolor` 4.1.1 / 4.1.2 (Shai-Hulud). Completeness is `--online`.
@@ -95,7 +95,7 @@ repo: engines.node <range> composer.php <range|none>
 
 | Rule | Component | Have | Need | Advisories | Action |
 |---|---|---|---|---|---|
-| 1 | node | 26.12.0 | 26.12.1 | CVE-2026-111497 | install patched Node |
+| 1 | node | 26.13.0 | 26.13.1 | CVE-2026-123863 | install patched Node |
 
 Online: ran | skipped
 Done: no | yes

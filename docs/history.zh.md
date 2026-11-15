@@ -140,6 +140,8 @@ Cursor／Grok skill 包裝放在 `tooling/ysk-cli/templates/agent/`，由 `creat
 
 **v1.6.4：** `ysk-kit check supply`（內建目錄 2026-10-21）、`engines.node` `>=26.12.1`、php-bridge `>=8.2.35`、override `launch-editor` 2.14.2。Skill `supply-scan`。
 
+**v1.6.11：** 只升穩定版的週期 bump（2026-11-15）。`engines.node` `>=26.13.1`。供應鏈目錄下限 26.13.1／24.22.3／22.23.5（`updated` 2026-11-15；保留 CVE-2026-111497）。pnpm 12.21.0、turbo 2.11.11、Expo 58.0.25、Electron 44.11.3、Vite 8.3.8、plugin-react 6.3.0、jose 6.2.17、`@bull-board/*` 9.13.1、nodemailer 10.5.0、AWS SDK 3.1169.0、BullMQ 6.7.6、Playwright 1.65.1、`@fastify/cors` 11.4.3。Compose Grafana 13.3.1。可選 OTEL `sdk-trace-*` 2.12.1。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。AGENTS／skill 本週不改。
+
 **v1.6.10：** `create-ysk-app --with-rust-sidecar` dest 專用 `ICryptoPort` crate（私有 stdio）。不是 flavor。ADR 0002 補篇。`@ysk-kit/crypto` `createStdioCryptoPort`。`check agent` `rust-sidecar-boundary`。
 
 **v1.6.9：** 只升穩定版的週期 bump（2026-11-08）。pnpm 12.18.0（`latest` = `latest-12` = `next-12`）。Expo 58.0.23、Electron 44.10.2、Vite 8.3.6、jose 6.2.15、`@bull-board/*` 9.11.0、nodemailer 10.4.0、AWS SDK 3.1164.0、TanStack Query 5.107.1、BullMQ 6.7.2、Vitest 5.1.0、Playwright 1.65.0。Compose Jaeger 2.23.0、Prometheus v3.16.0、Grafana 13.3.0。Override：node-forge 1.4.3、undici 7.30.2、mariadb 3.5.5。審計忽略現只剩 glob 13 與 minimatch 10。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。AGENTS／skill 本週不改。

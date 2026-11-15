@@ -117,6 +117,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.11
+
+#### Dependency upgrades
+
+- `engines.node` **`>=26.13.1`**. pnpm **12.21.0** (`latest` = `latest-12` = `next-12`). Expo **58.0.25**. Electron **44.11.3**. Vite **8.3.8**. `@vitejs/plugin-react` **6.3.0**. jose **6.2.17**. `@bull-board/*` **9.13.1**. nodemailer **10.5.0**. AWS SDK S3 **3.1169.0**. BullMQ **6.7.6**. Playwright **1.65.1**. turbo **2.11.11**.
+
+#### Internal/CI
+
+- Supply catalog floors **26.13.1 / 24.22.3 / 22.23.5** (Node 26.13.1 security CVEs; keep CVE-2026-111497). Compose Grafana **13.3.1**. Optional OTEL `sdk-trace-*` **2.12.1**. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors. No AGENTS or skill churn.
+
 ### v1.6.10
 
 #### New features
@@ -132,12 +142,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - Compose Jaeger **2.23.0**, Prometheus **v3.16.0**, Grafana **13.3.0**. Overrides: `node-forge` 1.4.3, `undici` 7.30.2, `mariadb` 3.5.5. Audit ignores now only glob 13 and minimatch 10. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors.
-
-### v1.6.8
-
-#### New features
-
-- Skill [clarify-feature](docs/skills/clarify-feature.md): at most five questions (authz, tenancy, envelope, flavor/preset, UI surfaces) before plan approval when Open questions are non-empty. Answers fold into the dated plan pair. Path card [sdd-path](docs/plans/sdd-path.md): lean is plan-feature → implement skills → verify-change → review-change; full inserts clarify-feature first. No Spec Kit CLI and no `.specify/`.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

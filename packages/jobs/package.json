@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@ysk-kit/contracts": "workspace:*",
-    "bullmq": "^6.7.2",
+    "bullmq": "^6.7.6",
     "ioredis": "^6.0.0"
   },
   "devDependencies": {

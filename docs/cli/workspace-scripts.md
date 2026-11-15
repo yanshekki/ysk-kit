@@ -2,7 +2,7 @@
 
 Language: [中文](workspace-scripts.zh.md) · English
 
-Root `package.json` scripts. Requires Node 26 and pnpm 12 (`packageManager` is `pnpm@12.18.0`).
+Root `package.json` scripts. Requires Node 26 and pnpm 12 (`packageManager` is `pnpm@12.21.0`).
 
 | Script | Command | Purpose |
 |---|---|---|

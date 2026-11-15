@@ -192,7 +192,7 @@ Exit 0 prints `ysk-kit check supply: ok` (kernel reminders may print first as wa
 
 | Rule | What it flags |
 |---|---|
-| `runtime-below-floor` | Host/CLI Node or PHP below the catalog line min (CVE-2026-111497, php2shell) |
+| `runtime-below-floor` | Host/CLI Node or PHP below the catalog line min (CVE-2026-123863 / CVE-2026-111497, php2shell) |
 | `constraint-below-floor` | `engines.node` or composer `require.php` still allows a vulnerable patch |
 | `runtime-eol` | PHP ≤8.1 (no upstream fix) |
 | `compromised-package` | Lockfile name@version in the catalog IOC seed |
@@ -235,14 +235,14 @@ Exit 0 when every check is `ok` or `warn`. Exit 1 when any check is `error`. `--
 
 | Check | Error | Warning | What to do |
 |---|---|---|---|
-| `engines` | Node or pnpm misses `package.json` `engines`, or `pnpm` is not on `PATH` | `packageManager` pin differs from `pnpm --version`, or `engines` is absent | Install Node 26 and run `corepack enable && corepack prepare pnpm@12.18.0 --activate` |
+| `engines` | Node or pnpm misses `package.json` `engines`, or `pnpm` is not on `PATH` | `packageManager` pin differs from `pnpm --version`, or `engines` is absent | Install Node 26 and run `corepack enable && corepack prepare pnpm@12.21.0 --activate` |
 | `env` | An API product is missing `DATABASE_URL` or `JWT_SECRET` | `static-web3` is missing `API_PUBLIC_URL` or `WEB_PUBLIC_URL`; `php-bridge` is missing `API_PUBLIC_URL` | `cp .env.example .env` and set the keys. Public URLs and the PHP bridge have localhost defaults, so those are warnings |
 | `secrets` | `NODE_ENV=production` with a placeholder `JWT_SECRET`, a secret shorter than 8 characters, example seed passwords in production, or `CRYPTO_MASTER_KEY` that is not 64 hex characters | Example `JWT_SECRET` in development, a secret shorter than 32 characters, or an empty `CRYPTO_MASTER_KEY` in production | `openssl rand -base64 32` for `JWT_SECRET`. `openssl rand -hex 32` for `CRYPTO_MASTER_KEY` |
 | `database` | The server is unreachable, the SQLite file is missing, or Prisma migrations are not applied | — | `pnpm db:migrate` in development, or `pnpm --filter @ysk-kit/api prisma:migrate:deploy` in production. Skipped when `apps/api/prisma/schema.prisma` is absent (`static-web3`, `php-bridge`) |
 | `rules` | Allowlisted guardrail files differ from this kit | Files match and `.ysk-kit.json` is missing or its `version` is behind this kit | `pnpm ysk-kit upgrade` |
 | `agent` | `check agent` reported a finding | — | Same rules as [`ysk-kit check agent`](#ysk-kit-check-agent) |
 | `errors` | — | `check errors` reported a finding | Throw `AppError` from `application/`, do not `console.log` in `apps/api` (except seed), and do not log `process.env`. See [`ysk-kit check errors`](#ysk-kit-check-errors) |
-| `supply` | Running Node is below the catalog floor | — | Install Node ≥26.12.1. See [`ysk-kit check supply`](#ysk-kit-check-supply) |
+| `supply` | Running Node is below the catalog floor | — | Install Node ≥26.13.1. See [`ysk-kit check supply`](#ysk-kit-check-supply) |
 
 SQLite is opened with Node's `node:sqlite` (`_prisma_migrations` where `finished_at` is set and `rolled_back_at` is null). MySQL and PostgreSQL run `prisma migrate status` in `apps/api`. Connection strings are redacted in the report.
 

@@ -1,5 +1,13 @@
 # @ysk-kit/application
 
+## 1.6.11
+
+### Patch Changes
+
+- 511106a: Lockstep patch for the 2026-11-15 stable weekly. `engines.node` is `>=26.13.1` (Node 26.13.1 LTS Lithium security release). Supply catalog floors are 26.13.1 / 24.22.3 / 22.23.5 (`updated` 2026-11-15); keep CVE-2026-111497 and add the 26.13.1 http2/tls IDs (CVE-2026-123863, 123864, 123865, 123866, 123872, 123874, 126051 and siblings). pnpm is 12.21.0 (`latest` = `latest-12` = `next-12`). Electron 44.11.3 (45 stays held), Expo 58.0.25, Vite 8.3.8, `@vitejs/plugin-react` 6.3.0, jose 6.2.17, `@bull-board/*` 9.13.1 (coordinated; supersedes Dependabot #104), nodemailer 10.5.0, AWS SDK 3.1169.0, BullMQ 6.7.6, Playwright 1.65.1, `@fastify/cors` 11.4.3, turbo 2.11.11. Optional OpenTelemetry `sdk-trace-base` / `sdk-trace-node` 2.12.1 (`latest-2`; non-deprecated patch; `latest` remains 2.12.0). Compose Grafana 13.3.1 (CVE-2026-102589, 107509, 110992, 111024, 13721, 14242). CI `pnpm/action-setup` stays v6.1.1. `pnpm audit` currently reports one ignored moderate (minimatch 10 / GHSA-g3hv); glob is 14.0.4 so GHSA-3g3m is not matching, ignore entry kept. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors (#100–#107 / #81), undici 8, seroval 1.8. No AGENTS or skill churn.
+- Updated dependencies [511106a]
+  - @ysk-kit/contracts@1.6.11
+
 ## 1.6.10
 
 ### Patch Changes

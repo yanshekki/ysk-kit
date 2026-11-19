@@ -1,5 +1,11 @@
 # @ysk-kit/create-app
 
+## 1.6.12
+
+### Patch Changes
+
+- 633ddd1: Lean plans by default, `check docs-budget`, four agent skill routers, and a shorter `AGENTS.md`.
+
 ## 1.6.11
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @ysk-kit/api-http
 
+## 1.6.12
+
+### Patch Changes
+
+- 633ddd1: Lean plans by default, `check docs-budget`, four agent skill routers, and a shorter `AGENTS.md`.
+- Updated dependencies [633ddd1]
+  - @ysk-kit/auth@1.6.12
+  - @ysk-kit/contracts@1.6.12
+  - @ysk-kit/domain-kernel@1.6.12
+
 ## 1.6.11
 
 ### Patch Changes

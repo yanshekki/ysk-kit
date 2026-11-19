@@ -39,7 +39,7 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 <!-- docs-budget-new -->
 
-## Unreleased
+## v1.6.12
 
 ### 改進
 

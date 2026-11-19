@@ -16,7 +16,7 @@ This kit is not a deployed product. Hosts and SHAs stay `unset`. Do not copy ano
 
 Max 3 dated plans (or none).
 
-1. `cursor/agent-context-budget-3b21` — shorten agent context (lean plans, docs-budget, four skill routers)
+None.
 
 ## Frozen decisions
 

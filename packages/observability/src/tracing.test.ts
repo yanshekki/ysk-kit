@@ -1,6 +1,6 @@
 import { Writable } from 'node:stream';
 import { AggregationTemporality, InMemoryMetricExporter } from '@opentelemetry/sdk-metrics';
-import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
+import { InMemorySpanExporter } from '@opentelemetry/sdk-trace';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import { createLogger } from '@ysk-kit/logger';
 import { describe, expect, it } from 'vitest';

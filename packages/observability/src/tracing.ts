@@ -1,4 +1,5 @@
-import { type Meter, metrics, trace } from '@opentelemetry/api';
+import { context, type Meter, metrics, trace } from '@opentelemetry/api';
+import { AsyncLocalStorageContextManager } from '@opentelemetry/context-async-hooks';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
@@ -13,8 +14,8 @@ import {
   BatchSpanProcessor,
   SimpleSpanProcessor,
   type SpanExporter,
-} from '@opentelemetry/sdk-trace-base';
-import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
+  TracerProvider,
+} from '@opentelemetry/sdk-trace';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 
 export type OtelHandle = {
@@ -75,17 +76,18 @@ export const startOtelFromEnv = (
     [ATTR_SERVICE_NAME]: env.OTEL_SERVICE_NAME ?? opts?.defaultServiceName ?? 'ysk-api',
   });
 
-  let tracerProvider: NodeTracerProvider | undefined;
+  let tracerProvider: TracerProvider | undefined;
   if (traceExporter) {
-    tracerProvider = new NodeTracerProvider({
+    context.setGlobalContextManager(new AsyncLocalStorageContextManager());
+    tracerProvider = new TracerProvider({
       resource,
       spanProcessors: [
         opts?.exporter
-          ? new SimpleSpanProcessor(traceExporter)
-          : new BatchSpanProcessor(traceExporter),
+          ? new SimpleSpanProcessor({ exporter: traceExporter })
+          : new BatchSpanProcessor({ exporter: traceExporter }),
       ],
     });
-    tracerProvider.register();
+    trace.setGlobalTracerProvider(tracerProvider);
     if (opts?.instrumentHttp ?? Boolean(tracesEndpoint)) {
       registerInstrumentations({ instrumentations: [new HttpInstrumentation()] });
     }

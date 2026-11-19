@@ -39,6 +39,18 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 
 <!-- docs-budget-new -->
 
+## Unreleased
+
+### Improvements
+
+- CI `thin-smoke` checks the four agent skill routers (`plan`, `implement`, `verify`, `review`). `docs/agent/NOW.md` in-progress is empty after v1.6.12.
+
+### Dependency upgrades
+
+- Electron **45.4.1** (owner-approved major; Dependabot #118 asked 45.3.2). Biome **2.6.8** (#116; `linter.rules.preset`; Markdown/YAML formatters off; `*.yml`/`*.yaml` excluded because the OpenAPI dump is not Biome-YAML). `@testing-library/user-event` **14.6.13** (#117 asked 14.6.10). Coordinated OpenTelemetry: `api` **1.10.0**, `resources` / `sdk-metrics` / `sdk-trace` / `context-async-hooks` **3.1.1**, experimental OTLP/instrumentation **0.301.2** (supersedes #119, #111, #115, #114, #113, #112, #81). Trace SDK is `@opentelemetry/sdk-trace` (no `sdk-trace-node` 3.x). Held: TypeScript 7, Prisma 8 RC.
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.12
 
 ### Improvements

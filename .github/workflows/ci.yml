@@ -66,25 +66,11 @@ jobs:
         working-directory: /tmp/ysk-thin-smoke
         run: |
           test -f AGENTS.md
-          test -f .agents/skills/plan-feature/SKILL.md
-          test -f .agents/skills/test-plan/SKILL.md
-          test -f .agents/skills/write-tests/SKILL.md
-          test -f .agents/skills/ui-design/SKILL.md
-          test -f .agents/skills/ui-review/SKILL.md
-          test -f .agents/skills/layout-system/SKILL.md
-          test -f .agents/skills/security-review/SKILL.md
-          test -f .agents/skills/db-migration/SKILL.md
-          test -f .agents/skills/webhook-handling/SKILL.md
-          test -f .agents/skills/desktop-electron/SKILL.md
-          test -f .agents/skills/contract-change/SKILL.md
-          test -f .agents/skills/debug-issue/SKILL.md
-          test -f .agents/skills/review-change/SKILL.md
-          test -f .agents/skills/llm-feature/SKILL.md
-          test -f .agents/skills/error-log-review/SKILL.md
-          test -f .agents/skills/supply-scan/SKILL.md
-          test -f .agents/skills/upgrade-kit/SKILL.md
-          test -f .agents/skills/audit-slice/SKILL.md
-          test -f .agents/skills/clarify-feature/SKILL.md
+          test -f .agents/skills/plan/SKILL.md
+          test -f .agents/skills/implement/SKILL.md
+          test -f .agents/skills/verify/SKILL.md
+          test -f .agents/skills/review/SKILL.md
+          test ! -e .agents/skills/plan-feature/SKILL.md
           test -f .cursor/rules/security.mdc
           test -f .cursor/rules/desktop.mdc
           test -f docs/plans/_template.md

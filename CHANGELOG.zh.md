@@ -39,6 +39,18 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 <!-- docs-budget-new -->
 
+## Unreleased
+
+### 改進
+
+- CI `thin-smoke` 檢查四個 agent skill 路由器（`plan`、`implement`、`verify`、`review`）。v1.6.12 之後 `docs/agent/NOW.md` 進行中清單為空。
+
+### 依賴升級
+
+- Electron **45.4.1**（擁有者已批准 major；Dependabot #118 要求 45.3.2）。Biome **2.6.8**（#116；`linter.rules.preset`；關閉 Markdown／YAML formatter；排除 `*.yml`／`*.yaml`，因為 OpenAPI 傾印不是 Biome-YAML）。`@testing-library/user-event` **14.6.13**（#117 要求 14.6.10）。OpenTelemetry 整組：`api` **1.10.0**、`resources`／`sdk-metrics`／`sdk-trace`／`context-async-hooks` **3.1.1**、實驗 OTLP／instrumentation **0.301.2**（取代 #119、#111、#115、#114、#113、#112、#81）。Trace SDK 改用 `@opentelemetry/sdk-trace`（沒有 `sdk-trace-node` 3.x）。暫緩：TypeScript 7、Prisma 8 RC。
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.12
 
 ### 改進

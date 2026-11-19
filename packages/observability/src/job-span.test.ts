@@ -1,5 +1,5 @@
 import { SpanStatusCode } from '@opentelemetry/api';
-import { InMemorySpanExporter } from '@opentelemetry/sdk-trace-base';
+import { InMemorySpanExporter } from '@opentelemetry/sdk-trace';
 import { describe, expect, it } from 'vitest';
 import { withJobSpan } from './job-span.js';
 import { pinoOtelMixin } from './pino-otel-mixin.js';

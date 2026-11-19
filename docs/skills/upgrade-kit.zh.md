@@ -44,7 +44,7 @@ Language: [English](upgrade-kit.md) · 中文
 
    `--repo-only --online` 就是 CI 跑的內容。不要加 Trivy。不要發明靜態 npm registry token（npm Trusted Publishing／OIDC 即可）。
 
-4. **分類。** 符合 engines 與 peers 的安全 patch／minor → 升。Major 或破壞 peer → 暫緩等使用者批准。暫緩例子（2026-10-25）：Electron **45.0.0**（2026-10-20 起已是穩定版；未批准前留在 44.x）、TypeScript **7**、Prisma **8**（`latest` 仍是 RC）。既有 `@ts-rest/core` `3.53.0-rc.1` 維持；不要引入**新的**預發佈。
+4. **分類。** 符合 engines 與 peers 的安全 patch／minor → 升。Major 或破壞 peer → 暫緩等使用者批准。暫緩例子：TypeScript **7**、Prisma **8**（`latest` 仍是 RC）。Electron **45** 已批准並在本 kit。既有 `@ts-rest/core` `3.53.0-rc.1` 維持；不要引入**新的**預發佈。
 
 5. **一條分支。** 安全 bump 與緊急漏洞修補放同一條。公開 `@ysk-kit/*` 有使用者可見改動時，用 lockstep patch changeset。`main` 上只有已合併的 Dependabot、沒有產品／文件／AGENTS 工作，**不必**單獨發佈。
 
@@ -95,11 +95,11 @@ Release: vX.Y.Z changeset | no release needed
 | 症狀 | 改做 |
 |---|---|
 | 在本 kit 跑 `pnpm ysk-kit upgrade` 來「升依賴」 | 用本 skill；dest 更新是 [upgrade](../guides/upgrade.zh.md) |
-| Electron 45／TS 7／Prisma 8「因為是 latest」 | 暫緩；先問 |
+| TS 7／Prisma 8「因為是 latest」 | 暫緩；先問 |
 | 貼上靜態 npm registry token | 只用 Trusted Publishing／OIDC |
 | 因 Actions 配額紅燈而跳過閘 | 跑上面的本機清單；把結果寫下來 |
 | 一次加一堆低價值 skill | 每週最多 1–2 個高槓桿雙語 skill |
 
 ## 升級／詢問
 
-Major（Electron 45、TypeScript 7、Prisma 8、新的預設 HTTP adapter）、新的 envelope 例外，或從筆電發佈之前，先問。
+Major（TypeScript 7、Prisma 8、新的 Electron major、新的預設 HTTP adapter）、新的 envelope 例外，或從筆電發佈之前，先問。

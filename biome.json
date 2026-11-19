@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
   "extends": ["@ysk-kit/biome/biome"],
   "files": {
     "includes": [
@@ -11,6 +11,8 @@
       "!**/coverage",
       "!**/.expo",
       "!**/pnpm-lock.yaml",
+      "!**/*.yml",
+      "!**/*.yaml",
       "!**/routeTree.gen.ts",
       "!**/apps/api/src/generated",
       "!**/tooling/ysk-cli/fixtures",

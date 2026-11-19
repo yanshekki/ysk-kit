@@ -36,10 +36,10 @@
     "check:links": "node .github/check-md-links.mjs"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.15",
+    "@biomejs/biome": "^2.6.8",
     "@changesets/cli": "^3.0.3",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.13",
     "@vitest/coverage-v8": "^5.1.0",
     "@vitejs/plugin-react": "^6.3.0",
     "happy-dom": "^21.0.4",

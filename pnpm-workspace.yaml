@@ -70,15 +70,15 @@ auditConfig:
     - GHSA-g3hv-75wg-m249
 
 minimumReleaseAgeExclude:
-  - "@biomejs/biome@2.5.15"
-  - "@biomejs/cli-darwin-arm64@2.5.15"
-  - "@biomejs/cli-darwin-x64@2.5.15"
-  - "@biomejs/cli-linux-arm64-musl@2.5.15"
-  - "@biomejs/cli-linux-arm64@2.5.15"
-  - "@biomejs/cli-linux-x64-musl@2.5.15"
-  - "@biomejs/cli-linux-x64@2.5.15"
-  - "@biomejs/cli-win32-arm64@2.5.15"
-  - "@biomejs/cli-win32-x64@2.5.15"
+  - "@biomejs/biome@2.6.8"
+  - "@biomejs/cli-darwin-arm64@2.6.8"
+  - "@biomejs/cli-darwin-x64@2.6.8"
+  - "@biomejs/cli-linux-arm64-musl@2.6.8"
+  - "@biomejs/cli-linux-arm64@2.6.8"
+  - "@biomejs/cli-linux-x64-musl@2.6.8"
+  - "@biomejs/cli-linux-x64@2.6.8"
+  - "@biomejs/cli-win32-arm64@2.6.8"
+  - "@biomejs/cli-win32-x64@2.6.8"
   - pg-cloudflare@1.4.1
   - pg-connection-string@2.14.1
   - pg-protocol@1.16.1
@@ -124,7 +124,7 @@ minimumReleaseAgeExclude:
   - "@react-native/babel-plugin-codegen@0.88.1"
   - "@react-native/js-polyfills@0.88.1"
   - bullmq@6.7.6
-  - electron@44.11.3
+  - electron@45.4.1
   - body-parser@2.4.0
   - undici@7.30.2
   - fast-uri@3.1.9 || 4.2.3
@@ -135,8 +135,15 @@ minimumReleaseAgeExclude:
   - nodemailer@10.5.0
   - "@types/node@26.6.6"
   - "@opentelemetry/semantic-conventions@1.45.0"
-  - "@opentelemetry/sdk-trace-base@2.12.1"
-  - "@opentelemetry/sdk-trace-node@2.12.1"
+  - "@opentelemetry/api@1.10.0"
+  - "@opentelemetry/context-async-hooks@3.1.1"
+  - "@opentelemetry/resources@3.1.1"
+  - "@opentelemetry/sdk-metrics@3.1.1"
+  - "@opentelemetry/sdk-trace@3.1.1"
+  - "@opentelemetry/exporter-metrics-otlp-http@0.301.2"
+  - "@opentelemetry/exporter-trace-otlp-http@0.301.2"
+  - "@opentelemetry/instrumentation@0.301.2"
+  - "@opentelemetry/instrumentation-http@0.301.2"
   - turbo@2.11.11
   - vite@8.3.8
   - "@vitejs/plugin-react@6.3.0"
@@ -150,3 +157,4 @@ minimumReleaseAgeExclude:
   - "@expo/log-box@58.0.14 || 58.0.15"
   - "@expo/schema-utils@58.0.3"
   - supertest@7.3.2
+  - "@testing-library/user-event@14.6.13"

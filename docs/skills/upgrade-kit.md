@@ -44,7 +44,7 @@ Do not use to copy guardrails into a product (`ysk-kit upgrade`), to add a modul
 
    `--repo-only --online` is what CI runs. Do not add Trivy. Do not invent a static npm registry token (Trusted Publishing / OIDC only).
 
-4. **Classify.** Safe patch / minor that satisfies engines and peers → bump. Major or peer-breaking → hold for user approval. Ranked hold examples (2026-10-25): Electron **45.0.0** (stable since 2026-10-20; stay on 44.x until approved), TypeScript **7**, Prisma **8** (`latest` is still RC). Existing `@ts-rest/core` `3.53.0-rc.1` stays; do not introduce **new** pre-releases.
+4. **Classify.** Safe patch / minor that satisfies engines and peers → bump. Major or peer-breaking → hold for user approval. Ranked hold examples: TypeScript **7**, Prisma **8** (`latest` is still RC). Electron **45** was approved and is on the living kit. Existing `@ts-rest/core` `3.53.0-rc.1` stays; do not introduce **new** pre-releases.
 
 5. **One branch.** Apply safe bumps + critical vuln fixes together. Lockstep patch changeset across public `@ysk-kit/*` when user-facing packages change. Dependabot-only merges on `main` without product/docs/AGENTS work do **not** need a release by themselves.
 
@@ -95,11 +95,11 @@ Safe stables are on the branch or explicitly skipped with a reason. Majors are n
 | Symptom | Do this instead |
 |---|---|
 | `pnpm ysk-kit upgrade` on this kit to “bump deps” | This skill; dest refresh is [upgrade](../guides/upgrade.md) |
-| Electron 45 / TS 7 / Prisma 8 “because latest” | Hold; ask |
+| TS 7 / Prisma 8 “because latest” | Hold; ask |
 | Paste a static npm registry token | Trusted Publishing / OIDC only |
 | Skip gates because Actions is red on quota | Run the local list above; document results |
 | New skill spam | At most 1–2 high-leverage bilingual skills per week |
 
 ## Escalate / ask
 
-Ask before a major (Electron 45, TypeScript 7, Prisma 8, a new default HTTP adapter), before adding an envelope exception, or before publishing from a laptop.
+Ask before a major (TypeScript 7, Prisma 8, a new Electron major, a new default HTTP adapter), before adding an envelope exception, or before publishing from a laptop.

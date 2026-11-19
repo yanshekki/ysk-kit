@@ -118,6 +118,16 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.13
+
+#### 改進
+
+- CI `thin-smoke` 檢查四個 skill 路由器（`plan`、`implement`、`verify`、`review`）。`docs/agent/NOW.md` 進行中清單為空。
+
+#### 依賴升級
+
+- Electron **45.4.1**。Biome **2.6.8**。`@testing-library/user-event` **14.6.13**。OpenTelemetry `api` **1.10.0**、`resources`／`sdk-metrics`／`sdk-trace` **3.1.1**、實驗 **0.301.2**。
+
 ### v1.6.12
 
 #### 改進
@@ -133,12 +143,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 內部／CI
 
 - 供應鏈目錄下限 **26.13.1／24.22.3／22.23.5**（Node 26.13.1 安全 CVE；保留 CVE-2026-111497）。Compose Grafana **13.3.1**。可選 OTEL `sdk-trace-*` **2.12.1**。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。AGENTS／skill 本週不改。
-
-### v1.6.10
-
-#### 新功能
-
-- `create-ysk-app --with-rust-sidecar`（TTY 預設 **no**）在帶 API 的 flavor 複製 dest 專用 `crates/ysk-sidecar` crate，放在 `ICryptoPort` 背後。私有換行 JSON stdio。`@ysk-kit/crypto` `createStdioCryptoPort`。食譜：[Rust sidecar](docs/recipes/rust-sidecar.zh.md)。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

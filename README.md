@@ -118,6 +118,16 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.13
+
+#### Improvements
+
+- CI `thin-smoke` checks the four skill routers (`plan`, `implement`, `verify`, `review`). `docs/agent/NOW.md` in-progress is empty.
+
+#### Dependency upgrades
+
+- Electron **45.4.1**. Biome **2.6.8**. `@testing-library/user-event` **14.6.13**. OpenTelemetry `api` **1.10.0**, `resources` / `sdk-metrics` / `sdk-trace` **3.1.1**, experimental **0.301.2**.
+
 ### v1.6.12
 
 #### Improvements
@@ -133,12 +143,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Internal/CI
 
 - Supply catalog floors **26.13.1 / 24.22.3 / 22.23.5** (Node 26.13.1 security CVEs; keep CVE-2026-111497). Compose Grafana **13.3.1**. Optional OTEL `sdk-trace-*` **2.12.1**. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors. No AGENTS or skill churn.
-
-### v1.6.10
-
-#### New features
-
-- `create-ysk-app --with-rust-sidecar` (TTY default **no**) copies a dest-only `crates/ysk-sidecar` crate behind `ICryptoPort` on API flavors. Private newline-JSON stdio. `@ysk-kit/crypto` `createStdioCryptoPort`. Recipe: [Rust sidecar](docs/recipes/rust-sidecar.md).
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

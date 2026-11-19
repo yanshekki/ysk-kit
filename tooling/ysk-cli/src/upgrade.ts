@@ -20,6 +20,7 @@ export const UPGRADE_PATHS = [
   'packages/biome-config',
   'docs/skills',
   'docs/plans',
+  'docs/agent',
   '.agents',
   '.gemini',
   '.github/copilot-instructions.md',

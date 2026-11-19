@@ -93,7 +93,7 @@ pnpm ysk-kit doctor
 Expected: exit 0 (`ok` / `warn` only). `error` means env, engines, migrations, or guardrails.
 
 - [ ] `.ysk-kit.json` records flavor, preset, db, and kit version
-- [ ] `AGENTS.md` and `.agents/skills/add-module/SKILL.md` exist (workspace products)
+- [ ] `AGENTS.md` and `.agents/skills/{plan,implement,verify,review}/SKILL.md` exist (workspace products)
 - [ ] Seed login works on flavors that have an API
 - [ ] Human-filled fields are listed for the owner (not invented by the agent)
 

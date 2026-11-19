@@ -1,3 +1,7 @@
+---
+plan: full
+---
+
 # Plan: {{title}}
 
 Language: Chinese pair `{{date}}-{{slug}}.zh.md` · English `{{date}}-{{slug}}.md`

@@ -9,13 +9,14 @@ pnpm ysk-kit add module <kebab-name> [--prisma] [--web] [--no-web]
 pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
-pnpm ysk-kit check agent
-pnpm ysk-kit check errors
-pnpm ysk-kit check logs [--file <jsonl>]
-pnpm ysk-kit check supply [--json] [--repo-only] [--online]
-pnpm ysk-kit doctor [--json]
-pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
-pnpm ysk-kit plan --check <file>
+  pnpm ysk-kit check agent
+  pnpm ysk-kit check errors
+  pnpm ysk-kit check docs-budget
+  pnpm ysk-kit check logs [--file <jsonl>]
+  pnpm ysk-kit check supply [--json] [--repo-only] [--online]
+  pnpm ysk-kit doctor [--json]
+  pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force] [--lean] [--full] [--zh]
+  pnpm ysk-kit plan --check <file>
 ```
 
 環境變數：`YSK_ROOT` — 要修補的產品根目錄。未設定時預設為本 kit。
@@ -134,6 +135,7 @@ pnpm ysk-kit check agent
 | `pointer-agents-md` | `CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.gemini/settings.json`、`.cursor/rules/*.mdc`、`.github/instructions/*.instructions.md`、skill 的 `SKILL.md` 副本 | 檔案存在但不含 `AGENTS.md` |
 | `skill-drift` | `.agents/skills`、`.claude/skills`、`.cursor/skills`、`.grok/skills`，以及（若存在）kit 模板 | 副本缺失或內容不同 |
 | `agents-md-budget` | 產品根底下每個 `AGENTS.md` | UTF-8 合計超過 24 KiB |
+| `docs-budget` | README Unreleased、CHANGELOG 新區、`plan: lean` 檔、git index | Unreleased 儲存格超過 800 字；`<!-- docs-budget-new -->` 與 `<!-- docs-budget-legacy -->` 之間出現禁止句子；精簡計劃超過 8 KiB；git-add 了 `docs/qa/**/*.png` |
 | `rust-sidecar-boundary` | 若存在 `crates/ysk-sidecar/Cargo.toml` 與 create-app crate 模板 | 依賴 axum／actix-web／warp；README 沒提 `ICryptoPort`；`src/main.rs` 有 `unsafe` |
 
 略過：`*.test.ts` / `*.test.tsx`、註解行、`node_modules`、`dist`、`generated`、`coverage`。Prisma schema 的 `enum UserStatus` 在 `.prisma` 檔，不是 TypeScript，不會掃描。
@@ -203,12 +205,24 @@ pnpm ysk-kit check supply --json
 
 Doctor 把 Node runtime 下限未過列為**錯誤**。CI 跑 `--repo-only --online`，不再直接跑 `pnpm audit`。程序：[supply-scan](../skills/supply-scan.zh.md)。操作手冊：[掃描供應鏈](../recipes/scan-supply.zh.md)。
 
+## `ysk-kit check docs-budget`
+
+README Unreleased 儲存格超過 800 字、CHANGELOG 在 `<!-- docs-budget-new -->` 與 `<!-- docs-budget-legacy -->` 之間出現禁止句子、`plan: lean` 檔超過 8 KiB，或 git-add 了 `docs/qa/**/*.png` 時失敗。也作為 `check agent` 規則 `docs-budget` 執行。
+
+```text
+pnpm ysk-kit check docs-budget
+```
+
+退出 0 時列印 `ysk-kit check docs-budget: ok`。
+
 ## `ysk-kit plan`
 
-按 [docs/plans/_template.md](../plans/_template.md) 寫出雙語功能計劃。
+寫出功能計劃。預設英文精簡，來自 [docs/plans/_template-lean.md](../plans/_template-lean.md)（`plan: lean`，六章）。
 
 ```text
 pnpm ysk-kit plan <kebab-slug>
+pnpm ysk-kit plan <kebab-slug> --full
+pnpm ysk-kit plan <kebab-slug> --zh
 pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
 pnpm ysk-kit plan <kebab-slug> --force
 pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
@@ -217,10 +231,13 @@ pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
 | 旗標 | 作用 |
 |---|---|
 | `--date YYYY-MM-DD` | 檔名中的曆日。預設：今天（本地） |
-| `--force` | 覆寫已有的日期配對 |
-| `--check <file>` | 缺必要標題或仍是佔位內容時退出 1 |
+| `--force` | 覆寫已有的日期檔 |
+| `--lean` | 明確精簡（預設）。不可與 `--full` 並用 |
+| `--full` | 19 章模板（`plan: full`） |
+| `--zh` | 同時寫中文配對 |
+| `--check <file>` | 缺必要標題時退出 1。`plan: lean` 用精簡標題；未標記與舊檔用完整標題。空章節與 `none`／`n/a` 通過 |
 
-會建立 `docs/plans/<date>-<slug>.md`、`docs/plans/<date>-<slug>.zh.md`，以及根目錄 `plan.md` 指針（已 gitignore）。Slug 必須符合 `^[a-z][a-z0-9-]*$`。程序：[plan-feature](../skills/plan-feature.zh.md)。模板章節與工具計劃模式：[docs/plans/README.zh.md](../plans/README.zh.md)。
+會建立 `docs/plans/<date>-<slug>.md` 與根目錄 `plan.md` 指針（已 gitignore）。`--zh` 才寫 `.zh.md`。Slug 必須符合 `^[a-z][a-z0-9-]*$`。程序：[plan-feature](../skills/plan-feature.zh.md)。模板章節：[docs/plans/README.zh.md](../plans/README.zh.md)。
 
 ## `ysk-kit doctor`
 

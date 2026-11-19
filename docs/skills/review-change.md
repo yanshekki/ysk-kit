@@ -1,10 +1,10 @@
 ---
 name: review-change
 description: >
-  Review a YSK Kit diff on two axes: Law (AGENTS.md hard rules, definition of
-  done, Do-not list) and Spec (the dated plan's scope and checklist). Flag
-  high-risk items for a human. Use when asked to review a PR, a branch vs
-  main, or uncommitted work; or /review-change.
+  Review a YSK Kit diff on two axes: Law (AGENTS.md hard rules and Do-not
+  list) and Spec (the dated plan). Flag high-risk items for a human.
+  Use when asked to review a PR, a branch vs main, or uncommitted work;
+  or /review-change.
   中文：審查、法律軸、計劃軸、高風險人工、合理化表。
   Do not use for implementing the change (plan-feature), a combined Staff/QA
   audit (audit-slice), or a dedicated security/Prisma deep dive
@@ -22,7 +22,7 @@ Review the **diff**, using the repo as research. Law: [AGENTS.md](../../AGENTS.m
 - The user asks for a review of a PR, a branch vs `main`, or the working tree.
 - A plan’s checklist is about to be marked done.
 
-Do not use this skill to implement the feature ([plan-feature](plan-feature.md)). For a combined Staff / Security / QA slice audit run [audit-slice](audit-slice.md). For authz/secrets/webhooks/LLM input run [security-review](security-review.md). For generated SQL run [db-migration](db-migration.md).
+Do not use this skill to implement the feature ([plan-feature](plan-feature.md)). Open [audit-slice](audit-slice.md) only when the user asks. Open [security-review](security-review.md) only when the diff touches auth, secrets, or webhooks. For generated SQL run [db-migration](db-migration.md).
 
 ## Inputs
 
@@ -34,7 +34,7 @@ Do not use this skill to implement the feature ([plan-feature](plan-feature.md))
 
 ## Two axes
 
-**Law** — AGENTS.md **hard rules** (currently twelve), [definition of done](../../AGENTS.md#definition-of-done), and the [Do not](../../AGENTS.md#do-not) list. Fail the review if any hard rule is broken (Prisma in a client, TypeScript `enum`, raw `fetch` to kit paths, new envelope exception without approval, live Stripe in unit tests, …).
+**Law** — AGENTS.md **hard rules** (currently twelve) and the [Do not](../../AGENTS.md#do-not) list. Fail the review if any hard rule is broken (Prisma in a client, TypeScript `enum`, raw `fetch` to kit paths, new envelope exception without approval, live Stripe in unit tests, …). The dated plan plus those hard rules replace any former “definition of done” heading.
 
 **Spec** — the dated plan’s Scope, Non-goals, task checklist, and verification commands. Fail if the diff ships work listed under Non-goals, or skips a checklist item without a recorded reason.
 
@@ -58,8 +58,8 @@ Hand those rows to [security-review](security-review.md) or [db-migration](db-mi
 ## Steps
 
 1. Confirm the base ref and print `git diff <base>...HEAD --stat`.
-2. Find the dated plan when the protocol required one. If it is missing, that is a Law finding (DoD).
-3. Walk Law (hard rules + DoD + Do-not). One row per finding.
+2. Find the dated plan when [When to plan](../../AGENTS.md#when-to-plan) required one. If it is missing, that is a Law finding.
+3. Walk Law (hard rules + Do-not). One row per finding.
 4. Walk Spec (scope, non-goals, checklist). One row per miss or extra.
 5. Run [verify-change](verify-change.md) (or record why you could not: no checkout, tests already running). Never claim “looks good” without the command output or an explicit blocker.
 6. Fill the [rationalization table](#output-format) for every Spec miss (“out of scope because…”, “deferred to …” with a file link). Empty reasons fail the review.
@@ -122,6 +122,6 @@ Ask before approving a hard-rule exception, a new envelope transport, or merging
 
 ## Sources
 
-- [AGENTS.md](../../AGENTS.md) hard rules, definition of done, Do-not
+- [AGENTS.md](../../AGENTS.md) hard rules, When to plan, Do-not
 - getsentry `security-review` (diff = report scope) — <https://github.com/getsentry/skills>
 - [security-review](security-review.md), [db-migration](db-migration.md), [verify-change](verify-change.md)

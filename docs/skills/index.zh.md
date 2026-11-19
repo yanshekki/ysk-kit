@@ -33,6 +33,60 @@ Language: [English](index.md) · 中文
 | [webhook-handling](webhook-handling.zh.md) | 入站 webhook（先 Stripe）：驗簽、確認、冪等 | 出站 Stripe SDK | Stripe webhooks／stripe/ai |
 | [desktop-electron](desktop-electron.zh.md) | Electron isolation、CSP、IPC、safeStorage | 只改 renderer UI | Electron security tutorial |
 
-共用包裝在 `.agents/skills/<name>/SKILL.md`（YAML `name` + `description`、短步驟摘要，然後指向此處）。`create-ysk-app` 與 `ysk-kit upgrade` 會從 `tooling/ysk-cli/templates/agent/` 把相同副本寫到 `.claude/skills/`、`.cursor/skills/` 與 `.grok/skills/`。若副本漂移或不提 `AGENTS.md`，`pnpm ysk-kit check agent` 會失敗。
+共用包裝是 **四個路由器**（`plan`、`implement`、`verify`、`review`），在 `.agents/skills/<name>/SKILL.md`。正文必須提到 `AGENTS.md`。`create-ysk-app` 與 `ysk-kit upgrade` 會從 `tooling/ysk-cli/templates/agent/` 把相同副本寫到 `.claude/skills/`、`.cursor/skills/` 與 `.grok/skills/`。若副本漂移或不提 `AGENTS.md`，`pnpm ysk-kit check agent` 會失敗。
 
-其他 agent 先讀 `AGENTS.md`，再跟本目錄。
+- **plan** → [plan-feature](plan-feature.zh.md)
+- **implement** → 本目錄；只打開對得上的程序。若產品有 fund-protocol 文件就跟隨它。本 kit 不附該檔。
+- **verify** → [verify-change](verify-change.zh.md)
+- **review** → [review-change](review-change.zh.md)。只有 diff 碰到授權、密鑰或 webhook 才打開 [security-review](security-review.zh.md)。只有使用者要求才打開 [audit-slice](audit-slice.zh.md)。
+
+先讀 [AGENTS.zh.md](../../AGENTS.zh.md) 與 [docs/agent/NOW.md](../agent/NOW.md)。
+
+## 任務索引
+
+| 任務 | 讀 |
+|---|---|
+| 計劃功能 | [plan-feature](plan-feature.zh.md)、[docs/plans/_template-lean.md](../plans/_template-lean.md)（`--full`：[_template.md](../plans/_template.md)） |
+| 澄清未決問題 | [clarify-feature](clarify-feature.zh.md) |
+| 精簡／完整路徑 | [sdd-path](../plans/sdd-path.zh.md) |
+| 搭產品 | [new-product](new-product.zh.md)、[create-ysk-app](../cli/create-ysk-app.zh.md) |
+| 加資源 | [add-module](add-module.zh.md)、[操作手冊](../recipes/add-module.zh.md) |
+| 開發者 how-to | [docs/recipes/](../recipes/README.zh.md) |
+| 還原 llm／team／billing／push | [add-capability](add-capability.zh.md) |
+| envelope／SSE／PDF | [envelope-api](envelope-api.zh.md)、[envelope 指南](../guides/envelope.zh.md) |
+| DTO／路徑／OpenAPI | [contract-change](contract-change.zh.md) |
+| 紅燈測試或使用者回報 | [debug-issue](debug-issue.zh.md) |
+| INTERNAL／5xx JSON 日誌 | [error-log-review](error-log-review.zh.md) |
+| CVE／第三方版本 | [supply-scan](supply-scan.zh.md) |
+| Kit 依賴／Dependabot | [upgrade-kit](upgrade-kit.zh.md) |
+| 審查 PR／分支 | [review-change](review-change.zh.md) |
+| Staff／QA 切片審計 | [audit-slice](audit-slice.zh.md) |
+| 產品 LLM prompt | [llm-feature](llm-feature.zh.md) |
+| `pnpm layers` 失敗 | [fix-layers](fix-layers.zh.md)、[hexagonal](../guides/hexagonal.zh.md) |
+| 任何功能之後 | [verify-change](verify-change.zh.md) |
+| 計劃如何測試 | [test-plan](test-plan.zh.md) |
+| 寫測試 | [write-tests](write-tests.zh.md)、[測試指南](../guides/testing.zh.md) |
+| 版面結構 | [layout-system](layout-system.zh.md) |
+| 加或改畫面 | [ui-design](ui-design.zh.md) |
+| 完成 UI | [ui-review](ui-review.zh.md) |
+| 本地化 UI／envelope 字串 | [i18n-localize](i18n-localize.zh.md) |
+| 安全審查 | [security-review](security-review.zh.md) |
+| Prisma 遷移 | [db-migration](db-migration.zh.md) |
+| 入站 webhook | [webhook-handling](webhook-handling.zh.md) |
+| Electron 桌面 | [desktop-electron](desktop-electron.zh.md) |
+| 更新產品 | [upgrade](../guides/upgrade.zh.md) |
+| CLI 旗標 | [ysk-kit](../cli/ysk-kit.zh.md) |
+
+## 編碼工具
+
+官方載入規則（不要另發明慣例檔）：
+
+| 工具 | 讀甚麼 | 本倉 |
+|---|---|---|
+| Codex | `AGENTS.md`，較近的 nested 優先；skills `.agents/skills/` | 根與 nested `AGENTS.md`。 |
+| OpenCode | 專案 `AGENTS.md`。沒有 `AGENTS.md` 才 fallback `CLAUDE.md` | 靠 `AGENTS.md`。 |
+| Grok Build | 相符的 `AGENTS.md`／`CLAUDE.md`／`GEMINI.md` 加 `.grok/rules/` | 指針保持短。 |
+| Cursor | 根與 nested `AGENTS.md` 與 `CLAUDE.md`。`.cursor/rules/*.mdc`。Skills `.agents/skills/` | 範圍 `.mdc` 只做提醒。 |
+| Claude Code | `CLAUDE.md`（`@AGENTS.md`）。Skills **只** `.claude/skills/` | 在 `CLAUDE.md` 保留 `@AGENTS.md`。Kit 把 `.claude/skills/` 從 `.agents/skills/` 鏡像。 |
+| Copilot | `AGENTS.md`。`.github/copilot-instructions.md` | 指針保持短。 |
+| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]` | `GEMINI.md` 只做指針。 |

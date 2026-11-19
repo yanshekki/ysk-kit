@@ -30,7 +30,7 @@ Language: [English](ui-review.md) · 中文
 | axe | **可選** | 本倉**沒有** `@axe-core/playwright`。除非被要求，否則不要加。若本機有，對 `/login` 與改過的路由跑；serious／critical 必須為零 |
 | 減少動效 | 若加了動畫 | 系統「減少動態」或 `page.emulateMedia({ reducedMotion: 'reduce' })` |
 
-單張截圖**不算**核對。要操作流程：點、輸入、提交、失敗、再試。
+單張截圖**不算**核對。要操作流程：點、輸入、提交、失敗、再試。驗收看**行為**，不是每個功能一個 PNG 目錄。不要 git-add `docs/qa/**/*.png`。
 
 ## 清單
 

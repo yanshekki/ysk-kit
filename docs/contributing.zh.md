@@ -9,17 +9,19 @@ Language: [English](contributing.md) · 中文
 1. 寫程式之前先讀 [AGENTS.zh.md](../AGENTS.zh.md)。
 2. 新的 HTTP 資源由 `pnpm ysk-kit add module <kebab> --prisma --web` 開始。
 3. 業務規則放在 `application/`。Prisma 留在 `infra/`。
-4. [計劃協議](../AGENTS.zh.md#計劃協議)要求計劃時，先寫 `docs/plans/<yyyy-mm-dd>-<slug>.md`（`pnpm ysk-kit plan <slug>`）。實作之前 `pnpm ysk-kit plan --check <file>` 必須通過。
-5. 完成前執行：`pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors`。
+4. [何時寫計劃](../AGENTS.zh.md#何時寫計劃)要求計劃時，先寫 `docs/plans/<yyyy-mm-dd>-<slug>.md`（`pnpm ysk-kit plan <slug>`）。預設英文精簡。實作之前 `pnpm ysk-kit plan --check <file>` 必須通過。
+5. 完成前：單一套件 `pnpm --filter <pkg> test`；跨套件 `pnpm layers && pnpm typecheck && pnpm test && pnpm gen:openapi && pnpm ysk-kit check agent && pnpm ysk-kit check errors && pnpm ysk-kit check docs-budget`。
 
 不要把行業 domain（沙龍、交易所、地圖產品）加進本 kit。那些業務寫在 `create-ysk-app` 產生的產品倉。
 
 ## 文件
 
-每份給人讀的 Markdown 都成對：
+README、`docs/product/SPEC.md` 與指南仍然要英文 + 香港繁體配對：
 
 - 英文：`name.md`
 - 繁體香港書面語：`name.zh.md`
+
+計劃、skill 程序、QA 筆記與 `docs/agent/NOW.md` 用英文。那些檔的中文配對可選。
 
 檔案頂部互相連結：
 
@@ -60,8 +62,9 @@ Language: [English](foo.md) · 中文
 | 命令與旗標 | `docs/cli/` |
 | 概念 | `docs/guides/` |
 | 逐步操作 | `docs/recipes/` |
-| Agent 程序 | `docs/skills/`（`.agents/skills` 包裝只指向此處） |
+| Agent 程序 | `docs/skills/`（`.agents/skills` 四個路由器只指向此處） |
 | 功能計劃 | `docs/plans/<yyyy-mm-dd>-<slug>.md` |
+| Agent 記憶 | `docs/agent/NOW.md` |
 | 版本變更紀錄 | `CHANGELOG.md`（最近三個版本同時在根 README） |
 | 階段日記 | `docs/history.md` |
 | 路線圖 | `docs/product-plan.md` |
@@ -88,4 +91,4 @@ Language: [English](foo.md) · 中文
 
 先改英文來源，再更新中文對。
 
-`tooling/ysk-cli` 的配對測試會在 `docs/**/*.md` 缺少 `.zh.md` 兄弟檔時失敗。
+`tooling/ysk-cli` 的配對測試會在必要英文文件（README、SPEC、指南、CLI 手冊、操作手冊，以及 `docs/` 其餘部分，但不包括計劃、skill 程序、QA 筆記與 `docs/agent/`）缺少 `.zh.md` 兄弟檔時失敗。

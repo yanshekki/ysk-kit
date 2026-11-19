@@ -5,34 +5,18 @@ import { describe, expect, it } from 'vitest';
 
 const kitRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
-const SKILLS = [
-  'new-product',
-  'add-module',
-  'add-capability',
-  'verify-change',
-  'fix-layers',
-  'envelope-api',
-  'plan-feature',
-  'test-plan',
-  'write-tests',
-  'layout-system',
-  'ui-design',
-  'ui-review',
-  'security-review',
-  'db-migration',
-  'webhook-handling',
-  'desktop-electron',
-  'contract-change',
-  'debug-issue',
-  'review-change',
-  'llm-feature',
-  'error-log-review',
-  'i18n-localize',
-  'supply-scan',
-  'upgrade-kit',
-  'audit-slice',
-  'clarify-feature',
-] as const;
+const SKILL_ROUTERS = {
+  plan: 'docs/skills/plan-feature.md',
+  implement: 'docs/skills/index.md',
+  verify: 'docs/skills/verify-change.md',
+  review: 'docs/skills/review-change.md',
+} as const;
+
+const OPTIONAL_EN_ONLY = (rel: string): boolean =>
+  rel.startsWith('docs/plans/') ||
+  rel.startsWith('docs/skills/') ||
+  rel.startsWith('docs/qa/') ||
+  rel.startsWith('docs/agent/');
 
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.runs', 'coverage', 'generated']);
 
@@ -52,10 +36,14 @@ const walkMarkdown = (dir: string): string[] => {
 };
 
 describe('public docs language pairs', () => {
-  it('pairs every English docs/*.md with a .zh.md sibling', () => {
+  it('pairs required English docs with a .zh.md sibling', () => {
     const files = walkMarkdown(join(kitRoot, 'docs'));
     const english = files.filter((path) => !path.endsWith('.zh.md'));
-    const missing = english.filter((path) => !existsSync(path.replace(/\.md$/, '.zh.md')));
+    const missing = english.filter((path) => {
+      const rel = relative(kitRoot, path);
+      if (OPTIONAL_EN_ONLY(rel)) return false;
+      return !existsSync(path.replace(/\.md$/, '.zh.md'));
+    });
     expect(missing.map((path) => relative(kitRoot, path))).toEqual([]);
   });
 
@@ -77,15 +65,15 @@ describe('public docs language pairs', () => {
     expect(missing.map((path) => relative(kitRoot, path))).toEqual([]);
   });
 
-  it('ships agent skill templates that point at docs and law', () => {
+  it('ships four identical skill routers that point at docs and law', () => {
     const rule = join(kitRoot, 'tooling/ysk-cli/templates/agent/ysk-kit.mdc');
     expect(existsSync(rule), rule).toBe(true);
     expect(readFileSync(rule, 'utf8')).toContain('AGENTS.md');
-    for (const name of SKILLS) {
+    for (const [name, pointer] of Object.entries(SKILL_ROUTERS)) {
       const tmpl = join(kitRoot, 'tooling/ysk-cli/templates/agent/skills', name, 'SKILL.md');
       expect(existsSync(tmpl), tmpl).toBe(true);
       const body = readFileSync(tmpl, 'utf8');
-      expect(body).toContain(`docs/skills/${name}.md`);
+      expect(body).toContain(pointer);
       expect(body).toContain('AGENTS.md');
       const agents = join(kitRoot, '.agents/skills', name, 'SKILL.md');
       const claude = join(kitRoot, '.claude/skills', name, 'SKILL.md');

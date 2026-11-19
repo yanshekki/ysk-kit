@@ -33,6 +33,60 @@ Procedures for people and AI agents. Each skill has trigger, inputs, steps, veri
 | [webhook-handling](webhook-handling.md) | Inbound webhooks (Stripe first): signature, ack, idempotency | Outbound Stripe SDK | Stripe webhooks / stripe/ai |
 | [desktop-electron](desktop-electron.md) | Electron isolation, CSP, IPC, safeStorage | Renderer-only UI | Electron security tutorial |
 
-Shared wrappers live in `.agents/skills/<name>/SKILL.md` (YAML `name` + `description`, a short step summary, then a pointer here). `create-ysk-app` and `ysk-kit upgrade` also write identical copies to `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/` from `tooling/ysk-cli/templates/agent/`. `pnpm ysk-kit check agent` fails if those copies drift or drop `AGENTS.md`.
+Shared wrappers are **four routers** (`plan`, `implement`, `verify`, `review`) in `.agents/skills/<name>/SKILL.md`. Each body must mention `AGENTS.md`. `create-ysk-app` and `ysk-kit upgrade` write identical copies to `.claude/skills/`, `.cursor/skills/`, and `.grok/skills/` from `tooling/ysk-cli/templates/agent/`. `pnpm ysk-kit check agent` fails if those copies drift or drop `AGENTS.md`.
 
-Other agents read `AGENTS.md`, then this index.
+- **plan** → [plan-feature](plan-feature.md)
+- **implement** → this index; open only the matching procedure. If the product has a fund-protocol doc, follow it. This kit does not ship one.
+- **verify** → [verify-change](verify-change.md)
+- **review** → [review-change](review-change.md). Open [security-review](security-review.md) only when the diff touches auth, secrets, or webhooks. Open [audit-slice](audit-slice.md) only when the user asks.
+
+Read [AGENTS.md](../../AGENTS.md) and [docs/agent/NOW.md](../agent/NOW.md) first.
+
+## Task index
+
+| Task | Read |
+|---|---|
+| Plan a feature | [plan-feature](plan-feature.md), [docs/plans/_template-lean.md](../plans/_template-lean.md) (`--full`: [_template.md](../plans/_template.md)) |
+| Clarify open questions | [clarify-feature](clarify-feature.md) |
+| Lean / full path | [sdd-path](../plans/sdd-path.md) |
+| Scaffold a product | [new-product](new-product.md), [create-ysk-app](../cli/create-ysk-app.md) |
+| Add a resource | [add-module](add-module.md), [recipe](../recipes/add-module.md) |
+| Developer how-to | [docs/recipes/](../recipes/README.md) |
+| Restore llm / team / billing / push | [add-capability](add-capability.md) |
+| Envelope / SSE / PDF | [envelope-api](envelope-api.md), [envelope guide](../guides/envelope.md) |
+| DTO / path / OpenAPI | [contract-change](contract-change.md) |
+| Red test or user report | [debug-issue](debug-issue.md) |
+| INTERNAL / 5xx JSON logs | [error-log-review](error-log-review.md) |
+| CVE / third-party versions | [supply-scan](supply-scan.md) |
+| Kit deps / Dependabot | [upgrade-kit](upgrade-kit.md) |
+| Review a PR / branch | [review-change](review-change.md) |
+| Staff / QA slice audit | [audit-slice](audit-slice.md) |
+| Product LLM prompt | [llm-feature](llm-feature.md) |
+| `pnpm layers` failed | [fix-layers](fix-layers.md), [hexagonal](../guides/hexagonal.md) |
+| After any feature | [verify-change](verify-change.md) |
+| Plan how to test | [test-plan](test-plan.md) |
+| Write tests | [write-tests](write-tests.md), [testing guide](../guides/testing.md) |
+| Layout structure | [layout-system](layout-system.md) |
+| Add or change a screen | [ui-design](ui-design.md) |
+| Finish UI | [ui-review](ui-review.md) |
+| Localize UI / envelope strings | [i18n-localize](i18n-localize.md) |
+| Security review | [security-review](security-review.md) |
+| Prisma migration | [db-migration](db-migration.md) |
+| Inbound webhook | [webhook-handling](webhook-handling.md) |
+| Electron desktop | [desktop-electron](desktop-electron.md) |
+| Refresh a product | [upgrade](../guides/upgrade.md) |
+| CLI flags | [ysk-kit](../cli/ysk-kit.md) |
+
+## Coding tools
+
+Official loading rules (do not invent extra convention files):
+
+| Tool | What it reads | This repo |
+|---|---|---|
+| Codex | `AGENTS.md`, nested closer-wins; skills `.agents/skills/` | Root + nested `AGENTS.md`. |
+| OpenCode | Project `AGENTS.md`. Fallback `CLAUDE.md` only if no `AGENTS.md` | Rely on `AGENTS.md`. |
+| Grok Build | Matching `AGENTS.md` / `CLAUDE.md` / `GEMINI.md` plus `.grok/rules/` | Pointers stay tiny. |
+| Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc`. Skills `.agents/skills/` | Scoped `.mdc` files are reminders. |
+| Claude Code | `CLAUDE.md` (`@AGENTS.md`). Skills **only** `.claude/skills/` | Keep `@AGENTS.md` in `CLAUDE.md`. Kit mirrors `.claude/skills/` from `.agents/skills/`. |
+| Copilot | `AGENTS.md`. `.github/copilot-instructions.md` | Pointers stay short. |
+| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]` | `GEMINI.md` is a pointer only. |

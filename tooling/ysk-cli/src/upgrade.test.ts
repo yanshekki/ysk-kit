@@ -58,24 +58,15 @@ describe('ysk upgrade', () => {
     expect(existsSync(join(dest, 'packages/typescript-config/package.json'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/ysk-kit.mdc'))).toBe(true);
     expect(existsSync(join(dest, '.cursor/rules/contracts.mdc'))).toBe(true);
-    expect(existsSync(join(dest, '.grok/skills/add-module/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.cursor/skills/add-module/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/add-module/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/plan-feature/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/test-plan/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/ui-review/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/layout-system/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/security-review/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/desktop-electron/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/contract-change/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/llm-feature/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/error-log-review/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/i18n-localize/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/supply-scan/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/upgrade-kit/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/audit-slice/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.agents/skills/clarify-feature/SKILL.md'))).toBe(true);
-    expect(existsSync(join(dest, '.claude/skills/add-module/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.grok/skills/implement/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.cursor/skills/implement/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/implement/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/plan/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/verify/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/review/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, '.agents/skills/add-module/SKILL.md'))).toBe(false);
+    expect(existsSync(join(dest, '.claude/skills/implement/SKILL.md'))).toBe(true);
+    expect(existsSync(join(dest, 'docs/agent/NOW.md'))).toBe(true);
     expect(existsSync(join(dest, 'docs/plans/_template.md'))).toBe(true);
     expect(readFileSync(join(dest, 'docs/plans/_template.md'), 'utf8')).toContain(
       '## Current state and reuse',

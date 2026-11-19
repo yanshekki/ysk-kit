@@ -1,5 +1,11 @@
 # @ysk-kit/create-app
 
+## 1.6.13
+
+### Patch Changes
+
+- 828cea0: Electron 45.4.1, Biome 2.6.8, user-event 14.6.13, and a coordinated OpenTelemetry 3.1.1 / 0.301.2 / api 1.10.0 graph. CI thin-smoke checks the four skill routers.
+
 ## 1.6.12
 
 ### Patch Changes

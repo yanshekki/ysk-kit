@@ -29,7 +29,7 @@
     "@types/react-dom": "^19.3.0",
     "@playwright/test": "^1.65.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.10",
     "@vitejs/plugin-react": "^6.3.0",
     "happy-dom": "^21.0.4",
     "tailwindcss": "^4.3.5",

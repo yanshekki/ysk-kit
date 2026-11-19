@@ -118,6 +118,12 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.12
+
+#### 改進
+
+- 預設精簡計劃（`pnpm ysk-kit plan <slug>`）、四個 skill 路由器（`plan`、`implement`、`verify`、`review`）、`ysk-kit check docs-budget`，以及 `docs/agent/NOW.md`。根 `AGENTS.md` 約 5 KB。
+
 ### v1.6.11
 
 #### 依賴升級
@@ -133,16 +139,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 新功能
 
 - `create-ysk-app --with-rust-sidecar`（TTY 預設 **no**）在帶 API 的 flavor 複製 dest 專用 `crates/ysk-sidecar` crate，放在 `ICryptoPort` 背後。私有換行 JSON stdio。`@ysk-kit/crypto` `createStdioCryptoPort`。食譜：[Rust sidecar](docs/recipes/rust-sidecar.zh.md)。
-
-### v1.6.9
-
-#### 依賴升級
-
-- pnpm **12.18.0**（`latest` = `latest-12` = `next-12`）。Expo **58.0.23**。Electron **44.10.2**。Vite **8.3.6**。jose **6.2.15**。`@bull-board/*` **9.11.0**。nodemailer **10.4.0**。AWS SDK S3 **3.1164.0**。TanStack Query **5.107.1**。BullMQ **6.7.2**。Vitest **5.1.0**。Playwright **1.65.0**。
-
-#### 內部／CI
-
-- Compose Jaeger **2.23.0**、Prometheus **v3.16.0**、Grafana **13.3.0**。Override：`node-forge` 1.4.3、`undici` 7.30.2、`mariadb` 3.5.5。審計忽略現只剩 glob 13 與 minimatch 10。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

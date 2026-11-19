@@ -47,5 +47,7 @@ blob-report
 
 .runs/
 
+docs/qa/**/*.png
+
 # Dest-only Rust sidecar (`create-ysk-app --with-rust-sidecar`). This kit has no living crates/.
 crates/**/target/

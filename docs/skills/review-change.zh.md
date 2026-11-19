@@ -1,7 +1,7 @@
 ---
 name: review-change
 description: >
-  沿兩軸審查 YSK Kit diff：法律（AGENTS.md 硬規則、完成定義、「不要」清單）與計劃（日期計劃的範圍與清單）。高風險項目標給人類。
+  沿兩軸審查 YSK Kit diff：法律（AGENTS.md 硬規則與「不要」清單）與計劃（日期計劃）。高風險項目標給人類。
   被要求審查 PR、相對 main 的分支，或未提交的工作時使用；或 /review-change。
   中文：審查、法律軸、計劃軸、高風險人工、合理化表。
   不要用於實作改動（plan-feature）、Staff／QA 組合審計（audit-slice），或專門的安全／Prisma 深挖（security-review、db-migration）。
@@ -18,7 +18,7 @@ Language: [English](review-change.md) · 中文
 - 使用者要求審查 PR、相對 `main` 的分支，或工作樹。
 - 計劃的清單即將標為完成。
 
-不要用本 skill 實作功能（[plan-feature](plan-feature.zh.md)）。Staff／QA 組合切片審計走 [audit-slice](audit-slice.zh.md)。授權／密鑰／webhook／LLM 輸入走 [security-review](security-review.zh.md)。產生的 SQL 走 [db-migration](db-migration.zh.md)。
+不要用本 skill 實作功能（[plan-feature](plan-feature.zh.md)）。只有使用者要求才打開 [audit-slice](audit-slice.zh.md)。只有 diff 碰到授權、密鑰或 webhook 才打開 [security-review](security-review.zh.md)。產生的 SQL 走 [db-migration](db-migration.zh.md)。
 
 ## 輸入
 
@@ -30,7 +30,7 @@ Language: [English](review-change.md) · 中文
 
 ## 兩軸
 
-**法律** — AGENTS.md **硬規則**（目前十二條）、[完成定義](../../AGENTS.zh.md#完成定義)，以及[不要](../../AGENTS.zh.md#不要)清單。任何硬規則被打破就審查失敗（客戶端 Prisma、TypeScript `enum`、對 kit 路徑 raw `fetch`、未經批准的新 envelope 例外、單元測試打真實 Stripe，…）。
+**法律** — AGENTS.md **硬規則**（目前十二條）以及[不要](../../AGENTS.zh.md#不要)清單。任何硬規則被打破就審查失敗（客戶端 Prisma、TypeScript `enum`、對 kit 路徑 raw `fetch`、未經批准的新 envelope 例外、單元測試打真實 Stripe，…）。日期計劃加上那些硬規則，取代從前的「完成定義」標題。
 
 **計劃** — 日期計劃的範圍、非目標、任務清單與驗證命令。diff 送出非目標列出的工作，或略過清單項而沒有記錄原因，就失敗。
 
@@ -54,8 +54,8 @@ Language: [English](review-change.md) · 中文
 ## 步驟
 
 1. 確認 base ref，並印出 `git diff <base>...HEAD --stat`。
-2. 協議要求時找出日期計劃。若缺失，那是法律 finding（完成定義）。
-3. 走法律（硬規則 + 完成定義 + 不要）。每個 finding 一列。
+2. [何時寫計劃](../../AGENTS.zh.md#何時寫計劃)要求時找出日期計劃。若缺失，那是法律 finding。
+3. 走法律（硬規則 + 不要）。每個 finding 一列。
 4. 走計劃（範圍、非目標、清單）。每個漏項或多做一列。
 5. 跑 [驗證改動](verify-change.zh.md)（或記錄為何不能：沒有 checkout、測試已在跑）。沒有命令輸出或明確阻礙，永遠不要說「看起來沒問題」。
 6. 每個計劃漏項填 [合理化表](#輸出格式)（「超出範圍因為…」、「延後到…」並附檔案連結）。理由空白就審查失敗。
@@ -118,6 +118,6 @@ Verify: <commands + result or blocker>
 
 ## 來源
 
-- [AGENTS.zh.md](../../AGENTS.zh.md) 硬規則、完成定義、不要
+- [AGENTS.zh.md](../../AGENTS.zh.md) 硬規則、何時寫計劃、不要
 - getsentry `security-review`（diff = 報告範圍） — <https://github.com/getsentry/skills>
 - [security-review](security-review.zh.md)、[db-migration](db-migration.zh.md)、[verify-change](verify-change.zh.md)

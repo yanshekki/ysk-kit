@@ -30,7 +30,7 @@ Run this checklist before marking UI work done. Design rules: [ui-design](ui-des
 | axe | **optional** | `@axe-core/playwright` is **not** in this repo. Do not add it unless asked. If available locally, run against `/login` and the changed route; zero serious/critical |
 | Reduced motion | if you added animation | OS “reduce motion” or `page.emulateMedia({ reducedMotion: 'reduce' })` |
 
-A single screenshot is **not** verification. Exercise the flow: click, type, submit, fail, retry.
+A single screenshot is **not** verification. Exercise the flow: click, type, submit, fail, retry. Acceptance is **behaviour**, not a PNG directory per feature. Do not git-add `docs/qa/**/*.png`.
 
 ## Checklist
 

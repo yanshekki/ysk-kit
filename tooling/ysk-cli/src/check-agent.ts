@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { checkAgentGuidance } from './check-agent-guidance.js';
+import { checkDocsBudget } from './check-docs-budget.js';
 
 export type AgentRule =
   | 'no-ts-enum'
@@ -9,6 +10,7 @@ export type AgentRule =
   | 'pointer-agents-md'
   | 'skill-drift'
   | 'agents-md-budget'
+  | 'docs-budget'
   | 'rust-sidecar-boundary';
 
 export type AgentFinding = {
@@ -140,6 +142,7 @@ export const checkAgent = (productRoot: string): AgentFinding[] => {
 
   findings.push(...rustSidecarBoundary(productRoot));
   findings.push(...checkAgentGuidance(productRoot));
+  findings.push(...checkDocsBudget(productRoot));
   findings.sort(
     (a, b) => a.file.localeCompare(b.file) || a.line - b.line || a.rule.localeCompare(b.rule),
   );

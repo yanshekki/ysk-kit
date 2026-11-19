@@ -9,10 +9,11 @@ Usage:
   pnpm ysk-kit upgrade [--dry-run]
   pnpm ysk-kit check agent
   pnpm ysk-kit check errors
+  pnpm ysk-kit check docs-budget
   pnpm ysk-kit check logs [--file <jsonl>]
   pnpm ysk-kit check supply [--json] [--repo-only] [--online]
   pnpm ysk-kit doctor [--json]
-  pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
+  pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force] [--lean] [--full] [--zh]
   pnpm ysk-kit plan --check <file>
 
 Commands:
@@ -48,10 +49,18 @@ Commands:
       Scan the product root for typical broken patches: TypeScript enum,
       Prisma imports in web/admin/mobile/desktop, raw fetch in those
       apps, pointer files that dropped AGENTS.md, drifted skill copies,
-      root + nested AGENTS.md over 24 KiB, and (when present) a dest
-      ysk-sidecar crate that is not an ICryptoPort adapter. Prints rule
-      id + file:line.
+      root + nested AGENTS.md over 24 KiB, docs-budget (README Unreleased
+      length, new CHANGELOG phrases, lean-plan size, git-added QA PNGs),
+      and (when present) a dest ysk-sidecar crate that is not an
+      ICryptoPort adapter. Prints rule id + file:line.
       Exit 1 when anything matches.
+
+  check docs-budget
+      Fail on a README Unreleased cell over 800 characters, forbidden
+      phrases between <!-- docs-budget-new --> and
+      <!-- docs-budget-legacy --> in CHANGELOG, a plan: lean file over
+      8 KiB, or a git-added docs/qa PNG. Also runs as check-agent rule
+      docs-budget. Exit 1 when anything matches.
 
   check errors
       Scan application/ for throw new Error, apps/api for console.log
@@ -72,14 +81,18 @@ Commands:
       --repo-only   Skip host PHP and kernel; still check CLI Node
       --online      Run pnpm audit --json and honor ignoreGhsas
 
-  plan <slug> [--date YYYY-MM-DD] [--force]
-      Write docs/plans/<date>-<slug>.md and the Chinese pair from the
-      bilingual template, plus a gitignored root plan.md pointer.
-      Slug must be kebab-case. --date defaults to today. --force overwrites.
+  plan <slug> [--date YYYY-MM-DD] [--force] [--lean] [--full] [--zh]
+      Write docs/plans/<date>-<slug>.md from the lean English template
+      (plan: lean; six sections) plus a gitignored root plan.md pointer.
+      --full uses the 19-section template (plan: full). --zh writes the
+      Chinese pair. --lean and --full cannot be used together. Slug must
+      be kebab-case. --date defaults to today. --force overwrites.
 
   plan --check <file>
-      Verify a plan file has every required template heading and no
-      required section is still placeholder-only. Exit 1 on failure.
+      If the file has plan: lean, require lean headings; otherwise
+      require full headings (including unmarked and old plans). Missing
+      headings fail. Empty bodies and none / n/a / nil / no / 沒有 /
+      不適用 pass. Exit 1 on failure.
 
   doctor [--json]
       Check a generated product: Node and pnpm versus engines, required
@@ -95,7 +108,7 @@ Environment:
   YSK_ROOT    Product root to patch (default: this repository)
 
 After add module / add capability:
-  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent && pnpm ysk-kit check errors
+  pnpm db:migrate && pnpm gen:openapi && pnpm layers && pnpm typecheck && pnpm test && pnpm ysk-kit check agent && pnpm ysk-kit check errors && pnpm ysk-kit check docs-budget
 
 Manual: docs/cli/ysk-kit.md
 Chinese: docs/cli/ysk-kit.zh.md

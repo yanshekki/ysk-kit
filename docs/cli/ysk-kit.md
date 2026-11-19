@@ -9,13 +9,14 @@ pnpm ysk-kit add module <kebab-name> [--prisma] [--web] [--no-web]
 pnpm ysk-kit add <capability>
 pnpm ysk-kit generate openapi
 pnpm ysk-kit upgrade [--dry-run]
-pnpm ysk-kit check agent
-pnpm ysk-kit check errors
-pnpm ysk-kit check logs [--file <jsonl>]
-pnpm ysk-kit check supply [--json] [--repo-only] [--online]
-pnpm ysk-kit doctor [--json]
-pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force]
-pnpm ysk-kit plan --check <file>
+  pnpm ysk-kit check agent
+  pnpm ysk-kit check errors
+  pnpm ysk-kit check docs-budget
+  pnpm ysk-kit check logs [--file <jsonl>]
+  pnpm ysk-kit check supply [--json] [--repo-only] [--online]
+  pnpm ysk-kit doctor [--json]
+  pnpm ysk-kit plan <kebab-slug> [--date YYYY-MM-DD] [--force] [--lean] [--full] [--zh]
+  pnpm ysk-kit plan --check <file>
 ```
 
 Environment: `YSK_ROOT` — product root to patch. Defaults to this kit when unset.
@@ -134,6 +135,7 @@ Exit 0 prints `ysk-kit check agent: ok`. Exit 1 prints one line per finding: `ru
 | `pointer-agents-md` | `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.gemini/settings.json`, `.cursor/rules/*.mdc`, `.github/instructions/*.instructions.md`, skill `SKILL.md` copies | File exists and does not contain `AGENTS.md` |
 | `skill-drift` | `.agents/skills`, `.claude/skills`, `.cursor/skills`, `.grok/skills`, and kit templates when present | A copy is missing or differs |
 | `agents-md-budget` | Every `AGENTS.md` under the product root | Combined UTF-8 size exceeds 24 KiB |
+| `docs-budget` | README Unreleased, CHANGELOG new zone, `plan: lean` files, git index | Unreleased cell over 800 characters; forbidden phrases between `<!-- docs-budget-new -->` and `<!-- docs-budget-legacy -->`; lean plan over 8 KiB; git-added `docs/qa/**/*.png` |
 | `rust-sidecar-boundary` | `crates/ysk-sidecar/Cargo.toml` and the create-app crate template when present | Depends on axum / actix-web / warp; README omits `ICryptoPort`; `unsafe` in `src/main.rs` |
 
 Skipped: `*.test.ts` / `*.test.tsx`, comment lines, `node_modules`, `dist`, `generated`, `coverage`. Prisma schema `enum UserStatus` in `.prisma` files is not TypeScript and is not scanned.
@@ -203,12 +205,24 @@ Exit 0 prints `ysk-kit check supply: ok` (kernel reminders may print first as wa
 
 Doctor reports a Node runtime floor miss as an **error**. CI runs `--repo-only --online` instead of raw `pnpm audit`. Procedure: [supply-scan](../skills/supply-scan.md). Recipe: [scan supply](../recipes/scan-supply.md).
 
+## `ysk-kit check docs-budget`
+
+Fails on README Unreleased cells over 800 characters, forbidden phrases in the CHANGELOG zone between `<!-- docs-budget-new -->` and `<!-- docs-budget-legacy -->`, a `plan: lean` file over 8 KiB, or a git-added `docs/qa/**/*.png`. Also runs as `check agent` rule `docs-budget`.
+
+```text
+pnpm ysk-kit check docs-budget
+```
+
+Exit 0 prints `ysk-kit check docs-budget: ok`.
+
 ## `ysk-kit plan`
 
-Writes a bilingual feature plan from [docs/plans/_template.md](../plans/_template.md).
+Writes a feature plan. Default is English lean from [docs/plans/_template-lean.md](../plans/_template-lean.md) (`plan: lean`, six sections).
 
 ```text
 pnpm ysk-kit plan <kebab-slug>
+pnpm ysk-kit plan <kebab-slug> --full
+pnpm ysk-kit plan <kebab-slug> --zh
 pnpm ysk-kit plan <kebab-slug> --date 2026-10-06
 pnpm ysk-kit plan <kebab-slug> --force
 pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
@@ -217,10 +231,13 @@ pnpm ysk-kit plan --check docs/plans/2026-10-06-<slug>.md
 | Flag | Effect |
 |---|---|
 | `--date YYYY-MM-DD` | Calendar day in the filename. Default: today (local) |
-| `--force` | Overwrite an existing dated pair |
-| `--check <file>` | Exit 1 if a required heading is missing or still placeholder-only |
+| `--force` | Overwrite an existing dated file |
+| `--lean` | Explicit lean (the default). Cannot combine with `--full` |
+| `--full` | 19-section template (`plan: full`) |
+| `--zh` | Also write the Chinese pair |
+| `--check <file>` | Exit 1 if a required heading is missing. `plan: lean` uses lean headings; unmarked and old files use full headings. Empty bodies and `none` / `n/a` pass |
 
-Creates `docs/plans/<date>-<slug>.md`, `docs/plans/<date>-<slug>.zh.md`, and a root `plan.md` pointer (gitignored). Slug must match `^[a-z][a-z0-9-]*$`. Procedure: [plan-feature](../skills/plan-feature.md). Template sections and tool plan modes: [docs/plans/README.md](../plans/README.md).
+Creates `docs/plans/<date>-<slug>.md` and a root `plan.md` pointer (gitignored). `--zh` also writes `.zh.md`. Slug must match `^[a-z][a-z0-9-]*$`. Procedure: [plan-feature](../skills/plan-feature.md). Template sections: [docs/plans/README.md](../plans/README.md).
 
 ## `ysk-kit doctor`
 

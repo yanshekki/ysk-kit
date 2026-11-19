@@ -78,9 +78,10 @@ PostgreSQL or SQLite: `create-ysk-app --db postgresql|sqlite` rewrites the Prism
 | `pnpm ysk-kit add module <name> --prisma --web` | Hexagonal HTTP slice |
 | `pnpm ysk-kit add <capability>` | Merge a catalogued capability |
 | `pnpm ysk-kit upgrade` | Refresh allowlisted kit guardrails |
-| `pnpm ysk-kit plan <slug>` | Write `docs/plans/<yyyy-mm-dd>-<slug>.md` from the template |
-| `pnpm ysk-kit plan --check <file>` | Fail if a plan is missing headings or still placeholders |
-| `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift |
+| `pnpm ysk-kit plan <slug>` | Write a lean English plan (`--full` / `--zh` optional) |
+| `pnpm ysk-kit plan --check <file>` | Fail if a required heading is missing |
+| `pnpm ysk-kit check agent` | Flag TypeScript enum, client Prisma, raw fetch, pointer drift, docs-budget |
+| `pnpm ysk-kit check docs-budget` | Flag long Unreleased cells, forbidden CHANGELOG phrases, oversized lean plans, git-added QA PNGs |
 | `pnpm ysk-kit check errors` | Flag plain `Error` in `application/`, API `console.log`, `process.env` logs |
 | `pnpm ysk-kit check logs --file <jsonl>` | Validate captured Pino JSON (secrets, ERROR `requestId`) |
 | `pnpm ysk-kit check supply [--json] [--repo-only] [--online]` | Inventory Node, PHP, lockfile, and Actions pins vs a vendored catalog |

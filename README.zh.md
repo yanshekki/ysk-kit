@@ -78,9 +78,10 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 | `pnpm ysk-kit add module <name> --prisma --web` | hexagonal HTTP 切片 |
 | `pnpm ysk-kit add <capability>` | 合併一項已編目的能力 |
 | `pnpm ysk-kit upgrade` | 更新允許清單上的 kit 護欄 |
-| `pnpm ysk-kit plan <slug>` | 按模板寫入 `docs/plans/<yyyy-mm-dd>-<slug>.md` |
-| `pnpm ysk-kit plan --check <file>` | 計劃缺標題或仍是佔位內容時失敗 |
-| `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移 |
+| `pnpm ysk-kit plan <slug>` | 寫英文精簡計劃（可選 `--full`／`--zh`） |
+| `pnpm ysk-kit plan --check <file>` | 缺必要標題時失敗 |
+| `pnpm ysk-kit check agent` | 標記 TypeScript enum、客戶端 Prisma、raw fetch、指針漂移、docs-budget |
+| `pnpm ysk-kit check docs-budget` | 標記過長 Unreleased、禁止的 CHANGELOG 句子、過大精簡計劃、git-add 的 QA PNG |
 | `pnpm ysk-kit check errors` | 標記 `application/` 普通 `Error`、API `console.log`、`process.env` 日誌 |
 | `pnpm ysk-kit check logs --file <jsonl>` | 驗證捕捉到的 Pino JSON（密鑰、ERROR `requestId`） |
 | `pnpm ysk-kit check supply [--json] [--repo-only] [--online]` | 盤點 Node、PHP、lockfile 與 Actions pin，對照內建目錄 |

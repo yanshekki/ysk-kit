@@ -5,13 +5,14 @@ import { fileURLToPath } from 'node:url';
 import { addCapability } from './add-capability.js';
 import { addModule } from './add-module.js';
 import { checkAgent, formatAgentFindings } from './check-agent.js';
+import { checkDocsBudget, formatDocsBudgetFindings } from './check-docs-budget.js';
 import { checkErrors, formatErrorFindings } from './check-errors.js';
 import { checkLogs, formatLogReport } from './check-logs.js';
 import { checkSupply, formatSupplyReport } from './check-supply.js';
 import { doctor, formatDoctorReport } from './doctor.js';
 import { generateOpenApi } from './generate-openapi.js';
 import { HELP } from './help.js';
-import { checkPlan, localIsoDate, writePlan } from './plan.js';
+import { checkPlan, parsePlanWriteArgs, writePlan } from './plan.js';
 import { upgrade } from './upgrade.js';
 
 const isCliEntry = (): boolean => {
@@ -66,6 +67,12 @@ const main = (): void => {
     if (args[0] === 'check' && args[1] === 'agent') {
       const findings = checkAgent(root);
       console.log(formatAgentFindings(findings));
+      process.exit(findings.length === 0 ? 0 : 1);
+    }
+
+    if (args[0] === 'check' && args[1] === 'docs-budget') {
+      const findings = checkDocsBudget(root);
+      console.log(formatDocsBudgetFindings(findings));
       process.exit(findings.length === 0 ? 0 : 1);
     }
 
@@ -125,15 +132,16 @@ const main = (): void => {
       process.exit(1);
     }
 
-    if (args[0] === 'plan' && args[1] && !args[1].startsWith('-')) {
-      const dateFlag = args.indexOf('--date');
-      const dateArg = dateFlag >= 0 ? args[dateFlag + 1] : localIsoDate();
+    if (args[0] === 'plan' && args.length > 1) {
+      const parsed = parsePlanWriteArgs(args.slice(1));
       const logs = writePlan({
         productRoot: root,
         kitRoot,
-        slug: args[1],
-        date: dateArg ?? localIsoDate(),
-        force: args.includes('--force'),
+        slug: parsed.slug,
+        date: parsed.date,
+        force: parsed.force,
+        kind: parsed.kind,
+        zh: parsed.zh,
       });
       for (const line of logs) console.log(line);
       process.exit(0);

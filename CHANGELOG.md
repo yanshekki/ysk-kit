@@ -37,6 +37,16 @@ Changesets still writes each package changelog. Those files stay:
 
 The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/history.md).
 
+<!-- docs-budget-new -->
+
+## Unreleased
+
+### Improvements
+
+- Shorter agent context: lean plans by default (`pnpm ysk-kit plan <slug>`), four skill routers (`plan`, `implement`, `verify`, `review`), `ysk-kit check docs-budget`, and `docs/agent/NOW.md`. Root `AGENTS.md` is about 5 KB.
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.11
 
 ### Dependency upgrades

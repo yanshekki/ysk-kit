@@ -37,6 +37,16 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 階段日記（Phase 1 至 Phase 53）仍在 [docs/history.zh.md](docs/history.zh.md)。
 
+<!-- docs-budget-new -->
+
+## Unreleased
+
+### 改進
+
+- 縮短 agent 上下文：預設精簡計劃（`pnpm ysk-kit plan <slug>`）、四個 skill 路由器（`plan`、`implement`、`verify`、`review`）、`ysk-kit check docs-budget`，以及 `docs/agent/NOW.md`。根 `AGENTS.md` 約 5 KB。
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.11
 
 ### 依賴升級

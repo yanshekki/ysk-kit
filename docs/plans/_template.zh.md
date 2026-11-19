@@ -1,3 +1,7 @@
+---
+plan: full
+---
+
 # 計劃：{{title}}
 
 Language: 英文配對 `{{date}}-{{slug}}.md` · 中文 `{{date}}-{{slug}}.zh.md`

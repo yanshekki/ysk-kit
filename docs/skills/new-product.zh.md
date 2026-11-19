@@ -93,7 +93,7 @@ pnpm ysk-kit doctor
 預期：exit 0（只有 `ok`／`warn`）。`error` 代表 env、engines、migrations 或護欄。
 
 - [ ] `.ysk-kit.json` 記錄 flavor、preset、db 與 kit 版本
-- [ ] 工作區產品存在 `AGENTS.md` 與 `.agents/skills/add-module/SKILL.md`
+- [ ] 工作區產品存在 `AGENTS.md` 與 `.agents/skills/{plan,implement,verify,review}/SKILL.md`
 - [ ] 有 API 的 flavor 可用種子帳戶登入
 - [ ] 須由人填的欄位已列給擁有者（不是由 agent 發明）
 

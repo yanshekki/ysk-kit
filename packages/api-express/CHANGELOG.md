@@ -1,5 +1,17 @@
 # @ysk-kit/api-express
 
+## 1.6.13
+
+### Patch Changes
+
+- 828cea0: Electron 45.4.1, Biome 2.6.8, user-event 14.6.13, and a coordinated OpenTelemetry 3.1.1 / 0.301.2 / api 1.10.0 graph. CI thin-smoke checks the four skill routers.
+- Updated dependencies [828cea0]
+  - @ysk-kit/api-http@1.6.13
+  - @ysk-kit/apikey@1.6.13
+  - @ysk-kit/auth@1.6.13
+  - @ysk-kit/contracts@1.6.13
+  - @ysk-kit/domain-kernel@1.6.13
+
 ## 1.6.12
 
 ### Patch Changes

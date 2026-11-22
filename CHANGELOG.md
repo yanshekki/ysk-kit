@@ -39,6 +39,22 @@ The phase diary (Phase 1 through Phase 53) stays in [docs/history.md](docs/histo
 
 <!-- docs-budget-new -->
 
+## v1.6.14
+
+### Dependency upgrades
+
+- Stable-only weekly for 2026-11-22. turbo **2.11.13**. dependency-cruiser **18.8.0**. Vitest / `@vitest/coverage-v8` **5.1.1**. Expo **58.0.26** (`expo-secure-store` **58.0.3**, `expo-status-bar` **58.0.5**). `@bull-board/*` **9.14.0**. BullMQ **6.7.8**. TanStack Query **5.108.2**. jose **6.2.18**. nodemailer **10.6.1**. AWS SDK S3 **3.1175.0**. `source-map-js` override **1.2.4**. Align web/admin `@testing-library/user-event` **14.6.13**. pnpm stays **12.21.0** (`12.22.0` is `next-12` only).
+
+### Security
+
+- Supply catalog PHP floors **8.2.36 / 8.3.37 / 8.4.28 / 8.5.13** (`updated` 2026-11-22) from the php.net 2026-11-19 security releases. Keep CVE-2026-109618 / CVE-2026-109619; add the official 8.5.13 IDs (CVE-2026-129289, 126714, 115560, 129496, 129291, 129538, 128090 and siblings). Catalog-only PHP **8.6.0** line (GA same day). php-bridge `require.php` is `>=8.2.36` (8.2 security floor; not an 8.6 retarget). Node floors unchanged (**26.13.1 / 24.22.3 / 22.23.5**).
+
+### Internal/CI
+
+- `docs/skills/index` coding-tools: Grok Build reads `AGENTS.md` / `AGENT.md` / `CLAUDE.md` (Discovery does not list `GEMINI.md`); Copilot and Gemini CLI also load project skills from `.agents/skills/` (Copilot also `.claude/skills/`). No new skill mirrors. Held: TypeScript 7, Prisma 8 RC, pnpm 12.22.0 (`next-12`), undici 8, seroval 1.8, Vite 8.4 beta, RN 0.89 RC, Fastify 6 alpha, Electron 46 alpha, Playwright 1.66 alpha. Audit ignores stay GHSA-3g3m and GHSA-g3hv (glob 13 / minimatch 10 via Expo CLI).
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.13
 
 ### Improvements

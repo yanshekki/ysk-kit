@@ -118,6 +118,20 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 最近三個版本。較舊的版本在完整變更紀錄。
 
+### v1.6.14
+
+#### 依賴升級
+
+- turbo **2.11.13**。Expo **58.0.26**。Vitest **5.1.1**。jose **6.2.18**。nodemailer **10.6.1**。BullMQ **6.7.8**。`@bull-board/*` **9.14.0**。AWS SDK S3 **3.1175.0**。TanStack Query **5.108.2**。dependency-cruiser **18.8.0**。`source-map-js` **1.2.4**。
+
+#### 安全
+
+- 供應鏈目錄 PHP 下限 **8.2.36／8.3.37／8.4.28／8.5.13**，另加目錄專用 **8.6.0**（`updated` 2026-11-22）。php-bridge 仍在 8.2（`>=8.2.36`）。
+
+#### 內部／CI
+
+- 編碼工具表：Grok Build 不再聲稱讀 `GEMINI.md`。Copilot 與 Gemini CLI 會載入 `.agents/skills/`。暫緩：TypeScript 7、Prisma 8 RC、pnpm 12.22.0（`next-12`）。
+
 ### v1.6.13
 
 #### 改進
@@ -133,16 +147,6 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 #### 改進
 
 - 預設精簡計劃（`pnpm ysk-kit plan <slug>`）、四個 skill 路由器（`plan`、`implement`、`verify`、`review`）、`ysk-kit check docs-budget`，以及 `docs/agent/NOW.md`。根 `AGENTS.md` 約 5 KB。
-
-### v1.6.11
-
-#### 依賴升級
-
-- `engines.node` **`>=26.13.1`**。pnpm **12.21.0**（`latest` = `latest-12` = `next-12`）。Expo **58.0.25**。Electron **44.11.3**。Vite **8.3.8**。`@vitejs/plugin-react` **6.3.0**。jose **6.2.17**。`@bull-board/*` **9.13.1**。nodemailer **10.5.0**。AWS SDK S3 **3.1169.0**。BullMQ **6.7.6**。Playwright **1.65.1**。turbo **2.11.11**。
-
-#### 內部／CI
-
-- 供應鏈目錄下限 **26.13.1／24.22.3／22.23.5**（Node 26.13.1 安全 CVE；保留 CVE-2026-111497）。Compose Grafana **13.3.1**。可選 OTEL `sdk-trace-*` **2.12.1**。暫緩：Electron 45、Biome 2.6、TypeScript 7、Prisma 8 RC、OpenTelemetry major。AGENTS／skill 本週不改。
 
 完整變更紀錄：[CHANGELOG.zh.md](CHANGELOG.zh.md)。
 

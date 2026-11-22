@@ -3,7 +3,7 @@
   "description": "YSK Kit PHP bridge client",
   "type": "library",
   "require": {
-    "php": ">=8.2.35",
+    "php": ">=8.2.36",
     "ext-curl": "*",
     "ext-json": "*"
   },

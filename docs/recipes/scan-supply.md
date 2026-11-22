@@ -28,7 +28,7 @@ constraint-below-floor  engines.node  have=>=26.0.0 need=26.13.1  package.json  
 | Finding | Fix |
 |---|---|
 | Node below floor | Install ≥26.13.1; set `engines.node` to `>=26.13.1` |
-| PHP below floor | Install the patched line (8.2.35 / 8.3.36 / 8.4.27 / 8.5.12); composer `>=8.2.35` |
+| PHP below floor | Install the patched line (8.2.36 / 8.3.37 / 8.4.28 / 8.5.13); composer `>=8.2.36` |
 | GHSA | Workspace override to a patched release, or documented `ignoreGhsas` |
 | Unpinned Action | `uses: owner/repo@<40-char-sha>` |
 | Compose `latest` | Pin a version tag |

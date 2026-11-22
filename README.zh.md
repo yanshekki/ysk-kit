@@ -126,7 +126,7 @@ PostgreSQL 或 SQLite：新產品用 `create-ysk-app --db postgresql|sqlite` 改
 
 #### 安全
 
-- 供應鏈目錄 PHP 下限 **8.2.36／8.3.37／8.4.28／8.5.13**，另加目錄專用 **8.6.0**（`updated` 2026-11-22）。php-bridge 仍在 8.2（`>=8.2.36`）。
+- 供應鏈目錄 PHP 下限 **8.2.36／8.3.37／8.4.28／8.5.13**，另加目錄專用 **8.6.0**（`updated` 2026-11-22）。php-bridge 仍在 8.2（`>=8.2.36`）。override `effect` **3.22.5**（GHSA-7589-6fvf-x4pw）。
 
 #### 內部／CI
 

@@ -126,7 +126,7 @@ The latest three versions. Older versions are in the full changelog.
 
 #### Security
 
-- Supply catalog PHP floors **8.2.36 / 8.3.37 / 8.4.28 / 8.5.13** plus catalog-only **8.6.0** (`updated` 2026-11-22). php-bridge stays on 8.2 (`>=8.2.36`).
+- Supply catalog PHP floors **8.2.36 / 8.3.37 / 8.4.28 / 8.5.13** plus catalog-only **8.6.0** (`updated` 2026-11-22). php-bridge stays on 8.2 (`>=8.2.36`). Override `effect` **3.22.5** (GHSA-7589-6fvf-x4pw).
 
 #### Internal/CI
 

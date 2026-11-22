@@ -118,6 +118,20 @@ See [architecture](docs/architecture.md) and [AGENTS.md](./AGENTS.md).
 
 The latest three versions. Older versions are in the full changelog.
 
+### v1.6.14
+
+#### Dependency upgrades
+
+- turbo **2.11.13**. Expo **58.0.26**. Vitest **5.1.1**. jose **6.2.18**. nodemailer **10.6.1**. BullMQ **6.7.8**. `@bull-board/*` **9.14.0**. AWS SDK S3 **3.1175.0**. TanStack Query **5.108.2**. dependency-cruiser **18.8.0**. `source-map-js` **1.2.4**.
+
+#### Security
+
+- Supply catalog PHP floors **8.2.36 / 8.3.37 / 8.4.28 / 8.5.13** plus catalog-only **8.6.0** (`updated` 2026-11-22). php-bridge stays on 8.2 (`>=8.2.36`). Override `effect` **3.22.5** (GHSA-7589-6fvf-x4pw).
+
+#### Internal/CI
+
+- Coding-tools table: Grok Build no longer claims `GEMINI.md`. Copilot and Gemini CLI load `.agents/skills/`. Held: TypeScript 7, Prisma 8 RC, pnpm 12.22.0 (`next-12`).
+
 ### v1.6.13
 
 #### Improvements
@@ -133,16 +147,6 @@ The latest three versions. Older versions are in the full changelog.
 #### Improvements
 
 - Lean plans by default (`pnpm ysk-kit plan <slug>`), four skill routers (`plan`, `implement`, `verify`, `review`), `ysk-kit check docs-budget`, and `docs/agent/NOW.md`. Root `AGENTS.md` is about 5 KB.
-
-### v1.6.11
-
-#### Dependency upgrades
-
-- `engines.node` **`>=26.13.1`**. pnpm **12.21.0** (`latest` = `latest-12` = `next-12`). Expo **58.0.25**. Electron **44.11.3**. Vite **8.3.8**. `@vitejs/plugin-react` **6.3.0**. jose **6.2.17**. `@bull-board/*` **9.13.1**. nodemailer **10.5.0**. AWS SDK S3 **3.1169.0**. BullMQ **6.7.6**. Playwright **1.65.1**. turbo **2.11.11**.
-
-#### Internal/CI
-
-- Supply catalog floors **26.13.1 / 24.22.3 / 22.23.5** (Node 26.13.1 security CVEs; keep CVE-2026-111497). Compose Grafana **13.3.1**. Optional OTEL `sdk-trace-*` **2.12.1**. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors. No AGENTS or skill churn.
 
 Full changelog: [CHANGELOG.md](CHANGELOG.md).
 

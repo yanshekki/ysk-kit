@@ -140,6 +140,8 @@ Cursor/Grok skill wrappers live in `tooling/ysk-cli/templates/agent/` and are wr
 
 **v1.6.4:** `ysk-kit check supply` (vendored catalog 2026-10-21), `engines.node` `>=26.12.1`, php-bridge `>=8.2.35`, override `launch-editor` 2.14.2. Skill `supply-scan`.
 
+**v1.6.14:** Stable-only weekly (2026-11-22). turbo 2.11.13, Expo 58.0.26, Vitest 5.1.1, jose 6.2.18, nodemailer 10.6.1, BullMQ 6.7.8, `@bull-board/*` 9.14.0, AWS SDK 3.1175.0, TanStack Query 5.108.2, dependency-cruiser 18.8.0, source-map-js 1.2.4. Supply catalog PHP floors 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 plus catalog-only 8.6.0 (`updated` 2026-11-22). php-bridge `>=8.2.36`. pnpm stays 12.21.0. Held: TypeScript 7, Prisma 8 RC, pnpm 12.22.0 (`next-12`), undici 8, seroval 1.8.
+
 **v1.6.11:** Stable-only weekly (2026-11-15). `engines.node` `>=26.13.1`. Supply catalog floors 26.13.1 / 24.22.3 / 22.23.5 (`updated` 2026-11-15; keep CVE-2026-111497). pnpm 12.21.0, turbo 2.11.11, Expo 58.0.25, Electron 44.11.3, Vite 8.3.8, plugin-react 6.3.0, jose 6.2.17, `@bull-board/*` 9.13.1, nodemailer 10.5.0, AWS SDK 3.1169.0, BullMQ 6.7.6, Playwright 1.65.1, `@fastify/cors` 11.4.3. Compose Grafana 13.3.1. Optional OTEL `sdk-trace-*` 2.12.1. Held: Electron 45, Biome 2.6, TypeScript 7, Prisma 8 RC, OpenTelemetry majors. No AGENTS or skill churn.
 
 **v1.6.10:** `create-ysk-app --with-rust-sidecar` dest-only `ICryptoPort` crate (private stdio). Not a flavor. ADR 0002 addendum. `@ysk-kit/crypto` `createStdioCryptoPort`. `check agent` `rust-sidecar-boundary`.

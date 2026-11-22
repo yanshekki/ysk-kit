@@ -39,6 +39,22 @@ Changesets 仍然撰寫每個套件的變更紀錄。這些檔案保留：
 
 <!-- docs-budget-new -->
 
+## v1.6.14
+
+### 依賴升級
+
+- 只升穩定版（2026-11-22）。turbo **2.11.13**。dependency-cruiser **18.8.0**。Vitest／`@vitest/coverage-v8` **5.1.1**。Expo **58.0.26**（`expo-secure-store` **58.0.3**、`expo-status-bar` **58.0.5**）。`@bull-board/*` **9.14.0**。BullMQ **6.7.8**。TanStack Query **5.108.2**。jose **6.2.18**。nodemailer **10.6.1**。AWS SDK S3 **3.1175.0**。`source-map-js` override **1.2.4**。web／admin `@testing-library/user-event` 對齊 **14.6.13**。pnpm 維持 **12.21.0**（`12.22.0` 只在 `next-12`）。
+
+### 安全
+
+- 供應鏈目錄 PHP 下限 **8.2.36／8.3.37／8.4.28／8.5.13**（`updated` 2026-11-22），來自 php.net 2026-11-19 安全版。保留 CVE-2026-109618／CVE-2026-109619；加入官方 8.5.13 ID（CVE-2026-129289、126714、115560、129496、129291、129538、128090 及同波次）。目錄加 PHP **8.6.0** 線（同日 GA）。php-bridge `require.php` 為 `>=8.2.36`（8.2 安全下限；不是改去 8.6）。Node 下限不變（**26.13.1／24.22.3／22.23.5**）。override `effect` **3.22.5** 修 GHSA-7589-6fvf-x4pw（Prisma 7.10 釘 3.20.0；維持 3.x，不升 4）。
+
+### 內部／CI
+
+- `docs/skills/index` 編碼工具表：Grok Build 讀 `AGENTS.md`／`AGENT.md`／`CLAUDE.md`（Discovery 名單沒有 `GEMINI.md`）；Copilot 與 Gemini CLI 也可從 `.agents/skills/` 載入專案 skills（Copilot 亦 `.claude/skills/`）。不加新 skill 鏡像。暫緩：TypeScript 7、Prisma 8 RC、pnpm 12.22.0（`next-12`）、undici 8、seroval 1.8、Vite 8.4 beta、RN 0.89 RC、Fastify 6 alpha、Electron 46 alpha、Playwright 1.66 alpha。審計忽略維持 GHSA-3g3m 與 GHSA-g3hv（Expo CLI 的 glob 13／minimatch 10）。
+
+<!-- docs-budget-legacy -->
+
 ## v1.6.13
 
 ### 改進

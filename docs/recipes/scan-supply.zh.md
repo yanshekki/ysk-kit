@@ -28,7 +28,7 @@ constraint-below-floor  engines.node  have=>=26.0.0 need=26.13.1  package.json  
 | Finding | 修法 |
 |---|---|
 | Node 低於下限 | 安裝 ≥26.13.1；把 `engines.node` 設成 `>=26.13.1` |
-| PHP 低於下限 | 安裝已修補線（8.2.35／8.3.36／8.4.27／8.5.12）；composer `>=8.2.35` |
+| PHP 低於下限 | 安裝已修補線（8.2.36／8.3.37／8.4.28／8.5.13）；composer `>=8.2.36` |
 | GHSA | 工作區 override 到已修補版本，或有說明的 `ignoreGhsas` |
 | 未釘的 Action | `uses: owner/repo@<40 字元 sha>` |
 | Compose `latest` | 釘版本標籤 |

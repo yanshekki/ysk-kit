@@ -61,7 +61,7 @@ describe('ysk-kit check supply', () => {
     expect(rangeAllowsBelow('>=26.13.1', '26.13.1')).toBe(false);
   });
 
-  it('flags PHP 8.2.34 and composer >=8.2; accepts 8.2.35 and >=8.2.35', () => {
+  it('flags PHP 8.2.35 and composer >=8.2; accepts 8.2.36 and >=8.2.36', () => {
     const dest = mkdtempSync(join(tmpdir(), 'ysk-supply-php-'));
     writeTree(dest, {
       'package.json': JSON.stringify({ engines: { node: '>=26.13.1' } }),
@@ -70,22 +70,22 @@ describe('ysk-kit check supply', () => {
     const low = checkSupply(dest, {
       repoOnly: false,
       nodeVersion: '26.13.1',
-      phpVersion: '8.2.34',
+      phpVersion: '8.2.35',
       kernelRelease: null,
       osPlatform: 'darwin',
     });
     expect(low.findings.map((item) => item.rule)).toEqual(
       expect.arrayContaining(['runtime-below-floor', 'constraint-below-floor']),
     );
-    expect(low.findings.some((item) => item.component === 'php' && item.need === '8.2.35')).toBe(
+    expect(low.findings.some((item) => item.component === 'php' && item.need === '8.2.36')).toBe(
       true,
     );
 
-    writeFileSync(join(dest, 'composer.json'), JSON.stringify({ require: { php: '>=8.2.35' } }));
+    writeFileSync(join(dest, 'composer.json'), JSON.stringify({ require: { php: '>=8.2.36' } }));
     const ok = checkSupply(dest, {
       repoOnly: false,
       nodeVersion: '26.13.1',
-      phpVersion: '8.2.35',
+      phpVersion: '8.2.36',
       kernelRelease: null,
       osPlatform: 'darwin',
     });
@@ -239,7 +239,7 @@ describe('ysk-kit check supply', () => {
       catalogUpdated: string;
       inventory: { node?: string };
     };
-    expect(parsed.catalogUpdated).toBe('2026-11-15');
+    expect(parsed.catalogUpdated).toBe('2026-11-22');
     expect(parsed.inventory.node).toBeTruthy();
   });
 });

@@ -85,8 +85,8 @@ Language: [English](index.md) · 中文
 |---|---|---|
 | Codex | `AGENTS.md`，較近的 nested 優先；skills `.agents/skills/` | 根與 nested `AGENTS.md`。 |
 | OpenCode | 專案 `AGENTS.md`。沒有 `AGENTS.md` 才 fallback `CLAUDE.md` | 靠 `AGENTS.md`。 |
-| Grok Build | 相符的 `AGENTS.md`／`CLAUDE.md`／`GEMINI.md` 加 `.grok/rules/` | 指針保持短。 |
+| Grok Build | `AGENTS.md`／`AGENT.md`／`CLAUDE.md`（官方 Discovery 名單沒有 `GEMINI.md`）加 `.grok/rules/`。專案 skills：`.grok/skills/` 與 Claude Code skills；使用者層 `~/.agents/skills/` | 指針保持短。 |
 | Cursor | 根與 nested `AGENTS.md` 與 `CLAUDE.md`。`.cursor/rules/*.mdc`。Skills `.agents/skills/` | 範圍 `.mdc` 只做提醒。 |
 | Claude Code | `CLAUDE.md`（`@AGENTS.md`）。Skills **只** `.claude/skills/` | 在 `CLAUDE.md` 保留 `@AGENTS.md`。Kit 把 `.claude/skills/` 從 `.agents/skills/` 鏡像。 |
-| Copilot | `AGENTS.md`。`.github/copilot-instructions.md` | 指針保持短。 |
-| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]` | `GEMINI.md` 只做指針。 |
+| Copilot | `AGENTS.md`。`.github/copilot-instructions.md`。專案 skills `.agents/skills/` 與 `.claude/skills/` | 指針保持短。不要加 `.github/skills`。 |
+| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]`。專案 skills `.agents/skills/` | `GEMINI.md` 只做指針。不要加 `.gemini/skills`。 |

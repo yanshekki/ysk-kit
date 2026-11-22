@@ -85,8 +85,8 @@ Official loading rules (do not invent extra convention files):
 |---|---|---|
 | Codex | `AGENTS.md`, nested closer-wins; skills `.agents/skills/` | Root + nested `AGENTS.md`. |
 | OpenCode | Project `AGENTS.md`. Fallback `CLAUDE.md` only if no `AGENTS.md` | Rely on `AGENTS.md`. |
-| Grok Build | Matching `AGENTS.md` / `CLAUDE.md` / `GEMINI.md` plus `.grok/rules/` | Pointers stay tiny. |
+| Grok Build | `AGENTS.md` / `AGENT.md` / `CLAUDE.md` (official Discovery does not list `GEMINI.md`) plus `.grok/rules/`. Project skills: `.grok/skills/` and Claude Code skills; user `~/.agents/skills/` | Pointers stay tiny. |
 | Cursor | Root + nested `AGENTS.md` and `CLAUDE.md`. `.cursor/rules/*.mdc`. Skills `.agents/skills/` | Scoped `.mdc` files are reminders. |
 | Claude Code | `CLAUDE.md` (`@AGENTS.md`). Skills **only** `.claude/skills/` | Keep `@AGENTS.md` in `CLAUDE.md`. Kit mirrors `.claude/skills/` from `.agents/skills/`. |
-| Copilot | `AGENTS.md`. `.github/copilot-instructions.md` | Pointers stay short. |
-| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]` | `GEMINI.md` is a pointer only. |
+| Copilot | `AGENTS.md`. `.github/copilot-instructions.md`. Project skills `.agents/skills/` and `.claude/skills/` | Pointers stay short. Do not add `.github/skills`. |
+| Gemini CLI | `.gemini/settings.json` `fileName: ["AGENTS.md"]`. Project skills `.agents/skills/` | `GEMINI.md` is a pointer only. Do not add `.gemini/skills`. |

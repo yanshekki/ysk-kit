@@ -1,5 +1,11 @@
 # @ysk-kit/push
 
+## 1.6.14
+
+### Patch Changes
+
+- d2e1d2c: Lockstep patch for the 2026-11-22 stable weekly. turbo 2.11.13, dependency-cruiser 18.8.0, Vitest / `@vitest/coverage-v8` 5.1.1, Expo 58.0.26 (`expo-secure-store` 58.0.3, `expo-status-bar` 58.0.5), `@bull-board/*` 9.14.0, BullMQ 6.7.8, TanStack Query 5.108.2, jose 6.2.18, nodemailer 10.6.1, AWS SDK S3 3.1175.0, `source-map-js` override 1.2.4, web/admin `@testing-library/user-event` 14.6.13. Supply catalog PHP floors 8.2.36 / 8.3.37 / 8.4.28 / 8.5.13 (`updated` 2026-11-22) from the php.net 2026-11-19 security releases; keep CVE-2026-109618 / CVE-2026-109619 and add the official 8.5.13 IDs; catalog-only PHP 8.6.0 line. php-bridge `require.php` is `>=8.2.36` (8.2 security floor, not an 8.6 retarget). Node floors stay 26.13.1 / 24.22.3 / 22.23.5. Override `effect` 3.22.5 for GHSA-7589-6fvf-x4pw (Prisma 7.10 pins 3.20.0; stay on 3.x). pnpm stays 12.21.0 (`12.22.0` is `next-12` only). Coding-tools table: Grok Build no longer claims GEMINI.md; Copilot and Gemini CLI load `.agents/skills/`. Held: TypeScript 7, Prisma 8 RC, undici 8, seroval 1.8, Vite 8.4 beta, RN 0.89 RC, Fastify 6 alpha, Electron 46 alpha, Playwright 1.66 alpha. Audit ignores stay GHSA-3g3m and GHSA-g3hv (glob 13 / minimatch 10 via Expo CLI).
+
 ## 1.6.13
 
 ### Patch Changes

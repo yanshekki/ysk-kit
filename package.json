@@ -46,7 +46,7 @@
     "vitest": "^5.1.1",
     "@types/node": "^26.6.6",
     "@ysk-kit/biome": "workspace:*",
-    "dependency-cruiser": "^18.8.0",
+    "dependency-cruiser": "^18.9.0",
     "turbo": "^2.11.13",
     "typescript": "^6.0.3"
   },
